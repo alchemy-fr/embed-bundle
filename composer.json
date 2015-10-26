@@ -1,0 +1,35 @@
+{
+  "name": "alchemy/embed-bundle",
+  "description": "Embed resources bundle",
+  "authors": [
+    {
+      "name": "Florian Blouet",
+      "email": "florian.blouet@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Alchemy\\Embed\\": "src/Component",
+      "Alchemy\\EmbedBundle\\": "src/Bundle",
+      "Alchemy\\EmbedProvider\\": "src/Provider"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Alchemy\\EmbedBundle\\Tests\\": "tests/unit/Bundle"
+    }
+  },
+  "license": "MIT",
+  "require-dev": {
+    "phpunit/phpunit": "^4.7",
+    "symfony/symfony": "~2.6",
+    "silex/silex": "^1.0.0",
+    "squizlabs/php_codesniffer": "^2.3"
+  },
+  "require": {},
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  }
+}

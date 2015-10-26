@@ -1,0 +1,6 @@
+services:
+  alchemy_embed.exception_transformer:
+    class: Alchemy\Embed\Response\ExceptionTransformer\DefaultExceptionTransformer
+    public: false
+    arguments:
+      - false

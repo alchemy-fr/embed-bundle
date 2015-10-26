@@ -1,0 +1,10 @@
+services:
+
+  alchemy_embed.exception_listener:
+    class: Alchemy\EmbedBundle\EventListener\ExceptionListener
+    arguments:
+      - @alchemy_embed.content_type_matcher
+      - @alchemy_embed.exception_transformer
+      - []
+    tags:
+      - { name: kernel.event_subscriber }
