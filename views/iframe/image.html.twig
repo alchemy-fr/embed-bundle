@@ -17,14 +17,6 @@
     <script type="text/javascript" src="/assets/embed/common.js"></script>
     <script type="text/javascript" src="/assets/embed/image.js"></script>
 {% endblock %}
-
-{% block styles %}
-    {#<style>
-        #embed-content{
-            margin: 0 auto;
-        }
-    </style>#}
-{% endblock %}
 {% block content %}
     <img id="embed-image" class="embed-resource" src="{{embedMedia.url}}" alt="{{ local_title }}">
 {% endblock %}
