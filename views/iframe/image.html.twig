@@ -1,0 +1,30 @@
+{% extends "@alchemy_embed/iframe/layout.html.twig" %}
+{% set local_title = embedMedia.title %}
+{% block footerScripts %}
+    <script>
+        var envConfiguration = (function () {
+            return {
+                locale: '{{app.locale}}',
+                resource: {
+                    width: {{embedMedia.dimensions.width}},
+                    height: {{embedMedia.dimensions.height}},
+                    fitIn: true, // force fit in window
+                    aspectRatio: '{{ embedMedia.dimensions.width }}:{{ embedMedia.dimensions.height }}'
+                }
+            };
+        })();
+    </script>
+    <script type="text/javascript" src="/assets/embed/common.js"></script>
+    <script type="text/javascript" src="/assets/embed/image.js"></script>
+{% endblock %}
+
+{% block styles %}
+    {#<style>
+        #embed-content{
+            margin: 0 auto;
+        }
+    </style>#}
+{% endblock %}
+{% block content %}
+    <img id="embed-image" class="embed-resource" src="{{embedMedia.url}}" alt="{{ local_title }}">
+{% endblock %}

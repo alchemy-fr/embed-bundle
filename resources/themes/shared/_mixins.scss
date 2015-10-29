@@ -1,0 +1,40 @@
+@mixin fontProperties($fontFamily: $primaryFontFamily, $color: #F5F5FF) {
+  font-family: $fontFamily;
+  color: $color;
+}
+
+@mixin alpha-background-color($color, $background) {
+    $percent: alpha($color) * 100%;
+    $opaque: opacify($color, 1);
+    $solid-color: mix($opaque, $background, $percent);
+    background-color: $solid-color;
+    background-color: $color;
+}
+
+@mixin customScrollBar($trackColor: #F5F5FF, $handleColor: #3b3b3b) {
+  ::-webkit-scrollbar-track
+  {
+    border-radius: 0;
+    background-color: $trackColor;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    border-radius: 0;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 0;
+    width: 3px;
+    background-color: $handleColor;
+  }
+
+  ::-webkit-scrollbar-button {
+    width: 0;
+    height: 0;
+    display: none;
+  }
+  ::-webkit-scrollbar-corner {
+    background-color: transparent;
+  }
+}

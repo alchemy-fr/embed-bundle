@@ -10,10 +10,10 @@
 namespace Alchemy\Embed\Controller;
 
 use Alchemy\Phrasea\Application;
-use Alchemy\Phrasea\Controller\BaseController as PhraseaController;
+use Alchemy\Phrasea\Controller\AbstractDelivery;
 
 
-abstract class BaseController extends PhraseaController
+abstract class BaseController extends AbstractDelivery
 {
 
 }

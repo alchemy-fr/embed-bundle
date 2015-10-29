@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="{{ app['locale'] }}">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>{% if local_title is defined%}{{local_title}}{% endif %}</title>
+    <link type="text/css" rel="stylesheet" href="{{ path('minifier', { 'f' : 'skins/common/main.css' }) }}">
+    <link type="text/css" rel="stylesheet" href="/assets/embed/theme/main.css">
+    <link rel="alternate" href="{{ oembedUrl }}?url={{ app.request.uri }}" type="application/json+oembed" title="{% if local_title is defined%}{{local_title}}{% endif %}">
+    {% block stylesheet %}{% endblock %}
+    {% block icon %}{% endblock %}
+    {% block rss %}{% endblock %}
+    {% block styles %}{% endblock %}
+    <script type="text/javascript" src="{{ path('minifier', { 'f' : 'assets/jquery/jquery.js' }) }}"></script>
+    {% block javascript %}{% endblock %}
+
+</head>
+<body>
+<div id="wrapper">
+    <div id="embed-content">
+        {% block content %}{% endblock %}
+    </div>
+</div>
+{% block footerScripts %}{% endblock %}
+</body>
+</html>

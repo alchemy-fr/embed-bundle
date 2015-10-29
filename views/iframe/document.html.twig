@@ -1,0 +1,47 @@
+{% extends "@alchemy_embed/iframe/layout.html.twig" %}
+{% set local_title = embedMedia.title %}
+{% block footerScripts %}
+    <script>
+        var envConfiguration = (function () {
+            return {
+                locale: '{{app.locale}}',
+                resource: {
+                    width: {{embedMedia.dimensions.width}},
+                    height: {{embedMedia.dimensions.height}},
+                    fitIn: true, // force fit in window
+                    aspectRatio: '{{ embedMedia.dimensions.width }}:{{ embedMedia.dimensions.height }}'
+                }
+            };
+        })();
+    </script>
+    <script type="text/javascript" src="{{ path('minifier', { 'f' : 'assets/swfobject/swfobject.js' }) }}"></script>
+    <script type="text/javascript" src="/assets/embed/common.js"></script>
+    <script type="text/javascript" src="/assets/embed/document.js"></script>
+
+
+    <script type="text/javascript">
+        swfobject.embedSWF(
+            "/include/FlexPaper_flash/FlexPaperViewer.swf",
+            "embed-document",
+            "100%", "100%", "9.0.0", false, false, {
+                menu: "false",
+                flashvars: "SwfFile={{embedMedia.url}}&Scale=0.6&ZoomTransition=easeOut&ZoomTime=0.5&ZoomInterval=0.1&FitPageOnLoad=true&FitWidthOnLoad=true&PrintEnabled=true&FullScreenAsMaxWindow=false&localeChain={{app.locale}}",
+                movie: "/include/FlexPaper_flash/FlexPaperViewer.swf",
+                allowFullScreen :"true",
+                wmode: "transparent"
+            }, false
+        );
+    </script>
+{% endblock %}
+
+{% block styles %}
+    <style>
+        #embed-content * {
+            position: absolute;
+            top:0;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <div id="embed-document"></div>
+{% endblock %}

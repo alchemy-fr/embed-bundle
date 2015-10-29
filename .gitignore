@@ -1,2 +1,6 @@
 vendor/
 tests/output
+bower_components/
+node_modules/
+.sass-cache/
+.tmp/

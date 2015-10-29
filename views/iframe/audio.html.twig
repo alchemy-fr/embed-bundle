@@ -1,0 +1,38 @@
+{% extends "@alchemy_embed/iframe/layout.html.twig" %}
+{% set local_title = embedMedia.title %}
+{% block footerScripts %}
+    <script>
+        var envConfiguration = (function () {
+            return {
+                locale: '{{app.locale}}',
+                resource: {
+                    width: {{embedMedia.dimensions.width}},
+                    height: {{embedMedia.dimensions.height}},
+                    fitIn: true, // force fit in window
+                    aspectRatio: '{{ embedMedia.dimensions.width }}:{{ embedMedia.dimensions.height }}'
+                }
+            };
+        })();
+    </script>
+    {#<script type="text/javascript" src="{{ path('minifier', { 'f' : 'assets/swfobject/swfobject.js' }) }}"></script>#}
+    <script type="text/javascript" src="/assets/embed/common.js"></script>
+    <script type="text/javascript" src="/assets/embed/audio.js"></script>
+    {#<script type="text/javascript">
+    swfobject.embedSWF("/include/jslibs/audio-player/player.swf",
+            "embed-audio",
+            "{{embedMedia.dimensions.width}}", "{{embedMedia.dimensions.height}}", "9.0.0", false, false,
+            {menu: "false",flashvars: "playerID=2&autostart=yes&noinfo=yes&animation=no&remaining=yes&soundFile={{embedMedia.url}}",
+                movie: "/include/jslibs/audio-player/player.swf",  allowFullScreen :"true",wmode: "transparent"}, false);
+    </script>#}
+{% endblock %}
+{% block content %}
+    {#<div id="embed-audio"></div>#}
+    <audio id="embed-audio" class="embed-resource video-js vjs-default-skin vjs-big-play-centered" controls
+           preload="auto" width="100%" height="100%" poster="{{ embedMedia.coverUrl }}"
+    >
+        {#<source src="{{embedMedia.url}}" type='audio/mp3'>#}
+        {% for source in  embedMedia.source %}
+            <source src="{{source.url}}" type="{{source.type}}">
+        {% endfor %}
+    </audio>
+{% endblock %}
