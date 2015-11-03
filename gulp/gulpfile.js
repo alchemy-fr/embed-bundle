@@ -17,7 +17,9 @@ gulp.task('watchOverall', ['clean:tmp'], function () {
     gulp.start('watchin');
 
 });
-
+gulp.task('deploy', function () {
+    gulp.start('build');
+});
 gulp.task('build', ['clean:tmp'], function () {
     if( conf.checkDistPath() === false ) {
         return;

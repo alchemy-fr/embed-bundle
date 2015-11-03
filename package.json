@@ -34,5 +34,8 @@
     "video.js": "^5.0.2",
     "webpack": "^1.12.2",
     "wrench": "^1.5.8"
+  },
+  "scripts": {
+    "postinstall": "node_modules/.bin/bower install && node_modules/.bin/gulp deploy;"
   }
 }
