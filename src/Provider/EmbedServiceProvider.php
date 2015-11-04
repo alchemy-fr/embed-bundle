@@ -46,10 +46,10 @@ class EmbedServiceProvider implements ServiceProviderInterface, ControllerProvid
           ->assert('record_id', '\d+');
 
         // http://phraseanet-php55-nginx/index_dev.php/embed/1/46/preview/FTV_VOEUX2015_BD_preview.mp4?token=rxszUQMMQDFPs1xAsvrz2sHzduUnvieYsSbG6XoEYFAJAo34EEsjMP8CRaJceUKY
-        $controllers->get('/{sbas_id}/{record_id}/{subdefName}', 'alchemy_embed.controller.embed:viewAction')
+        $controllers->get('/{sbas_id}/{record_id}/{subdefName}/', 'alchemy_embed.controller.embed:viewAction')
           ->bind('alchemy_embed_view');
 
-        $controllers->match('/{sbas_id}/{record_id}/{subdefName}', 'alchemy_embed.controller.embed:optionsAction')
+        $controllers->match('/{sbas_id}/{record_id}/{subdefName}/', 'alchemy_embed.controller.embed:optionsAction')
           ->method('OPTIONS');
 
 

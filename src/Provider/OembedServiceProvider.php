@@ -35,22 +35,6 @@ class OembedServiceProvider implements ServiceProviderInterface, ControllerProvi
 
         $controllers
           ->get('/', 'alchemy_embed.controller.oembed:indexAction');
-          // ->bind('alchemy_oembed_index');
-/*
-
-        $controllers
-          ->assert('sbas_id', '\d+')
-          ->assert('record_id', '\d+');
-
-        $controllers->get('/{sbas_id}/{record_id}/{subdefName}/{label}', 'alchemy_embed.controller.embed:viewAction')
-          ->bind('alchemy_embed_view');
-
-        $controllers->match('/{sbas_id}/{record_id}/{subdefName}/{label}', 'alchemy_embed.controller.embed:optionsAction')
-          ->method('OPTIONS');
-        */
-
-        // http://phraseanet-php55-nginx/index_dev.php/oembed/?url=http%3A%2F%2Fphraseanet-php55-nginx%2Findex_dev.php%2Fembed%2F1%2F46%2Fpreview%2FFTV_VOEUX2015_BD_preview.mp4%3Ftoken%3DrxszUQMMQDFPs1xAsvrz2sHzduUnvieYsSbG6XoEYFAJAo34EEsjMP8CRaJceUKY
-
 
         return $controllers;
     }
