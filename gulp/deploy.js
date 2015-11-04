@@ -32,7 +32,8 @@ gulp.task('deploy:external-vendors', ['deploy:minify:vendors'],function() {
     var extVendors = [
         path.join('./node_modules', 'jquery', 'dist', 'jquery.min.js'),
         path.join('./node_modules', 'respond.js', 'dest', 'respond.min.js'),
-        path.join('./node_modules', 'es5-shim','es5-shim.min.js')
+        path.join('./node_modules', 'es5-shim','es5-shim.min.js'),
+        path.join('./node_modules', 'video.js', 'dist', 'video-js.swf')
     ];
     return gulp.src(extVendors)
         .pipe(gulp.dest(path.join(conf.paths.dist, 'lib')))

@@ -35,8 +35,6 @@ export default class Embed {
                 container: this.$embedContainer,
                 resizeOnWindowChange: this.configService.get('resource.fitIn') === true , true : false,
                 resizeCallback: (dimensions) => {
-                    console.log('has been resized', dimensions);
-
                     this.$embedContainer.find('> div').css({width: dimensions.width, height: dimensions.height});
                 }
             });
@@ -64,7 +62,10 @@ export default class Embed {
             options.aspectRatio = this.configService.get('resource.aspectRatio');
         }
 
-        console.log('video init with', options);
+        options.techOrder = ['html5', 'flash'];
+        (<any>options).flash = {
+            swf: '/assets/embed/lib/video-js.swf'
+        };
 
         let player: VideoJSPlayer = this.initVideo('embed-video', options, function() {
             // if( this.configService.get('resource.autoplay') === true) {
