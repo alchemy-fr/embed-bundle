@@ -1,4 +1,13 @@
 <?php
+/*
+ * This file is part of Phraseanet
+ *
+ * (c) 2005-2015 Alchemy
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Alchemy\EmbedProvider;
 
 use Alchemy\Embed\Oembed\OembedController;
@@ -16,6 +25,7 @@ class OembedServiceProvider implements ServiceProviderInterface, ControllerProvi
     {
         $app['alchemy_embed.controller.oembed'] = $app->share(
           function (Application $app) {
+
               return (new OembedController($app, $app->getApplicationBox(), $app['acl'], $app->getAuthenticator()))
                 ->setDataboxLoggerLocator($app['phraseanet.logger'])
                 ->setDelivererLocator(new LazyLocator($app, 'phraseanet.file-serve'));

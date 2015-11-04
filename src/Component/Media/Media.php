@@ -1,23 +1,37 @@
 <?php
+/*
+ * This file is part of Phraseanet
+ *
+ * (c) 2005-2015 Alchemy
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Alchemy\Embed\Media;
 
 use Alchemy\Phrasea\Application;
+use Alchemy\Phrasea\Authentication\ACLProvider;
+use Alchemy\Phrasea\Authentication\Authenticator;
+use Alchemy\Phrasea\Controller\AbstractDelivery;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class Media
+class Media extends AbstractDelivery
 {
+    /** @var ACLProvider */
+    private $acl;
+    /** @var \appbox */
+    private $appbox;
+    /** @var Authenticator */
+    private $authentication;
 
-    /** @var Application */
-    protected $app;
-
-    /**
-     * Media constructor.
-     * @param Application $app
-     */
-    public function __construct(Application $app)
+    public function __construct(Application $app, \appbox $appbox, ACLProvider $acl, Authenticator $authenticator)
     {
-        $this->app = $app;
+        parent::__construct($app);
+
+        $this->appbox = $appbox;
+        $this->acl = $acl;
+        $this->authentication = $authenticator;
     }
 
     /**

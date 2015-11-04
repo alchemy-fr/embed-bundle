@@ -1,4 +1,12 @@
 <?php
+/*
+ * This file is part of Phraseanet
+ *
+ * (c) 2005-2015 Alchemy
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Alchemy\Embed\Oembed;
 
@@ -17,6 +25,8 @@ class OembedController extends BaseController
     private $appbox;
     /** @var Authenticator */
     private $authentication;
+    /** @var Media */
+    private $mediaService;
 
     /**
      * OembedController constructor.
@@ -32,6 +42,7 @@ class OembedController extends BaseController
         $this->appbox = $appbox;
         $this->acl = $acl;
         $this->authentication = $authenticator;
+        $this->mediaService = new Media($this->app, $this->app->getApplicationBox(), $this->app['acl'], $this->app->getAuthenticator());
     }
 
     /**
@@ -51,9 +62,8 @@ class OembedController extends BaseController
         $databox = $this->getDatabox($resourceParams['sbas_id']);
         $token = $urlRequest->get('token');
 
-        $media = new Media($this->app);
-        $record = $media->retrieveRecord($databox, $token, $resourceParams['record_id'], $resourceParams['subdefName']);
-        $metaDatas = $media->getMetaDatas($record, $resourceParams['subdefName']);
+        $record = $this->mediaService->retrieveRecord($databox, $token, $resourceParams['record_id'], $resourceParams['subdefName']);
+        $metaDatas = $this->mediaService->getMetaDatas($record, $resourceParams['subdefName']);
 
 
         $exportMetas = [

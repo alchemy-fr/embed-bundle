@@ -1,4 +1,12 @@
 <?php
+/*
+ * This file is part of Phraseanet
+ *
+ * (c) 2005-2015 Alchemy
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Alchemy\Embed\Embed;
 
@@ -19,6 +27,8 @@ class EmbedController extends BaseController
     private $appbox;
     /** @var Authenticator */
     private $authentication;
+    /** @var Media */
+    private $mediaService;
 
     public function __construct(Application $app, \appbox $appbox, ACLProvider $acl, Authenticator $authenticator)
     {
@@ -27,6 +37,7 @@ class EmbedController extends BaseController
         $this->appbox = $appbox;
         $this->acl = $acl;
         $this->authentication = $authenticator;
+        $this->mediaService = new Media($this->app, $this->app->getApplicationBox(), $this->app['acl'], $this->app->getAuthenticator());
     }
 
     public function testIframeAction(Request $request, $sbas_id, $record_id, $subdefName)
@@ -69,9 +80,8 @@ class EmbedController extends BaseController
         // $request->query->get('displayMode')
         $displayModeViewPath = 'iframe';
 
-        $media = new Media($this->app);
-        $record = $media->retrieveRecord($databox, $token, $record_id, $subdefName);
-        $metaDatas = $media->getMetaDatas($record, $subdefName);
+        $record = $this->mediaService->retrieveRecord($databox, $token, $record_id, $subdefName);
+        $metaDatas = $this->mediaService->getMetaDatas($record, $subdefName);
 
         switch ($record->getType()) {
             case 'video':
