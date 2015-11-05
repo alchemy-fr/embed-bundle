@@ -4,11 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "node_modules/.bin/bower install && node_modules/.bin/gulp deploy;"
   },
   "author": "",
   "license": "",
   "devDependencies": {
+    "bower": "^1.6.5",
     "gulp": "~3.9.0",
     "ts-loader": "~0.5.4",
     "typescript": "~1.5.3"
@@ -34,8 +35,5 @@
     "video.js": "^5.0.2",
     "webpack": "^1.12.2",
     "wrench": "^1.5.8"
-  },
-  "scripts": {
-    "postinstall": "node_modules/.bin/bower install && node_modules/.bin/gulp deploy;"
   }
 }
