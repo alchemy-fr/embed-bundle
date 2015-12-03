@@ -1,0 +1,1 @@
+webpackJsonp([2],[function(n,e,t){"use strict";t(1);var u=function(){function n(){}return n}();e["default"]=u,window.embedPlugin=new u}]);

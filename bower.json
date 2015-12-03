@@ -1,5 +1,5 @@
 {
-  "name": "embed-bundle",
+  "name": "alchemy-embed-medias",
   "version": "1.0.0",
   "authors": [
     "Florian BLOUET <florian.blouet@gmail.com>"
@@ -9,11 +9,15 @@
     "**/.*",
     "node_modules",
     "bower_components",
-    "www/assets",
+    "gulp",
+    "src",
+    "resources",
+    "views",
     "test",
     "tests"
   ],
   "dependencies": {
+    "jquery": ">=1.11.0",
     "modernizr": "~2.6.2",
     "html5shiv": "~3.7.3"
   }

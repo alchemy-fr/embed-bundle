@@ -19,7 +19,7 @@ gulp.task('styles', function (done) {
         .pipe(sourcemaps.init())
         .pipe(sass(sassOptions)).on('error', conf.errorHandler('Sass')) // sass.logError
         .pipe(autoprefixer()).on('error', conf.errorHandler('Autoprefixer'))
-        .pipe(concat('pluginView.css'))
+        .pipe(concat('embed.css'))
         .pipe(importCss())
         .pipe(sourcemaps.write())
         .pipe(gulp.dest(path.join(conf.paths.tmp)))

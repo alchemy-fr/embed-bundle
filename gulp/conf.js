@@ -5,7 +5,7 @@ var configPaths = {
     src: './resources',
     tmp: './.tmp',
     deployParent: '../../../www/assets',
-    dist: '../../../www/assets/embed',
+    dist: './dist',
     baseClientConfig: 'resources/themes/default',
     useClientConfig: 'your custom folder here'
 };

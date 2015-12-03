@@ -21,17 +21,19 @@ gulp.task('deploy:copy-styles', function(){
 
 
 gulp.task('deploy:minify:vendors', function() {
+    /*
     var extVendors = [
         path.join('./bower_components', 'modernizr', 'modernizr.js')
     ];
     return gulp.src(extVendors)
         .pipe(uglify())
-        .pipe(gulp.dest(path.join(conf.paths.dist, 'lib')))
+        .pipe(gulp.dest(path.join(conf.paths.dist, 'lib')));
+    */
 });
 gulp.task('deploy:external-vendors', ['deploy:minify:vendors'],function() {
     var extVendors = [
-        path.join('./node_modules', 'jquery', 'dist', 'jquery.min.js'),
-        path.join('./node_modules', 'respond.js', 'dest', 'respond.min.js'),
+        // path.join('./node_modules', 'jquery', 'dist', 'jquery.min.js'),
+        // path.join('./node_modules', 'respond.js', 'dest', 'respond.min.js'),
         path.join('./node_modules', 'es5-shim','es5-shim.min.js'),
         path.join('./node_modules', 'video.js', 'dist', 'video-js.swf')
     ];
