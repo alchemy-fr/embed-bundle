@@ -25,10 +25,12 @@
     "gulp-util": "^3.0.7",
     "ts-loader": "~0.5.4",
     "typescript": "~1.5.3",
+    "underscore-template-loader": "^0.5.2",
     "webpack": "^1.12.2",
     "wrench": "^1.5.8"
   },
   "dependencies": {
+    "flowplayer": "^6.0.4",
     "jquery": "~1.11.3",
     "lodash.merge": "^3.3.2",
     "screenfull": "^2.0.0",

@@ -239,4 +239,13 @@ class Media extends AbstractDelivery
 
         throw new NotFoundHttpException('Wrong token.');
     }
+
+    /**
+     * @param int $databoxId
+     * @return \databox
+     */
+    public function getDatabox($databoxId)
+    {
+        return $this->appbox->get_databox((int)$databoxId);
+    }
 }

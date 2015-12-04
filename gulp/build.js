@@ -14,7 +14,6 @@ gulp.task('hbs-tpl', function(){
 
 gulp.task('webpack:build', ['styles', 'hbs-tpl'], function(callback) {
     gulp.start('deploy:copy-styles');
-    //gulp.start('deploy:assets')
     // modify some webpack config options
     var myConfig = Object.create(webpackConfig);
     myConfig.plugins = myConfig.plugins.concat(
@@ -49,7 +48,6 @@ gulp.task('webpack:build-dev', [
     var devCompiler = webpack(devConfig);
 
     gulp.start('deploy:copy-styles-dev');
-    // gulp.start('deploy:assets');
     // run webpack
     devCompiler.run(function(err, stats) {
         if(err) throw new gutil.PluginError("webpack:build-dev", err);

@@ -1,34 +1,37 @@
-/// <reference path="./embed.d.ts" />
+/// <reference path="../../../embed/embed.d.ts" />
 /**
  * Entry point for Embed Videos
  */
 
 require('html5shiv');
 (<any>window).HELP_IMPROVE_VIDEOJS = false;
-let videojs = require('../../node_modules/video.js/dist/video.js');
+let videojs = require('../../../../node_modules/video.js/dist/video.js');
 
 import * as $ from 'jquery';
 import * as _ from 'underscore';
-import ConfigService from '../components/embed/config/service';
-import ResizeEl from '../components/utils/resizeEl';
+import ConfigService from '../../embed/config/service';
+import ResizeEl from '../../utils/resizeEl';
+let playerTemplate:any = require('./player.html');
 
-export default class Embed {
+export default class VideoPlayer {
     private configService;
     private resourceOriginalWidth;
     private resourceOriginalHeight;
     private $embedContainer;
     private $embedResource;
     private resizer;
+    private $videoContainer;
     constructor() {
         this.configService = new ConfigService();
 
         $(document).ready(() => {
+            this.$videoContainer =  $('.video-player');
+            this.$videoContainer.append(playerTemplate( this.configService.get('resource') ));
+
             this.$embedContainer = $('#embed-content');
             this.$embedResource = $('#embed-video');
             this.resourceOriginalWidth = this.configService.get('resource.width');
             this.resourceOriginalHeight = this.configService.get('resource.height');
-
-
 
             this.resizer = new ResizeEl({
                 target: this.$embedResource,
@@ -47,16 +50,16 @@ export default class Embed {
                 height: this.resourceOriginalHeight
             });
             this.resizer.resize();
+
             this.setupVideo();
         });
-
-
     }
+
     setupVideo() {
         let aspectRatio = this.configService.get('resource.aspectRatio'),
             options: VideoJSOptions = {
-                fluid: true
-            };
+            fluid: true
+        };
 
         if( this.configService.get('resource.aspectRatio') !== null ) {
             options.aspectRatio = this.configService.get('resource.aspectRatio');
@@ -64,12 +67,12 @@ export default class Embed {
 
         options.techOrder = ['html5', 'flash'];
         (<any>options).flash = {
-            swf: '/assets/embed/lib/video-js.swf'
+            swf: '/assets/embed/players/videojs/video-js.swf'
         };
 
         let player: VideoJSPlayer = this.initVideo('embed-video', options, function() {
             // if( this.configService.get('resource.autoplay') === true) {
-                // this.play();
+            // this.play();
             // }
             // this.on('ended', function() {});
         });
@@ -78,4 +81,4 @@ export default class Embed {
         return (<any>videojs).apply(this, args);
     }
 }
-(<any>window).embedPlugin = new Embed();
+(<any>window).embedPlugin = new VideoPlayer();

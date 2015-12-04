@@ -1,5 +1,9 @@
 {% extends "@alchemy_embed/iframe/layout.html.twig" %}
 {% set local_title = embedMedia.title %}
+{% block stylesheet %}
+    <link type="text/css" rel="stylesheet" href="/assets/vendors/alchemy-embed-medias/players/videojs/skin/videojs.css">
+    {#<link type="text/css" rel="stylesheet" href="/assets/vendors/alchemy-embed-medias/players/flowplayer/skin/flowplayer.css">#}
+{% endblock %}
 {% block javascript %}{% endblock %}
 {% block footerScripts %}
 <script>
@@ -11,24 +15,20 @@
                 height: {{embedMedia.dimensions.height}},
                 autoplay: false,
                 fitIn: true, // force video to downScale / upscale
-                aspectRatio: '{{ embedMedia.dimensions.width }}:{{ embedMedia.dimensions.height }}'
+                aspectRatio: '{{ embedMedia.dimensions.width }}:{{ embedMedia.dimensions.height }}',
+                coverUrl: "{{embedMedia.coverUrl}}",
+                sources: [{% for source in  embedMedia.source %}{
+                    url: "{{source.url}}",
+                    type: "{{source.type}}"
+                }{% if not loop.last %},{% endif %}{% endfor %}]
             }
         };
     })();
 </script>
 <script type="text/javascript" src="/assets/vendors/alchemy-embed-medias/common.js"></script>
-<script type="text/javascript" src="/assets/vendors/alchemy-embed-medias/video.js"></script>
+{#<script type="text/javascript" src="/assets/vendors/alchemy-embed-medias/flowplayer.js"></script>#}
+<script type="text/javascript" src="/assets/vendors/alchemy-embed-medias/videojs.js"></script>
 {% endblock %}
 {% block content %}
-<video id="embed-video" class="embed-resource video-js vjs-default-skin vjs-big-play-centered" controls
-       preload="auto" width="100%" height="100%" poster="{{ embedMedia.coverUrl }}">
-    {% for source in  embedMedia.source %}
-        <source src="{{source.url}}" type="{{source.type}}">
-    {% endfor %}
-    <p class="vjs-no-js">
-        To view this video please enable JavaScript, and consider upgrading to a web browser
-        that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-    </p>
-</video>
-
+    <div class="video-player"></div>
 {% endblock %}

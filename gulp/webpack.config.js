@@ -9,7 +9,8 @@ module.exports = {
     entry: {
         image: conf.paths.src + '/embed/image.ts',
         document: conf.paths.src + '/embed/document.ts',
-        video: conf.paths.src + '/embed/video.ts',
+        videojs: conf.paths.src + '/components/players/videojs/player.ts',
+        flowplayer: conf.paths.src + '/components/players/flowplayer/player.ts',
         audio: conf.paths.src + '/embed/audio.ts',
         common: ['jquery', 'underscore', 'html5shiv'],
     },
@@ -25,11 +26,7 @@ module.exports = {
                 test: /imageloaded/,
                 loader: 'imports?define=>false&this=>window'
             },
-            {
-                test: /\.html/,
-                loader: "handlebars-loader" // ?helperDirs[]=" + __dirname + "/resources/hbsHelpers > webpack will
-                // throw error > https://github.com/altano/handlebars-loader/issues/41
-            },
+            { test: /\.html$/, loader: "underscore-template-loader" },
             {test: /\.css$/, loader: "style!css"},
             { test: /\.ts(x?)$/, exclude: /node_modules/, loader: 'babel-loader?loose[]=all!ts-loader' }
         ]
@@ -65,6 +62,9 @@ module.exports = {
          }),*/
         // new webpack.ContextReplacementPlugin(/moment[\/\\]locale/, /en|fr$/),
         // new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en-gb|fr$/),
+        new webpack.ProvidePlugin({
+            _: "underscore"
+        }),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'common',
             // minChunks: Infinity,

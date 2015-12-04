@@ -30,8 +30,8 @@ gulp.task('build', ['clean:tmp'], function () {
     }
     gulp.start('webpack:build');
     gulp.start('deploy:copy-styles');
-    gulp.start('deploy:assets');
-    gulp.start('deploy:external-vendors');
+    //gulp.start('deploy:assets');
+    gulp.start('deploy-vendors');
     gulp.start('themes');
 
 });
@@ -42,8 +42,8 @@ gulp.task('build-dev', ['clean:tmp'], function () {
     }
     gulp.start('webpack:build-dev');
     gulp.start('deploy:copy-styles-dev');
-    gulp.start('deploy:assets');
-    gulp.start('deploy:external-vendors');
+    //gulp.start('deploy:assets');
+    gulp.start('deploy-vendors');
     gulp.start('themes');
 
 });

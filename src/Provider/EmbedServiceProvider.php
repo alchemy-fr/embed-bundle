@@ -11,24 +11,29 @@
 namespace Alchemy\EmbedProvider;
 
 use Alchemy\Embed\Embed\EmbedController;
-use Alchemy\Embed\Oembed\OEmbedController;
+use Alchemy\Embed\Media\Media;
+use Alchemy\Phrasea\Application;
 use Alchemy\Phrasea\Controller\LazyLocator;
-use Silex\Application;
+use Silex\Application as SilexApplication;
 use Silex\ControllerCollection;
 use Silex\ControllerProviderInterface;
 use Silex\ServiceProviderInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Twig_Environment;
 
 class EmbedServiceProvider implements ServiceProviderInterface, ControllerProviderInterface
 {
-    public function register(Application $app)
+    public function register(SilexApplication $app)
     {
         $app['alchemy_embed.controller.embed'] = $app->share(
           function (Application $app) {
-              return (new EmbedController($app, $app->getApplicationBox(), $app['acl'], $app->getAuthenticator()))
+              return (new EmbedController($app, $app->getApplicationBox(), $app['acl'], $app->getAuthenticator(), $app['alchemy_embed.service.media']))
                 ->setDataboxLoggerLocator($app['phraseanet.logger'])
                 ->setDelivererLocator(new LazyLocator($app, 'phraseanet.file-serve'));
+          }
+        );
+
+        $app['alchemy_embed.service.media'] = $app->share(
+          function(Application $app) {
+              return new Media($app, $app->getApplicationBox(), $app['acl'], $app->getAuthenticator());
           }
         );
 
@@ -40,12 +45,12 @@ class EmbedServiceProvider implements ServiceProviderInterface, ControllerProvid
           }));
     }
 
-    public function boot(Application $app)
+    public function boot(SilexApplication $app)
     {
         // Nothing to do.
     }
 
-    public function connect(Application $app)
+    public function connect(SilexApplication $app)
     {
         /** @var ControllerCollection $controllers */
         $controllers = $app['controllers_factory'];

@@ -30,14 +30,14 @@ class EmbedController extends BaseController
     /** @var Media */
     private $mediaService;
 
-    public function __construct(Application $app, \appbox $appbox, ACLProvider $acl, Authenticator $authenticator)
+    public function __construct(Application $app, \appbox $appbox, ACLProvider $acl, Authenticator $authenticator, Media $mediaService)
     {
         parent::__construct($app);
 
         $this->appbox = $appbox;
         $this->acl = $acl;
         $this->authentication = $authenticator;
-        $this->mediaService = new Media($this->app, $this->app->getApplicationBox(), $this->app['acl'], $this->app->getAuthenticator());
+        $this->mediaService = $mediaService;
     }
 
     public function testIframeAction(Request $request, $sbas_id, $record_id, $subdefName)
@@ -53,7 +53,7 @@ class EmbedController extends BaseController
 
     public function optionsAction(Request $request, $sbas_id, $record_id)
     {
-        $databox = $this->getDatabox($sbas_id);
+        $databox = $this->mediaService->getDatabox($sbas_id);
         $token = $request->query->get('token');
         $record = $this->retrieveRecord($databox, $token, $record_id, $request->get('subdef', 'thumbnail'));
 
@@ -74,7 +74,7 @@ class EmbedController extends BaseController
      */
     public function viewAction(Request $request, $sbas_id, $record_id, $subdefName)
     {
-        $databox = $this->getDatabox($sbas_id);
+        $databox = $this->mediaService->getDatabox($sbas_id);
         $token = $request->query->get('token');
         // @TODO - switch mode between iframe and raw embedding:
         // $request->query->get('displayMode')
@@ -103,12 +103,4 @@ class EmbedController extends BaseController
 
     }
 
-    /**
-     * @param int $databoxId
-     * @return \databox
-     */
-    private function getDatabox($databoxId)
-    {
-        return $this->appbox->get_databox((int)$databoxId);
-    }
 }
