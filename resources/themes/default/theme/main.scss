@@ -4,6 +4,8 @@ $asset-theme-path: './assets/images/';
 @import '../../shared/vendors/video-js';
 
 body {
+  margin: 0;
+  padding: 0;
   background-color: #333;
 }
 #embed-content{

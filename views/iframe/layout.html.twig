@@ -9,17 +9,15 @@
 {% for metaKey, metaValue in ogMetaDatas %}
     <meta property="{{ metaKey }}" content="{{ metaValue }}" />
 {% endfor %}
-    <link type="text/css" rel="stylesheet" href="{{ path('minifier', { 'f' : 'skins/common/main.css' }) }}">
-    <link type="text/css" rel="stylesheet" href="/assets/embed/theme/main.css">
+    <link type="text/css" rel="stylesheet" href="/assets/vendors/alchemy-embed-medias/theme/main.css">
     <link rel="alternate" href="{{ oembedUrl }}?url={{ app.request.uri }}" type="application/json+oembed" title="{% if local_title is defined%}{{local_title}}{% endif %}">
 
     {% block stylesheet %}{% endblock %}
     {% block icon %}{% endblock %}
     {% block rss %}{% endblock %}
     {% block styles %}{% endblock %}
-    <script type="text/javascript" src="{{ path('minifier', { 'f' : 'assets/jquery/jquery.js' }) }}"></script>
+    <script type="text/javascript" src="/assets/vendors/jquery/jquery{% if not app.debug %}.min{% endif %}.js"></script>
     {% block javascript %}{% endblock %}
-
 </head>
 <body>
 <div id="wrapper">
