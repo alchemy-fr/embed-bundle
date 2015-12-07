@@ -30,6 +30,7 @@
     "wrench": "^1.5.8"
   },
   "dependencies": {
+    "es5-shim": "^4.3.1",
     "flowplayer": "^6.0.4",
     "jquery": "~1.11.3",
     "lodash.merge": "^3.3.2",

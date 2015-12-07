@@ -1,34 +1,47 @@
 {% extends "@alchemy_embed/iframe/layout.html.twig" %}
 {% set local_title = embedMedia.title %}
 {% block stylesheet %}
+    {% if video_player == 'videojs' %}
     <link type="text/css" rel="stylesheet" href="/assets/vendors/alchemy-embed-medias/players/videojs/skin/videojs.css">
-    {#<link type="text/css" rel="stylesheet" href="/assets/vendors/alchemy-embed-medias/players/flowplayer/skin/flowplayer.css">#}
+    {% else %}
+    <link type="text/css" rel="stylesheet" href="/assets/vendors/alchemy-embed-medias/players/flowplayer/skin/flowplayer.css">
+    {% endif %}
 {% endblock %}
-{% block javascript %}{% endblock %}
+{% block javascript %}
+    {% if video_player == 'videojs' %}
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="/assets/vendors/alchemy-embed-medias/players/videojs/videojs-ie8.js"></script>
+    <![endif]-->
+    {% endif %}
+{% endblock %}
 {% block footerScripts %}
-<script>
-    var envConfiguration = (function () {
-        return {
-            locale: '{{app.locale}}',
-            resource: {
-                width: {{embedMedia.dimensions.width}},
-                height: {{embedMedia.dimensions.height}},
-                autoplay: false,
-                fitIn: true, // force video to downScale / upscale
-                aspectRatio: '{{ embedMedia.dimensions.width }}:{{ embedMedia.dimensions.height }}',
-                coverUrl: "{{embedMedia.coverUrl}}",
-                sources: [{% for source in  embedMedia.source %}{
-                    url: "{{source.url}}",
-                    type: "{{source.type}}"
-                }{% if not loop.last %},{% endif %}{% endfor %}]
-            }
-        };
-    })();
-</script>
-<script type="text/javascript" src="/assets/vendors/alchemy-embed-medias/common.js"></script>
-{#<script type="text/javascript" src="/assets/vendors/alchemy-embed-medias/flowplayer.js"></script>#}
-<script type="text/javascript" src="/assets/vendors/alchemy-embed-medias/videojs.js"></script>
-{% endblock %}
-{% block content %}
+    <script>
+        var envConfiguration = (function () {
+            return {
+                locale: '{{app.locale}}',
+                resource: {
+                    width: {{embedMedia.dimensions.width}},
+                    height: {{embedMedia.dimensions.height}},
+                    autoplay: {{ video_autoplay |json_encode|raw }},
+                    fitIn: true, // force video to downScale / upscale
+                    aspectRatio: '{{ embedMedia.dimensions.width }}:{{ embedMedia.dimensions.height }}',
+                    coverUrl: "{{embedMedia.coverUrl}}",
+                    playbackRates: {{ video_available_speeds|json_encode|raw }},
+                    sources: [{% for source in  embedMedia.source %}{
+                        url: "{{source.url}}",
+                        type: "{{source.type}}"
+                    }{% if not loop.last %},{% endif %}{% endfor %}]
+                }
+            };
+        })();
+    </script>
+    <script type="text/javascript" src="/assets/vendors/alchemy-embed-medias/common.js"></script>
+    {% if video_player == 'videojs' %}
+        <script type="text/javascript" src="/assets/vendors/alchemy-embed-medias/videojs.js"></script>
+    {% else %}
+        <script type="text/javascript" src="/assets/vendors/alchemy-embed-medias/flowplayer.js"></script>
+    {% endif %}
+    {% endblock %}
+    {% block content %}
     <div class="video-player"></div>
 {% endblock %}

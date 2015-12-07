@@ -1,3 +1,4 @@
+dist/*.map
 vendor/
 tests/output
 bower_components/

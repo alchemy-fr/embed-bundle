@@ -12,7 +12,7 @@ module.exports = {
         videojs: conf.paths.src + '/components/players/videojs/player.ts',
         flowplayer: conf.paths.src + '/components/players/flowplayer/player.ts',
         audio: conf.paths.src + '/embed/audio.ts',
-        common: ['jquery', 'underscore', 'html5shiv'],
+        common: ['jquery', 'underscore', 'es5-shim']
     },
     output: {
         path: conf.paths.dist,
@@ -54,14 +54,7 @@ module.exports = {
             includes:           /.*/,
             excludes:           /.*\.scss/, // assume all css will be handled by themes
             searchResolveModulesDirectories: true
-        }),/*new webpack.ResolverPlugin(
-            new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin("bower.json", ["main"])
-        ),*/
-        /*new ExtractTextPlugin('[name].css',{
-         allChunks: true
-         }),*/
-        // new webpack.ContextReplacementPlugin(/moment[\/\\]locale/, /en|fr$/),
-        // new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en-gb|fr$/),
+        }),
         new webpack.ProvidePlugin({
             _: "underscore"
         }),

@@ -13,6 +13,12 @@ import ConfigService from '../../embed/config/service';
 import ResizeEl from '../../utils/resizeEl';
 let playerTemplate:any = require('./player.html');
 
+interface IFlowPlayerOptions {
+    aspectRatio?: any;
+    autoplay?: boolean;
+    speeds?: number[];
+}
+
 export default class VideoPlayer {
     private configService;
     private resourceOriginalWidth;
@@ -36,7 +42,7 @@ export default class VideoPlayer {
             this.resizer = new ResizeEl({
                 target: this.$embedResource,
                 container: this.$embedContainer,
-                resizeOnWindowChange: this.configService.get('resource.fitIn') === true , true : false,
+                resizeOnWindowChange: this.configService.get('resource.fitIn') === true ? true : false,
                 resizeCallback: (dimensions) => {
                     this.$embedContainer.find('> div').css({width: dimensions.width, height: dimensions.height});
                 }
@@ -57,13 +63,22 @@ export default class VideoPlayer {
 
     setupVideo() {
         let aspectRatio = this.configService.get('resource.aspectRatio'),
-            options: VideoJSOptions = {
-            fluid: true
-        };
+            options: IFlowPlayerOptions = {};
 
         if( this.configService.get('resource.aspectRatio') !== null ) {
             options.aspectRatio = this.configService.get('resource.aspectRatio');
         }
+
+        if( this.configService.get('resource.autoplay') !== null ) {
+            options.autoplay = this.configService.get('resource.autoplay');
+        }
+
+        if( this.configService.get('resource.playbackRates') !== null ) {
+            options.speeds = this.configService.get('resource.playbackRates');
+        }
+
+        (<any>options).swf =  '/assets/vendors/alchemy-embed-medias/players/flowplayer/flowplayer.swf';
+        (<any>options).swfHls =  '/assets/vendors/alchemy-embed-medias/players/flowplayer/flowplayerhls.swf';
 
         let player = this.initVideo($('.flowplayer')[0], {
             clip: {

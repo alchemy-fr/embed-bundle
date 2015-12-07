@@ -9,6 +9,7 @@
                     width: {{embedMedia.dimensions.width}},
                     height: {{embedMedia.dimensions.height}},
                     fitIn: true, // force fit in window
+                    autoplay: {{ video_autoplay |json_encode|raw }},
                     aspectRatio: '{{ embedMedia.dimensions.width }}:{{ embedMedia.dimensions.height }}'
                 }
             };

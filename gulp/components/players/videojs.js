@@ -11,11 +11,10 @@ var conf = require('../../conf.js');
 
 gulp.task('deploy-videojs-skin-assets', function() {
     var extVendors = [
-        path.join('./node_modules', 'videojs', 'dist', 'font', '**/!(*.js|*.map|*.css|*.html)'),
-        // path.join('./node_modules', 'videojs', 'dist', 'skin', 'img/*'),
+        path.join('./node_modules', 'video.js', 'dist', 'font', '**/*')
     ];
     return gulp.src(extVendors)
-        .pipe(gulp.dest(path.join(conf.paths.dist, 'players/videojs/skin')))
+        .pipe(gulp.dest(path.join(conf.paths.dist, 'players/videojs/skin/font')))
 });
 
 gulp.task('deploy-videojs-skin', ['deploy-videojs-skin-assets'], function (done) {
@@ -37,7 +36,8 @@ gulp.task('deploy-videojs-skin', ['deploy-videojs-skin-assets'], function (done)
 
 gulp.task('deploy-videojs-assets', function() {
     var extVendors = [
-        path.join('./node_modules', 'video.js', 'dist', 'video-js.swf')
+        path.join('./node_modules', 'video.js', 'dist', 'video-js.swf'),
+        path.join('./node_modules', 'video.js', 'dist', 'ie8', 'videojs-ie8.js')
     ];
     return gulp.src(extVendors)
         .pipe(gulp.dest(path.join(conf.paths.dist, 'players/videojs')))

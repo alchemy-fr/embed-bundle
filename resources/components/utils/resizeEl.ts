@@ -42,10 +42,6 @@ class ResizeEl {
     }
 
     onResizeWindow(width, height) {
-        console.log('ok shoudl resize', {
-            width:  width,
-            height: height
-        })
         this.setContainerDimensions({
             width:  width,
             height: height

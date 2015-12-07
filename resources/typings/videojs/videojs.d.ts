@@ -15,6 +15,7 @@ interface VideoJSOptions {
 	controls?: boolean;
 	src?: string;
 	autoplay?: boolean;
+	playbackRates?: number[];
 	preload?: string;
 	aspectRatio?: string;
 	fluid?: boolean;

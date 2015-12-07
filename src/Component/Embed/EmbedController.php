@@ -98,8 +98,36 @@ class EmbedController extends BaseController
                 $template = 'image.html.twig';
                 break;
         }
+        /*
+         width: {{embedMedia.dimensions.width}},
+                height: {{embedMedia.dimensions.height}},
+                autoplay: "{{ video_options.auto_start }}",
+                fitIn: true, // force video to downScale / upscale
+                aspectRatio: '{{ embedMedia.dimensions.width }}:{{ embedMedia.dimensions.height }}',
+                coverUrl: "{{embedMedia.coverUrl}}",
+                sources: [{% for source in  embedMedia.source %}{
+                    url: "{{source.url}}",
+                    type: "{{source.type}}"
+                }{% if not loop.last %},{% endif %}{% endfor %}]
+        */
 
-        return $this->app['twig']->render('@alchemy_embed/'.$displayModeViewPath.'/'.$template, $metaDatas);
+        // load predefined opts:
+        $config = [
+            'video_autoplay' => false,
+            'video_options' => [
+
+            ],
+            'video_player' => 'videojs',
+            'audio_player' => 'videojs'
+        ];
+        if (isset($this->app['phraseanet.configuration']['embed_bundle'])) {
+            // override default option with phraseanet defined:
+            $config = array_merge($config, $this->app['phraseanet.configuration']['embed_bundle']);
+        }
+
+        $twigOptions = array_merge($config, $metaDatas);
+
+        return $this->app['twig']->render('@alchemy_embed/'.$displayModeViewPath.'/'.$template, $twigOptions);
 
     }
 

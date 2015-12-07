@@ -36,7 +36,7 @@ export default class VideoPlayer {
             this.resizer = new ResizeEl({
                 target: this.$embedResource,
                 container: this.$embedContainer,
-                resizeOnWindowChange: this.configService.get('resource.fitIn') === true , true : false,
+                resizeOnWindowChange: this.configService.get('resource.fitIn') === true ? true : false,
                 resizeCallback: (dimensions) => {
                     this.$embedContainer.find('> div').css({width: dimensions.width, height: dimensions.height});
                 }
@@ -58,6 +58,7 @@ export default class VideoPlayer {
     setupVideo() {
         let aspectRatio = this.configService.get('resource.aspectRatio'),
             options: VideoJSOptions = {
+            playbackRates: [],
             fluid: true
         };
 
@@ -65,9 +66,17 @@ export default class VideoPlayer {
             options.aspectRatio = this.configService.get('resource.aspectRatio');
         }
 
+        if( this.configService.get('resource.autoplay') !== null ) {
+            options.autoplay = this.configService.get('resource.autoplay');
+        }
+
+        if( this.configService.get('resource.playbackRates') !== null ) {
+            options.playbackRates = this.configService.get('resource.playbackRates');
+        }
+
         options.techOrder = ['html5', 'flash'];
         (<any>options).flash = {
-            swf: '/assets/embed/players/videojs/video-js.swf'
+            swf: '/assets/vendors/alchemy-embed-medias/players/videojs/video-js.swf'
         };
 
         let player: VideoJSPlayer = this.initVideo('embed-video', options, function() {
