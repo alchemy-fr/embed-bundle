@@ -74,7 +74,7 @@ class OembedController extends BaseController
           'title' => $record->get_title(),
           'url' => $metaDatas['embedMedia']['url'],
             // 'provider_name'=>'$this->app['request']->',
-          'provider_url' => $this->app['request']->getSchemeAndHttpHost()
+          'provider_url' => $request->getSchemeAndHttpHost()
         ];
 
         if (array_key_exists('html', $metaDatas['oembedMetaDatas'])) {
