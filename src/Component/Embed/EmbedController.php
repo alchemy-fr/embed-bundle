@@ -42,8 +42,12 @@ class EmbedController extends BaseController
 
     public function testIframeAction(Request $request, $sbas_id, $record_id, $subdefName)
     {
-        $baseUrl = $this->app['request']->getSchemeAndHttpHost().$this->app['request']->getBaseUrl();
-        $embedUrl = $baseUrl.'/embed/'.$sbas_id.'/'.$record_id.'/'.$subdefName.'?token='.$request->query->get('token');
+        $embedUrl = $this->app->url('alchemy_embed_view', [
+            'sbas_id' => $sbas_id,
+            'record_id' => $record_id,
+            'subdefName' => $subdefName,
+            'token' => $request->query->get('token'),
+        ]);
         $view = '@alchemy_embed/test/iframe.html.twig';
 
         return $this->app['twig']->render($view, [
