@@ -15,6 +15,7 @@ use Alchemy\Embed\Media\Media;
 use Alchemy\Phrasea\Application;
 use Alchemy\Phrasea\Authentication\ACLProvider;
 use Alchemy\Phrasea\Authentication\Authenticator;
+use record_adapter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -59,7 +60,7 @@ class EmbedController extends BaseController
     {
         $databox = $this->mediaService->getDatabox($sbas_id);
         $token = $request->query->get('token');
-        $record = $this->retrieveRecord($databox, $token, $record_id, $request->get('subdef', 'thumbnail'));
+        $record = $this->mediaService->retrieveRecord($databox, $token, $record_id, $request->get('subdef', 'thumbnail'));
 
         if (null === $record) {
             throw new NotFoundHttpException("Record not found");
@@ -80,12 +81,46 @@ class EmbedController extends BaseController
     {
         $databox = $this->mediaService->getDatabox($sbas_id);
         $token = $request->query->get('token');
-        // @TODO - switch mode between iframe and raw embedding:
-        // $request->query->get('displayMode')
-        $displayModeViewPath = 'iframe';
+
 
         $record = $this->mediaService->retrieveRecord($databox, $token, $record_id, $subdefName);
         $metaDatas = $this->mediaService->getMetaDatas($record, $subdefName);
+
+
+        return $this->renderEmbed($record, $metaDatas);
+    }
+
+    /**
+     * Get record by sbasId, recordId and subdefName
+     * @param Request $request
+     * @return mixed - rendered twig
+     */
+    public function viewDatafileAction(Request $request)
+    {
+        $urlRequest = Request::create($request->get('url'));
+
+        $matchingUrl = $urlRequest->getPathInfo();
+        if (0 === strpos($matchingUrl, $request->getBaseUrl())) {
+            $matchingUrl = substr($matchingUrl, strlen($request->getBaseUrl()));
+        }
+
+        $resourceParams = $this->app['url_matcher']->match($matchingUrl);
+
+        $subdefId = $resourceParams['sbas_id'];
+        $subdefName = $resourceParams['subdef'];
+        $recordId = $resourceParams['record_id'];
+
+        $record = new record_adapter($this->app, $subdefId, $recordId);
+        $metaDatas = $this->mediaService->getMetaDatas($record, $subdefName);
+
+        return $this->renderEmbed($record, $metaDatas);
+    }
+
+    public function renderEmbed($record, $metaDatas)
+    {
+        // @TODO - switch mode between iframe and raw embedding:
+        // $request->query->get('displayMode')
+        $displayModeViewPath = 'iframe';
 
         switch ($record->getType()) {
             case 'video':
@@ -102,28 +137,18 @@ class EmbedController extends BaseController
                 $template = 'image.html.twig';
                 break;
         }
-        /*
-         width: {{embedMedia.dimensions.width}},
-                height: {{embedMedia.dimensions.height}},
-                autoplay: "{{ video_options.auto_start }}",
-                fitIn: true, // force video to downScale / upscale
-                aspectRatio: '{{ embedMedia.dimensions.width }}:{{ embedMedia.dimensions.height }}',
-                coverUrl: "{{embedMedia.coverUrl}}",
-                sources: [{% for source in  embedMedia.source %}{
-                    url: "{{source.url}}",
-                    type: "{{source.type}}"
-                }{% if not loop.last %},{% endif %}{% endfor %}]
-        */
 
         // load predefined opts:
         $config = [
-            'video_autoplay' => false,
-            'video_options' => [
+          'video_autoplay' => false,
+          'video_options' => [
 
-            ],
-            'video_player' => 'videojs',
-            'audio_player' => 'videojs'
+          ],
+          'video_player' => 'videojs',
+          'audio_player' => 'videojs',
+          'document_player' => 'flexpaper'
         ];
+
         if (isset($this->app['phraseanet.configuration']['embed_bundle'])) {
             // override default option with phraseanet defined:
             $config = array_merge($config, $this->app['phraseanet.configuration']['embed_bundle']);
@@ -132,7 +157,6 @@ class EmbedController extends BaseController
         $twigOptions = array_merge($config, $metaDatas);
 
         return $this->app['twig']->render('@alchemy_embed/'.$displayModeViewPath.'/'.$template, $twigOptions);
-
     }
 
 }

@@ -1,16 +1,16 @@
-/// <reference path="../../../embed/embed.d.ts" />
+/// <reference path="../../../../embed/embed.d.ts" />
 /**
- * Entry point for Embed Videos
+ * FlowPlayer Player for Embed Videos
  */
 
 require('html5shiv');
 (<any>window).HELP_IMPROVE_VIDEOJS = false;
-let flowplayer = require('../../../../node_modules/flowplayer/dist/flowplayer.js');
+let flowplayer = require('../../../../../node_modules/flowplayer/dist/flowplayer.js');
 
 import * as $ from 'jquery';
 import * as _ from 'underscore';
-import ConfigService from '../../embed/config/service';
-import ResizeEl from '../../utils/resizeEl';
+import ConfigService from '../../../embed/config/service';
+import ResizeEl from '../../../utils/resizeEl';
 let playerTemplate:any = require('./player.html');
 
 interface IFlowPlayerOptions {

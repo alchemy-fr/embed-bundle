@@ -1,19 +1,19 @@
-/// <reference path="../../../embed/embed.d.ts" />
+/// <reference path="../../../../embed/embed.d.ts" />
 /**
- * Entry point for Embed Videos
+ * VideoJS Player for Embed Audio
  */
 
 require('html5shiv');
 (<any>window).HELP_IMPROVE_VIDEOJS = false;
-let videojs = require('../../../../node_modules/video.js/dist/video.js');
+let videojs = require('../../../../../node_modules/video.js/dist/video.js');
 
 import * as $ from 'jquery';
 import * as _ from 'underscore';
-import ConfigService from '../../embed/config/service';
-import ResizeEl from '../../utils/resizeEl';
+import ConfigService from '../../../embed/config/service';
+import ResizeEl from '../../../utils/resizeEl';
 let playerTemplate:any = require('./player.html');
 
-export default class VideoPlayer {
+export default class AudioPlayer {
     private configService;
     private resourceOriginalWidth;
     private resourceOriginalHeight;
@@ -25,11 +25,11 @@ export default class VideoPlayer {
         this.configService = new ConfigService();
 
         $(document).ready(() => {
-            this.$videoContainer =  $('.video-player');
+            this.$videoContainer =  $('.audio-player');
             this.$videoContainer.append(playerTemplate( this.configService.get('resource') ));
 
             this.$embedContainer = $('#embed-content');
-            this.$embedResource = $('#embed-video');
+            this.$embedResource = $('#embed-audio');
             this.resourceOriginalWidth = this.configService.get('resource.width');
             this.resourceOriginalHeight = this.configService.get('resource.height');
 
@@ -58,8 +58,8 @@ export default class VideoPlayer {
     setupVideo() {
         let aspectRatio = this.configService.get('resource.aspectRatio'),
             options: VideoJSOptions = {
-            playbackRates: [],
-            fluid: true
+            fluid: true,
+            inactivityTimeout: 0 // force control to be alway active
         };
 
         if( this.configService.get('resource.aspectRatio') !== null ) {
@@ -70,16 +70,16 @@ export default class VideoPlayer {
             options.autoplay = this.configService.get('resource.autoplay');
         }
 
-        if( this.configService.get('resource.playbackRates') !== null ) {
+        /*if( this.configService.get('resource.playbackRates') !== null ) {
             options.playbackRates = this.configService.get('resource.playbackRates');
-        }
+        }*/
 
         options.techOrder = ['html5', 'flash'];
         (<any>options).flash = {
             swf: '/assets/vendors/alchemy-embed-medias/players/videojs/video-js.swf'
         };
 
-        let player: VideoJSPlayer = this.initVideo('embed-video', options, function() {
+        let player: VideoJSPlayer = this.initVideo('embed-audio', options, function() {
             // if( this.configService.get('resource.autoplay') === true) {
             // this.play();
             // }
@@ -90,4 +90,4 @@ export default class VideoPlayer {
         return (<any>videojs).apply(this, args);
     }
 }
-(<any>window).embedPlugin = new VideoPlayer();
+(<any>window).embedPlugin = new AudioPlayer();

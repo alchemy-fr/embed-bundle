@@ -1,0 +1,10 @@
+#embed-content * {
+  position: absolute;
+  top: 0;
+}
+
+.document-player {
+  width: 100%;
+  height: 100%;
+}
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uLy4uL3N0ZGluIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLGlCQUNFLGtCQUNBLEtBQU0sQ0FDUCxpQkFFQyxXQUNBLFdBQWEsQ0FDZCIsImZpbGUiOiJmbGV4cGFwZXIuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiI2VtYmVkLWNvbnRlbnQgKiB7XG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgdG9wOjA7XG59XG4uZG9jdW1lbnQtcGxheWVyIHtcbiAgd2lkdGg6IDEwMCU7XG4gIGhlaWdodDogMTAwJTtcbn0iXSwic291cmNlUm9vdCI6Ii9zb3VyY2UvIn0= */

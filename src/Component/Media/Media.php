@@ -87,7 +87,7 @@ class Media extends AbstractDelivery
         $embedMedia = [];
         $oembedMetaDatas = [];
 
-        $substitutionPath = sprintf('/skins/icons/substitution/%s.png',
+        $substitutionPath = sprintf('/assets/common/images/icons/substitution/%s.png',
           str_replace('/', '_', $record->getMimeType())
         );
 

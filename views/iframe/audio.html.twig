@@ -1,5 +1,19 @@
 {% extends "@alchemy_embed/iframe/layout.html.twig" %}
 {% set local_title = embedMedia.title %}
+{% block stylesheet %}
+    {% if audio_player == 'videojs' %}
+        <link type="text/css" rel="stylesheet" href="/assets/vendors/alchemy-embed-medias/players/videojs/skin/videojs.css">
+    {% else %}
+        <link type="text/css" rel="stylesheet" href="/assets/vendors/alchemy-embed-medias/players/flowplayer/skin/flowplayer.css">
+    {% endif %}
+{% endblock %}
+{% block javascript %}
+    {% if audio_player == 'videojs' %}
+        <!--[if lt IE 9]>
+        <script type="text/javascript" src="/assets/vendors/alchemy-embed-medias/players/videojs/videojs-ie8.js"></script>
+        <![endif]-->
+    {% endif %}
+{% endblock %}
 {% block footerScripts %}
     <script>
         var envConfiguration = (function () {
@@ -8,21 +22,27 @@
                 resource: {
                     width: {{embedMedia.dimensions.width}},
                     height: {{embedMedia.dimensions.height}},
-                    fitIn: true, // force fit in window
-                    autoplay: {{ video_autoplay |json_encode|raw }},
-                    aspectRatio: '{{ embedMedia.dimensions.width }}:{{ embedMedia.dimensions.height }}'
+                    autoplay: {{ audio_autoplay |json_encode|raw }},
+                    fitIn: true, // force video to downScale / upscale
+                    aspectRatio: '{{ embedMedia.dimensions.width }}:{{ embedMedia.dimensions.height }}',
+                    coverUrl: "{{embedMedia.coverUrl}}",
+                    playbackRates: {{ video_available_speeds|json_encode|raw }},
+                    sources: [{% for source in  embedMedia.source %}{
+                        url: "{{source.url}}",
+                        type: "{{source.type}}"
+                    }{% if not loop.last %},{% endif %}{% endfor %}]
                 }
             };
         })();
     </script>
     <script type="text/javascript" src="/assets/vendors/alchemy-embed-medias/common.js"></script>
-    <script type="text/javascript" src="/assets/vendors/alchemy-embed-medias/audio.js"></script>
+    {% if audio_player == 'videojs' %}
+        <script type="text/javascript" src="/assets/vendors/alchemy-embed-medias/audio_videojs.js"></script>
+    {% else %}
+        <script type="text/javascript" src="/assets/vendors/alchemy-embed-medias/audio_flowplayer.js"></script>
+    {% endif %}
 {% endblock %}
-{% block content %}
-    <audio id="embed-audio" class="embed-resource video-js vjs-default-skin vjs-big-play-centered" controls
-           preload="auto" width="100%" height="100%" poster="{{ embedMedia.coverUrl }}">
-        {% for source in  embedMedia.source %}
-            <source src="{{source.url}}" type="{{source.type}}">
-        {% endfor %}
-    </audio>
+    {% block content %}
+        <div class="audio-player"></div>
+
 {% endblock %}

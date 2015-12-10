@@ -3,7 +3,7 @@ var gulp = require('gulp');
 var path = require('path');
 var conf = require('./conf.js');
 
-gulp.task('watchin', ['webpack:build-dev'], function () {
+gulp.task('watch', ['webpack:build-dev'], function () {
     gulp.watch([path.join(conf.paths.src, '/**/*.scss'), path.join('!'+conf.paths.src, 'themes/**/*')], function() {
         gulp.start('deploy:styles-dev');
     });

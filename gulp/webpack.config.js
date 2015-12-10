@@ -8,10 +8,10 @@ module.exports = {
     cache: true,
     entry: {
         image: conf.paths.src + '/embed/image.ts',
-        document: conf.paths.src + '/embed/document.ts',
-        videojs: conf.paths.src + '/components/players/videojs/player.ts',
-        flowplayer: conf.paths.src + '/components/players/flowplayer/player.ts',
-        audio: conf.paths.src + '/embed/audio.ts',
+        video_videojs: conf.paths.src + '/components/players/video/videojs/player.ts',
+        video_flowplayer: conf.paths.src + '/components/players/video/flowplayer/player.ts',
+        audio_videojs: conf.paths.src + '/components/players/audio/videojs/player.ts',
+        document_flexpaper: conf.paths.src + '/components/players/document/flexpaper/player.ts',
         common: ['jquery', 'underscore', 'es5-shim']
     },
     output: {
