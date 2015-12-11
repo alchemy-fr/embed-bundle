@@ -33,6 +33,10 @@ gulp.task('deploy-flexpaper-assets', function() {
         .pipe(gulp.dest(path.join(conf.paths.dist, 'players/flexpaper')))
 });
 
+gulp.task('watch-flexpaper-css', function() {
+    return gulp.watch(path.join(conf.paths.src, 'components/players/document/flexpaper/styles/**/*.scss'), ['deploy-flexpaper-skin']);
+});
+
 gulp.task('deploy-flexpaper', function() {
     gulp.start('deploy-flexpaper-assets');
     gulp.start('deploy-flexpaper-skin');

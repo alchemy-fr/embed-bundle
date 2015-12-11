@@ -18,27 +18,28 @@ export default class VideoPlayer {
     private resourceOriginalWidth;
     private resourceOriginalHeight;
     private $embedContainer;
-    private $embedResource;
+    private $embedVideoResource;
     private resizer;
-    private $videoContainer;
+    private $playerContainer;
     constructor() {
         this.configService = new ConfigService();
 
         $(document).ready(() => {
-            this.$videoContainer =  $('.video-player');
-            this.$videoContainer.append(playerTemplate( this.configService.get('resource') ));
+            this.$playerContainer =  $('.video-player');
+            this.$playerContainer.append(playerTemplate( this.configService.get('resource') ));
 
             this.$embedContainer = $('#embed-content');
-            this.$embedResource = $('#embed-video');
+            this.$embedVideoResource = $('#embed-video');
             this.resourceOriginalWidth = this.configService.get('resource.width');
             this.resourceOriginalHeight = this.configService.get('resource.height');
 
             this.resizer = new ResizeEl({
-                target: this.$embedResource,
+                target: this.$embedVideoResource,
                 container: this.$embedContainer,
                 resizeOnWindowChange: this.configService.get('resource.fitIn') === true ? true : false,
                 resizeCallback: (dimensions) => {
-                    this.$embedContainer.find('> div').css({width: dimensions.width, height: dimensions.height});
+                    this.$playerContainer.css({width: dimensions.width, height: dimensions.height});
+                    this.$playerContainer.find('> div').css({width: dimensions.width, height: dimensions.height});
                 }
             });
             this.resizer.setContainerDimensions({
@@ -75,17 +76,30 @@ export default class VideoPlayer {
         }
 
         options.techOrder = ['html5', 'flash'];
+
         (<any>options).flash = {
             swf: '/assets/vendors/alchemy-embed-medias/players/videojs/video-js.swf'
         };
 
-        let player: VideoJSPlayer = this.initVideo('embed-video', options, function() {
-            // if( this.configService.get('resource.autoplay') === true) {
-            // this.play();
-            // }
-            // this.on('ended', function() {});
+        let player: VideoJSPlayer = this.initVideo('embed-video', options, () => {
+
+            let metadatas = player.on('loadedmetadata', () => {
+
+                let videoWidth = this.$embedVideoResource[0].videoWidth,
+                    videoHeight = this.$embedVideoResource[0].videoHeight;
+
+                if (videoWidth > 0 && videoHeight > 0) {
+                    this.resizer.setTargetDimensions({
+                        width: videoWidth,
+                        height: videoHeight
+                    });
+                    this.resizer.resize();
+                }
+            });
+
         });
     }
+
     initVideo(...args): VideoJSPlayer {
         return (<any>videojs).apply(this, args);
     }

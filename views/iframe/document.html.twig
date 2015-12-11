@@ -3,6 +3,8 @@
 {% block stylesheet %}
     {% if document_player == 'flexpaper' %}
         <link type="text/css" rel="stylesheet" href="/assets/vendors/alchemy-embed-medias/players/flexpaper/skin/flexpaper.css">
+    {% elseif document_player == 'pdfjs' %}
+        <link type="text/css" rel="stylesheet" href="/assets/vendors/alchemy-embed-medias/players/pdfjs/skin/pdfjs.css">
     {% endif %}
 {% endblock %}
 {% block footerScripts %}
@@ -24,6 +26,8 @@
     <script type="text/javascript" src="/assets/vendors/alchemy-embed-medias/common.js"></script>
     {% if document_player == 'flexpaper' %}
         <script type="text/javascript" src="/assets/vendors/alchemy-embed-medias/document_flexpaper.js"></script>
+    {% elseif document_player == 'pdfjs' %}
+        <script type="text/javascript" src="/assets/vendors/alchemy-embed-medias/document_pdfjs.js"></script>
     {% endif %}
 {% endblock %}
 {% block content %}

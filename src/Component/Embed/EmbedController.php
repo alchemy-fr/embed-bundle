@@ -121,23 +121,6 @@ class EmbedController extends BaseController
         // @TODO - switch mode between iframe and raw embedding:
         // $request->query->get('displayMode')
         $displayModeViewPath = 'iframe';
-
-        switch ($record->getType()) {
-            case 'video':
-                $template = 'video.html.twig';
-                break;
-            case 'flexpaper':
-            case 'document':
-                $template = 'document.html.twig';
-                break;
-            case 'audio':
-                $template = 'audio.html.twig';
-                break;
-            default:
-                $template = 'image.html.twig';
-                break;
-        }
-
         // load predefined opts:
         $config = [
           'video_autoplay' => false,
@@ -148,6 +131,28 @@ class EmbedController extends BaseController
           'audio_player' => 'videojs',
           'document_player' => 'flexpaper'
         ];
+
+
+        switch ($record->getType()) {
+            case 'video':
+                $template = 'video.html.twig';
+                break;
+            case 'flexpaper':
+            case 'document':
+                $template = 'document.html.twig';
+                break;
+            case 'pdf_document':
+                $config['document_player'] = 'pdfjs';
+                $template = 'document.html.twig'; // @TODO switch to mozilla pdf viewer?
+                break;
+            case 'audio':
+                $template = 'audio.html.twig';
+                break;
+            default:
+                $template = 'image.html.twig';
+                break;
+        }
+
 
         if (isset($this->app['phraseanet.configuration']['embed_bundle'])) {
             // override default option with phraseanet defined:

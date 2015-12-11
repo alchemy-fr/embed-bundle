@@ -20,13 +20,13 @@ export default class AudioPlayer {
     private $embedContainer;
     private $embedResource;
     private resizer;
-    private $videoContainer;
+    private $playerContainer;
     constructor() {
         this.configService = new ConfigService();
 
         $(document).ready(() => {
-            this.$videoContainer =  $('.audio-player');
-            this.$videoContainer.append(playerTemplate( this.configService.get('resource') ));
+            this.$playerContainer =  $('.audio-player');
+            this.$playerContainer.append(playerTemplate( this.configService.get('resource') ));
 
             this.$embedContainer = $('#embed-content');
             this.$embedResource = $('#embed-audio');

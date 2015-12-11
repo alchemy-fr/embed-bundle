@@ -8,6 +8,8 @@ class ResizeEl {
     private containerDimensions;
     private targetDimensions;
     private resizeCallback;
+    private defaultWidth;
+    private defaultHeight;
 
     constructor(options) {
         if (!options) {
@@ -33,6 +35,9 @@ class ResizeEl {
                 this.onResizeWindow(<any>window.innerWidth, <any>window.innerHeight);
             }, 300));
         }
+
+        this.defaultWidth = 120;
+        this.defaultHeight = 120;
     }
     setContainerDimensions(dimensions) {
         this.containerDimensions = dimensions;
@@ -80,10 +85,17 @@ class ResizeEl {
             }
         }
 
+        if( resizeW === null && resizeH === null ) {
+            resizeW = this.defaultWidth;
+            resizeH = this.defaultHeight;
+        }
+
         resizeW = Math.floor(resizeW);
         resizeH = Math.floor(resizeH);
+
         // add top margin:
         let marginTop = 0;
+
         if (this.containerDimensions.height > resizeH) {
             marginTop = (this.containerDimensions.height - resizeH) / 2;
         }

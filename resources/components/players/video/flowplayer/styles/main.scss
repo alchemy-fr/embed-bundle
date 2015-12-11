@@ -1,1 +1,2 @@
-@import '../../../../../node_modules/flowplayer/dist/skin/minimalist'; // no extension for inlining
+// this file is loaded via include path - relative to the root of project...
+@import './node_modules/flowplayer/dist/skin/minimalist'; // no extension for inlining

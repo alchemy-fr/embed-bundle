@@ -26,13 +26,13 @@ export default class VideoPlayer {
     private $embedContainer;
     private $embedResource;
     private resizer;
-    private $videoContainer;
+    private $playerContainer;
     constructor() {
         this.configService = new ConfigService();
 
         $(document).ready(() => {
-            this.$videoContainer =  $('.video-player');
-            this.$videoContainer.append(playerTemplate( this.configService.get('resource') ));
+            this.$playerContainer =  $('.video-player');
+            this.$playerContainer.append(playerTemplate( this.configService.get('resource') ));
 
             this.$embedContainer = $('#embed-content');
             this.$embedResource = $('#embed-video');

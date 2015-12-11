@@ -12,19 +12,26 @@ module.exports = {
         video_flowplayer: conf.paths.src + '/components/players/video/flowplayer/player.ts',
         audio_videojs: conf.paths.src + '/components/players/audio/videojs/player.ts',
         document_flexpaper: conf.paths.src + '/components/players/document/flexpaper/player.ts',
+        document_pdfjs: conf.paths.src + '/components/players/document/pdfjs/player.ts',
         common: ['jquery', 'underscore', 'es5-shim']
     },
     output: {
         path: conf.paths.dist,
-        publicPath: "/assets/embed/",
+        /**
+         * May have to override publicPath value:
+         * https://github.com/webpack/docs/wiki/configuration#outputpublicpath
+         * PDFjs worker need it
+         */
+        publicPath: "/assets/vendors/alchemy-embed-medias/",
         filename: "[name].js",
         chunkFilename: "[chunkhash].js"
     },
     module: {
         loaders: [
+            /* PDFjs loader configuration */
             {
-                test: /imageloaded/,
-                loader: 'imports?define=>false&this=>window'
+                test: /\.pdf$|pdf\.worker\.js$/,
+                loader: "url-loader?limit=10000"
             },
             { test: /\.html$/, loader: "underscore-template-loader" },
             {test: /\.css$/, loader: "style!css"},

@@ -22,7 +22,7 @@ gulp.task('deploy-flowplayer-skin', ['deploy-flowplayer-skin-assets'], function 
         outputStyle: 'compressed'
     };
     gulp.src([
-            path.join(conf.paths.src, 'components/players/flowplayer/styles/main.scss')
+            path.join(conf.paths.src, 'components/players/video/flowplayer/styles/main.scss')
         ])
         .pipe(sourcemaps.init())
         .pipe(sass(sassOptions)).on('error', conf.errorHandler('Sass')) // sass.logError
@@ -43,6 +43,10 @@ gulp.task('deploy-flowplayer-assets', function() {
     ];
     return gulp.src(extVendors)
         .pipe(gulp.dest(path.join(conf.paths.dist, 'players/flowplayer')))
+});
+
+gulp.task('watch-flowplayer-css', function() {
+    return gulp.watch(path.join(conf.paths.src, 'components/players/video/flowplayer/styles/**/*.scss'), ['deploy-flowplayer-skin']);
 });
 
 gulp.task('deploy-flowplayer', function() {

@@ -22,7 +22,7 @@ gulp.task('deploy-videojs-skin', ['deploy-videojs-skin-assets'], function (done)
         outputStyle: 'compressed'
     };
     gulp.src([
-            path.join(conf.paths.src, 'components/players/videojs/styles/main.scss')
+            path.join(conf.paths.src, 'components/players/video/videojs/styles/main.scss')
         ])
         .pipe(sourcemaps.init())
         .pipe(sass(sassOptions)).on('error', conf.errorHandler('Sass')) // sass.logError
@@ -41,6 +41,10 @@ gulp.task('deploy-videojs-assets', function() {
     ];
     return gulp.src(extVendors)
         .pipe(gulp.dest(path.join(conf.paths.dist, 'players/videojs')))
+});
+
+gulp.task('watch-videojs-css', function() {
+    return gulp.watch(path.join(conf.paths.src, 'components/players/video/videojs/styles/**/*.scss'), ['deploy-videojs-skin']);
 });
 
 gulp.task('deploy-videojs', function() {

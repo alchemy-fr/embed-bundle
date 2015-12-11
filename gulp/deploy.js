@@ -21,5 +21,6 @@ gulp.task('deploy:copy-styles', function(){
 gulp.task('deploy-vendors', [
     'deploy-videojs',
     'deploy-flowplayer',
-    'deploy-flexpaper'
+    'deploy-flexpaper',
+    'deploy-pdfjs',
 ], function() {});
