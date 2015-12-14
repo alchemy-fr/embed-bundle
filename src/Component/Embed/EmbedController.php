@@ -113,14 +113,14 @@ class EmbedController extends BaseController
         $record = new record_adapter($this->app, $subdefId, $recordId);
         $metaDatas = $this->mediaService->getMetaDatas($record, $subdefName);
 
+        // is autoplay active?
+        $metaDatas['autoplay'] = $request->get('autoplay') == '1' ? true: false;
+
         return $this->renderEmbed($record, $metaDatas);
     }
 
     public function renderEmbed($record, $metaDatas)
     {
-        // @TODO - switch mode between iframe and raw embedding:
-        // $request->query->get('displayMode')
-        $displayModeViewPath = 'iframe';
         // load predefined opts:
         $config = [
           'video_autoplay' => false,
@@ -132,9 +132,16 @@ class EmbedController extends BaseController
           'document_player' => 'flexpaper'
         ];
 
+        if (isset($this->app['phraseanet.configuration']['embed_bundle'])) {
+            // override default option with phraseanet defined:
+            $config = array_merge($config, $this->app['phraseanet.configuration']['embed_bundle']);
+        }
 
         switch ($record->getType()) {
             case 'video':
+                if( $metaDatas['autoplay'] === true ) {
+                    $config['video_autoplay'] = true;
+                }
                 $template = 'video.html.twig';
                 break;
             case 'flexpaper':
@@ -146,6 +153,9 @@ class EmbedController extends BaseController
                 $template = 'document.html.twig'; // @TODO switch to mozilla pdf viewer?
                 break;
             case 'audio':
+                if( $metaDatas['autoplay'] === true ) {
+                    $config['audio_autoplay'] = true;
+                }
                 $template = 'audio.html.twig';
                 break;
             default:
@@ -154,14 +164,11 @@ class EmbedController extends BaseController
         }
 
 
-        if (isset($this->app['phraseanet.configuration']['embed_bundle'])) {
-            // override default option with phraseanet defined:
-            $config = array_merge($config, $this->app['phraseanet.configuration']['embed_bundle']);
-        }
+
 
         $twigOptions = array_merge($config, $metaDatas);
 
-        return $this->app['twig']->render('@alchemy_embed/'.$displayModeViewPath.'/'.$template, $twigOptions);
+        return $this->app['twig']->render('@alchemy_embed/iframe/'.$template, $twigOptions);
     }
 
 }
