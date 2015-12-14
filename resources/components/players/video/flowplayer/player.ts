@@ -1,17 +1,23 @@
-/// <reference path="../../../embed/embed.d.ts" />
+/// <reference path="../../../../embed/embed.d.ts" />
 /**
- * Entry point for Embed Videos
+ * FlowPlayer Player for Embed Videos
  */
 
 require('html5shiv');
 (<any>window).HELP_IMPROVE_VIDEOJS = false;
-let videojs = require('../../../../node_modules/video.js/dist/video.js');
+let flowplayer = require('../../../../../node_modules/flowplayer/dist/flowplayer.js');
 
 import * as $ from 'jquery';
 import * as _ from 'underscore';
-import ConfigService from '../../embed/config/service';
-import ResizeEl from '../../utils/resizeEl';
+import ConfigService from '../../../embed/config/service';
+import ResizeEl from '../../../utils/resizeEl';
 let playerTemplate:any = require('./player.html');
+
+interface IFlowPlayerOptions {
+    aspectRatio?: any;
+    autoplay?: boolean;
+    speeds?: number[];
+}
 
 export default class VideoPlayer {
     private configService;
@@ -20,13 +26,13 @@ export default class VideoPlayer {
     private $embedContainer;
     private $embedResource;
     private resizer;
-    private $videoContainer;
+    private $playerContainer;
     constructor() {
         this.configService = new ConfigService();
 
         $(document).ready(() => {
-            this.$videoContainer =  $('.video-player');
-            this.$videoContainer.append(playerTemplate( this.configService.get('resource') ));
+            this.$playerContainer =  $('.video-player');
+            this.$playerContainer.append(playerTemplate( this.configService.get('resource') ));
 
             this.$embedContainer = $('#embed-content');
             this.$embedResource = $('#embed-video');
@@ -57,10 +63,7 @@ export default class VideoPlayer {
 
     setupVideo() {
         let aspectRatio = this.configService.get('resource.aspectRatio'),
-            options: VideoJSOptions = {
-            playbackRates: [],
-            fluid: true
-        };
+            options: IFlowPlayerOptions = {};
 
         if( this.configService.get('resource.aspectRatio') !== null ) {
             options.aspectRatio = this.configService.get('resource.aspectRatio');
@@ -71,23 +74,20 @@ export default class VideoPlayer {
         }
 
         if( this.configService.get('resource.playbackRates') !== null ) {
-            options.playbackRates = this.configService.get('resource.playbackRates');
+            options.speeds = this.configService.get('resource.playbackRates');
         }
 
-        options.techOrder = ['html5', 'flash'];
-        (<any>options).flash = {
-            swf: '/assets/vendors/alchemy-embed-medias/players/videojs/video-js.swf'
-        };
+        (<any>options).swf =  '/assets/vendors/alchemy-embed-medias/players/flowplayer/flowplayer.swf';
+        (<any>options).swfHls =  '/assets/vendors/alchemy-embed-medias/players/flowplayer/flowplayerhls.swf';
 
-        let player: VideoJSPlayer = this.initVideo('embed-video', options, function() {
-            // if( this.configService.get('resource.autoplay') === true) {
-            // this.play();
-            // }
-            // this.on('ended', function() {});
+        let player = this.initVideo($('.flowplayer')[0], {
+            clip: {
+                sources: this.configService.get('resource.sources')
+            }
         });
     }
-    initVideo(...args): VideoJSPlayer {
-        return (<any>videojs).apply(this, args);
+    initVideo(...args) {
+        return (<any>flowplayer).apply(this, args);
     }
 }
 (<any>window).embedPlugin = new VideoPlayer();

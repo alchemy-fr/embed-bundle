@@ -1,0 +1,3 @@
+$asset-theme-path: './assets/images/';
+// this file is loaded via include path - relative to the root of project...
+@import './node_modules/video.js/src/css/video-js.scss';

@@ -87,7 +87,7 @@ class Media extends AbstractDelivery
         $embedMedia = [];
         $oembedMetaDatas = [];
 
-        $substitutionPath = sprintf('/skins/icons/substitution/%s.png',
+        $substitutionPath = sprintf('/assets/common/images/icons/substitution/%s.png',
           str_replace('/', '_', $record->getMimeType())
         );
 
@@ -173,17 +173,32 @@ class Media extends AbstractDelivery
      */
     private function getDimensions($subdef)
     {
+
+        $outWidth = $subdef->get_width();
+        $outHeight = $subdef->get_height();
+        if( $outWidth > 0 && $outHeight > 0) {
+
+
+        } else {
+            if( $outWidth > $outHeight) {
+
+            }
+        }
+
+
         $outWidth = $subdef->get_width();
         $outHeight = $subdef->get_height() | $outWidth;
-
-        $b_ratio = $outWidth / $outHeight;
 
         $thumbnail_height = $subdef->get_height() > 0 ? $subdef->get_height() : 120;
         $thumbnail_width = $subdef->get_width() > 0 ? $subdef->get_width() : 120;
 
-        $i_ratio = $thumbnail_width / $thumbnail_height;
+        $subdefRatio = 0;
+        $thumbnailRatio = $thumbnail_width / $thumbnail_height;
+        if( $outWidth > 0 && $outHeight > 0) {
+            $subdefRatio = $outWidth / $outHeight;
+        }
 
-        if ($i_ratio > $b_ratio) {
+        if ($thumbnailRatio > $subdefRatio) {
 
             if ($outWidth > $thumbnail_width) {
                 $outWidth = $thumbnail_width;
@@ -197,6 +212,11 @@ class Media extends AbstractDelivery
             $outWidth = $outHeight * $thumbnail_width / $thumbnail_height;
             $top = (($outHeight - $outHeight) / 2);
         }
+        /*if( $outWidth === 0 || $outHeight === 0) {
+            $outWidth = 640;//$thumbnail_height;
+              $outHeight = 480;//$thumbnail_width;
+        }*/
+
 
         return [
           'width' => round($outWidth),

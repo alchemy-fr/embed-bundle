@@ -70,6 +70,9 @@ class EmbedServiceProvider implements ServiceProviderInterface, ControllerProvid
         $controllers->get('/iframe/{sbas_id}/{record_id}/{subdefName}/', 'alchemy_embed.controller.embed:testIframeAction')
           ->bind('alchemy_embed_iframe');
 
+        $controllers->get('/datafiles/', 'alchemy_embed.controller.embed:viewDatafileAction')
+          ->bind('alchemy_embed_datafile');
+
 
 
         return $controllers;

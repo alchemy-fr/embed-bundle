@@ -1,5 +1,5 @@
 <div class="flowplayer">
-<video id="embed-video" class="embed-resource" controls preload="auto" width="100%" height="100%" poster="<%= coverUrl %>">
+<video id="embed-video" class="embed-resource" controls preload="none" width="100%" height="100%" poster="<%= coverUrl %>">
     <% _.each( sources, function( s ){ %>
     <source src="<%= s.url %>" type="<%= s.type %>">
     <% }); %>
