@@ -119,17 +119,24 @@ class EmbedController extends BaseController
         return $this->renderEmbed($record, $metaDatas);
     }
 
-    public function renderEmbed($record, $metaDatas)
+    /**
+     * Render Embed Twig view
+     * @param $record record_adapter
+     * @param $metaDatas
+     * @return mixed
+     */
+    public function renderEmbed(record_adapter $record, $metaDatas)
     {
         // load predefined opts:
         $config = [
-          'video_autoplay' => false,
-          'video_options' => [
-
-          ],
-          'video_player' => 'videojs',
-          'audio_player' => 'videojs',
-          'document_player' => 'flexpaper'
+            'video_autoplay' => false,
+            'video_options' => [],
+            'video_player' => 'videojs',
+            'audio_player' => 'videojs',
+            'document_player' => 'flexpaper',
+            'document' => [
+                'enable_pdfjs' => true
+            ]
         ];
 
         if (isset($this->app['phraseanet.configuration']['embed_bundle'])) {
@@ -147,10 +154,22 @@ class EmbedController extends BaseController
             case 'flexpaper':
             case 'document':
                 $template = 'document.html.twig';
-                break;
-            case 'pdf_document':
-                $config['document_player'] = 'pdfjs';
-                $template = 'document.html.twig'; // @TODO switch to mozilla pdf viewer?
+
+                // if document type is pdf and player is active, let's use original documents:
+
+                $ie8OrLess = preg_match('/(?i)msie [6-8]/',$_SERVER['HTTP_USER_AGENT']);
+
+                if ($record->getMimeType() == 'application/pdf' && !$ie8OrLess) {
+                    if ($config['document']['enable_pdfjs'] === true) {
+                        if ($record->has_subdef('document')) {
+                            $subdef = $record->get_subdef('document');
+
+                            $config['document_player'] = 'pdfjs';
+                            $metaDatas['embedMedia']['url'] = (string)$subdef->get_permalink()->get_url();
+                        }
+                    }
+                }
+
                 break;
             case 'audio':
                 if( $metaDatas['autoplay'] === true ) {
@@ -162,9 +181,6 @@ class EmbedController extends BaseController
                 $template = 'image.html.twig';
                 break;
         }
-
-
-
 
         $twigOptions = array_merge($config, $metaDatas);
 
