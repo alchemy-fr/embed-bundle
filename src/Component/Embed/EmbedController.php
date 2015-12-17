@@ -86,6 +86,8 @@ class EmbedController extends BaseController
         $record = $this->mediaService->retrieveRecord($databox, $token, $record_id, $subdefName);
         $metaDatas = $this->mediaService->getMetaDatas($record, $subdefName);
 
+        // is autoplay active?
+        $metaDatas['options']['autoplay'] = $request->get('autoplay') == '1' ? true: false;
 
         return $this->renderEmbed($record, $metaDatas);
     }
@@ -114,7 +116,7 @@ class EmbedController extends BaseController
         $metaDatas = $this->mediaService->getMetaDatas($record, $subdefName);
 
         // is autoplay active?
-        $metaDatas['autoplay'] = $request->get('autoplay') == '1' ? true: false;
+        $metaDatas['options']['autoplay'] = $request->get('autoplay') == '1' ? true: false;
 
         return $this->renderEmbed($record, $metaDatas);
     }
@@ -131,6 +133,7 @@ class EmbedController extends BaseController
         $config = [
             'video_autoplay' => false,
             'video_options' => [],
+            'video_available_speeds' => [],
             'video_player' => 'videojs',
             'audio_player' => 'videojs',
             'document_player' => 'flexpaper',
@@ -146,7 +149,7 @@ class EmbedController extends BaseController
 
         switch ($record->getType()) {
             case 'video':
-                if( $metaDatas['autoplay'] === true ) {
+                if( $metaDatas['options']['autoplay'] === true ) {
                     $config['video_autoplay'] = true;
                 }
                 $template = 'video.html.twig';
@@ -172,7 +175,7 @@ class EmbedController extends BaseController
 
                 break;
             case 'audio':
-                if( $metaDatas['autoplay'] === true ) {
+                if( $metaDatas['options']['autoplay'] === true ) {
                     $config['audio_autoplay'] = true;
                 }
                 $template = 'audio.html.twig';

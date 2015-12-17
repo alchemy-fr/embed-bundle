@@ -158,6 +158,9 @@ class Media extends AbstractDelivery
         }
 
         return [
+          'options' => [
+            'autoplay' => false
+          ],
           'oembedMetaDatas' => $oembedMetaDatas,
           'ogMetaDatas' => $ogMetaDatas,
           'oembedUrl' => $oembedUrl,
