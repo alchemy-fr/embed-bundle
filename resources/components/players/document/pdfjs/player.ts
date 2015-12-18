@@ -3,14 +3,14 @@
  * FlexPaper Player for Embed Document
  */
 
-require('html5shiv');
+//require('html5shiv');
 require('../../../../../node_modules/pdfjs-dist/build/pdf');
 // Webpack returns a string to the url because we configured the url-loader.
 (<any>window).PDFJS.workerSrc = require('../../../../../node_modules/pdfjs-dist/build/pdf.worker.js');
 require('../../../../../node_modules/pdfjs-dist/web/compatibility');
 require('../../../../../node_modules/pdfjs-dist/web/pdf_viewer');
 
-import * as $ from 'jquery';
+//import * as $ from 'jquery';
 import * as _ from 'underscore';
 import ConfigService from '../../../embed/config/service';
 let playerTemplate:any = require('./player.html');
@@ -22,25 +22,22 @@ export default class DocumentPlayer {
     constructor() {
         this.configService = new ConfigService();
 
-        $(document).ready(() => {
-
-            this.$documentContainer =  $('.document-player');
-            this.$documentContainer.append(playerTemplate( this.configService.get('resource') ));
-            this.documentEmbedContainerId = 'embed-document';
+        let docContainers =  document.getElementsByClassName('document-player');
+        this.$documentContainer = docContainers[0];
+        this.$documentContainer.insertAdjacentHTML('afterbegin', playerTemplate( this.configService.get('resource') ));
 
 
-            let pdf = this.configService.get('resource.url')
-            //let pdf = '/assets/helloworld.pdf';
+        let pdf = this.configService.get('resource.url')
+        //let pdf = '/assets/helloworld.pdf';
 
-            let pdfViewer = new (<any>window).PDFJS.PDFViewer({
-                container: $('#viewerContainer')[0]
-            });
-
-            (<any>window).PDFJS.getDocument(pdf)
-                .then(function(document){
-                    pdfViewer.setDocument(document);
-                });
+        let pdfViewer = new (<any>window).PDFJS.PDFViewer({
+            container: document.getElementById('viewerContainer')
         });
+
+        (<any>window).PDFJS.getDocument(pdf)
+            .then(function(document){
+                pdfViewer.setDocument(document);
+            });
     }
 }
 (<any>window).embedPlugin = new DocumentPlayer();

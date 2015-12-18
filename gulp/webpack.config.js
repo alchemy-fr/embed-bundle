@@ -13,7 +13,7 @@ module.exports = {
         audio_videojs: conf.paths.src + '/components/players/audio/videojs/player.ts',
         document_flexpaper: conf.paths.src + '/components/players/document/flexpaper/player.ts',
         document_pdfjs: conf.paths.src + '/components/players/document/pdfjs/player.ts',
-        common: ['jquery', 'underscore', 'es5-shim']
+        common: ['underscore']
     },
     output: {
         path: conf.paths.dist,
@@ -42,7 +42,7 @@ module.exports = {
         compiler: 'typescript'
     },
     externals: {
-        jquery: 'jQuery',
+        // jquery: 'jQuery',
         modernizr: 'Modernizr'
     },
     resolve: {

@@ -6,6 +6,7 @@
     {% elseif document_player == 'pdfjs' %}
         <link type="text/css" rel="stylesheet" href="/assets/vendors/alchemy-embed-medias/players/pdfjs/skin/pdfjs.css">
     {% endif %}
+    <script type="text/javascript" src="/assets/vendors/jquery/jquery{% if not app.debug %}.min{% endif %}.js"></script>
 {% endblock %}
 {% block footerScripts %}
     <script>

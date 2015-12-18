@@ -22,7 +22,8 @@ class ResizeEl {
         if( options.container) {
             this.$embedContainer = options.container;
         } else {
-            this.$embedContainer = $('body');
+            let containers = document.getElementsByTagName('body');
+            this.$embedContainer = containers[0];
         }
 
         if( options.resizeCallback !== undefined ) {
@@ -31,9 +32,14 @@ class ResizeEl {
 
 
         if (options.resizeOnWindowChange === true) {
-            $(<any>window).resize(_.debounce(() => {
+
+            window.addEventListener('resize', _.debounce(() => {
                 this.onResizeWindow(<any>window.innerWidth, <any>window.innerHeight);
-            }, 300));
+            }, 300), false);
+
+            /*$(<any>window).resize(_.debounce(() => {
+                this.onResizeWindow(<any>window.innerWidth, <any>window.innerHeight);
+            }, 300));*/
         }
 
         this.defaultWidth = 120;
@@ -100,8 +106,12 @@ class ResizeEl {
             marginTop = (this.containerDimensions.height - resizeH) / 2;
         }
 
-        this.$embedResource.css({width: resizeW, height: resizeH});
-        this.$embedContainer.css({width: resizeW, height: resizeH, 'margin-top': marginTop});
+        this.$embedResource.style.width = resizeW + 'px';
+        this.$embedResource.style.height = resizeH + 'px';
+
+        this.$embedContainer.style.width = resizeW + 'px';
+        this.$embedContainer.style.height = resizeH + 'px';
+        this.$embedContainer.style['margin-top'] = marginTop + 'px';
 
         if( this.resizeCallback !== undefined) {
             this.resizeCallback.apply(this, [{width: resizeW, height: resizeH, 'margin-top': marginTop}]);

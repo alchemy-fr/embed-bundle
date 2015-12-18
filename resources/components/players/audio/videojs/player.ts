@@ -3,11 +3,11 @@
  * VideoJS Player for Embed Audio
  */
 
-require('html5shiv');
+// require('html5shiv');
 (<any>window).HELP_IMPROVE_VIDEOJS = false;
 let videojs = require('../../../../../node_modules/video.js/dist/video.js');
 
-import * as $ from 'jquery';
+
 import * as _ from 'underscore';
 import ConfigService from '../../../embed/config/service';
 import ResizeEl from '../../../utils/resizeEl';
@@ -24,35 +24,38 @@ export default class AudioPlayer {
     constructor() {
         this.configService = new ConfigService();
 
-        $(document).ready(() => {
-            this.$playerContainer =  $('.audio-player');
-            this.$playerContainer.append(playerTemplate( this.configService.get('resource') ));
+        let audioContainers =  document.getElementsByClassName('audio-player'); //$('.video-player');
+        this.$playerContainer = audioContainers[0];
+        this.$playerContainer.insertAdjacentHTML('afterbegin', playerTemplate( this.configService.get('resource') ));
 
-            this.$embedContainer = $('#embed-content');
-            this.$embedResource = $('#embed-audio');
-            this.resourceOriginalWidth = this.configService.get('resource.width');
-            this.resourceOriginalHeight = this.configService.get('resource.height');
+        this.$embedContainer = document.getElementById('embed-content');
+        this.$embedResource = document.getElementById('embed-audio');
+        this.resourceOriginalWidth = this.configService.get('resource.width');
+        this.resourceOriginalHeight = this.configService.get('resource.height');
 
-            this.resizer = new ResizeEl({
-                target: this.$embedResource,
-                container: this.$embedContainer,
-                resizeOnWindowChange: this.configService.get('resource.fitIn') === true ? true : false,
-                resizeCallback: (dimensions) => {
-                    this.$embedContainer.find('> div').css({width: dimensions.width, height: dimensions.height});
-                }
-            });
-            this.resizer.setContainerDimensions({
-                width:  <any>window.innerWidth,
-                height: <any>window.innerHeight
-            });
-            this.resizer.setTargetDimensions({
-                width:  this.resourceOriginalWidth,
-                height: this.resourceOriginalHeight
-            });
-            this.resizer.resize();
+        this.resizer = new ResizeEl({
+            target: this.$embedResource,
+            container: this.$embedContainer,
+            resizeOnWindowChange: this.configService.get('resource.fitIn') === true ? true : false,
+            resizeCallback: (dimensions) => {
+                this.$playerContainer.style.width = dimensions.width + 'px';
+                this.$playerContainer.style.height = dimensions.height + 'px';
 
-            this.setupVideo();
+                this.$playerContainer.firstChild.style.width = dimensions.width + 'px';
+                this.$playerContainer.firstChild.style.height = dimensions.height + 'px';
+            }
         });
+        this.resizer.setContainerDimensions({
+            width:  <any>window.innerWidth,
+            height: <any>window.innerHeight
+        });
+        this.resizer.setTargetDimensions({
+            width:  this.resourceOriginalWidth,
+            height: this.resourceOriginalHeight
+        });
+        this.resizer.resize();
+
+        this.setupVideo();
     }
 
     setupVideo() {
