@@ -53,9 +53,12 @@ class OembedController extends BaseController
     {
         $urlRequest = Request::create($request->get('url'));
 
+        $baseUrl = $request->getBaseUrl();
         $matchingUrl = $urlRequest->getPathInfo();
-        if (0 === strpos($matchingUrl, $request->getBaseUrl())) {
-            $matchingUrl = substr($matchingUrl, strlen($request->getBaseUrl()));
+        if (!empty($baseUrl)) {
+            if (0 === strpos($matchingUrl, $baseUrl)) {
+                $matchingUrl = substr($matchingUrl, strlen($baseUrl));
+            }
         }
 
         $resourceParams = $this->app['url_matcher']->match($matchingUrl);
