@@ -24,18 +24,15 @@ class EmbedController extends BaseController
 {
     /** @var ACLProvider */
     private $acl;
-    /** @var \appbox */
-    private $appbox;
     /** @var Authenticator */
     private $authentication;
     /** @var Media */
     private $mediaService;
 
-    public function __construct(Application $app, \appbox $appbox, ACLProvider $acl, Authenticator $authenticator, Media $mediaService)
+    public function __construct(Application $app, ACLProvider $acl, Authenticator $authenticator, Media $mediaService)
     {
         parent::__construct($app);
 
-        $this->appbox = $appbox;
         $this->acl = $acl;
         $this->authentication = $authenticator;
         $this->mediaService = $mediaService;

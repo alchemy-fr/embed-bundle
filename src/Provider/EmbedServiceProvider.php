@@ -25,7 +25,12 @@ class EmbedServiceProvider implements ServiceProviderInterface, ControllerProvid
     {
         $app['alchemy_embed.controller.embed'] = $app->share(
           function (Application $app) {
-              return (new EmbedController($app, $app->getApplicationBox(), $app['acl'], $app->getAuthenticator(), $app['alchemy_embed.service.media']))
+              return (new EmbedController(
+                  $app,
+                  $app['acl'],
+                  $app->getAuthenticator(),
+                  $app['alchemy_embed.service.media']
+              ))
                 ->setDataboxLoggerLocator($app['phraseanet.logger'])
                 ->setDelivererLocator(new LazyLocator($app, 'phraseanet.file-serve'));
           }
