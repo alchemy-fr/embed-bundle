@@ -39,3 +39,9 @@ $asset-theme-path: './assets/images/';
 @import "./node_modules/video.js/src/css/components/adaptive";
 @import "./node_modules/video.js/src/css/components/captions-settings";
 @import "./node_modules/video.js/src/css/components/modal-dialog";
+
+
+.video-js-box, video.video-js {
+  width: 100%;
+  height: 100%;
+}

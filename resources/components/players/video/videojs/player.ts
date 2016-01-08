@@ -35,17 +35,12 @@ export default class VideoPlayer {
         this.resourceOriginalHeight = this.configService.get('resource.height');
 
         this.resizer = new ResizeEl({
-            target: this.$embedVideoResource,
+            target: this.$embedContainer, // don't target video directly to allow fullscreen
             container: this.$embedContainer,
             resizeOnWindowChange: this.configService.get('resource.fitIn') === true ? true : false,
             resizeCallback: (dimensions) => {
                 this.$playerContainer.style.width = dimensions.width + 'px';
                 this.$playerContainer.style.height = dimensions.height + 'px';
-
-                this.$playerContainer.firstChild.style.width = dimensions.width + 'px';
-                this.$playerContainer.firstChild.style.height = dimensions.height + 'px';
-                // this.$playerContainer.setAttribute('style', 'width: '+dimensions.width+'px; height: '+dimensions.height+'px');
-                // this.$playerContainer.firstChild.setAttribute('style', 'width: '+dimensions.width+'px; height: '+dimensions.height+'px');
             }
         });
         this.resizer.setContainerDimensions({
