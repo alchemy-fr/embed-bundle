@@ -44,7 +44,8 @@ class OembedServiceProvider implements ServiceProviderInterface, ControllerProvi
         $controllers = $app['controllers_factory'];
 
         $controllers
-          ->get('/', 'alchemy_embed.controller.oembed:indexAction');
+          ->get('/', 'alchemy_embed.controller.oembed:indexAction')
+          ->bind('embed_oembed');
 
         return $controllers;
     }
