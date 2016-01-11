@@ -81,21 +81,21 @@ class EmbedController extends BaseController
 
 
         $record = $this->mediaService->retrieveRecord($databox, $token, $record_id, $subdefName);
-        $metaDatas = $this->mediaService->getMetaData($record, $subdefName);
+        $metaData = $this->mediaService->getMetaData($request, $record, $subdefName);
 
         // is autoplay active?
-        $metaDatas['options']['autoplay'] = $request->get('autoplay') == '1' ? true: false;
+        $metaData['options']['autoplay'] = $request->get('autoplay') == '1' ? true : false;
 
-        return $this->renderEmbed($record, $metaDatas);
+        return $this->renderEmbed($record, $metaData);
     }
 
     /**
      * Render Embed Twig view
      * @param $record record_adapter
-     * @param $metaDatas
+     * @param $metaData
      * @return mixed
      */
-    public function renderEmbed(record_adapter $record, $metaDatas)
+    public function renderEmbed(record_adapter $record, $metaData)
     {
         // load predefined opts:
         $config = [
@@ -117,7 +117,7 @@ class EmbedController extends BaseController
 
         switch ($record->getType()) {
             case 'video':
-                if( $metaDatas['options']['autoplay'] === true ) {
+                if ($metaData['options']['autoplay'] === true) {
                     $config['video_autoplay'] = true;
                 }
                 $template = 'video.html.twig';
@@ -136,14 +136,15 @@ class EmbedController extends BaseController
                             $subdef = $record->get_subdef('document');
 
                             $config['document_player'] = 'pdfjs';
-                            $metaDatas['embedMedia']['url'] = (string)$subdef->get_permalink()->get_url();
+                            $metaData['embedMedia']['url'] = (string)$subdef->get_permalink()
+                                ->get_url();
                         }
                     }
                 }
 
                 break;
             case 'audio':
-                if( $metaDatas['options']['autoplay'] === true ) {
+                if ($metaData['options']['autoplay'] === true) {
                     $config['audio_autoplay'] = true;
                 }
                 $template = 'audio.html.twig';
@@ -153,7 +154,7 @@ class EmbedController extends BaseController
                 break;
         }
 
-        $twigOptions = array_merge($config, $metaDatas);
+        $twigOptions = array_merge($config, $metaData);
 
         return $this->app['twig']->render('@alchemy_embed/iframe/'.$template, $twigOptions);
     }
@@ -183,7 +184,7 @@ class EmbedController extends BaseController
         $recordId = $resourceParams['record_id'];
 
         $record = new record_adapter($this->app, $subdefId, $recordId);
-        $metaDatas = $this->mediaService->getMetaData($record, $subdefName);
+        $metaDatas = $this->mediaService->getMetaData($request, $record, $subdefName);
 
         // is autoplay active?
         $metaDatas['options']['autoplay'] = $request->get('autoplay') == '1' ? true : false;

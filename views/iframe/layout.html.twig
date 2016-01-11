@@ -6,7 +6,7 @@
     <meta property="og:title" content="{% if local_title is defined%}{{local_title}}{% endif %}">
     <meta property="og:site_name" content="{{ app['conf'].get(['registry', 'general', 'title']) }}">
     <meta property="og:url" content="{{ app['request'].getUri }}">
-{% for metaKey, metaValue in ogMetaDatas %}
+    {% for metaKey, metaValue in ogMetaData %}
     <meta property="{{ metaKey }}" content="{{ metaValue }}" />
 {% endfor %}
     <link type="text/css" rel="stylesheet" href="/assets/vendors/alchemy-embed-medias/theme/main.css">

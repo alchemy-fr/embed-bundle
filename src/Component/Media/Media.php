@@ -14,6 +14,7 @@ use Alchemy\Phrasea\Application;
 use Alchemy\Phrasea\Authentication\ACLProvider;
 use Alchemy\Phrasea\Authentication\Authenticator;
 use Alchemy\Phrasea\Controller\AbstractDelivery;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Media extends AbstractDelivery
@@ -52,13 +53,13 @@ class Media extends AbstractDelivery
 
     /**
      * Return all available metaData
+     * @param Request         $request
      * @param \record_adapter $record
      * @param string          $subdefName
      * @return array
      */
-    public function getMetaData($record, $subdefName)
+    public function getMetaData(Request $request, $record, $subdefName)
     {
-        $request = $this->app['request'];
         $subdef = $record->get_subdef($subdefName);
         $thumbnail = $record->get_thumbnail();
         $baseUrl = $request->getSchemeAndHttpHost();
@@ -240,7 +241,7 @@ class Media extends AbstractDelivery
 
         $feedItemsRepository = $this->app['repo.feed-items'];
         if (in_array($subdef, [\databox_subdef::CLASS_PREVIEW, \databox_subdef::CLASS_THUMBNAIL])
-          && $feedItemsRepository->isRecordInPublicFeed($databox->get_sbas_id(), $record_id)
+            && $feedItemsRepository->isRecordInPublicFeed($databox->get_sbas_id(), $record_id)
         ) {
             return $record;
         } elseif ($permalink->get_token() == (string)$token) {

@@ -66,25 +66,25 @@ class OembedController extends BaseController
         $token = $urlRequest->get('token');
 
         $record = $this->mediaService->retrieveRecord($databox, $token, $resourceParams['record_id'], $resourceParams['subdefName']);
-        $metaDatas = $this->mediaService->getMetaData($record, $resourceParams['subdefName']);
+        $metaData = $this->mediaService->getMetaData($request, $record, $resourceParams['subdefName']);
 
 
-        $exportMetas = [
-          'version' => '1.0',
-          'type' => $metaDatas['oembedMetaDatas']['type'],
-          'width' => $metaDatas['ogMetaDatas']['og:image:width'],
-          'height' => $metaDatas['ogMetaDatas']['og:image:height'],
-          'title' => $record->get_title(),
-          'url' => $metaDatas['embedMedia']['url'],
+        $exportedMeta = [
+            'version'      => '1.0',
+            'type'         => $metaData['oembedMetaData']['type'],
+            'width'        => $metaData['ogMetaData']['og:image:width'],
+            'height'       => $metaData['ogMetaData']['og:image:height'],
+            'title'        => $record->get_title(),
+            'url'          => $metaData['embedMedia']['url'],
             // 'provider_name'=>'$this->app['request']->',
-          'provider_url' => $request->getSchemeAndHttpHost()
+            'provider_url' => $request->getSchemeAndHttpHost()
         ];
 
-        if (array_key_exists('html', $metaDatas['oembedMetaDatas'])) {
-            $exportMetas['html'] = $metaDatas['oembedMetaDatas']['html'];
+        if (array_key_exists('html', $metaData['oembedMetaData'])) {
+            $exportedMeta['html'] = $metaData['oembedMetaData']['html'];
         }
 
-        return $this->app->json($exportMetas);
+        return $this->app->json($exportedMeta);
     }
 
     /**
