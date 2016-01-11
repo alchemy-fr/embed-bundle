@@ -66,7 +66,7 @@ class OembedController extends BaseController
         $token = $urlRequest->get('token');
 
         $record = $this->mediaService->retrieveRecord($databox, $token, $resourceParams['record_id'], $resourceParams['subdefName']);
-        $metaDatas = $this->mediaService->getMetaDatas($record, $resourceParams['subdefName']);
+        $metaDatas = $this->mediaService->getMetaData($record, $resourceParams['subdefName']);
 
 
         $exportMetas = [

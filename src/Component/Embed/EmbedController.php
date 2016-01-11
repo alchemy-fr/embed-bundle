@@ -81,40 +81,7 @@ class EmbedController extends BaseController
 
 
         $record = $this->mediaService->retrieveRecord($databox, $token, $record_id, $subdefName);
-        $metaDatas = $this->mediaService->getMetaDatas($record, $subdefName);
-
-        // is autoplay active?
-        $metaDatas['options']['autoplay'] = $request->get('autoplay') == '1' ? true: false;
-
-        return $this->renderEmbed($record, $metaDatas);
-    }
-
-    /**
-     * Get record by sbasId, recordId and subdefName
-     * @param Request $request
-     * @return mixed - rendered twig
-     */
-    public function viewDatafileAction(Request $request)
-    {
-        $urlRequest = Request::create($request->get('url'));
-
-        $baseUrl = $request->getBaseUrl();
-        $matchingUrl = $urlRequest->getPathInfo();
-
-        if (!empty($baseUrl)) {
-            if (0 === strpos($matchingUrl, $baseUrl)) {
-                $matchingUrl = substr($matchingUrl, strlen($baseUrl));
-            }
-        }
-
-        $resourceParams = $this->app['url_matcher']->match($matchingUrl);
-
-        $subdefId = $resourceParams['sbas_id'];
-        $subdefName = $resourceParams['subdef'];
-        $recordId = $resourceParams['record_id'];
-
-        $record = new record_adapter($this->app, $subdefId, $recordId);
-        $metaDatas = $this->mediaService->getMetaDatas($record, $subdefName);
+        $metaDatas = $this->mediaService->getMetaData($record, $subdefName);
 
         // is autoplay active?
         $metaDatas['options']['autoplay'] = $request->get('autoplay') == '1' ? true: false;
@@ -189,6 +156,39 @@ class EmbedController extends BaseController
         $twigOptions = array_merge($config, $metaDatas);
 
         return $this->app['twig']->render('@alchemy_embed/iframe/'.$template, $twigOptions);
+    }
+
+    /**
+     * Get record by sbasId, recordId and subdefName
+     * @param Request $request
+     * @return mixed - rendered twig
+     */
+    public function viewDatafileAction(Request $request)
+    {
+        $urlRequest = Request::create($request->get('url'));
+
+        $baseUrl = $request->getBaseUrl();
+        $matchingUrl = $urlRequest->getPathInfo();
+
+        if (!empty($baseUrl)) {
+            if (0 === strpos($matchingUrl, $baseUrl)) {
+                $matchingUrl = substr($matchingUrl, strlen($baseUrl));
+            }
+        }
+
+        $resourceParams = $this->app['url_matcher']->match($matchingUrl);
+
+        $subdefId = $resourceParams['sbas_id'];
+        $subdefName = $resourceParams['subdef'];
+        $recordId = $resourceParams['record_id'];
+
+        $record = new record_adapter($this->app, $subdefId, $recordId);
+        $metaDatas = $this->mediaService->getMetaData($record, $subdefName);
+
+        // is autoplay active?
+        $metaDatas['options']['autoplay'] = $request->get('autoplay') == '1' ? true : false;
+
+        return $this->renderEmbed($record, $metaDatas);
     }
 
 }
