@@ -1,5 +1,5 @@
 {% extends "@alchemy_embed/iframe/layout.html.twig" %}
-{% set local_title = embedMedia.title %}
+
 {% block footerScripts %}
     <script>
         var envConfiguration = (function () {
@@ -17,6 +17,7 @@
     <script type="text/javascript" src="/assets/vendors/alchemy-embed-medias/common.js"></script>
     <script type="text/javascript" src="/assets/vendors/alchemy-embed-medias/image.js"></script>
 {% endblock %}
+
 {% block content %}
-    <img id="embed-image" class="embed-resource" src="{{embedMedia.url}}" alt="{{ local_title }}">
+    <img id="embed-image" class="embed-resource" src="{{ embedMedia.url }}" alt="{{ embedMedia.title }}">
 {% endblock %}
