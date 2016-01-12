@@ -35,10 +35,6 @@ class EmbedServiceProvider implements ServiceProviderInterface, ControllerProvid
           }
         );
 
-        $app['alchemy_embed.controller.oembed'] = $app->share(function (Application $app) {
-            return new OembedController($app, $app['alchemy_embed.service.media']);
-        });
-
         $app['alchemy_embed.service.media'] = $app->share(
           function(Application $app) {
               return new Media($app, $app->getApplicationBox(), $app['acl'], $app->getAuthenticator());
@@ -68,10 +64,9 @@ class EmbedServiceProvider implements ServiceProviderInterface, ControllerProvid
             ->bind('alchemy_embed_view');
 
         $controllers
-            ->get('/oembed/', 'alchemy_embed.controller.oembed:indexAction')
+            ->get('/oembed/', 'alchemy_embed.controller.embed:oembedAction')
             ->assert('url', '.*')
             ->bind('alchemy_embed_oembed');
-        ;
 
         return $controllers;
     }

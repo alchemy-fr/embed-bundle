@@ -125,4 +125,44 @@ class EmbedController
 
         return $this->app['twig']->render('@alchemy_embed/iframe/'.$template, $twigOptions);
     }
+
+    public function oembedAction(Request $request)
+    {
+        $url = $request->query->get('url');
+
+        $baseUri = $request->getUriForPath('');
+        if (strncmp($url, $baseUri, strlen($baseUri)) !== 0) {
+            throw new BadRequestHttpException('Given url does not apply to this server instance');
+        }
+
+        $resourceRequest = Request::create($url, 'GET', [], $request->cookies->all(), [], $request->server->all());
+        if ($request->getSession()) {
+            $resourceRequest->setSession($request->getSession());
+        }
+
+        $urlParams = $this->app['url_matcher']->matchRequest($resourceRequest);
+
+        $media = $this->app['alchemy_embed.resource_resolver']->resolve($resourceRequest, $urlParams['_route'], $urlParams);
+
+        $subdef = $media->getResource();
+
+        $metaData = $this->mediaService->getMetaData($request, $subdef->get_record(), $subdef->get_name());
+
+        $exportedMeta = [
+            'version'      => '1.0',
+            'type'         => $metaData['oembedMetaData']['type'],
+            'width'        => $metaData['ogMetaData']['og:image:width'],
+            'height'       => $metaData['ogMetaData']['og:image:height'],
+            'title'        => $subdef->get_record()->get_title(),
+            'url'          => $metaData['embedMedia']['url'],
+            // 'provider_name'=>'$this->app['request']->',
+            'provider_url' => $request->getSchemeAndHttpHost()
+        ];
+
+        if (array_key_exists('html', $metaData['oembedMetaData'])) {
+            $exportedMeta['html'] = $metaData['oembedMetaData']['html'];
+        }
+
+        return $this->app->json($exportedMeta);
+    }
 }
