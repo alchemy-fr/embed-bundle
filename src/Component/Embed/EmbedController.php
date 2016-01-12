@@ -33,19 +33,9 @@ class EmbedController
     {
         $url = $request->query->get('url');
 
-        $baseUri = $request->getUriForPath('');
-        if (strncmp($url, $baseUri, strlen($baseUri)) !== 0) {
-            throw new BadRequestHttpException('Given url does not apply to this server instance');
-        }
+        $resourceRequest = $this->createResourceRequest($request, $url);
 
-        $resourceRequest = Request::create($url, 'GET', [], $request->cookies->all(), [], $request->server->all());
-        if ($request->getSession()) {
-            $resourceRequest->setSession($request->getSession());
-        }
-
-        $urlParams = $this->app['url_matcher']->matchRequest($resourceRequest);
-
-        $media = $this->app['alchemy_embed.resource_resolver']->resolve($resourceRequest, $urlParams['_route'], $urlParams);
+        $media = $this->matchResourceRequest($resourceRequest);
 
         $subdef = $media->getResource();
 
@@ -130,19 +120,9 @@ class EmbedController
     {
         $url = $request->query->get('url');
 
-        $baseUri = $request->getUriForPath('');
-        if (strncmp($url, $baseUri, strlen($baseUri)) !== 0) {
-            throw new BadRequestHttpException('Given url does not apply to this server instance');
-        }
+        $resourceRequest = $this->createResourceRequest($request, $url);
 
-        $resourceRequest = Request::create($url, 'GET', [], $request->cookies->all(), [], $request->server->all());
-        if ($request->getSession()) {
-            $resourceRequest->setSession($request->getSession());
-        }
-
-        $urlParams = $this->app['url_matcher']->matchRequest($resourceRequest);
-
-        $media = $this->app['alchemy_embed.resource_resolver']->resolve($resourceRequest, $urlParams['_route'], $urlParams);
+        $media = $this->matchResourceRequest($resourceRequest);
 
         $subdef = $media->getResource();
 
@@ -164,5 +144,41 @@ class EmbedController
         }
 
         return $this->app->json($exportedMeta);
+    }
+
+    /**
+     * @param Request $request
+     * @param string  $url
+     * @return Request
+     */
+    private function createResourceRequest(Request $request, $url)
+    {
+        $baseUri = $request->getUriForPath('');
+
+        if (strncmp($url, $baseUri, strlen($baseUri)) !== 0) {
+            throw new BadRequestHttpException('Given url does not apply to this server instance');
+        }
+
+        $resourceRequest = Request::create($url, 'GET', [], $request->cookies->all(), [], $request->server->all());
+        if ($request->getSession()) {
+            $resourceRequest->setSession($request->getSession());
+        }
+
+        return $resourceRequest;
+    }
+
+    /**
+     * @param Request $resourceRequest
+     * @return \Alchemy\Embed\Media\MediaInformation
+     */
+    private function matchResourceRequest(Request $resourceRequest)
+    {
+        $urlParams = $this->app['url_matcher']->matchRequest($resourceRequest);
+
+        return $this->app['alchemy_embed.resource_resolver']->resolve(
+            $resourceRequest,
+            $urlParams['_route'],
+            $urlParams
+        );
     }
 }
