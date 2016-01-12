@@ -36,22 +36,6 @@ class Media extends AbstractDelivery
     }
 
     /**
-     * @param int $sbasId
-     * @param int $recordId
-     * @return \record_adapter
-     */
-    public function getRecord($sbasId, $recordId)
-    {
-        try {
-            $record = new \record_adapter($this->app, $sbasId, $recordId);
-        } catch (\Exception $exception) {
-            throw new NotFoundHttpException('Record Not Found.', $exception);
-        }
-
-        return $record;
-    }
-
-    /**
      * Return all available metaData
      * @param Request         $request
      * @param \record_adapter $record
@@ -62,10 +46,7 @@ class Media extends AbstractDelivery
     {
         $subdef = $record->get_subdef($subdefName);
         $thumbnail = $record->get_thumbnail();
-        $baseUrl = $request->getSchemeAndHttpHost();
-        $baseUrlPath = $baseUrl . $request->getBaseUrl();
-        $oembedUrl = $baseUrlPath . '/oembed/';
-
+        $baseUrl = $request->getUriForPath('');
 
         $ogMetaData = [];
         $embedMedia = [];
@@ -77,8 +58,7 @@ class Media extends AbstractDelivery
         );
 
         $embedMedia['title'] = $record->get_title();
-        $embedMedia['url'] = (string)$subdef->get_permalink()
-            ->get_url();
+        $embedMedia['url'] = (string)$subdef->get_permalink()->get_url();
 
         switch ($record->getType()) {
             case 'video':
@@ -90,8 +70,7 @@ class Media extends AbstractDelivery
                 $embedMedia['coverUrl'] = $baseUrl . $thumbnail->get_url();
                 $embedMedia['source'] = [];
                 $embedMedia['source'][] = [
-                    'url'  => $subdef->get_permalink()
-                        ->get_url(),
+                    'url'  => (string)$subdef->get_permalink()->get_url(),
                     'type' => $subdef->get_mime(),
                 ];
                 $embedMedia['dimensions'] = $this->getDimensions($subdef);
@@ -101,7 +80,7 @@ class Media extends AbstractDelivery
                     '<iframe width="%d" height="%d" src="%s" frameborder="0" allowfullscreen></iframe>',
                     $embedMedia['dimensions']['width'],
                     $embedMedia['dimensions']['height'],
-                    $this->getEmbedUrl($record, $subdefName)
+                    $this->getEmbedUrl($subdef)
                 );
                 break;
             case 'flexpaper':
@@ -123,8 +102,7 @@ class Media extends AbstractDelivery
                 $oembedMetaData['type'] = 'link';
                 $embedMedia['source'] = [];
                 $embedMedia['source'][] = [
-                    'url'  => (string)$subdef->get_permalink()
-                        ->get_url(),
+                    'url'  => (string)$subdef->get_permalink()->get_url(),
                     'type' => $subdef->get_mime()
                 ];
                 $embedMedia['coverUrl'] = $baseUrl . $substitutionPath;
@@ -138,9 +116,7 @@ class Media extends AbstractDelivery
             default:
                 $oembedMetaData['type'] = 'photo';
                 $ogMetaData['og:type'] = 'image';
-                $ogMetaData['og:image'] = (string)$record->get_preview()
-                    ->get_permalink()
-                    ->get_url();
+                $ogMetaData['og:image'] = (string)$record->get_preview()->get_permalink()->get_url();
                 $ogMetaData['og:image:width'] = $subdef->get_width();
                 $ogMetaData['og:image:height'] = $subdef->get_height();
 
@@ -154,7 +130,6 @@ class Media extends AbstractDelivery
             ],
             'oembedMetaData' => $oembedMetaData,
             'ogMetaData'     => $ogMetaData,
-            'oembedUrl'      => $oembedUrl,
             'embedMedia'     => $embedMedia,
         ];
     }
@@ -199,23 +174,11 @@ class Media extends AbstractDelivery
         ];
     }
 
-    /**
-     * Return embed Url
-     * @param \record_adapter $record
-     * @param string          $subdefName
-     * @return string
-     */
-    public function getEmbedUrl(\record_adapter $record, $subdefName)
+    public function getEmbedUrl(\media_subdef $subdef)
     {
-        $sbas_id = $record->getDataboxId();
-        $request = $this->app['request'];
-        $baseUrl = $request->getSchemeAndHttpHost() . $request->getBaseUrl();
+        $urlGenerator = $this->app['url_generator'];
 
-        $subdef = $record->get_subdef($subdefName);
-        $token = $subdef->get_permalink()
-            ->get_token();
-
-        return $baseUrl . '/embed/' . $sbas_id . '/' . $record->getRecordId() . '/' . $subdefName . '/?token=' . $token;
+        return $urlGenerator->generate('alchemy_embed_view', ['url' => (string)$subdef->get_permalink()->get_url()]);
     }
 
     /**

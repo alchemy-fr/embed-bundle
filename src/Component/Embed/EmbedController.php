@@ -10,92 +10,60 @@
 
 namespace Alchemy\Embed\Embed;
 
-use Alchemy\Embed\Controller\BaseController;
 use Alchemy\Embed\Media\Media;
 use Alchemy\Phrasea\Application;
-use Alchemy\Phrasea\Authentication\ACLProvider;
-use Alchemy\Phrasea\Authentication\Authenticator;
 use record_adapter;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
-class EmbedController extends BaseController
+class EmbedController
 {
-    /** @var ACLProvider */
-    private $acl;
-    /** @var Authenticator */
-    private $authentication;
+    /** @var Application */
+    private $app;
     /** @var Media */
     private $mediaService;
 
-    public function __construct(Application $app, ACLProvider $acl, Authenticator $authenticator, Media $mediaService)
+    public function __construct(Application $app, Media $mediaService)
     {
-        parent::__construct($app);
-
-        $this->acl = $acl;
-        $this->authentication = $authenticator;
+        $this->app = $app;
         $this->mediaService = $mediaService;
     }
 
-    public function testIframeAction(Request $request, $sbas_id, $record_id, $subdefName)
+    public function viewAction(Request $request)
     {
-        $embedUrl = $this->app->url('alchemy_embed_view', [
-            'sbas_id' => $sbas_id,
-            'record_id' => $record_id,
-            'subdefName' => $subdefName,
-            'token' => $request->query->get('token'),
-        ]);
-        $view = '@alchemy_embed/test/iframe.html.twig';
+        $url = $request->query->get('url');
 
-        return $this->app['twig']->render($view, [
-          'embedUrl' => $embedUrl
-        ]);
-    }
-
-    public function optionsAction(Request $request, $sbas_id, $record_id)
-    {
-        $databox = $this->mediaService->getDatabox($sbas_id);
-        $token = $request->query->get('token');
-        $record = $this->mediaService->retrieveRecord($databox, $token, $record_id, $request->get('subdef', 'thumbnail'));
-
-        if (null === $record) {
-            throw new NotFoundHttpException("Record not found");
+        $baseUri = $request->getUriForPath('');
+        if (strncmp($url, $baseUri, strlen($baseUri)) !== 0) {
+            throw new BadRequestHttpException('Given url does not apply to this server instance');
         }
 
-        return new Response('', 200, ['Allow' => 'GET, HEAD, OPTIONS']);
-    }
+        $resourceRequest = Request::create($url, 'GET', [], $request->cookies->all(), [], $request->server->all());
+        if ($request->getSession()) {
+            $resourceRequest->setSession($request->getSession());
+        }
 
+        $urlParams = $this->app['url_matcher']->matchRequest($resourceRequest);
 
-    /**
-     * @param Request $request
-     * @param $sbas_id
-     * @param $record_id
-     * @param $subdefName
-     * @return mixed
-     */
-    public function viewAction(Request $request, $sbas_id, $record_id, $subdefName)
-    {
-        $databox = $this->mediaService->getDatabox($sbas_id);
-        $token = $request->query->get('token');
+        $media = $this->app['alchemy_embed.resource_resolver']->resolve($resourceRequest, $urlParams['_route'], $urlParams);
 
+        $subdef = $media->getResource();
 
-        $record = $this->mediaService->retrieveRecord($databox, $token, $record_id, $subdefName);
-        $metaData = $this->mediaService->getMetaData($request, $record, $subdefName);
+        $metaData = $this->mediaService->getMetaData($request, $subdef->get_record(), $subdef->get_name());
 
         // is autoplay active?
         $metaData['options']['autoplay'] = $request->get('autoplay') == '1' ? true : false;
 
-        return $this->renderEmbed($record, $metaData);
+        return $this->renderEmbed($subdef->get_record(), $metaData);
     }
 
     /**
      * Render Embed Twig view
-     * @param $record record_adapter
-     * @param $metaData
+     * @param record_adapter $record
+     * @param array $metaData
      * @return mixed
      */
-    public function renderEmbed(record_adapter $record, $metaData)
+    public function renderEmbed(record_adapter $record, array $metaData)
     {
         // load predefined opts:
         $config = [
@@ -136,8 +104,7 @@ class EmbedController extends BaseController
                             $subdef = $record->get_subdef('document');
 
                             $config['document_player'] = 'pdfjs';
-                            $metaData['embedMedia']['url'] = (string)$subdef->get_permalink()
-                                ->get_url();
+                            $metaData['embedMedia']['url'] = (string)$subdef->get_permalink()->get_url();
                         }
                     }
                 }
@@ -158,38 +125,4 @@ class EmbedController extends BaseController
 
         return $this->app['twig']->render('@alchemy_embed/iframe/'.$template, $twigOptions);
     }
-
-    /**
-     * Get record by sbasId, recordId and subdefName
-     * @param Request $request
-     * @return mixed - rendered twig
-     */
-    public function viewDatafileAction(Request $request)
-    {
-        $urlRequest = Request::create($request->get('url'));
-
-        $baseUrl = $request->getBaseUrl();
-        $matchingUrl = $urlRequest->getPathInfo();
-
-        if (!empty($baseUrl)) {
-            if (0 === strpos($matchingUrl, $baseUrl)) {
-                $matchingUrl = substr($matchingUrl, strlen($baseUrl));
-            }
-        }
-
-        $resourceParams = $this->app['url_matcher']->match($matchingUrl);
-
-        $subdefId = $resourceParams['sbas_id'];
-        $subdefName = $resourceParams['subdef'];
-        $recordId = $resourceParams['record_id'];
-
-        $record = new record_adapter($this->app, $subdefId, $recordId);
-        $metaDatas = $this->mediaService->getMetaData($request, $record, $subdefName);
-
-        // is autoplay active?
-        $metaDatas['options']['autoplay'] = $request->get('autoplay') == '1' ? true : false;
-
-        return $this->renderEmbed($record, $metaDatas);
-    }
-
 }

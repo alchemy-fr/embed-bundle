@@ -10,39 +10,26 @@
 
 namespace Alchemy\Embed\Oembed;
 
-use Alchemy\Embed\Controller\BaseController;
 use Alchemy\Embed\Media\Media;
 use Alchemy\Phrasea\Application;
-use Alchemy\Phrasea\Authentication\ACLProvider;
-use Alchemy\Phrasea\Authentication\Authenticator;
 use Symfony\Component\HttpFoundation\Request;
 
-class OembedController extends BaseController
+class OembedController
 {
-    /** @var ACLProvider */
-    private $acl;
-    /** @var \appbox */
-    private $appbox;
-    /** @var Authenticator */
-    private $authentication;
+    /** @var Application */
+    private $app;
     /** @var Media */
     private $mediaService;
 
     /**
      * OembedController constructor.
      * @param Application $app
-     * @param \appbox $appbox
-     * @param ACLProvider $acl
-     * @param Authenticator $authenticator
+     * @param Media       $media
      */
-    public function __construct(Application $app, \appbox $appbox, ACLProvider $acl, Authenticator $authenticator)
+    public function __construct(Application $app, Media $media)
     {
-        parent::__construct($app);
-
-        $this->appbox = $appbox;
-        $this->acl = $acl;
-        $this->authentication = $authenticator;
-        $this->mediaService = new Media($this->app, $this->app->getApplicationBox(), $this->app['acl'], $this->app->getAuthenticator());
+        $this->app = $app;
+        $this->mediaService = $media;
     }
 
     /**
@@ -62,6 +49,9 @@ class OembedController extends BaseController
         }
 
         $resourceParams = $this->app['url_matcher']->match($matchingUrl);
+
+        $resource = $this->app['alchemy_embed.resolver.resource']->resolve($resourceParams);
+
         $databox = $this->getDatabox($resourceParams['sbas_id']);
         $token = $urlRequest->get('token');
 

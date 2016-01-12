@@ -10,7 +10,7 @@
         <meta property="{{ metaKey }}" content="{{ metaValue }}"/>
     {% endfor %}
     <link type="text/css" rel="stylesheet" href="/assets/vendors/alchemy-embed-medias/theme/main.css">
-    <link rel="alternate" href="{{ oembedUrl }}?url={{ app.request.uri }}" type="application/json+oembed" title="{{ local_title | default('') }}">
+    <link rel="alternate" href="{{ url('alchemy_embed_oembed', { url: app.request.uri }) }}" type="application/json+oembed" title="{{ local_title | default('') }}">
 
     {% block stylesheet %}{% endblock %}
     {% block icon %}{% endblock %}
