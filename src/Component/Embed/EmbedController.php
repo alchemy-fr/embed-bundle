@@ -151,7 +151,7 @@ class EmbedController
      * @param string  $url
      * @return Request
      */
-    private function createResourceRequest(Request $request, $url)
+    public function createResourceRequest(Request $request, $url)
     {
         $baseUri = $request->getUriForPath('');
 
@@ -171,7 +171,7 @@ class EmbedController
      * @param Request $resourceRequest
      * @return \Alchemy\Embed\Media\MediaInformation
      */
-    private function matchResourceRequest(Request $resourceRequest)
+    public function matchResourceRequest(Request $resourceRequest)
     {
         $urlParams = $this->app['url_matcher']->matchRequest($resourceRequest);
 
