@@ -131,8 +131,8 @@ class EmbedController
         $exportedMeta = [
             'version'      => '1.0',
             'type'         => $metaData['oembedMetaData']['type'],
-            'width'        => $metaData['ogMetaData']['og:image:width'],
-            'height'       => $metaData['ogMetaData']['og:image:height'],
+            'width'        => $metaData['embedMedia']['dimensions']['width'],
+            'height'       => $metaData['embedMedia']['dimensions']['height'],
             'title'        => $subdef->get_record()->get_title(),
             'url'          => $metaData['embedMedia']['url'],
             // 'provider_name'=>'$this->app['request']->',

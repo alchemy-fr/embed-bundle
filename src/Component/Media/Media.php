@@ -46,7 +46,7 @@ class Media extends AbstractDelivery
     {
         $subdef = $record->get_subdef($subdefName);
         $thumbnail = $record->get_thumbnail();
-        $baseUrl = $request->getUriForPath('');
+        $baseUrl = $request->getSchemeAndHttpHost() . $request->getBasePath();
 
         $ogMetaData = [];
         $embedMedia = [];
