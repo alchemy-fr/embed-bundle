@@ -180,46 +180,4 @@ class Media extends AbstractDelivery
 
         return $urlGenerator->generate('alchemy_embed_view', ['url' => (string)$subdef->get_permalink()->get_url()]);
     }
-
-    /**
-     * @param \databox $databox
-     * @param string   $token
-     * @param int      $record_id
-     * @param string   $subdef
-     * @return \record_adapter
-     */
-    public function retrieveRecord(\databox $databox, $token, $record_id, $subdef)
-    {
-        try {
-            $record = $databox->get_record($record_id);
-            $subDefinition = $record->get_subdef($subdef);
-            $permalink = $subDefinition->get_permalink();
-        } catch (\Exception $exception) {
-            throw new NotFoundHttpException('Wrong token.', $exception);
-        }
-
-        if (null === $permalink || !$permalink->get_is_activated()) {
-            throw new NotFoundHttpException('This token has been disabled.');
-        }
-
-        $feedItemsRepository = $this->app['repo.feed-items'];
-        if (in_array($subdef, [\databox_subdef::CLASS_PREVIEW, \databox_subdef::CLASS_THUMBNAIL])
-            && $feedItemsRepository->isRecordInPublicFeed($databox->get_sbas_id(), $record_id)
-        ) {
-            return $record;
-        } elseif ($permalink->get_token() == (string)$token) {
-            return $record;
-        }
-
-        throw new NotFoundHttpException('Wrong token.');
-    }
-
-    /**
-     * @param int $databoxId
-     * @return \databox
-     */
-    public function getDatabox($databoxId)
-    {
-        return $this->appbox->get_databox((int)$databoxId);
-    }
 }
