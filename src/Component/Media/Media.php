@@ -11,30 +11,11 @@
 namespace Alchemy\Embed\Media;
 
 use Alchemy\Phrasea\Application;
-use Alchemy\Phrasea\Authentication\ACLProvider;
-use Alchemy\Phrasea\Authentication\Authenticator;
 use Alchemy\Phrasea\Controller\AbstractDelivery;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Media extends AbstractDelivery
 {
-    /** @var ACLProvider */
-    private $acl;
-    /** @var \appbox */
-    private $appbox;
-    /** @var Authenticator */
-    private $authentication;
-
-    public function __construct(Application $app, \appbox $appbox, ACLProvider $acl, Authenticator $authenticator)
-    {
-        parent::__construct($app);
-
-        $this->appbox = $appbox;
-        $this->acl = $acl;
-        $this->authentication = $authenticator;
-    }
-
     /**
      * Return all available metaData
      * @param Request         $request

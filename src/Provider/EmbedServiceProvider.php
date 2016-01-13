@@ -37,7 +37,7 @@ class EmbedServiceProvider implements ServiceProviderInterface, ControllerProvid
 
         $app['alchemy_embed.service.media'] = $app->share(
           function(Application $app) {
-              return new Media($app, $app->getApplicationBox(), $app['acl'], $app->getAuthenticator());
+              return new Media($app);
           }
         );
 
