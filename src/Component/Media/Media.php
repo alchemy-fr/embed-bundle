@@ -16,17 +16,26 @@ use Symfony\Component\HttpFoundation\Request;
 
 class Media extends AbstractDelivery
 {
+    public function createMediaInformationFromResourceAndRoute(\media_subdef $subdef, $route, array $parameters = [])
+    {
+        $urlGenerator = $this->app['url_generator'];
+
+        $url = $urlGenerator->generate($route, $parameters, $urlGenerator::ABSOLUTE_URL);
+
+        return new MediaInformation($subdef, Request::create($url), $route, $parameters);
+    }
+
     /**
      * Return all available metaData
-     * @param Request         $request
-     * @param \record_adapter $record
-     * @param string          $subdefName
+     * @param MediaInformation $information
      * @return array
      */
-    public function getMetaData(Request $request, $record, $subdefName)
+    public function getMetaData(MediaInformation $information)
     {
-        $subdef = $record->get_subdef($subdefName);
+        $subdef = $information->getResource();
+        $record = $subdef->get_record();
         $thumbnail = $record->get_thumbnail();
+        $request = $information->getResourceRequest();
         $baseUrl = $request->getSchemeAndHttpHost() . $request->getBasePath();
 
         $ogMetaData = [];
@@ -38,8 +47,10 @@ class Media extends AbstractDelivery
             str_replace('/', '_', $record->getMimeType())
         );
 
+        $resourceUrl = $information->getUrl();
+
         $embedMedia['title'] = $record->get_title();
-        $embedMedia['url'] = (string)$subdef->get_permalink()->get_url();
+        $embedMedia['url'] = $resourceUrl;
 
         switch ($record->getType()) {
             case 'video':
@@ -51,7 +62,7 @@ class Media extends AbstractDelivery
                 $embedMedia['coverUrl'] = $baseUrl . $thumbnail->get_url();
                 $embedMedia['source'] = [];
                 $embedMedia['source'][] = [
-                    'url'  => (string)$subdef->get_permalink()->get_url(),
+                    'url'  => $resourceUrl,
                     'type' => $subdef->get_mime(),
                 ];
                 $embedMedia['dimensions'] = $this->getDimensions($subdef);
@@ -61,7 +72,7 @@ class Media extends AbstractDelivery
                     '<iframe width="%d" height="%d" src="%s" frameborder="0" allowfullscreen></iframe>',
                     $embedMedia['dimensions']['width'],
                     $embedMedia['dimensions']['height'],
-                    $this->getEmbedUrl($subdef)
+                    $this->getEmbedUrl($resourceUrl)
                 );
                 break;
             case 'flexpaper':
@@ -83,7 +94,7 @@ class Media extends AbstractDelivery
                 $oembedMetaData['type'] = 'link';
                 $embedMedia['source'] = [];
                 $embedMedia['source'][] = [
-                    'url'  => (string)$subdef->get_permalink()->get_url(),
+                    'url'  => $resourceUrl,
                     'type' => $subdef->get_mime()
                 ];
                 $embedMedia['coverUrl'] = $baseUrl . $substitutionPath;
@@ -155,10 +166,10 @@ class Media extends AbstractDelivery
         ];
     }
 
-    public function getEmbedUrl(\media_subdef $subdef)
+    private function getEmbedUrl($url)
     {
         $urlGenerator = $this->app['url_generator'];
 
-        return $urlGenerator->generate('alchemy_embed_view', ['url' => (string)$subdef->get_permalink()->get_url()]);
+        return $urlGenerator->generate('alchemy_embed_view', ['url' => $url]);
     }
 }

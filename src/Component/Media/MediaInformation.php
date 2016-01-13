@@ -9,18 +9,25 @@
  */
 namespace Alchemy\Embed\Media;
 
+use Symfony\Component\HttpFoundation\Request;
+
 final class MediaInformation
 {
     /** @var \media_subdef */
     private $resource;
-    private $url;
-    private $embedUrl;
+    /** @var Request */
+    private $resourceRequest;
+    /** @var string */
+    private $route;
+    /** @var array */
+    private $routeParameters;
 
-    public function __construct(\media_subdef $resource, $url, $embedUrl)
+    public function __construct(\media_subdef $resource, Request $resourceRequest, $route, array $routeParameters)
     {
         $this->resource = $resource;
-        $this->url = $url;
-        $this->embedUrl = $embedUrl;
+        $this->resourceRequest = $resourceRequest;
+        $this->route = $route;
+        $this->routeParameters = $routeParameters;
     }
 
     /**
@@ -32,18 +39,34 @@ final class MediaInformation
     }
 
     /**
-     * @return string
+     * @return Request
      */
-    public function getUrl()
+    public function getResourceRequest()
     {
-        return $this->url;
+        return $this->resourceRequest;
     }
 
     /**
      * @return string
      */
-    public function getEmbedUrl()
+    public function getRoute()
     {
-        return $this->embedUrl;
+        return $this->route;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRouteParameters()
+    {
+        return $this->routeParameters;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->resourceRequest->getUri();
     }
 }

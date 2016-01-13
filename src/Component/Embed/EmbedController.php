@@ -11,8 +11,8 @@
 namespace Alchemy\Embed\Embed;
 
 use Alchemy\Embed\Media\Media;
+use Alchemy\Embed\Media\MediaInformation;
 use Alchemy\Phrasea\Application;
-use record_adapter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
@@ -34,27 +34,25 @@ class EmbedController
         $url = $request->query->get('url');
 
         $resourceRequest = $this->createResourceRequest($request, $url);
-
         $media = $this->matchResourceRequest($resourceRequest);
-
-        $subdef = $media->getResource();
-
-        $metaData = $this->mediaService->getMetaData($request, $subdef->get_record(), $subdef->get_name());
+        $metaData = $this->mediaService->getMetaData($media);
 
         // is autoplay active?
         $metaData['options']['autoplay'] = $request->get('autoplay') == '1' ? true : false;
 
-        return $this->renderEmbed($subdef->get_record(), $metaData);
+        return $this->renderEmbed($media, $metaData);
     }
 
     /**
      * Render Embed Twig view
-     * @param record_adapter $record
-     * @param array $metaData
-     * @return mixed
+     * @param MediaInformation $mediaInformation
+     * @param array            $metaData
+     * @return string
      */
-    public function renderEmbed(record_adapter $record, array $metaData)
+    public function renderEmbed(MediaInformation $mediaInformation, array $metaData)
     {
+        $record = $mediaInformation->getResource()->get_record();
+
         // load predefined opts:
         $config = [
             'video_autoplay' => false,
@@ -123,17 +121,14 @@ class EmbedController
         $resourceRequest = $this->createResourceRequest($request, $url);
 
         $media = $this->matchResourceRequest($resourceRequest);
-
-        $subdef = $media->getResource();
-
-        $metaData = $this->mediaService->getMetaData($request, $subdef->get_record(), $subdef->get_name());
+        $metaData = $this->mediaService->getMetaData($media);
 
         $exportedMeta = [
             'version'      => '1.0',
             'type'         => $metaData['oembedMetaData']['type'],
             'width'        => $metaData['embedMedia']['dimensions']['width'],
             'height'       => $metaData['embedMedia']['dimensions']['height'],
-            'title'        => $subdef->get_record()->get_title(),
+            'title'        => $metaData['embedMedia']['title'],
             'url'          => $metaData['embedMedia']['url'],
             // 'provider_name'=>'$this->app['request']->',
             'provider_url' => $request->getSchemeAndHttpHost()
