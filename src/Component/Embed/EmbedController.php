@@ -155,6 +155,9 @@ class EmbedController
     {
         $baseUri = $request->getUriForPath('');
 
+        if ($url{0} === '/') {
+            $url = $request->getSchemeAndHttpHost() . $url;
+        }
         if (strncmp($url, $baseUri, strlen($baseUri)) !== 0) {
             throw new BadRequestHttpException('Given url does not apply to this server instance');
         }
