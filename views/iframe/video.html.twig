@@ -1,5 +1,5 @@
 {% extends "@alchemy_embed/iframe/layout.html.twig" %}
-{% set local_title = embedMedia.title %}
+
 {% block stylesheet %}
     {% if video_player == 'videojs' %}
     <link type="text/css" rel="stylesheet" href="/assets/vendors/alchemy-embed-medias/players/videojs/skin/videojs.css">
@@ -7,6 +7,7 @@
     <link type="text/css" rel="stylesheet" href="/assets/vendors/alchemy-embed-medias/players/flowplayer/skin/flowplayer.css">
     {% endif %}
 {% endblock %}
+
 {% block javascript %}
     {% if video_player == 'videojs' %}
     <!--[if lt IE 9]>
@@ -14,6 +15,7 @@
     <![endif]-->
     {% endif %}
 {% endblock %}
+
 {% block footerScripts %}
     <script>
         var envConfiguration = (function () {
@@ -41,7 +43,8 @@
     {% else %}
         <script type="text/javascript" src="/assets/vendors/alchemy-embed-medias/video_flowplayer.js"></script>
     {% endif %}
-    {% endblock %}
-    {% block content %}
+{% endblock %}
+
+{% block content %}
     <div class="video-player"></div>
 {% endblock %}

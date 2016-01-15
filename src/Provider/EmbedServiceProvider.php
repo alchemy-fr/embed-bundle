@@ -11,9 +11,10 @@
 namespace Alchemy\EmbedProvider;
 
 use Alchemy\Embed\Embed\EmbedController;
+use Alchemy\Embed\Media\ChainedResourceResolver;
 use Alchemy\Embed\Media\Media;
+use Alchemy\Embed\Oembed\OembedController;
 use Alchemy\Phrasea\Application;
-use Alchemy\Phrasea\Controller\LazyLocator;
 use Silex\Application as SilexApplication;
 use Silex\ControllerCollection;
 use Silex\ControllerProviderInterface;
@@ -23,17 +24,20 @@ class EmbedServiceProvider implements ServiceProviderInterface, ControllerProvid
 {
     public function register(SilexApplication $app)
     {
+        $app['alchemy_embed.resource_resolvers'] = new \Pimple();
+        $app['alchemy_embed.resource_resolver'] = $app->share(function (Application $app) {
+            return new ChainedResourceResolver($app['alchemy_embed.resource_resolvers']);
+        });
+
         $app['alchemy_embed.controller.embed'] = $app->share(
           function (Application $app) {
-              return (new EmbedController($app, $app->getApplicationBox(), $app['acl'], $app->getAuthenticator(), $app['alchemy_embed.service.media']))
-                ->setDataboxLoggerLocator($app['phraseanet.logger'])
-                ->setDelivererLocator(new LazyLocator($app, 'phraseanet.file-serve'));
+              return new EmbedController($app, $app['alchemy_embed.service.media']);
           }
         );
 
         $app['alchemy_embed.service.media'] = $app->share(
           function(Application $app) {
-              return new Media($app, $app->getApplicationBox(), $app['acl'], $app->getAuthenticator());
+              return new Media($app);
           }
         );
 
@@ -55,25 +59,14 @@ class EmbedServiceProvider implements ServiceProviderInterface, ControllerProvid
         /** @var ControllerCollection $controllers */
         $controllers = $app['controllers_factory'];
 
+        $controllers->get('/', 'alchemy_embed.controller.embed:viewAction')
+            ->assert('url', '.*')
+            ->bind('alchemy_embed_view');
+
         $controllers
-          ->assert('sbas_id', '\d+')
-          ->assert('record_id', '\d+');
-
-        // http://phraseanet-php55-nginx/index_dev.php/embed/1/46/preview/FTV_VOEUX2015_BD_preview.mp4?token=rxszUQMMQDFPs1xAsvrz2sHzduUnvieYsSbG6XoEYFAJAo34EEsjMP8CRaJceUKY
-        $controllers->get('/{sbas_id}/{record_id}/{subdefName}/', 'alchemy_embed.controller.embed:viewAction')
-          ->bind('alchemy_embed_view');
-
-        $controllers->match('/{sbas_id}/{record_id}/{subdefName}/', 'alchemy_embed.controller.embed:optionsAction')
-          ->method('OPTIONS');
-
-
-        $controllers->get('/iframe/{sbas_id}/{record_id}/{subdefName}/', 'alchemy_embed.controller.embed:testIframeAction')
-          ->bind('alchemy_embed_iframe');
-
-        $controllers->get('/datafiles/', 'alchemy_embed.controller.embed:viewDatafileAction')
-          ->bind('alchemy_embed_datafile');
-
-
+            ->get('/oembed/', 'alchemy_embed.controller.embed:oembedAction')
+            ->assert('url', '.*')
+            ->bind('alchemy_embed_oembed');
 
         return $controllers;
     }

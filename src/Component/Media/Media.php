@@ -11,184 +11,128 @@
 namespace Alchemy\Embed\Media;
 
 use Alchemy\Phrasea\Application;
-use Alchemy\Phrasea\Authentication\ACLProvider;
-use Alchemy\Phrasea\Authentication\Authenticator;
 use Alchemy\Phrasea\Controller\AbstractDelivery;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\Request;
 
 class Media extends AbstractDelivery
 {
-    /** @var ACLProvider */
-    private $acl;
-    /** @var \appbox */
-    private $appbox;
-    /** @var Authenticator */
-    private $authentication;
-
-    public function __construct(Application $app, \appbox $appbox, ACLProvider $acl, Authenticator $authenticator)
+    public function createMediaInformationFromResourceAndRoute(\media_subdef $subdef, $route, array $parameters = [])
     {
-        parent::__construct($app);
+        $urlGenerator = $this->app['url_generator'];
 
-        $this->appbox = $appbox;
-        $this->acl = $acl;
-        $this->authentication = $authenticator;
+        $url = $urlGenerator->generate($route, $parameters, $urlGenerator::ABSOLUTE_URL);
+
+        return new MediaInformation($subdef, Request::create($url), $route, $parameters);
     }
 
     /**
-     * @param $sbasId
-     * @param $recordId
-     * @return \record_adapter
-     */
-    public function getRecord($sbasId, $recordId)
-    {
-        try {
-            $record = new \record_adapter($this->app, $sbasId, $recordId);
-        } catch (\Exception $exception) {
-            throw new NotFoundHttpException('Record Not Found.', $exception);
-        }
-
-        return $record;
-    }
-
-    /**
-     * Return embed Url
-     * @param $record
-     * @param $subdefName
-     * @return string
-     */
-    public function getEmbedUrl($record, $subdefName)
-    {
-        $sbas_id = $record->getDataboxId();
-        $baseUrl = $this->app['request']->getSchemeAndHttpHost().$this->app['request']->getBaseUrl();
-
-        $subdef = $record->get_subdef($subdefName);
-        $token = $subdef->get_permalink()->get_token();
-
-        return $baseUrl.'/embed/'.$sbas_id.'/'.$record->getRecordId().'/'.$subdefName.'/?token='.$token;
-    }
-
-    /**
-     * Return all available metaDatas
-     * @param $record
-     * @param $subdefName
+     * Return all available metaData
+     * @param MediaInformation $information
      * @return array
      */
-    public function getMetaDatas($record, $subdefName)
+    public function getMetaData(MediaInformation $information)
     {
-        $subdef = $record->get_subdef($subdefName);
+        $subdef = $information->getResource();
+        $record = $subdef->get_record();
         $thumbnail = $record->get_thumbnail();
-        $preview = $record->get_preview();
-        $baseUrl = $this->app['request']->getSchemeAndHttpHost();
-        $baseUrlPath = $baseUrl.$this->app['request']->getBaseUrl();
-        $oembedUrl = $baseUrlPath.'/oembed/';
+        $request = $information->getResourceRequest();
+        $baseUrl = $request->getSchemeAndHttpHost() . $request->getBasePath();
 
-
-        $ogMetaDatas = [];
+        $ogMetaData = [];
         $embedMedia = [];
-        $oembedMetaDatas = [];
+        $oembedMetaData = [];
 
-        $substitutionPath = sprintf('/assets/common/images/icons/substitution/%s.png',
-          str_replace('/', '_', $record->getMimeType())
+        $substitutionPath = sprintf(
+            '/assets/common/images/icons/substitution/%s.png',
+            str_replace('/', '_', $record->getMimeType())
         );
 
-        // app.getAuthenticator().isAuthenticated() ? thumbnail.get_url() : thumbnail.get_permalink().get_url()
+        $resourceUrl = $information->getUrl();
 
         $embedMedia['title'] = $record->get_title();
-        $embedMedia['url'] = (string)$subdef->get_permalink()->get_url();
+        $embedMedia['url'] = $resourceUrl;
+
         switch ($record->getType()) {
             case 'video':
-                $template = 'video.html.twig';
-                $ogMetaDatas['og:type'] = 'video.other';
-                $ogMetaDatas['og:image'] = $baseUrl.$thumbnail->get_url();
-                $ogMetaDatas['og:image:width'] = $thumbnail->get_width();
-                $ogMetaDatas['og:image:height'] = $thumbnail->get_height();
+                $ogMetaData['og:type'] = 'video.other';
+                $ogMetaData['og:image'] = $baseUrl . $thumbnail->get_url();
+                $ogMetaData['og:image:width'] = $thumbnail->get_width();
+                $ogMetaData['og:image:height'] = $thumbnail->get_height();
 
-                $embedMedia['coverUrl'] = $baseUrl.$thumbnail->get_url();
+                $embedMedia['coverUrl'] = $baseUrl . $thumbnail->get_url();
                 $embedMedia['source'] = [];
                 $embedMedia['source'][] = [
-                  'url' => $subdef->get_permalink()->get_url(),
-                  'type' => $subdef->get_mime()
+                    'url'  => $resourceUrl,
+                    'type' => $subdef->get_mime(),
                 ];
                 $embedMedia['dimensions'] = $this->getDimensions($subdef);
 
-                $oembedMetaDatas['type'] = 'video';
-                $oembedMetaDatas['html'] = '<iframe width="'.$embedMedia['dimensions']['width'].'" height="'.$embedMedia['dimensions']['height'].'" src="'.$this->getEmbedUrl($record,
-                    $subdefName).'" frameborder="0" allowfullscreen></iframe>';
+                $oembedMetaData['type'] = 'video';
+                $oembedMetaData['html'] = sprintf(
+                    '<iframe width="%d" height="%d" src="%s" frameborder="0" allowfullscreen></iframe>',
+                    $embedMedia['dimensions']['width'],
+                    $embedMedia['dimensions']['height'],
+                    $this->getEmbedUrl($resourceUrl)
+                );
                 break;
             case 'flexpaper':
             case 'document':
-                $ogMetaDatas['og:type'] = 'article';
-                $ogMetaDatas['og:image'] = $baseUrl.$thumbnail->get_url();
-                $ogMetaDatas['og:image:width'] = $thumbnail->get_width();
-                $ogMetaDatas['og:image:height'] = $thumbnail->get_height();
+                $ogMetaData['og:type'] = 'article';
+                $ogMetaData['og:image'] = $baseUrl . $thumbnail->get_url();
+                $ogMetaData['og:image:width'] = $thumbnail->get_width();
+                $ogMetaData['og:image:height'] = $thumbnail->get_height();
 
-                $oembedMetaDatas['type'] = 'link';
+                $oembedMetaData['type'] = 'link';
                 $embedMedia['dimensions'] = $this->getDimensions($subdef);
                 break;
             case 'audio':
-                $ogMetaDatas['og:type'] = 'music.song';
-                $ogMetaDatas['og:image'] = $baseUrl.$substitutionPath;
-                $ogMetaDatas['og:image:width'] = $thumbnail->get_width();
-                $ogMetaDatas['og:image:height'] = $thumbnail->get_height();
+                $ogMetaData['og:type'] = 'music.song';
+                $ogMetaData['og:image'] = $baseUrl . $substitutionPath;
+                $ogMetaData['og:image:width'] = $thumbnail->get_width();
+                $ogMetaData['og:image:height'] = $thumbnail->get_height();
 
-
-                $oembedMetaDatas['type'] = 'link';
+                $oembedMetaData['type'] = 'link';
                 $embedMedia['source'] = [];
                 $embedMedia['source'][] = [
-                  'url' => (string)$subdef->get_permalink()->get_url(),
-                  'type' => $subdef->get_mime()
+                    'url'  => $resourceUrl,
+                    'type' => $subdef->get_mime()
                 ];
-                $embedMedia['coverUrl'] = $baseUrl.$substitutionPath;
+                $embedMedia['coverUrl'] = $baseUrl . $substitutionPath;
                 // set default dimension for player
                 $embedMedia['dimensions'] = [
-                  'width' => 320,
-                  'height' => 320,
-                  'top' => 0
+                    'width'  => 320,
+                    'height' => 320,
+                    'top'    => 0,
                 ];
                 break;
             default:
-                $oembedMetaDatas['type'] = 'photo';
-                $ogMetaDatas['og:type'] = 'image';
-                $ogMetaDatas['og:image'] = (string)$preview->get_permalink()->get_url();
-                $ogMetaDatas['og:image:width'] = $subdef->get_width();
-                $ogMetaDatas['og:image:height'] = $subdef->get_height();
+                $oembedMetaData['type'] = 'photo';
+                $ogMetaData['og:type'] = 'image';
+                $ogMetaData['og:image'] = (string)$record->get_preview()->get_permalink()->get_url();
+                $ogMetaData['og:image:width'] = $subdef->get_width();
+                $ogMetaData['og:image:height'] = $subdef->get_height();
 
                 $embedMedia['dimensions'] = $this->getDimensions($subdef);
                 break;
         }
 
         return [
-          'options' => [
-            'autoplay' => false
-          ],
-          'oembedMetaDatas' => $oembedMetaDatas,
-          'ogMetaDatas' => $ogMetaDatas,
-          'oembedUrl' => $oembedUrl,
-          'embedMedia' => $embedMedia
+            'options'        => [
+                'autoplay' => false,
+            ],
+            'oembedMetaData' => $oembedMetaData,
+            'ogMetaData'     => $ogMetaData,
+            'embedMedia'     => $embedMedia,
         ];
     }
 
-
     /**
      * Php raw implementation of thumbnails.html.twig macro
-     * @param $subdef
+     * @param \media_subdef $subdef
      * @return array
      */
-    private function getDimensions($subdef)
+    private function getDimensions(\media_subdef $subdef)
     {
-
-        $outWidth = $subdef->get_width();
-        $outHeight = $subdef->get_height();
-        if( $outWidth > 0 && $outHeight > 0) {
-
-
-        } else {
-            if( $outWidth > $outHeight) {
-
-            }
-        }
-
-
         $outWidth = $subdef->get_width();
         $outHeight = $subdef->get_height() | $outWidth;
 
@@ -197,12 +141,11 @@ class Media extends AbstractDelivery
 
         $subdefRatio = 0;
         $thumbnailRatio = $thumbnail_width / $thumbnail_height;
-        if( $outWidth > 0 && $outHeight > 0) {
+        if ($outWidth > 0 && $outHeight > 0) {
             $subdefRatio = $outWidth / $outHeight;
         }
 
         if ($thumbnailRatio > $subdefRatio) {
-
             if ($outWidth > $thumbnail_width) {
                 $outWidth = $thumbnail_width;
             }
@@ -215,60 +158,18 @@ class Media extends AbstractDelivery
             $outWidth = $outHeight * $thumbnail_width / $thumbnail_height;
             $top = (($outHeight - $outHeight) / 2);
         }
-        /*if( $outWidth === 0 || $outHeight === 0) {
-            $outWidth = 640;//$thumbnail_height;
-              $outHeight = 480;//$thumbnail_width;
-        }*/
-
 
         return [
-          'width' => round($outWidth),
-          'height' => round($outHeight),
-          'top' => $top
+            'width'  => round($outWidth),
+            'height' => round($outHeight),
+            'top'    => $top
         ];
     }
 
-    /**
-     * @param \databox $databox
-     * @param string $token
-     * @param int $record_id
-     * @param string $subdef
-     * @return \record_adapter
-     */
-    public function retrieveRecord(\databox $databox, $token, $record_id, $subdef)
+    private function getEmbedUrl($url)
     {
-        try {
-            $record = new \record_adapter($this->app, $databox->get_sbas_id(), $record_id);
+        $urlGenerator = $this->app['url_generator'];
 
-            $subDefinition = new \media_subdef($this->app, $record, $subdef);
-            $permalink = new \media_Permalink_Adapter($this->app, $databox, $subDefinition);
-        } catch (\Exception $exception) {
-            throw new NotFoundHttpException('Wrong token.', $exception);
-        }
-
-        if (!$permalink->get_is_activated()) {
-            throw new NotFoundHttpException('This token has been disabled.');
-        }
-
-        /** @var FeedItemRepository $feedItemsRepository */
-        $feedItemsRepository = $this->app['repo.feed-items'];
-        if (in_array($subdef, [\databox_subdef::CLASS_PREVIEW, \databox_subdef::CLASS_THUMBNAIL])
-          && $feedItemsRepository->isRecordInPublicFeed($databox->get_sbas_id(), $record_id)
-        ) {
-            return $record;
-        } elseif ($permalink->get_token() == (string)$token) {
-            return $record;
-        }
-
-        throw new NotFoundHttpException('Wrong token.');
-    }
-
-    /**
-     * @param int $databoxId
-     * @return \databox
-     */
-    public function getDatabox($databoxId)
-    {
-        return $this->appbox->get_databox((int)$databoxId);
+        return $urlGenerator->generate('alchemy_embed_view', ['url' => $url]);
     }
 }

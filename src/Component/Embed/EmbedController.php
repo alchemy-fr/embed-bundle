@@ -10,129 +10,49 @@
 
 namespace Alchemy\Embed\Embed;
 
-use Alchemy\Embed\Controller\BaseController;
 use Alchemy\Embed\Media\Media;
+use Alchemy\Embed\Media\MediaInformation;
 use Alchemy\Phrasea\Application;
-use Alchemy\Phrasea\Authentication\ACLProvider;
-use Alchemy\Phrasea\Authentication\Authenticator;
-use record_adapter;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
-class EmbedController extends BaseController
+class EmbedController
 {
-    /** @var ACLProvider */
-    private $acl;
-    /** @var \appbox */
-    private $appbox;
-    /** @var Authenticator */
-    private $authentication;
+    /** @var Application */
+    private $app;
     /** @var Media */
     private $mediaService;
 
-    public function __construct(Application $app, \appbox $appbox, ACLProvider $acl, Authenticator $authenticator, Media $mediaService)
+    public function __construct(Application $app, Media $mediaService)
     {
-        parent::__construct($app);
-
-        $this->appbox = $appbox;
-        $this->acl = $acl;
-        $this->authentication = $authenticator;
+        $this->app = $app;
         $this->mediaService = $mediaService;
     }
 
-    public function testIframeAction(Request $request, $sbas_id, $record_id, $subdefName)
+    public function viewAction(Request $request)
     {
-        $embedUrl = $this->app->url('alchemy_embed_view', [
-            'sbas_id' => $sbas_id,
-            'record_id' => $record_id,
-            'subdefName' => $subdefName,
-            'token' => $request->query->get('token'),
-        ]);
-        $view = '@alchemy_embed/test/iframe.html.twig';
+        $url = $request->query->get('url');
 
-        return $this->app['twig']->render($view, [
-          'embedUrl' => $embedUrl
-        ]);
-    }
-
-    public function optionsAction(Request $request, $sbas_id, $record_id)
-    {
-        $databox = $this->mediaService->getDatabox($sbas_id);
-        $token = $request->query->get('token');
-        $record = $this->mediaService->retrieveRecord($databox, $token, $record_id, $request->get('subdef', 'thumbnail'));
-
-        if (null === $record) {
-            throw new NotFoundHttpException("Record not found");
-        }
-
-        return new Response('', 200, ['Allow' => 'GET, HEAD, OPTIONS']);
-    }
-
-
-    /**
-     * @param Request $request
-     * @param $sbas_id
-     * @param $record_id
-     * @param $subdefName
-     * @return mixed
-     */
-    public function viewAction(Request $request, $sbas_id, $record_id, $subdefName)
-    {
-        $databox = $this->mediaService->getDatabox($sbas_id);
-        $token = $request->query->get('token');
-
-
-        $record = $this->mediaService->retrieveRecord($databox, $token, $record_id, $subdefName);
-        $metaDatas = $this->mediaService->getMetaDatas($record, $subdefName);
+        $resourceRequest = $this->createResourceRequest($request, $url);
+        $media = $this->matchResourceRequest($resourceRequest);
+        $metaData = $this->mediaService->getMetaData($media);
 
         // is autoplay active?
-        $metaDatas['options']['autoplay'] = $request->get('autoplay') == '1' ? true: false;
+        $metaData['options']['autoplay'] = $request->get('autoplay') == '1' ? true : false;
 
-        return $this->renderEmbed($record, $metaDatas);
-    }
-
-    /**
-     * Get record by sbasId, recordId and subdefName
-     * @param Request $request
-     * @return mixed - rendered twig
-     */
-    public function viewDatafileAction(Request $request)
-    {
-        $urlRequest = Request::create($request->get('url'));
-
-        $baseUrl = $request->getBaseUrl();
-        $matchingUrl = $urlRequest->getPathInfo();
-
-        if (!empty($baseUrl)) {
-            if (0 === strpos($matchingUrl, $baseUrl)) {
-                $matchingUrl = substr($matchingUrl, strlen($baseUrl));
-            }
-        }
-
-        $resourceParams = $this->app['url_matcher']->match($matchingUrl);
-
-        $subdefId = $resourceParams['sbas_id'];
-        $subdefName = $resourceParams['subdef'];
-        $recordId = $resourceParams['record_id'];
-
-        $record = new record_adapter($this->app, $subdefId, $recordId);
-        $metaDatas = $this->mediaService->getMetaDatas($record, $subdefName);
-
-        // is autoplay active?
-        $metaDatas['options']['autoplay'] = $request->get('autoplay') == '1' ? true: false;
-
-        return $this->renderEmbed($record, $metaDatas);
+        return $this->renderEmbed($media, $metaData);
     }
 
     /**
      * Render Embed Twig view
-     * @param $record record_adapter
-     * @param $metaDatas
-     * @return mixed
+     * @param MediaInformation $mediaInformation
+     * @param array            $metaData
+     * @return string
      */
-    public function renderEmbed(record_adapter $record, $metaDatas)
+    public function renderEmbed(MediaInformation $mediaInformation, array $metaData)
     {
+        $record = $mediaInformation->getResource()->get_record();
+
         // load predefined opts:
         $config = [
             'video_autoplay' => false,
@@ -153,7 +73,7 @@ class EmbedController extends BaseController
 
         switch ($record->getType()) {
             case 'video':
-                if( $metaDatas['options']['autoplay'] === true ) {
+                if ($metaData['options']['autoplay'] === true) {
                     $config['video_autoplay'] = true;
                 }
                 $template = 'video.html.twig';
@@ -172,14 +92,14 @@ class EmbedController extends BaseController
                             $subdef = $record->get_subdef('document');
 
                             $config['document_player'] = 'pdfjs';
-                            $metaDatas['embedMedia']['url'] = (string)$subdef->get_permalink()->get_url();
+                            $metaData['embedMedia']['url'] = (string)$subdef->get_permalink()->get_url();
                         }
                     }
                 }
 
                 break;
             case 'audio':
-                if( $metaDatas['options']['autoplay'] === true ) {
+                if ($metaData['options']['autoplay'] === true) {
                     $config['audio_autoplay'] = true;
                 }
                 $template = 'audio.html.twig';
@@ -189,9 +109,74 @@ class EmbedController extends BaseController
                 break;
         }
 
-        $twigOptions = array_merge($config, $metaDatas);
+        $twigOptions = array_merge($config, $metaData);
 
         return $this->app['twig']->render('@alchemy_embed/iframe/'.$template, $twigOptions);
     }
 
+    public function oembedAction(Request $request)
+    {
+        $url = $request->query->get('url');
+
+        $resourceRequest = $this->createResourceRequest($request, $url);
+
+        $media = $this->matchResourceRequest($resourceRequest);
+        $metaData = $this->mediaService->getMetaData($media);
+
+        $exportedMeta = [
+            'version'      => '1.0',
+            'type'         => $metaData['oembedMetaData']['type'],
+            'width'        => $metaData['embedMedia']['dimensions']['width'],
+            'height'       => $metaData['embedMedia']['dimensions']['height'],
+            'title'        => $metaData['embedMedia']['title'],
+            'url'          => $metaData['embedMedia']['url'],
+            // 'provider_name'=>'$this->app['request']->',
+            'provider_url' => $request->getSchemeAndHttpHost()
+        ];
+
+        if (array_key_exists('html', $metaData['oembedMetaData'])) {
+            $exportedMeta['html'] = $metaData['oembedMetaData']['html'];
+        }
+
+        return $this->app->json($exportedMeta);
+    }
+
+    /**
+     * @param Request $request
+     * @param string  $url
+     * @return Request
+     */
+    public function createResourceRequest(Request $request, $url)
+    {
+        $baseUri = $request->getUriForPath('');
+
+        if ($url{0} === '/') {
+            $url = $request->getSchemeAndHttpHost() . $url;
+        }
+        if (strncmp($url, $baseUri, strlen($baseUri)) !== 0) {
+            throw new BadRequestHttpException('Given url does not apply to this server instance');
+        }
+
+        $resourceRequest = Request::create($url, 'GET', [], $request->cookies->all(), [], $request->server->all());
+        if ($request->getSession()) {
+            $resourceRequest->setSession($request->getSession());
+        }
+
+        return $resourceRequest;
+    }
+
+    /**
+     * @param Request $resourceRequest
+     * @return \Alchemy\Embed\Media\MediaInformation
+     */
+    public function matchResourceRequest(Request $resourceRequest)
+    {
+        $urlParams = $this->app['url_matcher']->matchRequest($resourceRequest);
+
+        return $this->app['alchemy_embed.resource_resolver']->resolve(
+            $resourceRequest,
+            $urlParams['_route'],
+            $urlParams
+        );
+    }
 }

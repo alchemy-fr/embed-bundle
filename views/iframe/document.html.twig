@@ -1,5 +1,5 @@
 {% extends "@alchemy_embed/iframe/layout.html.twig" %}
-{% set local_title = embedMedia.title %}
+
 {% block stylesheet %}
     {% if document_player == 'flexpaper' %}
         <link type="text/css" rel="stylesheet" href="/assets/vendors/alchemy-embed-medias/players/flexpaper/skin/flexpaper.css">
@@ -8,6 +8,7 @@
     {% endif %}
     <script type="text/javascript" src="/assets/vendors/jquery/jquery{% if not app.debug %}.min{% endif %}.js"></script>
 {% endblock %}
+
 {% block footerScripts %}
     <script>
         var envConfiguration = (function () {
@@ -31,6 +32,7 @@
         <script type="text/javascript" src="/assets/vendors/alchemy-embed-medias/document_pdfjs.js"></script>
     {% endif %}
 {% endblock %}
+
 {% block content %}
     <div class="document-player"></div>
 {% endblock %}
