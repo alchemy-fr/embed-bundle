@@ -13,7 +13,6 @@ namespace Alchemy\EmbedProvider;
 use Alchemy\Embed\Embed\EmbedController;
 use Alchemy\Embed\Media\ChainedResourceResolver;
 use Alchemy\Embed\Media\Media;
-use Alchemy\Embed\Oembed\OembedController;
 use Alchemy\Phrasea\Application;
 use Silex\Application as SilexApplication;
 use Silex\ControllerCollection;
