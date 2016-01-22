@@ -32,6 +32,13 @@
                     sources: [{% for source in  embedMedia.source %}{
                         url: "{{source.url}}",
                         type: "{{source.type}}"
+                    }{% if not loop.last %},{% endif %}{% endfor %}],
+                    tracks: [{% for track in  embedMedia.track %}{
+                        url: "{{track.url}}",
+                        kind: "{{track.kind}}",
+                        srclang: "{{track.srclang}}",
+                        label: "{{track.label}}",
+                        default: {{track.default|json_encode}}
                     }{% if not loop.last %},{% endif %}{% endfor %}]
                 }
             };

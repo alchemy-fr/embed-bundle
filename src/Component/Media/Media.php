@@ -65,6 +65,11 @@ class Media extends AbstractDelivery
                     'url'  => $resourceUrl,
                     'type' => $subdef->get_mime(),
                 ];
+
+                $embedMedia['track'] = $this->getAvailableVideoTextTracks($information);
+
+
+
                 $embedMedia['dimensions'] = $this->getDimensions($subdef);
 
                 $oembedMetaData['type'] = 'video';
@@ -171,5 +176,106 @@ class Media extends AbstractDelivery
         $urlGenerator = $this->app['url_generator'];
 
         return $urlGenerator->generate('alchemy_embed_view', ['url' => $url]);
+    }
+
+    /**
+     * Fetch vtt files content if exists
+     * @param MediaInformation $media
+     * @return bool|string Video Text Track content
+     */
+    public function getVideoTextTrackContent(MediaInformation $media, $id)
+    {
+        $id = (int)$id;
+        $record = $media->getResource()->get_record();
+        $videoTextTrack = false;
+
+        if ($record->getType() === 'video') {
+            $databox = $record->getDatabox();
+            $vttIds = [];
+
+            // list available vtt ids
+            foreach ($databox->get_meta_structure() as $meta) {
+                if (preg_match('/^VideoTextTrack(.*)$/iu', $meta->get_name(), $foundParts)) {
+                    $vttIds[] = $meta->get_id();
+                }
+            }
+
+            // extract vtt content from ids
+            foreach ($record->get_caption()->get_fields(null, true) as $field) {
+
+                // if a category is matching, ensure it's vtt related
+                if (!in_array($id, $vttIds) || $id !== $field->get_meta_struct_id()) {
+                    continue;
+                }
+
+                foreach ($field->get_values() as $value) {
+                    // get vtt raw content
+                    $videoTextTrack = $value->getValue();
+                }
+            }
+        }
+
+        return $videoTextTrack;
+    }
+
+    /**
+     * list available video text tracks (only metadatas)
+     * @param MediaInformation $media
+     * @return array
+     */
+    public function getAvailableVideoTextTracks(MediaInformation $media)
+    {
+        $record = $media->getResource()->get_record();
+        $videoTextTrack = [];
+
+        if ($record->getType() === 'video') {
+            $databox = $record->getDatabox();
+            $vttIds = [];
+            $vttMetadata = [];
+
+            // extract vtt ids and labels
+            foreach ($databox->get_meta_structure() as $meta) {
+                if (preg_match('/^VideoTextTrack(.*)$/iu', $meta->get_name(), $foundParts)) {
+                    $vttIds[] = $meta->get_id();
+                    $vttMetadata[$meta->get_id()] = [
+                      'label' => empty($foundParts[1]) ? 'default' : $foundParts[1], //@todo translate
+                      'srclang' => empty($foundParts[1]) ? 'en' : strtolower($foundParts[1]),
+                    ];
+                }
+            }
+
+            // extract vtt metadatas from ids
+            $setAsDefault = true;
+            foreach ($record->get_caption()->get_fields(null, true) as $field) {
+
+                $metaStructId = $field->get_meta_struct_id();
+
+                if (!in_array($metaStructId, $vttIds)) {
+                    continue;
+                }
+
+                foreach ($field->get_values() as $value) {
+                    $videoTextTrack[] = array_merge([
+                      'url' => $this->getEmbedVttUrl($media->getUrl(), ['choice' => $metaStructId]),
+                      'default' => $setAsDefault ? true : false,
+                      'kind' => 'subtitles',
+                      'id' => $metaStructId
+                    ], $vttMetadata[$metaStructId]);
+                    $setAsDefault = false;
+
+                }
+            }
+        }
+
+        return $videoTextTrack;
+    }
+
+    private function getEmbedVttUrl($url, $options = [])
+    {
+        $urlGenerator = $this->app['url_generator'];
+
+        $queryOptions = array_merge(['url' => $url], $options);
+
+        return $urlGenerator->generate('alchemy_embed_view_vtt', $queryOptions);
     }
 }

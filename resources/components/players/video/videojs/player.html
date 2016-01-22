@@ -3,5 +3,8 @@
     <% _.each( sources, function( s ){ %>
     <source src="<%= s.url %>" type="<%= s.type %>">
     <% }); %>
+    <% _.each( tracks, function( s ){ %>
+    <track src="<%= s.url %>" kind="<%= s.kind %>" srclang="<%= s.srclang %>" label="<%= s.label %>" <% if (s.default == true) { %>default<% } %> >
+    <% }); %>
 
 </video>
