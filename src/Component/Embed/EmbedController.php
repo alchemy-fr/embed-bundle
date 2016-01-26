@@ -14,7 +14,9 @@ use Alchemy\Embed\Media\Media;
 use Alchemy\Embed\Media\MediaInformation;
 use Alchemy\Phrasea\Application;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class EmbedController
 {
@@ -41,6 +43,24 @@ class EmbedController
         $metaData['options']['autoplay'] = $request->get('autoplay') == '1' ? true : false;
 
         return $this->renderEmbed($media, $metaData);
+    }
+
+    public function viewVttAction(Request $request)
+    {
+        $url = $request->query->get('url');
+        $choice = $request->query->get('choice');
+
+        $resourceRequest = $this->createResourceRequest($request, $url);
+        $media = $this->matchResourceRequest($resourceRequest);
+        $videoTextTrack = $this->mediaService->getVideoTextTrackContent($media, $choice);
+
+        if ($videoTextTrack !== false) {
+            return new Response($videoTextTrack, 200, [
+              'mime-type' => 'text/vtt'
+            ]);
+        }
+
+        throw new NotFoundHttpException();
     }
 
     /**

@@ -17,7 +17,7 @@ gulp.task('watchOverall', ['clean:tmp'], function () {
         gutil.log(gutil.colors.red('[ERROR]'), 'Deploy folder "'+conf.paths.deployParent+'" not found');
         return;
     }
-    gulp.start('watchin');
+    gulp.start('watch');
 
 });
 gulp.task('deploy', function () {

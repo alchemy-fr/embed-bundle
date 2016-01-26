@@ -62,6 +62,10 @@ class EmbedServiceProvider implements ServiceProviderInterface, ControllerProvid
             ->assert('url', '.*')
             ->bind('alchemy_embed_view');
 
+        $controllers->get('/vtt/', 'alchemy_embed.controller.embed:viewVttAction')
+          ->assert('url', '.*')
+          ->bind('alchemy_embed_view_vtt');
+
         $controllers
             ->get('/oembed/', 'alchemy_embed.controller.embed:oembedAction')
             ->assert('url', '.*')

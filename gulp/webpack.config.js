@@ -63,7 +63,9 @@ module.exports = {
             searchResolveModulesDirectories: true
         }),
         new webpack.ProvidePlugin({
-            _: "underscore"
+            _: "underscore",
+            "videojs": "video.js",
+            "window.videojs": "video.js"
         }),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'common',
