@@ -235,17 +235,40 @@ class Media extends AbstractDelivery
 
             // extract vtt ids and labels
             foreach ($databox->get_meta_structure() as $meta) {
+                $foundParts = [];
                 if (preg_match('/^VideoTextTrack(.*)$/iu', $meta->get_name(), $foundParts)) {
                     $vttIds[] = $meta->get_id();
+
+                    /*
+                    Available HTML5 track types:
+                        - captions
+                        - chapters
+                        - descriptions
+                        - metadata
+                        - subtitles
+                    */
+                    $kind = '';
+                    $setAsDefault = false;
+                    $vttFoundKind = strtolower($foundParts[1]);
+                    switch($vttFoundKind) {
+                        case 'chapters':
+                            $setAsDefault = true;
+                            $kind = 'chapters';
+                            break;
+                        default:
+                            $kind = 'subtitles';
+                    }
+
                     $vttMetadata[$meta->get_id()] = [
                       'label' => empty($foundParts[1]) ? 'default' : $foundParts[1], //@todo translate
-                      'srclang' => empty($foundParts[1]) ? 'en' : strtolower($foundParts[1]),
+                      'srclang' => '',
+                      'default' => $setAsDefault,
+                      'kind' => $kind,
                     ];
                 }
             }
 
             // extract vtt metadatas from ids
-            $setAsDefault = true;
             foreach ($record->get_caption()->get_fields(null, true) as $field) {
 
                 $metaStructId = $field->get_meta_struct_id();
@@ -256,13 +279,9 @@ class Media extends AbstractDelivery
 
                 foreach ($field->get_values() as $value) {
                     $videoTextTrack[] = array_merge([
-                      'url' => $this->getEmbedVttUrl($media->getUrl(), ['choice' => $metaStructId]),
-                      'default' => $setAsDefault ? true : false,
-                      'kind' => 'subtitles',
+                      'src' => $this->getEmbedVttUrl($media->getUrl(), ['choice' => $metaStructId]),
                       'id' => $metaStructId
                     ], $vttMetadata[$metaStructId]);
-                    $setAsDefault = false;
-
                 }
             }
         }

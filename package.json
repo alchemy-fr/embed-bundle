@@ -1,6 +1,6 @@
 {
   "name": "embed-bundle",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "",
   "scripts": {
     "postinstall": "node_modules/.bin/bower install && node_modules/.bin/gulp deploy;"
@@ -40,6 +40,7 @@
     "screenfull": "^2.0.0",
     "swfobject": "^2.2.1",
     "underscore": "^1.8.3",
-    "video.js": "^5.0.2"
+    "video.js": "^5.5.3",
+    "videojs-chapter-thumbnails": "^1.1.2"
   }
 }

@@ -34,7 +34,7 @@
                         type: "{{source.type}}"
                     }{% if not loop.last %},{% endif %}{% endfor %}],
                     tracks: [{% for track in  embedMedia.track %}{
-                        url: "{{track.url}}",
+                        src: "{{track.src|raw}}",
                         kind: "{{track.kind}}",
                         srclang: "{{track.srclang}}",
                         label: "{{track.label}}",

@@ -7,11 +7,13 @@
 (<any>window).HELP_IMPROVE_VIDEOJS = false;
 let videojs = require('../../../../../node_modules/video.js/dist/video.js');
 
+let chapters = require('../../../../../node_modules/videojs-chapter-thumbnails/dist/videojs.chapter-thumbnails.js')
 
 import * as _ from 'underscore';
 import ConfigService from '../../../embed/config/service';
 import ResizeEl from '../../../utils/resizeEl';
 let playerTemplate:any = require('./player.html');
+let chaptersTemplate:any = require('./chapters.html');
 
 export default class VideoPlayer {
     private configService;
@@ -54,7 +56,6 @@ export default class VideoPlayer {
         this.resizer.resize();
 
         this.setupVideo();
-
     }
 
     setupVideo() {
@@ -82,6 +83,17 @@ export default class VideoPlayer {
             swf: '/assets/vendors/alchemy-embed-medias/players/videojs/video-js.swf'
         };
 
+        let chapterTrack = null,
+            tracks = this.configService.get('resource.tracks')
+            if( tracks !== null ) {
+                // search for chapter track:
+                _.each(tracks, (track, i) => {
+                    if( (<any>track).kind === 'chapters') {
+                        chapterTrack = track;
+                    }
+                });
+            }
+
         let player: VideoJSPlayer = this.initVideo('embed-video', options, () => {
 
             let metadatas = player.on('loadedmetadata', () => {
@@ -99,6 +111,14 @@ export default class VideoPlayer {
             });
 
         });
+
+        if( chapterTrack !== null ) {
+            (<any>player).ready(function() {
+                (<any>player).chapter_thumbnails(chapterTrack, { template: chaptersTemplate});
+            });
+        }
+
+
     }
 
     initVideo(...args): VideoJSPlayer {
