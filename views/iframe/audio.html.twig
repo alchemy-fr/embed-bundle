@@ -1,7 +1,7 @@
 {% extends "@alchemy_embed/iframe/layout.html.twig" %}
 
 {% block stylesheet %}
-    {% if audio_player == 'videojs' %}
+    {% if audio.player == 'videojs' %}
         <link type="text/css" rel="stylesheet" href="/assets/vendors/alchemy-embed-medias/players/videojs/skin/videojs.css">
     {% else %}
         <link type="text/css" rel="stylesheet" href="/assets/vendors/alchemy-embed-medias/players/flowplayer/skin/flowplayer.css">
@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block javascript %}
-    {% if audio_player == 'videojs' %}
+    {% if audio.player == 'videojs' %}
         <!--[if lt IE 9]>
         <script type="text/javascript" src="/assets/vendors/alchemy-embed-medias/players/videojs/videojs-ie8.js"></script>
         <![endif]-->
@@ -24,11 +24,11 @@
                 resource: {
                     width: {{ embedMedia.dimensions.width }},
                     height: {{ embedMedia.dimensions.height }},
-                    autoplay: {{ audio_autoplay |json_encode|raw }},
+                    autoplay: {{ audio.autoplay |json_encode|raw }},
                     fitIn: true, // force video to downScale / upscale
                     aspectRatio: '{{ embedMedia.dimensions.width }}:{{ embedMedia.dimensions.height }}',
                     coverUrl: "{{ embedMedia.coverUrl }}",
-                    playbackRates: {{ video_available_speeds|json_encode|raw }},
+                    playbackRates: {{ audio['available-speeds']|json_encode|raw }},
                     sources: [{% for source in  embedMedia.source %}{
                         url: "{{ source.url }}",
                         type: "{{ source.type }}"
@@ -38,7 +38,7 @@
         })();
     </script>
     <script type="text/javascript" src="/assets/vendors/alchemy-embed-medias/common.js"></script>
-    {% if audio_player == 'videojs' %}
+    {% if audio.player == 'videojs' %}
         <script type="text/javascript" src="/assets/vendors/alchemy-embed-medias/audio_videojs.js"></script>
     {% else %}
         <script type="text/javascript" src="/assets/vendors/alchemy-embed-medias/audio_flowplayer.js"></script>

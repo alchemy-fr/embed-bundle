@@ -10,6 +10,7 @@
 
 namespace Alchemy\EmbedProvider;
 
+use Alchemy\Embed\Embed\Embed;
 use Alchemy\Embed\Embed\EmbedController;
 use Alchemy\Embed\Media\ChainedResourceResolver;
 use Alchemy\Embed\Media\Media;
@@ -30,7 +31,13 @@ class EmbedServiceProvider implements ServiceProviderInterface, ControllerProvid
 
         $app['alchemy_embed.controller.embed'] = $app->share(
           function (Application $app) {
-              return new EmbedController($app, $app['alchemy_embed.service.media']);
+              return new EmbedController($app, $app['alchemy_embed.service.media'], $app['alchemy_embed.service.embed']);
+          }
+        );
+
+        $app['alchemy_embed.service.embed'] = $app->share(
+          function(Application $app) {
+              return new Embed($app);
           }
         );
 
