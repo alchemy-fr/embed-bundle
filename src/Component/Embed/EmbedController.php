@@ -24,15 +24,14 @@ class EmbedController
     private $app;
     /** @var Media */
     private $mediaService;
-
-    private $config;
+    /** @var Embed */
+    private $embedService;
 
     public function __construct(Application $app, Media $mediaService, Embed $embedService)
     {
         $this->app = $app;
         $this->mediaService = $mediaService;
         $this->embedService = $embedService;
-        $this->config = $this->embedService->getConfiguration();
     }
 
     public function viewAction(Request $request)
@@ -76,12 +75,13 @@ class EmbedController
     public function renderEmbed(MediaInformation $mediaInformation, array $metaData)
     {
         $record = $mediaInformation->getResource()->get_record();
+        $embedConfig = $this->embedService->getConfiguration();
 
 
         switch ($record->getType()) {
             case 'video':
                 if ($metaData['options']['autoplay'] === true) {
-                    $this->config['video']['autoplay'] = true;
+                    $embedConfig['video']['autoplay'] = true;
                 }
                 $template = 'video.html.twig';
                 break;
@@ -94,10 +94,10 @@ class EmbedController
                 $ie8OrLess = preg_match('/(?i)msie [6-8]/',$_SERVER['HTTP_USER_AGENT']);
 
                 if ($record->getMimeType() == 'application/pdf' && !$ie8OrLess) {
-                    if ($this->config['document']['enable-pdfjs'] === true) {
+                    if ($embedConfig['document']['enable-pdfjs'] === true) {
                         if ($record->has_subdef('document')) {
                             $subdef = $record->get_subdef('document');
-                            $this->config['document']['player'] = 'pdfjs';
+                            $embedConfig['document']['player'] = 'pdfjs';
                             $metaData['embedMedia']['url'] = (string)$subdef->get_permalink()->get_url();
                         }
                     }
@@ -106,7 +106,7 @@ class EmbedController
                 break;
             case 'audio':
                 if ($metaData['options']['autoplay'] === true) {
-                    $this->config['audio']['autoplay'] = true;
+                    $embedConfig['audio']['autoplay'] = true;
                 }
                 $template = 'audio.html.twig';
                 break;
@@ -115,7 +115,7 @@ class EmbedController
                 break;
         }
 
-        $twigOptions = array_merge($this->config, $metaData);
+        $twigOptions = array_merge($embedConfig, $metaData);
 
         return $this->app['twig']->render('@alchemy_embed/iframe/'.$template, $twigOptions);
     }

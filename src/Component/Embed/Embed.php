@@ -2,24 +2,13 @@
 
 namespace Alchemy\Embed\Embed;
 
-use Alchemy\Phrasea\Application;
-
 class Embed
 {
-    /** @var Application */
-    protected $app;
+    protected $embedConfiguration;
 
-    public function __construct(Application $app)
+    public function __construct(array $embedConfiguration)
     {
-        $this->app = $app;
-    }
 
-    /**
-     * load user configuration for embed bundle
-     * @return array configuration
-     */
-    public function getConfiguration()
-    {
         // default configuration:
         $config = [
           'video' => [
@@ -40,34 +29,58 @@ class Embed
           ]
         ];
 
-        if (isset($this->app['phraseanet.configuration']['embed_bundle'])) {
-            $userConfig = $this->app['phraseanet.configuration']['embed_bundle'];
+        if (isset($embedConfiguration)) {
+
+            $userConfig = $this->normalizeConfig($embedConfiguration);
 
             // override default options with users defined:
             $config = array_replace_recursive($config, $userConfig);
 
-            // apply deprecated configuration keys if exists:
-            if (array_key_exists('video_player', $userConfig)) {
-                $config['video']['player'] = $userConfig['video_player'];
-            }
-            if (array_key_exists('video_autoplay', $userConfig)) {
-                $config['video']['autoplay'] = $userConfig['video_autoplay'];
-            }
-            if (array_key_exists('video_available_speeds', $userConfig)) {
-                $config['video']['available-speeds'] = $userConfig['video_available_speeds'];
-            }
-            if (array_key_exists('audio_player', $userConfig)) {
-                $config['audio']['player'] = $userConfig['audio_player'];
-            }
-            if (array_key_exists('audio_autoplay', $userConfig)) {
-                $config['audio']['autoplay'] = $userConfig['audio_autoplay'];
-            }
-            if (array_key_exists('audio_available_speeds', $userConfig)) {
-                $config['audio']['available-speeds'] = $userConfig['audio_available_speeds'];
-            }
-            if (array_key_exists('enable_pdfjs', $userConfig['document'])) {
-                $config['document']['enable-pdfjs'] = $userConfig['document']['enable_pdfjs'];
-            }
+        }
+        $this->embedConfiguration = $config;
+
+    }
+
+    /**
+     * load user configuration for embed bundle
+     * @return array configuration
+     */
+    public function getConfiguration()
+    {
+        return $this->embedConfiguration;
+    }
+
+    /**
+     * apply deprecated configuration keys
+     * @param array $embedConfig
+     * @return array
+     */
+    private function normalizeConfig(array $embedConfig)
+    {
+
+        $config = $embedConfig;
+
+        // apply deprecated configuration keys if exists:
+        if (array_key_exists('video_player', $embedConfig)) {
+            $config['video']['player'] = $embedConfig['video_player'];
+        }
+        if (array_key_exists('video_autoplay', $embedConfig)) {
+            $config['video']['autoplay'] = $embedConfig['video_autoplay'];
+        }
+        if (array_key_exists('video_available_speeds', $embedConfig)) {
+            $config['video']['available-speeds'] = $embedConfig['video_available_speeds'];
+        }
+        if (array_key_exists('audio_player', $embedConfig)) {
+            $config['audio']['player'] = $embedConfig['audio_player'];
+        }
+        if (array_key_exists('audio_autoplay', $embedConfig)) {
+            $config['audio']['autoplay'] = $embedConfig['audio_autoplay'];
+        }
+        if (array_key_exists('audio_available_speeds', $embedConfig)) {
+            $config['audio']['available-speeds'] = $embedConfig['audio_available_speeds'];
+        }
+        if (array_key_exists('enable_pdfjs', $embedConfig['document'])) {
+            $config['document']['enable-pdfjs'] = $embedConfig['document']['enable_pdfjs'];
         }
 
         return $config;

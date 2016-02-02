@@ -37,7 +37,7 @@ class EmbedServiceProvider implements ServiceProviderInterface, ControllerProvid
 
         $app['alchemy_embed.service.embed'] = $app->share(
           function(Application $app) {
-              return new Embed($app);
+              return new Embed($app['phraseanet.configuration']['embed_bundle']);
           }
         );
 

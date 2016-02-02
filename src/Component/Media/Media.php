@@ -61,12 +61,13 @@ class Media extends AbstractDelivery
                 $ogMetaData['og:image:height'] = $thumbnail->get_height();
 
                 $coverUrl = $baseUrl . $thumbnail->get_url();
-                $embedBundleConfiguration = $this->getEmbedConfiguration();
+
+                $embedConfig = $this->getEmbedConfiguration();
 
                 // if user config has custom subdef specified:
-                if (array_key_exists('video', $embedBundleConfiguration)) {
-                    if (array_key_exists('coverSubdef', $embedBundleConfiguration['video'])) {
-                        $customCoverName = $embedBundleConfiguration['video']['coverSubdef'];
+                if (array_key_exists('video', $embedConfig)) {
+                    if (array_key_exists('coverSubdef', $embedConfig['video'])) {
+                        $customCoverName = $embedConfig['video']['coverSubdef'];
                         try {
                             $customCover = $record->get_subdef($customCoverName);
                             $coverUrl = $baseUrl.$customCover->get_url();
