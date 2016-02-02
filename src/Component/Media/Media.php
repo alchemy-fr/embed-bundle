@@ -38,6 +38,7 @@ class Media extends AbstractDelivery
         $request = $information->getResourceRequest();
         $baseUrl = $request->getSchemeAndHttpHost() . $request->getBasePath();
 
+
         $ogMetaData = [];
         $embedMedia = [];
         $oembedMetaData = [];
@@ -59,7 +60,24 @@ class Media extends AbstractDelivery
                 $ogMetaData['og:image:width'] = $thumbnail->get_width();
                 $ogMetaData['og:image:height'] = $thumbnail->get_height();
 
-                $embedMedia['coverUrl'] = $baseUrl . $thumbnail->get_url();
+                $coverUrl = $baseUrl . $thumbnail->get_url();
+
+                $embedConfig = $this->getEmbedConfiguration();
+
+                // if user config has custom subdef specified:
+                if (array_key_exists('video', $embedConfig)) {
+                    if (array_key_exists('coverSubdef', $embedConfig['video'])) {
+                        $customCoverName = $embedConfig['video']['coverSubdef'];
+                        try {
+                            $customCover = $record->get_subdef($customCoverName);
+                            $coverUrl = $baseUrl.$customCover->get_url();
+                        } catch (\Exception $e) {
+                            // no existing custom cover
+                        }
+                    }
+                }
+
+                $embedMedia['coverUrl'] = $coverUrl;
                 $embedMedia['source'] = [];
                 $embedMedia['source'][] = [
                     'url'  => $resourceUrl,
@@ -287,6 +305,14 @@ class Media extends AbstractDelivery
         }
 
         return $videoTextTrack;
+    }
+
+    private function getEmbedConfiguration()
+    {
+
+        $embedService = $this->app['alchemy_embed.service.embed'];
+
+        return $embedService->getConfiguration();
     }
 
     private function getEmbedVttUrl($url, $options = [])

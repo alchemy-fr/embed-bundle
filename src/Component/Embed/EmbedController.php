@@ -24,11 +24,14 @@ class EmbedController
     private $app;
     /** @var Media */
     private $mediaService;
+    /** @var Embed */
+    private $embedService;
 
-    public function __construct(Application $app, Media $mediaService)
+    public function __construct(Application $app, Media $mediaService, Embed $embedService)
     {
         $this->app = $app;
         $this->mediaService = $mediaService;
+        $this->embedService = $embedService;
     }
 
     public function viewAction(Request $request)
@@ -72,29 +75,13 @@ class EmbedController
     public function renderEmbed(MediaInformation $mediaInformation, array $metaData)
     {
         $record = $mediaInformation->getResource()->get_record();
+        $embedConfig = $this->embedService->getConfiguration();
 
-        // load predefined opts:
-        $config = [
-            'video_autoplay' => false,
-            'video_options' => [],
-            'video_available_speeds' => [],
-            'video_player' => 'videojs',
-            'audio_player' => 'videojs',
-            'document_player' => 'flexpaper',
-            'document' => [
-                'enable_pdfjs' => true
-            ]
-        ];
-
-        if (isset($this->app['phraseanet.configuration']['embed_bundle'])) {
-            // override default option with phraseanet defined:
-            $config = array_merge($config, $this->app['phraseanet.configuration']['embed_bundle']);
-        }
 
         switch ($record->getType()) {
             case 'video':
                 if ($metaData['options']['autoplay'] === true) {
-                    $config['video_autoplay'] = true;
+                    $embedConfig['video']['autoplay'] = true;
                 }
                 $template = 'video.html.twig';
                 break;
@@ -107,11 +94,10 @@ class EmbedController
                 $ie8OrLess = preg_match('/(?i)msie [6-8]/',$_SERVER['HTTP_USER_AGENT']);
 
                 if ($record->getMimeType() == 'application/pdf' && !$ie8OrLess) {
-                    if ($config['document']['enable_pdfjs'] === true) {
+                    if ($embedConfig['document']['enable-pdfjs'] === true) {
                         if ($record->has_subdef('document')) {
                             $subdef = $record->get_subdef('document');
-
-                            $config['document_player'] = 'pdfjs';
+                            $embedConfig['document']['player'] = 'pdfjs';
                             $metaData['embedMedia']['url'] = (string)$subdef->get_permalink()->get_url();
                         }
                     }
@@ -120,7 +106,7 @@ class EmbedController
                 break;
             case 'audio':
                 if ($metaData['options']['autoplay'] === true) {
-                    $config['audio_autoplay'] = true;
+                    $embedConfig['audio']['autoplay'] = true;
                 }
                 $template = 'audio.html.twig';
                 break;
@@ -129,7 +115,7 @@ class EmbedController
                 break;
         }
 
-        $twigOptions = array_merge($config, $metaData);
+        $twigOptions = array_merge($embedConfig, $metaData);
 
         return $this->app['twig']->render('@alchemy_embed/iframe/'.$template, $twigOptions);
     }

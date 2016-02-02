@@ -25,29 +25,33 @@ configuration options for phraseanet in `config/configuration.yml`
 
 | property | type | description
 -----------|------|-------
-video_player | string | active player, embed bundle ship with `videojs` and `flowplayer`
-video_autoplay | boolean | autoplay as default behavior
-video_available_speeds | number[] | playback available speeds
-audio_player | string | active video player, embed bundle ship with `videojs`
-audio_autoplay | boolean | autoplay as default behavior
-document | object | define options for document player
-document.enable_pdfjs | boolean | use pdfjs instead of flexbox
+video.player | string | active player, embed bundle ship with `videojs` and `flowplayer`
+video.autoplay | boolean | autoplay as default behavior
+video. coverSubdef | string | define a subdefinition for video cover, default is ```thumbnail```
+video.available-speeds | number[] | playback available speeds
+audio.player | string | active video player, embed bundle ship with `videojs`
+audio.autoplay | boolean | autoplay as default behavior
+document.enable_pdfjs | boolean | use pdfjs instead of flexbox for pdf only
+document.player | string | active document player, embed bundle ship with `flexbox`
 
 yaml example:
 
 ```
 embed_bundle:
-    video_player: 'videojs'
-    video_autoplay: false
-    video_available_speeds:
-        - 0.5
-        - 1
-        - 1.5
-        - 2
-    audio_player: 'videojs'
-    audio_autoplay: false
+    video:
+        player: videojs
+        autoplay: false
+        coverSubdef: previewx4
+        available-speeds:
+          - 1
+          - '1.5'
+          - 3
+    audio:
+        player: videojs
+        autoplay: false
     document:
-        enable_pdfjs: true
+        player: flexpaper
+        enable-pdfjs: true
 ```
 
 Field mapping
