@@ -41,7 +41,7 @@ class EmbedController
 
         $resourceRequest = $this->createResourceRequest($request, $url);
         $media = $this->matchResourceRequest($resourceRequest);
-        $metaData = $this->mediaService->getMetaData($media, $this->config);
+        $metaData = $this->mediaService->getMetaData($media);
 
         // is autoplay active?
         $metaData['options']['autoplay'] = $request->get('autoplay') == '1' ? true : false;
