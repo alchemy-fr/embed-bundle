@@ -6,11 +6,11 @@ Installation
 ------------
 Add embed bundle to Phraseanet:
 
-`composer require alchemy/embed-bundle:~0.3.1`
+`composer require alchemy/embed-bundle:~0.3.2`
 
 Add embed players to Phraseanet:
 
-`bower install alchemy-embed-medias#~0.3.1`
+`bower install alchemy-embed-medias#~0.3.2`
 
 Deploy embed players in Phraseanet assets path:
 

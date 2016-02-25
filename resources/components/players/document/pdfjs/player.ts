@@ -4,10 +4,10 @@
  */
 
 //require('html5shiv');
+require('../../../../../node_modules/pdfjs-dist/web/compatibility'); // should be loaded first
 require('../../../../../node_modules/pdfjs-dist/build/pdf');
 // Webpack returns a string to the url because we configured the url-loader.
 (<any>window).PDFJS.workerSrc = require('../../../../../node_modules/pdfjs-dist/build/pdf.worker.js');
-require('../../../../../node_modules/pdfjs-dist/web/compatibility');
 require('../../../../../node_modules/pdfjs-dist/web/pdf_viewer');
 
 //import * as $ from 'jquery';

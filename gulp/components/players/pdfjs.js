@@ -7,7 +7,7 @@ var autoprefixer = require('gulp-autoprefixer');
 var importCss = require('gulp-import-css');
 var sass = require('gulp-sass');
 var conf = require('../../conf.js');
-
+// node_modules/pdfjs-dist/web/compatibility.js
 gulp.task('deploy-pdfjs-skin', function (done) {
     var sassOptions = {
         outputStyle: 'compressed'
