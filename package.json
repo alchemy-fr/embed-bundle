@@ -1,9 +1,12 @@
 {
-  "name": "embed-bundle",
+  "name": "alchemy-embed-medias",
   "version": "0.3.2",
   "description": "",
   "scripts": {
-    "postinstall": "node_modules/.bin/bower install && node_modules/.bin/gulp deploy;"
+    "postinstall": "node_modules/.bin/bower install && node_modules/.bin/gulp deploy;",
+    "dist": "node_modules/.bin/bower install && node_modules/.bin/gulp deploy;",
+    "publish-patch": "git add -A && npm run dist && git commit && git push -u origin master && git push --tags && npm version patch && npm publish",
+    "publish-minor": "git add -A && npm run dist && git commit && git push -u origin master && git push --tags && npm version minor && npm publish"
   },
   "author": "",
   "license": "",
