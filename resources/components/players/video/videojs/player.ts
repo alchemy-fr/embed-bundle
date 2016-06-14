@@ -25,7 +25,7 @@ export default class VideoPlayer {
     private $playerContainer;
     constructor() {
         this.configService = new ConfigService();
-
+        console.log('init player yay');
         let videoContainers =  document.getElementsByClassName('video-player'); //$('.video-player');
         this.$playerContainer = videoContainers[0];
         this.$playerContainer.insertAdjacentHTML('afterbegin', playerTemplate( this.configService.get('resource') ));

@@ -1,6 +1,6 @@
 {
   "name": "alchemy-embed-medias",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "",
   "scripts": {
     "postinstall": "node_modules/.bin/bower install && node_modules/.bin/gulp deploy;",
@@ -40,6 +40,7 @@
     "jquery": "~1.11.3",
     "lodash.merge": "^3.3.2",
     "pdfjs-dist": "^1.3.66",
+    "pym.js": "^0.4.5",
     "screenfull": "^2.0.0",
     "swfobject": "^2.2.1",
     "underscore": "^1.8.3",
