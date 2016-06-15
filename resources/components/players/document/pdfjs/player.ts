@@ -14,29 +14,87 @@ require('../../../../../node_modules/pdfjs-dist/web/pdf_viewer');
 import * as _ from 'underscore';
 import ConfigService from '../../../embed/config/service';
 let playerTemplate:any = require('./player.html');
-
+let pym = require('pym.js');
 export default class DocumentPlayer {
     private configService;
     private $documentContainer;
     private documentEmbedContainerId;
+    private pymChild;
+    private $embedContainer;
+
     constructor() {
         this.configService = new ConfigService();
-
-        let docContainers =  document.getElementsByClassName('document-player');
+        let that = this;
+        let docContainers = document.getElementsByClassName('document-player');
         this.$documentContainer = docContainers[0];
-        this.$documentContainer.insertAdjacentHTML('afterbegin', playerTemplate( this.configService.get('resource') ));
+        this.$documentContainer.insertAdjacentHTML('afterbegin', playerTemplate(this.configService.get('resource')));
+        this.$embedContainer = document.getElementById('embed-content');
 
-
-        let pdf = this.configService.get('resource.url')
-        //let pdf = '/assets/helloworld.pdf';
-
+        if (this.configService.get('isStandalone') !== true) {
+            this.pymChild = new (<any>pym).Child({
+                id: 'phraseanet-embed-frame', renderCallback: function (windowWidth) {
+                    that.$embedContainer.style.height = windowWidth + 'px';
+                }
+            });
+            this.pymChild.sendMessage('childReady', '');
+            this.pymChild.sendMessage('documentReady', '');
+            if (this.pymChild.parentUrl === '') {
+                // no parent pym:
+            }
+        }
+        let pdf = this.configService.get('resource.url');
+        let viewerContainer = document.getElementById('viewerContainer');
         let pdfViewer = new (<any>window).PDFJS.PDFViewer({
-            container: document.getElementById('viewerContainer')
+            container: viewerContainer
+        });
+
+        let addEvent = function(obj, type, callback, eventReturn)
+        {
+            if(obj == null || typeof obj === 'undefined')
+                return;
+
+            if(obj.addEventListener)
+                obj.addEventListener(type, callback, eventReturn ? true : false);
+            else if(obj.attachEvent)
+                obj.attachEvent('on' + type, callback);
+            else
+                obj['on' + type] = callback;
+        };
+
+        let debounce = function(func, wait, immediate) {
+            var timeout;
+            return function() {
+                var context = this, args = arguments;
+                var later = function() {
+                    timeout = null;
+                    if (!immediate) func.apply(context, args);
+                };
+                var callNow = immediate && !timeout;
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+                if (callNow) func.apply(context, args);
+            };
+        };
+
+        addEvent(window, 'resize',
+            debounce(() => {
+                pdfViewer.currentScaleValue = 'page-width';
+            }, 250, true)
+        , true);
+
+        viewerContainer.addEventListener('pagesinit', function () {
+            // change default scale.
+            pdfViewer.currentScaleValue = 'page-width';
+
+
         });
 
         (<any>window).PDFJS.getDocument(pdf)
-            .then(function(document){
+            .then(function (document) {
                 pdfViewer.setDocument(document);
+                if (that.pymChild !== undefined) {
+                    that.pymChild.sendHeight()
+                }
             });
     }
 }

@@ -29,10 +29,10 @@ module.exports = {
     module: {
         loaders: [
             /* PDFjs loader configuration */
-            {
+            /*{
                 test: /\.pdf$|pdf\.worker\.js$/,
                 loader: "url-loader?limit=10000"
-            },
+            },*/
             { test: /\.html$/, loader: "underscore-template-loader" },
             {test: /\.css$/, loader: "style!css"},
             { test: /\.ts(x?)$/, exclude: /node_modules/, loader: 'babel-loader?loose[]=all!ts-loader' }
