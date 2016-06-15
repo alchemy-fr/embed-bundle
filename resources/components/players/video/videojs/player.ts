@@ -14,7 +14,7 @@ import ConfigService from '../../../embed/config/service';
 import ResizeEl from '../../../utils/resizeEl';
 let playerTemplate:any = require('./player.html');
 let chaptersTemplate:any = require('./chapters.html');
-
+let pym = require('pym.js');
 export default class VideoPlayer {
     private configService;
     private resourceOriginalWidth;
@@ -23,9 +23,11 @@ export default class VideoPlayer {
     private $embedVideoResource;
     private resizer;
     private $playerContainer;
+    private pymChild;
     constructor() {
+        let that = this;
+        this.resizer = null;
         this.configService = new ConfigService();
-        console.log('init player yay');
         let videoContainers =  document.getElementsByClassName('video-player'); //$('.video-player');
         this.$playerContainer = videoContainers[0];
         this.$playerContainer.insertAdjacentHTML('afterbegin', playerTemplate( this.configService.get('resource') ));
@@ -36,6 +38,27 @@ export default class VideoPlayer {
         this.resourceOriginalWidth = this.configService.get('resource.width');
         this.resourceOriginalHeight = this.configService.get('resource.height');
 
+
+        if( this.configService.get('isStandalone') === true ) {
+            this.initResizer();
+        } else {
+            this.pymChild = new (<any>pym).Child({id: 'phraseanet-embed-frame', renderCallback: function(windowWidth) {
+                let ratio = that.resourceOriginalHeight / that.resourceOriginalWidth;
+                // send video calculated height
+                that.$embedContainer.style.height = windowWidth * ratio + 'px';
+            }});
+            /*this.pymChild.onMessage('parentReady', (message) => {
+                console.log('ok parent ready', message)
+            });*/
+            if (this.pymChild.parentUrl === '') {
+                // no parent pym:
+                this.initResizer();
+            }
+        }
+        this.setupVideo();
+    }
+
+    initResizer() {
         this.resizer = new ResizeEl({
             target: this.$embedContainer, // don't target video directly to allow fullscreen
             container: this.$embedContainer,
@@ -54,8 +77,6 @@ export default class VideoPlayer {
             height: this.resourceOriginalHeight
         });
         this.resizer.resize();
-
-        this.setupVideo();
     }
 
     setupVideo() {
@@ -102,14 +123,21 @@ export default class VideoPlayer {
                     videoHeight = this.$embedVideoResource.videoHeight;
 
                 if (videoWidth > 0 && videoHeight > 0) {
-                    this.resizer.setTargetDimensions({
-                        width: videoWidth,
-                        height: videoHeight
-                    });
-                    this.resizer.resize();
+                    if( this.resizer !== null ) {
+                        this.resizer.setTargetDimensions({
+                            width: videoWidth,
+                            height: videoHeight
+                        });
+                        this.resizer.resize();
+                    }
                 }
             });
 
+            player.on('ready', () => {
+                if( this.pymChild !== undefined ) {
+                    this.pymChild.sendMessage('childReady', {type: 'video'});
+                }
+            });
         });
 
         if( chapterTrack !== null ) {
@@ -118,7 +146,24 @@ export default class VideoPlayer {
             });
         }
 
+        if( this.pymChild !== undefined ) {
 
+            if (this.pymChild.parentUrl !== '') {
+                // listen for parent events:
+                // note: message are never received if there no message content with the subject
+                this.pymChild.onMessage('play', () => {
+                    player.play();
+                });
+
+                this.pymChild.onMessage('pause', () => {
+                    player.pause();
+                });
+
+                this.pymChild.onMessage('dispose', () => {
+                    player.dispose();
+                });
+            }
+        }
     }
 
     initVideo(...args): VideoJSPlayer {

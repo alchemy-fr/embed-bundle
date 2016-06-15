@@ -15,3 +15,16 @@ interface Element {
     url?:string;
     title?:any;
 }
+
+
+
+interface PymInstance {
+    Child(): void;
+    onMessage(): void;
+}
+
+interface PymStatic {
+    (options?: any): PymInstance;
+}
+
+declare var pym:PymStatic;
