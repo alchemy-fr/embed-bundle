@@ -21,6 +21,8 @@ export default class DocumentPlayer {
     private documentEmbedContainerId;
     private pymChild;
     private $embedContainer;
+    private resourceOriginalWidth;
+    private resourceOriginalHeight;
 
     constructor() {
         this.configService = new ConfigService();
@@ -29,18 +31,23 @@ export default class DocumentPlayer {
         this.$documentContainer = docContainers[0];
         this.$documentContainer.insertAdjacentHTML('afterbegin', playerTemplate(this.configService.get('resource')));
         this.$embedContainer = document.getElementById('embed-content');
+        
+        this.resourceOriginalWidth = this.configService.get('resource.width');
+        this.resourceOriginalHeight = this.configService.get('resource.height');
 
         if (this.configService.get('isStandalone') !== true) {
             this.pymChild = new (<any>pym).Child({
-                id: 'phraseanet-embed-frame', renderCallback: function (windowWidth) {
-                    that.$embedContainer.style.height = windowWidth + 'px';
+                id: 'phraseanet-embed-frame', renderCallback: (windowWidth) => {
+                    let ratio = that.resourceOriginalHeight / that.resourceOriginalWidth;
+                    let height = windowWidth > 0 ? (windowWidth * ratio) : that.resourceOriginalHeight;
+                    // send video calculated height
+                    that.$embedContainer.style.height = height + 'px';
                 }
             });
-            this.pymChild.sendMessage('childReady', '');
-            this.pymChild.sendMessage('documentReady', '');
-            if (this.pymChild.parentUrl === '') {
-                // no parent pym:
-            }
+
+            this.pymChild.onMessage('shouldResize', (container) => {
+                this.pymChild.sendHeight()
+            })
         }
         let pdf = this.configService.get('resource.url');
         let viewerContainer = document.getElementById('viewerContainer');
@@ -48,43 +55,19 @@ export default class DocumentPlayer {
             container: viewerContainer
         });
 
-        let addEvent = function(obj, type, callback, eventReturn)
-        {
-            if(obj == null || typeof obj === 'undefined')
-                return;
-
-            if(obj.addEventListener)
-                obj.addEventListener(type, callback, eventReturn ? true : false);
-            else if(obj.attachEvent)
-                obj.attachEvent('on' + type, callback);
-            else
-                obj['on' + type] = callback;
-        };
-
-        let debounce = function(func, wait, immediate) {
-            var timeout;
-            return function() {
-                var context = this, args = arguments;
-                var later = function() {
-                    timeout = null;
-                    if (!immediate) func.apply(context, args);
-                };
-                var callNow = immediate && !timeout;
-                clearTimeout(timeout);
-                timeout = setTimeout(later, wait);
-                if (callNow) func.apply(context, args);
-            };
-        };
-
-        addEvent(window, 'resize',
-            debounce(() => {
-                pdfViewer.currentScaleValue = 'page-width';
-            }, 250, true)
-        , true);
+        window.addEventListener('resize', _.debounce(() => {
+            if (this.pymChild !== undefined) {
+                this.pymChild.sendHeight()
+            }
+            pdfViewer.currentScaleValue = 'page-width';
+        }, 200), false);
 
         viewerContainer.addEventListener('pagesinit', function () {
             // change default scale.
             pdfViewer.currentScaleValue = 'page-width';
+            if (this.pymChild !== undefined) {
+                this.pymChild.sendHeight()
+            }
 
 
         });

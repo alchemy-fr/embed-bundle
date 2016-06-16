@@ -43,13 +43,16 @@ export default class VideoPlayer {
             this.initResizer();
         } else {
             this.pymChild = new (<any>pym).Child({id: 'phraseanet-embed-frame', renderCallback: function(windowWidth) {
-                let ratio = that.resourceOriginalHeight / that.resourceOriginalWidth;
+                //let ratio = that.resourceOriginalHeight / that.resourceOriginalWidth;
                 // send video calculated height
-                that.$embedContainer.style.height = windowWidth * ratio + 'px';
+                //that.$embedContainer.style.height = windowWidth * ratio + 'px';
             }});
-            /*this.pymChild.onMessage('parentReady', (message) => {
-                console.log('ok parent ready', message)
-            });*/
+            window.addEventListener('resize', _.debounce(() => {
+                if (this.pymChild !== undefined) {
+                    this.pymChild.sendHeight()
+                }
+            }, 200), false);
+            
             if (this.pymChild.parentUrl === '') {
                 // no parent pym:
                 this.initResizer();
