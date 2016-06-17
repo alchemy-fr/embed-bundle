@@ -3,8 +3,7 @@
   "version": "0.4.2",
   "description": "",
   "scripts": {
-    "postinstall": "node_modules/.bin/bower install && node_modules/.bin/gulp deploy;",
-    "dist": "node_modules/.bin/bower install && node_modules/.bin/gulp deploy;",
+    "dist": "./node_modules/.bin/gulp install;",
     "publish-patch": "git add -A && npm run dist && git commit && git push -u origin master && git push --tags && npm version patch && npm publish",
     "publish-minor": "git add -A && npm run dist && git commit && git push -u origin master && git push --tags && npm version minor && npm publish"
   },
@@ -42,6 +41,7 @@
   "dependencies": {
     "es5-shim": "^4.3.1",
     "flowplayer": "^6.0.4",
+    "gulp-install": "^0.6.0",
     "jquery": "~1.11.3",
     "lodash.merge": "^3.3.2",
     "pdfjs-dist": "~1.5.294",
