@@ -4,6 +4,7 @@
   "description": "",
   "scripts": {
     "dist": "./node_modules/.bin/gulp install;",
+    "dev": "./node_modules/.bin/gulp watch;",
     "publish-patch": "git add -A && npm run dist && git commit && git push -u origin master && git push --tags && npm version patch && npm publish",
     "publish-minor": "git add -A && npm run dist && git commit && git push -u origin master && git push --tags && npm version minor && npm publish"
   },
