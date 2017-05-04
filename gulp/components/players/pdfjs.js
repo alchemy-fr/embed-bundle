@@ -37,7 +37,7 @@ gulp.task('deploy-pdfjs-assets', function() {
 
 gulp.task('deploy-pdfjs-toolbar-assets', function() {
     var extVendors = [
-        path.join('./resources', 'components', 'players', 'documents', 'pdfjs', 'toolbar-images', '**/*')
+        path.join('./resources', 'components', 'players', 'document', 'pdfjs', 'toolbar-images', '**/*')
     ];
     return gulp.src(extVendors)
         .pipe(gulp.dest(path.join(conf.paths.dist, 'players/pdfjs/toolbar-images')))
