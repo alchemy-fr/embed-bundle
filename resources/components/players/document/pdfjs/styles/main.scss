@@ -30,13 +30,13 @@
   width: 100%;
 }
 
-#toolbarContainer {
+#toolbarContainer, .findbar {
   position: relative;
   height: 32px;
   background-color: #474747; /* fallback */
 }
 
-html[dir='ltr'] #toolbarContainer {
+#toolbarContainer, .findbar {
   box-shadow: inset 1px 0 0 hsla(0,0%,100%,.08),
   inset 0 1px 1px hsla(0,0%,0%,.15),
   inset 0 -1px 0 hsla(0,0%,100%,.05),
@@ -48,10 +48,21 @@ html[dir='ltr'] #toolbarContainer {
   height: 32px;
 }
 
+#toolbarViewerLeft {
+  float: left;
+  margin-left: 2px;
+}
+
 #toolbarViewerMiddle {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+}
+
+#toolbarViewerLeft > *,
+.findbar * {
+  position: relative;
+  float: left;
 }
 
 #toolbarViewerMiddle > * {
@@ -279,4 +290,235 @@ html[dir='rtl'] .splitToolbarButtonSeparator {
 #toolbarViewerMiddle #reset span {
   overflow: initial;
   width: 32px;
+}
+
+.toolbarButton.toggled,
+.splitToolbarButton.toggled > .toolbarButton.toggled,
+.secondaryToolbarButton.toggled {
+  background-color: hsla(0,0%,0%,.3);
+  background-image: linear-gradient(hsla(0,0%,100%,.05), hsla(0,0%,100%,0));
+  border-color: hsla(0,0%,0%,.4) hsla(0,0%,0%,.45) hsla(0,0%,0%,.5);
+  box-shadow: 0 1px 1px hsla(0,0%,0%,.1) inset,
+  0 0 1px hsla(0,0%,0%,.2) inset,
+  0 1px 0 hsla(0,0%,100%,.05);
+  -webkit-transition-property: background-color, border-color, box-shadow;
+  -webkit-transition-duration: 10ms;
+  -webkit-transition-timing-function: linear;
+  transition-property: background-color, border-color, box-shadow;
+  transition-duration: 10ms;
+  transition-timing-function: linear;
+}
+
+.toolbarButton.toggled:hover:active,
+.splitToolbarButton.toggled > .toolbarButton.toggled:hover:active,
+.secondaryToolbarButton.toggled:hover:active {
+  background-color: hsla(0,0%,0%,.4);
+  border-color: hsla(0,0%,0%,.4) hsla(0,0%,0%,.5) hsla(0,0%,0%,.55);
+  box-shadow: 0 1px 1px hsla(0,0%,0%,.2) inset,
+  0 0 1px hsla(0,0%,0%,.3) inset,
+  0 1px 0 hsla(0,0%,100%,.05);
+}
+
+.hidden {
+  display: none !important;
+}
+
+
+.findbar, .secondaryToolbar {
+  top: 32px;
+  position: absolute;
+  z-index: 10000;
+  height: auto;
+  min-width: 16px;
+  padding: 0px 6px 0px 6px;
+  margin: 4px 2px 4px 2px;
+  color: hsl(0,0%,85%);
+  font-size: 12px;
+  line-height: 14px;
+  text-align: left;
+  cursor: default;
+}
+
+.findbar {
+  min-width: 300px;
+}
+.findbar > div {
+  height: 32px;
+}
+.findbar.wrapContainers > div {
+  clear: both;
+}
+.findbar.wrapContainers > div#findbarMessageContainer {
+  height: auto;
+}
+
+.findbar label {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+}
+
+
+.doorHanger,
+.doorHangerRight {
+  border: 1px solid hsla(0,0%,0%,.5);
+  border-radius: 2px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+.doorHanger:after, .doorHanger:before,
+.doorHangerRight:after, .doorHangerRight:before {
+  bottom: 100%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+.doorHanger:after,
+.doorHangerRight:after {
+  border-bottom-color: hsla(0,0%,32%,.99);
+  border-width: 8px;
+}
+.doorHanger:before,
+.doorHangerRight:before {
+  border-bottom-color: hsla(0,0%,0%,.5);
+  border-width: 9px;
+}
+.doorHanger:after,
+.doorHangerRight:after {
+  left: 13px;
+  margin-left: -8px;
+}
+
+
+#findInput {
+  width: 200px;
+}
+#findInput::-webkit-input-placeholder {
+  font-style: italic;
+}
+#findInput::-moz-placeholder {
+  font-style: italic;
+}
+#findInput:-ms-input-placeholder {
+  font-style: italic;
+}
+#findInput::placeholder {
+  font-style: italic;
+}
+#findInput[data-status="pending"] {
+  background-image: url(../toolbar-images/loading-small.png);
+  background-repeat: no-repeat;
+  background-position: right;
+}
+
+
+#findResultsCount {
+  background-color: hsl(0, 0%, 85%);
+  color: hsl(0, 0%, 32%);
+  text-align: center;
+  padding: 3px 4px;
+}
+
+#findMsg {
+  font-style: italic;
+  color: #A6B7D0;
+}
+#findMsg:empty {
+  display: none;
+}
+
+#findInput.notFound {
+  background-color: rgb(255, 102, 102);
+}
+
+.toolbarField {
+  padding: 3px 6px;
+  margin: 4px 0 4px 0;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  background-color: hsla(0,0%,100%,.09);
+  background-image: linear-gradient(hsla(0,0%,100%,.05), hsla(0,0%,100%,0));
+  background-clip: padding-box;
+  border: 1px solid hsla(0,0%,0%,.35);
+  border-color: hsla(0,0%,0%,.32) hsla(0,0%,0%,.38) hsla(0,0%,0%,.42);
+  box-shadow: 0 1px 0 hsla(0,0%,0%,.05) inset,
+  0 1px 0 hsla(0,0%,100%,.05);
+  color: hsl(0,0%,95%);
+  font-size: 12px;
+  line-height: 14px;
+  outline-style: none;
+  transition-property: background-color, border-color, box-shadow;
+  transition-duration: 150ms;
+  transition-timing-function: ease;
+}
+
+.toolbarField[type=checkbox] {
+  display: inline-block;
+  margin: 8px 0px;
+}
+
+.toolbarField.pageNumber {
+  -moz-appearance: textfield; /* hides the spinner in moz */
+  min-width: 16px;
+  text-align: right;
+  width: 40px;
+}
+
+.toolbarField.pageNumber.visiblePageIsLoading {
+  background-image: url(../toolbar-images/loading-small.png);
+  background-repeat: no-repeat;
+  background-position: 1px;
+}
+
+.toolbarField.pageNumber::-webkit-inner-spin-button,
+.toolbarField.pageNumber::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.toolbarField:hover {
+  background-color: hsla(0,0%,100%,.11);
+  border-color: hsla(0,0%,0%,.4) hsla(0,0%,0%,.43) hsla(0,0%,0%,.45);
+}
+
+.toolbarField:focus {
+  background-color: hsla(0,0%,100%,.15);
+  border-color: hsla(204,100%,65%,.8) hsla(204,100%,65%,.85) hsla(204,100%,65%,.9);
+}
+
+#findPrevious {
+  margin-left: 3px;
+}
+
+.toolbarButton.findPrevious::before {
+  content: url(../toolbar-images/findbarButton-previous.png);
+}
+
+#findNext {
+  margin-right: 3px;
+}
+
+.toolbarButton.findNext::before {
+  content: url(../toolbar-images/findbarButton-next.png);
+}
+
+#viewFind.toolbarButton::before {
+  content: url(../toolbar-images/toolbarButton-search.png);
+}
+
+
+.toolbarLabel {
+  min-width: 16px;
+  padding: 3px 6px 3px 2px;
+  margin: 4px 2px 4px 0;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  color: hsl(0,0%,85%);
+  line-height: 14px;
+  text-align: left;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  cursor: default;
+  font: 11px system-ui;
 }
