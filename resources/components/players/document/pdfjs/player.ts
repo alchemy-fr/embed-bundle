@@ -69,6 +69,14 @@ export default class DocumentPlayer {
             pdfViewer: pdfViewer
         });
 
+        pdfFindController.onUpdateResultsCount = function (matchCount) {
+            updateResultsCount(matchCount);
+        };
+
+        pdfFindController.onUpdateState = function (state, previous, matchCount) {
+            updateUIState(state, previous, matchCount);
+        }
+
 
         pdfViewer.setFindController(pdfFindController);
 
@@ -203,6 +211,53 @@ export default class DocumentPlayer {
                 // wrap all of them to adjust the width of the find bar.
                 bar.classList.add('wrapContainers');
             }
+        }
+
+        function updateResultsCount(matchCount) {
+            if (!findResultsCount) {
+                return; // No UI control is provided. 
+            }
+            // If there are no matches, hide the counter. 
+            if (!matchCount) {
+                findResultsCount.classList.add('hidden');
+                return;
+            }
+            // Create and show the match counter. 
+            findResultsCount.textContent = matchCount.toLocaleString();
+            findResultsCount.classList.remove('hidden');
+        }
+
+        function updateUIState(state, previous, matchCount) {
+            var notFound = false;
+            var findMsg = '';
+            var status = '';
+            switch (state) {
+                case FindStates.FIND_FOUND:
+                    break;
+                case FindStates.FIND_PENDING:
+                    status = 'pending';
+                    break;
+                case FindStates.FIND_NOTFOUND:
+                    findMsg = 'Phrase not found';
+                    notFound = true;
+                    break;
+                case FindStates.FIND_WRAPPED:
+                    if (previous) {
+                        findMsg = 'Reached top of document, continued from bottom';
+                    } else {
+                        findMsg = 'Reached end of document, continued from top';
+                    }
+                    break;
+            }
+            if (notFound) {
+                findField.classList.add('notFound');
+            } else {
+                findField.classList.remove('notFound');
+            }
+            findField.setAttribute('data-status', status);
+            findMessage.textContent = findMsg;
+            updateResultsCount(matchCount);
+            _adjustWidth();
         }
 
 
