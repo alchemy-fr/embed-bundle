@@ -183,7 +183,6 @@ export default class DocumentPlayer {
         }
 
         function toggle() {
-            console.log(opened);
             if (opened) {
                 close();
             } else {
