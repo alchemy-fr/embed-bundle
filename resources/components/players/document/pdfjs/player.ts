@@ -119,7 +119,9 @@ export default class DocumentPlayer {
         });
 
         findNextButton.addEventListener('click', function () {
-            dispatchEvent('again', false);
+            if(findField.value.length > 2) {
+                dispatchEvent('again', false);
+            }
         });
 
         findPreviousButton.addEventListener('click', () => {
@@ -165,6 +167,13 @@ export default class DocumentPlayer {
                 opened = true;
                 toggleFindButton.classList.add('toggled');
                 bar.classList.remove('hidden');
+            }
+
+            if ((sessionStorage.getItem('search') != null
+                || sessionStorage.getItem('search') !== '') && parent.document.body.getElementsByClassName('popover-content').length > 0) {
+                findField.value = JSON.parse(sessionStorage.getItem('search'));
+                dispatchEvent('', false);
+                //sessionStorage.removeItem('search');
             }
             findField.select();
             findField.focus();
