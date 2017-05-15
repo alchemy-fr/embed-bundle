@@ -115,13 +115,13 @@ export default class DocumentPlayer {
         });
 
         findField.addEventListener('input', function() {
-            dispatchEvent('', false);
+            if(findField.value.length > 2) {
+                dispatchEvent('', false);
+            }
         });
 
         findNextButton.addEventListener('click', function () {
-            if(findField.value.length > 2) {
-                dispatchEvent('again', false);
-            }
+            dispatchEvent('again', false);
         });
 
         findPreviousButton.addEventListener('click', () => {
