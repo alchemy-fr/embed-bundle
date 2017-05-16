@@ -168,9 +168,12 @@ export default class DocumentPlayer {
                 toggleFindButton.classList.add('toggled');
                 bar.classList.remove('hidden');
             }
-
+            debugger;
             if ((sessionStorage.getItem('search') != null
-                || sessionStorage.getItem('search') !== '') && parent.document.body.getElementsByClassName('popover-content').length > 0) {
+                || sessionStorage.getItem('search') !== '') &&
+                (parent.document.body.getElementsByClassName('documentTips')[0]
+                    .parentElement.parentElement.getAttribute('class').indexOf('preview_col_cont') > 0
+                || parent.document.body.getElementsByClassName('popover-content').length > 0)) {
                 findField.value = JSON.parse(sessionStorage.getItem('search'));
                 dispatchEvent('', false);
                 //sessionStorage.removeItem('search');
