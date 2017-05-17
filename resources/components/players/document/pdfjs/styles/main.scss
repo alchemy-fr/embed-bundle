@@ -319,6 +319,14 @@ html[dir='rtl'] .splitToolbarButtonSeparator {
   0 1px 0 hsla(0,0%,100%,.05);
 }
 
+button#viewFind {
+  margin: 3px 2px 4px 0;
+}
+
+button#presentationMode {
+  margin: 3px 2px 4px 0;
+}
+
 .hidden {
   display: none !important;
 }
@@ -521,4 +529,90 @@ html[dir='rtl'] .splitToolbarButtonSeparator {
   -moz-user-select: none;
   cursor: default;
   font: 11px system-ui;
+}
+
+:-webkit-full-screen {
+  top: 0px;
+  border-top: 2px solid transparent;
+  background-color: #000;
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+  cursor: none;
+  -webkit-user-select: none;
+}
+
+:-moz-full-screen {
+  top: 0px;
+  border-top: 2px solid transparent;
+  background-color: #000;
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+  cursor: none;
+  -moz-user-select: none;
+}
+
+:-ms-fullscreen {
+  top: 0px !important;
+  border-top: 2px solid transparent;
+  width: 100%;
+  height: 100%;
+  overflow: scroll !important;
+  cursor: none;
+  -ms-user-select: none;
+}
+
+:-ms-fullscreen::-ms-backdrop {
+  background-color: #000;
+}
+
+:fullscreen {
+  top: 0px;
+  border-top: 2px solid transparent;
+  background-color: #000;
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+  cursor: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+:-webkit-full-screen a:not(.internalLink) {
+  display: none;
+}
+
+:-moz-full-screen a:not(.internalLink) {
+  display: none;
+}
+
+:-ms-fullscreen a:not(.internalLink) {
+  display: none !important;
+}
+
+:fullscreen a:not(.internalLink) {
+  display: none;
+}
+
+:-webkit-full-screen .textLayer > div {
+  cursor: none;
+}
+
+:-moz-full-screen .textLayer > div {
+  cursor: none;
+}
+
+:-ms-fullscreen .textLayer > div {
+  cursor: none;
+}
+
+:fullscreen .textLayer > div {
+  cursor: none;
+}
+
+.toolbarButton.presentationMode::before,
+.secondaryToolbarButton.presentationMode::before {
+  content: url(../toolbar-images/toolbarButton-presentationMode.png);
 }
