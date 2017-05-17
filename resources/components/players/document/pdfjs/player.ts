@@ -35,6 +35,7 @@ export default class DocumentPlayer {
         let MAX_SCALE = 2.5;
 
         let opened = false;
+        let isFullScreen = false;
         this.configService = new ConfigService();
 
         let docContainers =  document.getElementsByClassName('document-player');
@@ -45,6 +46,7 @@ export default class DocumentPlayer {
         let pdf = this.configService.get('resource.url')
         //let pdf = '/assets/helloworld.pdf';
 
+        let viewerElement = document.getElementById('viewer');
         let container = document.getElementById('viewerContainer');
         let zoomIn = document.getElementById('zoomIn');
         let zoomOut = document.getElementById('zoomOut');
@@ -57,7 +59,8 @@ export default class DocumentPlayer {
         let caseSensitive = <HTMLInputElement>document.getElementById('findMatchCase');
         let highlightAll = <HTMLInputElement>document.getElementById('findHighlightAll');
         let findResultsCount = document.getElementById('findResultsCount');
-        let findMessage = document.getElementById('findMsg')
+        let findMessage = document.getElementById('findMsg');
+        let presentationModeButton = document.getElementById('presentationMode');
 
 
         let pdfViewer = new (<any>window).PDFJS.PDFViewer({
@@ -79,6 +82,7 @@ export default class DocumentPlayer {
 
 
         pdfViewer.setFindController(pdfFindController);
+
 
 
         /* HANDLERS FUNCTIONS */
@@ -128,14 +132,68 @@ export default class DocumentPlayer {
             dispatchEvent('again', true);
         });
 
-        highlightAll.addEventListener('click', () => {
+        highlightAll.addEventListener('click', function () {
             dispatchEvent('highlightallchange', false);
         });
 
-        caseSensitive.addEventListener('click', () => {
+        caseSensitive.addEventListener('click', function () {
             dispatchEvent('casesensitivitychange', false);
         });
 
+        presentationModeButton.addEventListener('click', function () {
+            toggleFullScreen();
+        });
+
+
+        document.addEventListener('webkitfullscreenchange', exitHandler, false);
+        document.addEventListener('mozfullscreenchange', exitHandler, false);
+        document.addEventListener('fullscreenchange', exitHandler, false);
+        document.addEventListener('MSFullscreenChange', exitHandler, false);
+
+        function exitHandler()
+        {
+            var document:any = window.document;
+            var fullscreen = document.webkitIsFullScreen ||    // alternative standard method
+                document.mozFullScreen  || document.msFullscreenElement;
+            if (fullscreen)
+            {
+                pdfViewer.currentScaleValue = "auto";
+            }else {
+                pdfViewer.currentScaleValue = "page-width";
+            }
+
+        }
+
+
+        function toggleFullScreen() {
+            var elem:any = viewerElement;
+            var document:any = window.document;
+            if (!isFullScreen) {
+                if (elem.requestFullscreen) {
+                    elem.requestFullscreen();
+                } else if (elem.mozRequestFullScreen) {
+                    elem.mozRequestFullScreen();
+                } else if (elem.webkitRequestFullscreen) {
+                    elem.webkitRequestFullscreen();
+                } else if (elem.msRequestFullscreen) {
+                    elem.msRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.cancelFullScreen) {
+                    document.cancelFullScreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.webkitCancelFullScreen) {
+                    document.webkitCancelFullScreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            }
+        }
 
         function dispatchEvent(type, findPrev) {
             pdfFindController.executeCommand('find' + type, {
