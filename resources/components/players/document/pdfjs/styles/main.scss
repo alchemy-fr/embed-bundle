@@ -93,7 +93,7 @@
 .toolbarButton > span {
   display: inline-block;
   width: 0;
-  height: 0;
+  height: 14px;
   overflow: hidden;
 }
 
@@ -283,13 +283,15 @@ html[dir='rtl'] .splitToolbarButtonSeparator {
 }
 
 #toolbarViewerMiddle #reset {
-  width: 48px;
-  padding: 0;
+  margin: 3px 2px 4px 0;
+  width: auto;
+  padding: 0 6px;
 }
 
 #toolbarViewerMiddle #reset span {
+  vertical-align: middle;
   overflow: initial;
-  width: 32px;
+  width: 100%;
 }
 
 .toolbarButton.toggled,
