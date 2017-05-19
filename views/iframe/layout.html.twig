@@ -9,6 +9,7 @@
     {% for metaKey, metaValue in ogMetaData %}
         <meta property="{{ metaKey }}" content="{{ metaValue }}"/>
     {% endfor %}
+    <link rel="prefetch" type="application/l10n" href="/assets/vendors/alchemy-embed-medias/players/pdfjs/l10n/locales.ini" />
     <link type="text/css" rel="stylesheet" href="/assets/vendors/alchemy-embed-medias/theme/main.css">
     <link rel="alternate" href="{{ url('alchemy_embed_oembed', { url: app.request.uri }) }}" type="application/json+oembed" title="{{ local_title | default('') }}">
 
