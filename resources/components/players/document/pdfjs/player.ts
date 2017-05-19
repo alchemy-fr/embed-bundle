@@ -4,16 +4,18 @@
  */
 
 //require('html5shiv');
+require('../../../../../node_modules/webl10n/l10n');
 require('../../../../../node_modules/pdfjs-dist/web/compatibility'); // should be loaded first
 require('../../../../../node_modules/pdfjs-dist/build/pdf');
 // Webpack returns a string to the url because we configured the url-loader.
 (<any>window).PDFJS.workerSrc = require('../../../../../node_modules/pdfjs-dist/build/pdf.worker.js');
-require('../../../../../node_modules/pdfjs-dist/web/pdf_viewer');
-
+let pdfview = require('../../../../../node_modules/pdfjs-dist/web/pdf_viewer');
+let ui_utils:any = require('../../../../../node_modules/pdfjs-dist/lib/web/ui_utils');
 //import * as $ from 'jquery';
 import * as _ from 'underscore';
 import ConfigService from '../../../embed/config/service';
 let playerTemplate:any = require('./player.html');
+
 
 let FindStates = {
     FIND_FOUND: 0,
@@ -43,7 +45,7 @@ export default class DocumentPlayer {
         this.$documentContainer.insertAdjacentHTML('afterbegin', playerTemplate( this.configService.get('resource') ));
 
 
-        let pdf = this.configService.get('resource.url')
+        let pdf = this.configService.get('resource.url');
         //let pdf = '/assets/helloworld.pdf';
 
         let viewerElement = document.getElementById('viewer');
@@ -66,6 +68,9 @@ export default class DocumentPlayer {
         let pdfViewer = new (<any>window).PDFJS.PDFViewer({
             container: container
         });
+
+        //set localization
+        ui_utils.mozL10n.ready(onLocalized);
 
 
         let pdfFindController = new (<any>window).PDFJS.PDFFindController({
@@ -150,6 +155,10 @@ export default class DocumentPlayer {
         document.addEventListener('fullscreenchange', exitHandler, false);
         document.addEventListener('MSFullscreenChange', exitHandler, false);
 
+        function onLocalized() {
+            ui_utils.mozL10n.setLanguage(document.documentElement.lang);
+        }
+
         function exitHandler()
         {
             var document:any = window.document;
@@ -226,7 +235,7 @@ export default class DocumentPlayer {
                 toggleFindButton.classList.add('toggled');
                 bar.classList.remove('hidden');
             }
-            debugger;
+
             if ((sessionStorage.getItem('search') != null
                 || sessionStorage.getItem('search') !== '') &&
                 (parent.document.body.getElementsByClassName('documentTips')[0]
@@ -307,14 +316,14 @@ export default class DocumentPlayer {
                     status = 'pending';
                     break;
                 case FindStates.FIND_NOTFOUND:
-                    findMsg = 'Phrase not found';
+                    findMsg = ui_utils.mozL10n.get('find_not_found', null, 'Phrase not found');
                     notFound = true;
                     break;
                 case FindStates.FIND_WRAPPED:
                     if (previous) {
-                        findMsg = 'Reached top of document, continued from bottom';
+                        findMsg = ui_utils.mozL10n.get('find_reached_top', null, 'Reached top of document, continued from bottom');
                     } else {
-                        findMsg = 'Reached end of document, continued from top';
+                        findMsg = ui_utils.mozL10n.get('find_reached_bottom', null, 'Reached end of document, continued from top');
                     }
                     break;
             }
