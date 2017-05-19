@@ -43,11 +43,20 @@ gulp.task('deploy-pdfjs-toolbar-assets', function() {
         .pipe(gulp.dest(path.join(conf.paths.dist, 'players/pdfjs/toolbar-images')))
 });
 
+gulp.task('deploy-pdfjs-localization', function() {
+    var extVendors = [
+        path.join('./resources', 'components', 'players', 'document', 'pdfjs', 'l10n', '**/*')
+    ];
+    return gulp.src(extVendors)
+        .pipe(gulp.dest(path.join(conf.paths.dist, 'players/pdfjs/l10n')))
+});
+
 gulp.task('watch-pdfjs-css', function() {
     return gulp.watch(path.join(conf.paths.src, 'components/players/document/pdfjs/styles/**/*.scss'), ['deploy-pdfjs-skin']);
 });
 
 gulp.task('deploy-pdfjs', function() {
+    gulp.start('deploy-pdfjs-localization');
     gulp.start('deploy-pdfjs-assets');
     gulp.start('deploy-pdfjs-toolbar-assets');
     gulp.start('deploy-pdfjs-skin');
