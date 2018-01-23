@@ -1,7 +1,5 @@
 var path = require('path');
 var webpack = require('webpack');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var BowerWebpackPlugin = require('bower-webpack-plugin');
 var conf = require('./conf.js');
 
 module.exports = {
@@ -27,27 +25,40 @@ module.exports = {
         chunkFilename: "[chunkhash].js"
     },
     module: {
-        loaders: [
+        rules: [
             /* PDFjs loader configuration */
             {
                 test: /\.pdf$|pdf\.worker\.js$/,
-                loader: "url-loader?limit=10000"
+                loader: "url-loader",
+                options: {
+                    limit: 10000
+                }
             },
-            { test: /\.html$/, loader: "underscore-template-loader" },
-            {test: /\.css$/, loader: "style!css"},
-            { test: /\.ts(x?)$/, exclude: /node_modules/, loader: 'babel-loader?loose[]=all!ts-loader' }
+            {
+                test: /\.html$/,
+                loader: "underscore-template-loader"
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    "style-loader",
+                    "css-loader"
+                ]
+            },
+            {
+                test: /\.ts(x?)$/,
+                exclude: /node_modules/,
+                loader: "babel-loader!ts-loader"
+            }
         ]
-    },
-    ts: {
-        compiler: 'typescript'
     },
     externals: {
         // jquery: 'jQuery',
         modernizr: 'Modernizr'
     },
     resolve: {
-        extensions: ['', '.webpack.js', '.web.js', '.ts', '.tsx', '.js'],
-        modulesDirectories: ['node_modules', 'bower_components'],
+        extensions: ['*', '.webpack.js', '.web.js', '.ts', '.tsx', '.js'],
+        modules: ['node_modules',],
         // root: ['node_modules', 'app/bower_components'],
         alias: {
             // replace underscore with lodash:
@@ -55,13 +66,6 @@ module.exports = {
         }
     },
     plugins: [
-        new BowerWebpackPlugin({
-            modulesDirectories: ['bower_components'],
-            manifestFiles:      'bower.json',
-            includes:           /.*/,
-            excludes:           /.*\.scss/, // assume all css will be handled by themes
-            searchResolveModulesDirectories: true
-        }),
         new webpack.ProvidePlugin({
             _: "underscore",
             "videojs": "video.js",

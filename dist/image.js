@@ -1,1 +1,140 @@
-webpackJsonp([4],{0:function(e,i,t){"use strict";var n=t(2),s=t(6),r=function(){function e(){this.configService=new n.default,this.$embedContainer=document.getElementById("embed-content"),this.$embedResource=document.getElementById("embed-image"),this.resourceOriginalWidth=this.configService.get("resource.width"),this.resourceOriginalHeight=this.configService.get("resource.height"),this.resizer=new s.default({target:this.$embedResource,container:this.$embedContainer,resizeOnWindowChange:this.configService.get("resource.fitIn")===!0}),this.resizer.setContainerDimensions({width:window.innerWidth,height:window.innerHeight}),this.resizer.setTargetDimensions({width:this.resourceOriginalWidth,height:this.resourceOriginalHeight}),this.resizer.resize()}return e}();i.default=r,window.embedPlugin=new r},6:function(e,i,t){"use strict";var n=t(4),s=function(){function e(e){var i=this;if(e||(e={}),e.target&&(this.$embedResource=e.target),e.container)this.$embedContainer=e.container;else{var t=document.getElementsByTagName("body");this.$embedContainer=t[0]}void 0!==e.resizeCallback&&(this.resizeCallback=e.resizeCallback),e.resizeOnWindowChange===!0&&window.addEventListener("resize",n.debounce(function(){i.onResizeWindow(window.innerWidth,window.innerHeight)},300),!1),this.defaultWidth=120,this.defaultHeight=120}return e.prototype.setContainerDimensions=function(e){this.containerDimensions=e},e.prototype.setTargetDimensions=function(e){this.targetDimensions=e},e.prototype.onResizeWindow=function(e,i){this.setContainerDimensions({width:e,height:i}),this.resize()},e.prototype.resize=function(){var e=this.containerDimensions.width,i=this.containerDimensions.height,t=this.targetDimensions.width,n=this.targetDimensions.height,s=this.targetDimensions.height/this.targetDimensions.width,r=t,h=n;t>n?(r>e&&(r=e,h=e*s),h>i&&(r=i/s,h=i)):h>i&&(r=i/s,h=i),null===r&&null===h&&(r=this.defaultWidth,h=this.defaultHeight),r=Math.floor(r),h=Math.floor(h);var o=0;this.containerDimensions.height>h&&(o=(this.containerDimensions.height-h)/2),this.$embedResource.style.width=r+"px",this.$embedResource.style.height=h+"px",this.$embedContainer.style.width=r+"px",this.$embedContainer.style.height=h+"px",this.$embedContainer.style["margin-top"]=o+"px",void 0!==this.resizeCallback&&this.resizeCallback.apply(this,[{width:r,height:h,"margin-top":o}])},e}();i.default=s}});
+webpackJsonp([6],{
+
+/***/ 147:
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Entry point for Embed Images
+ */
+/// <reference path="./embed.d.ts" />
+// require('html5shiv');
+//import _ = require('underscore');
+var service_1 = __webpack_require__(33);
+var resizeEl_1 = __webpack_require__(28);
+var Embed = function () {
+    function Embed() {
+        this.configService = new service_1.default();
+        this.$embedContainer = document.getElementById('embed-content');
+        this.$embedResource = document.getElementById('embed-image');
+        this.resourceOriginalWidth = this.configService.get('resource.width');
+        this.resourceOriginalHeight = this.configService.get('resource.height');
+        this.resizer = new resizeEl_1.default({
+            target: this.$embedResource,
+            container: this.$embedContainer,
+            resizeOnWindowChange: this.configService.get('resource.fitIn') === true ? true : false
+        });
+        this.resizer.setContainerDimensions({
+            width: window.innerWidth,
+            height: window.innerHeight
+        });
+        this.resizer.setTargetDimensions({
+            width: this.resourceOriginalWidth,
+            height: this.resourceOriginalHeight
+        });
+        this.resizer.resize();
+    }
+    return Embed;
+}();
+exports.default = Embed;
+window.embedPlugin = new Embed();
+
+/***/ }),
+
+/***/ 28:
+/***/ (function(module, exports, __webpack_require__) {
+
+var _ = __webpack_require__(13);
+var ResizeEl = function () {
+    function ResizeEl(options) {
+        var _this = this;
+        if (!options) {
+            options = {};
+        }
+        if (options.target) {
+            this.$embedResource = options.target;
+        }
+        if (options.container) {
+            this.$embedContainer = options.container;
+        } else {
+            var containers = document.getElementsByTagName('body');
+            this.$embedContainer = containers[0];
+        }
+        if (options.resizeCallback !== undefined) {
+            this.resizeCallback = options.resizeCallback;
+        }
+        if (options.resizeOnWindowChange === true) {
+            window.addEventListener('resize', _.debounce(function () {
+                _this.onResizeWindow(window.innerWidth, window.innerHeight);
+            }, 300), false);
+        }
+        this.defaultWidth = 120;
+        this.defaultHeight = 120;
+    }
+    ResizeEl.prototype.setContainerDimensions = function (dimensions) {
+        this.containerDimensions = dimensions;
+    };
+    ResizeEl.prototype.setTargetDimensions = function (dimensions) {
+        this.targetDimensions = dimensions;
+    };
+    ResizeEl.prototype.onResizeWindow = function (width, height) {
+        this.setContainerDimensions({
+            width: width,
+            height: height
+        });
+        this.resize();
+    };
+    ResizeEl.prototype.resize = function () {
+        // get original size
+        var resized = false,
+            maxWidth = this.containerDimensions.width,
+            maxHeight = this.containerDimensions.height,
+            resourceWidth = this.targetDimensions.width,
+            resourceHeight = this.targetDimensions.height,
+            resourceRatio = this.targetDimensions.height / this.targetDimensions.width;
+        var resizeW = resourceWidth,
+            resizeH = resourceHeight;
+        // pass 1 make height ok:
+        if (resourceWidth > resourceHeight) {
+            // if width still too large:
+            if (resizeW > maxWidth) {
+                resizeW = maxWidth;
+                resizeH = maxWidth * resourceRatio;
+            }
+            if (resizeH > maxHeight) {
+                resizeW = maxHeight / resourceRatio;
+                resizeH = maxHeight;
+            }
+        } else {
+            if (resizeH > maxHeight) {
+                resizeW = maxHeight / resourceRatio;
+                resizeH = maxHeight;
+            }
+        }
+        if (resizeW === null && resizeH === null) {
+            resizeW = this.defaultWidth;
+            resizeH = this.defaultHeight;
+        }
+        resizeW = Math.floor(resizeW);
+        resizeH = Math.floor(resizeH);
+        // add top margin:
+        var marginTop = 0;
+        if (this.containerDimensions.height > resizeH) {
+            marginTop = (this.containerDimensions.height - resizeH) / 2;
+        }
+        this.$embedResource.style.width = resizeW + 'px';
+        this.$embedResource.style.height = resizeH + 'px';
+        this.$embedContainer.style.width = resizeW + 'px';
+        this.$embedContainer.style.height = resizeH + 'px';
+        this.$embedContainer.style['margin-top'] = marginTop + 'px';
+        if (this.resizeCallback !== undefined) {
+            this.resizeCallback.apply(this, [{ width: resizeW, height: resizeH, 'margin-top': marginTop }]);
+        }
+    };
+    return ResizeEl;
+}();
+exports.default = ResizeEl;
+
+/***/ })
+
+},[147]);
+//# sourceMappingURL=image.js.map
