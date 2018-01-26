@@ -10,7 +10,7 @@ Add embed bundle to Phraseanet:
 
 Add embed players to Phraseanet:
 
-`bower install alchemy-embed-medias#~0.3.2`
+`npm install alchemy-embed-medias@^0.5.0`
 
 Deploy embed players in Phraseanet assets path:
 
