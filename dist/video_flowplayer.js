@@ -1,6 +1,34 @@
 webpackJsonp([3],{
 
-/***/ 220:
+/***/ 10:
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+
+/***/ 132:
 /***/ (function(module, exports, __webpack_require__) {
 
 /// <reference path="../../../../embed/embed.d.ts" />
@@ -9,11 +37,11 @@ webpackJsonp([3],{
  */
 // require('html5shiv');
 window.HELP_IMPROVE_VIDEOJS = false;
-var flowplayer = __webpack_require__(221);
-var _ = __webpack_require__(13);
-var service_1 = __webpack_require__(33);
-var resizeEl_1 = __webpack_require__(28);
-var playerTemplate = __webpack_require__(222);
+var flowplayer = __webpack_require__(133);
+var _ = __webpack_require__(9);
+var service_1 = __webpack_require__(15);
+var resizeEl_1 = __webpack_require__(14);
+var playerTemplate = __webpack_require__(134);
 var VideoPlayer = function () {
     function VideoPlayer() {
         this.configService = new service_1.default();
@@ -87,7 +115,7 @@ window.embedPlugin = new VideoPlayer();
 
 /***/ }),
 
-/***/ 221:
+/***/ 133:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var require;var require;/*!
@@ -7003,11 +7031,11 @@ module.exports = function isObject(x) {
 },{}]},{},[19])(19)
 });
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ }),
 
-/***/ 222:
+/***/ 134:
 /***/ (function(module, exports) {
 
 module.exports = function(obj){
@@ -7020,10 +7048,10 @@ return __p;
 
 /***/ }),
 
-/***/ 28:
+/***/ 14:
 /***/ (function(module, exports, __webpack_require__) {
 
-var _ = __webpack_require__(13);
+var _ = __webpack_require__(9);
 var ResizeEl = function () {
     function ResizeEl(options) {
         var _this = this;
@@ -7114,35 +7142,7 @@ var ResizeEl = function () {
 }();
 exports.default = ResizeEl;
 
-/***/ }),
-
-/***/ 3:
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
 /***/ })
 
-},[220]);
+},[132]);
 //# sourceMappingURL=video_flowplayer.js.map

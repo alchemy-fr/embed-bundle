@@ -1,6 +1,34 @@
 webpackJsonp([4],{
 
-/***/ 223:
+/***/ 10:
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+
+/***/ 135:
 /***/ (function(module, exports, __webpack_require__) {
 
 /// <reference path="../../../../embed/embed.d.ts" />
@@ -9,10 +37,10 @@ webpackJsonp([4],{
  */
 // require('html5shiv');
 window.HELP_IMPROVE_VIDEOJS = false;
-var videojs = __webpack_require__(65);
-var service_1 = __webpack_require__(33);
-var resizeEl_1 = __webpack_require__(28);
-var playerTemplate = __webpack_require__(224);
+var videojs = __webpack_require__(27);
+var service_1 = __webpack_require__(15);
+var resizeEl_1 = __webpack_require__(14);
+var playerTemplate = __webpack_require__(136);
 var AudioPlayer = function () {
     function AudioPlayer() {
         var _this = this;
@@ -86,7 +114,7 @@ window.embedPlugin = new AudioPlayer();
 
 /***/ }),
 
-/***/ 224:
+/***/ 136:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
@@ -106,14 +134,14 @@ __p+='\n</audio>';
 }
 return __p;
 };
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(13)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
 
 /***/ }),
 
-/***/ 28:
+/***/ 14:
 /***/ (function(module, exports, __webpack_require__) {
 
-var _ = __webpack_require__(13);
+var _ = __webpack_require__(9);
 var ResizeEl = function () {
     function ResizeEl(options) {
         var _this = this;
@@ -206,35 +234,7 @@ exports.default = ResizeEl;
 
 /***/ }),
 
-/***/ 3:
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-
-/***/ 65:
+/***/ 27:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var require;var require;/**
@@ -27228,9 +27228,9 @@ function extend() {
 
 },{}]},{},[93])(93)
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ })
 
-},[223]);
+},[135]);
 //# sourceMappingURL=audio_videojs.js.map

@@ -1,6 +1,6 @@
 webpackJsonp([5],{
 
-/***/ 225:
+/***/ 137:
 /***/ (function(module, exports, __webpack_require__) {
 
 /// <reference path="../../../../embed/embed.d.ts" />
@@ -8,9 +8,9 @@ webpackJsonp([5],{
  * FlexPaper Player for Embed Document
  */
 // require('html5shiv');
-var swfobject = __webpack_require__(226);
-var service_1 = __webpack_require__(33);
-var playerTemplate = __webpack_require__(227);
+var swfobject = __webpack_require__(138);
+var service_1 = __webpack_require__(15);
+var playerTemplate = __webpack_require__(139);
 var DocumentPlayer = function () {
     function DocumentPlayer() {
         this.configService = new service_1.default();
@@ -40,7 +40,7 @@ window.embedPlugin = new DocumentPlayer();
 
 /***/ }),
 
-/***/ 226:
+/***/ 138:
 /***/ (function(module, exports) {
 
 /*	SWFObject v2.2 <http://code.google.com/p/swfobject/> 
@@ -51,7 +51,7 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
 
 /***/ }),
 
-/***/ 227:
+/***/ 139:
 /***/ (function(module, exports) {
 
 module.exports = function(obj){
@@ -64,5 +64,5 @@ return __p;
 
 /***/ })
 
-},[225]);
+},[137]);
 //# sourceMappingURL=document_flexpaper.js.map

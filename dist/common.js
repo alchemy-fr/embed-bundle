@@ -91,7 +91,7 @@
 /******/ 		if (__webpack_require__.nc) {
 /******/ 			script.setAttribute("nonce", __webpack_require__.nc);
 /******/ 		}
-/******/ 		script.src = __webpack_require__.p + "" + {"0":"3f9bf19a9c7f2d29338c","1":"b34aac235b8cf696db4e","2":"3c3f562ba193870739bb","3":"b92f6243a2b13389d919","4":"241542e12b377b1d10f8","5":"056e7556adeb4e34c93a","6":"32c64f81c34908cfff15"}[chunkId] + ".js";
+/******/ 		script.src = __webpack_require__.p + "" + {"0":"4da2155b88d5bc6e25f2","1":"4d28a013ee5f4089be46","2":"60933dfea010c53e2220","3":"f700c5cf83c9c151ee61","4":"3d6075da5f7a8180f5a3","5":"899e9c01d237512251fe","6":"acb83feddd25595f7a27"}[chunkId] + ".js";
 /******/ 		var timeout = setTimeout(onScriptComplete, 120000);
 /******/ 		script.onerror = script.onload = onScriptComplete;
 /******/ 		function onScriptComplete() {
@@ -147,12 +147,177 @@
 /******/ 	__webpack_require__.oe = function(err) { console.error(err); throw err; };
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 322);
+/******/ 	return __webpack_require__(__webpack_require__.s = 153);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 13:
+/***/ 15:
+/***/ (function(module, exports, __webpack_require__) {
+
+var __extends = this && this.__extends || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() {
+        this.constructor = d;
+    }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var applicationConfigService_1 = __webpack_require__(60);
+//import radioChannels from '../../core/radioChannels';
+var config_1 = __webpack_require__(61);
+var instance = null;
+var ConfigService = function (_super) {
+    __extends(ConfigService, _super);
+    function ConfigService() {
+        if (!instance) {
+            instance = this;
+        }
+        _super.call(this, config_1.default);
+        /*        // register listeners:
+                radioChannels().get('config').reply('service', () => {
+                    return instance;
+                });
+                radioChannels().get('config').reply('get', (configKey) => {
+                    return this.get(configKey);
+                });*/
+        return instance;
+    }
+    return ConfigService;
+}(applicationConfigService_1.default);
+;
+exports.default = ConfigService;
+
+/***/ }),
+
+/***/ 153:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(9);
+
+
+/***/ }),
+
+/***/ 60:
+/***/ (function(module, exports, __webpack_require__) {
+
+var instance = null;
+var _ = __webpack_require__(9);
+var ApplicationConfigService = function () {
+    function ApplicationConfigService(config) {
+        // if( !instance ) {
+        //     instance = this;
+        // }
+        this.configuration = config;
+        // return instance;
+    }
+    ApplicationConfigService.prototype.get = function (configKey) {
+        if (configKey !== undefined) {
+            var foundValue = this._findKeyValue(configKey || this.configuration);
+            switch (typeof foundValue) {
+                case 'string':
+                    return foundValue;
+                default:
+                    return foundValue ? foundValue : null;
+            }
+        }
+        return this.configuration;
+    };
+    ApplicationConfigService.prototype.set = function (configKey, value) {
+        if (configKey !== undefined) {
+            this.configuration[configKey] = value;
+        }
+    };
+    // @TODO cast
+    ApplicationConfigService.prototype._findKeyValue = function (configName) {
+        if (!configName) {
+            return undefined;
+        }
+        var isStr = _.isString(configName),
+            name = isStr ? configName : configName.name,
+            path = configName.indexOf('.') > 0 ? true : false;
+        if (path) {
+            return this._search(this.configuration, name);
+        }
+        var state = this.configuration[name];
+        if (state && (isStr || !isStr && state === configName)) {
+            return state;
+        } else if (isStr) {
+            return state;
+        }
+        return undefined;
+    };
+    // @TODO cast
+    ApplicationConfigService.prototype._search = function (obj, path) {
+        if (_.isNumber(path)) {
+            path = [path];
+        }
+        if (_.isEmpty(path)) {
+            return obj;
+        }
+        if (_.isEmpty(obj)) {
+            return null;
+        }
+        if (_.isString(path)) {
+            return this._search(obj, path.split('.'));
+        }
+        var currentPath = path[0];
+        if (path.length === 1) {
+            if (obj[currentPath] === void 0) {
+                return null;
+            }
+            return obj[currentPath];
+        }
+        return this._search(obj[currentPath], path.slice(1));
+    };
+    return ApplicationConfigService;
+}();
+exports.default = ApplicationConfigService;
+;
+
+/***/ }),
+
+/***/ 61:
+/***/ (function(module, exports, __webpack_require__) {
+
+var _ = __webpack_require__(9);
+var config = {
+    assetsPath: '/plugins/web-gallery/assets',
+    api: {
+        baseUrl: '/web-gallery',
+        basePath: '',
+        ajaxSetup: {
+            accept: 'application/json',
+            contentType: 'application/json',
+            async: true,
+            cache: false,
+            dataType: 'json',
+            complete: function () {
+                // console.log('complete')
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                // override default phraseanet behavior
+                console.log('ajax failed', jqXHR, textStatus, errorThrown);
+                var res,
+                    ct = jqXHR.getResponseHeader('content-type') || '';
+                if (ct.indexOf('json') > -1) {
+                    res = $.parseJSON(jqXHR.responseText);
+                }
+                return res;
+            }
+        }
+    }
+};
+// config can be overridden by local environment:
+var envConfiguration = window.envConfiguration;
+if (envConfiguration !== undefined) {
+    config = _.extend(config, envConfiguration);
+}
+exports.default = config;
+
+/***/ }),
+
+/***/ 9:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//     Underscore.js 1.8.3
@@ -1705,171 +1870,6 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//     Underscor
   }
 }.call(this));
 
-
-/***/ }),
-
-/***/ 148:
-/***/ (function(module, exports, __webpack_require__) {
-
-var instance = null;
-var _ = __webpack_require__(13);
-var ApplicationConfigService = function () {
-    function ApplicationConfigService(config) {
-        // if( !instance ) {
-        //     instance = this;
-        // }
-        this.configuration = config;
-        // return instance;
-    }
-    ApplicationConfigService.prototype.get = function (configKey) {
-        if (configKey !== undefined) {
-            var foundValue = this._findKeyValue(configKey || this.configuration);
-            switch (typeof foundValue) {
-                case 'string':
-                    return foundValue;
-                default:
-                    return foundValue ? foundValue : null;
-            }
-        }
-        return this.configuration;
-    };
-    ApplicationConfigService.prototype.set = function (configKey, value) {
-        if (configKey !== undefined) {
-            this.configuration[configKey] = value;
-        }
-    };
-    // @TODO cast
-    ApplicationConfigService.prototype._findKeyValue = function (configName) {
-        if (!configName) {
-            return undefined;
-        }
-        var isStr = _.isString(configName),
-            name = isStr ? configName : configName.name,
-            path = configName.indexOf('.') > 0 ? true : false;
-        if (path) {
-            return this._search(this.configuration, name);
-        }
-        var state = this.configuration[name];
-        if (state && (isStr || !isStr && state === configName)) {
-            return state;
-        } else if (isStr) {
-            return state;
-        }
-        return undefined;
-    };
-    // @TODO cast
-    ApplicationConfigService.prototype._search = function (obj, path) {
-        if (_.isNumber(path)) {
-            path = [path];
-        }
-        if (_.isEmpty(path)) {
-            return obj;
-        }
-        if (_.isEmpty(obj)) {
-            return null;
-        }
-        if (_.isString(path)) {
-            return this._search(obj, path.split('.'));
-        }
-        var currentPath = path[0];
-        if (path.length === 1) {
-            if (obj[currentPath] === void 0) {
-                return null;
-            }
-            return obj[currentPath];
-        }
-        return this._search(obj[currentPath], path.slice(1));
-    };
-    return ApplicationConfigService;
-}();
-exports.default = ApplicationConfigService;
-;
-
-/***/ }),
-
-/***/ 149:
-/***/ (function(module, exports, __webpack_require__) {
-
-var _ = __webpack_require__(13);
-var config = {
-    assetsPath: '/plugins/web-gallery/assets',
-    api: {
-        baseUrl: '/web-gallery',
-        basePath: '',
-        ajaxSetup: {
-            accept: 'application/json',
-            contentType: 'application/json',
-            async: true,
-            cache: false,
-            dataType: 'json',
-            complete: function () {
-                // console.log('complete')
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                // override default phraseanet behavior
-                console.log('ajax failed', jqXHR, textStatus, errorThrown);
-                var res,
-                    ct = jqXHR.getResponseHeader('content-type') || '';
-                if (ct.indexOf('json') > -1) {
-                    res = $.parseJSON(jqXHR.responseText);
-                }
-                return res;
-            }
-        }
-    }
-};
-// config can be overridden by local environment:
-var envConfiguration = window.envConfiguration;
-if (envConfiguration !== undefined) {
-    config = _.extend(config, envConfiguration);
-}
-exports.default = config;
-
-/***/ }),
-
-/***/ 322:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(13);
-
-
-/***/ }),
-
-/***/ 33:
-/***/ (function(module, exports, __webpack_require__) {
-
-var __extends = this && this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() {
-        this.constructor = d;
-    }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
-var applicationConfigService_1 = __webpack_require__(148);
-//import radioChannels from '../../core/radioChannels';
-var config_1 = __webpack_require__(149);
-var instance = null;
-var ConfigService = function (_super) {
-    __extends(ConfigService, _super);
-    function ConfigService() {
-        if (!instance) {
-            instance = this;
-        }
-        _super.call(this, config_1.default);
-        /*        // register listeners:
-                radioChannels().get('config').reply('service', () => {
-                    return instance;
-                });
-                radioChannels().get('config').reply('get', (configKey) => {
-                    return this.get(configKey);
-                });*/
-        return instance;
-    }
-    return ConfigService;
-}(applicationConfigService_1.default);
-;
-exports.default = ConfigService;
 
 /***/ })
 
