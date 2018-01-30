@@ -36,10 +36,10 @@ gulp.task('build', ['clean:tmp'], function () {
 
 });
 gulp.task('build-dev', ['clean:tmp'], function () {
-    if( conf.checkPath(conf.paths.deployParent) === false ) {
-        gutil.log(gutil.colors.red('[ERROR]'), 'Deploy folder "'+conf.paths.deployParent+'" not found');
-        return;
-    }
+    // if( conf.checkPath(conf.paths.deployParent) === false ) {
+    //     gutil.log(gutil.colors.red('[ERROR]'), 'Deploy folder "'+conf.paths.deployParent+'" not found');
+    //     return;
+    // }
     gulp.start('webpack:build-dev');
     gulp.start('deploy:copy-styles-dev');
     //gulp.start('deploy:assets');

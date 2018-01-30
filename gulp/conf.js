@@ -1,11 +1,12 @@
 var gutil = require("gulp-util");
 var fs = require('fs');
 var path = require('path');
+const _root = __dirname + '/../';
 var configPaths = {
     src: './resources',
     tmp: './.tmp',
     deployParent: '../../../www/assets',
-    dist: './dist',
+    dist: _root + 'dist',
     baseClientConfig: 'resources/themes/default',
     useClientConfig: 'your custom folder here'
 };
