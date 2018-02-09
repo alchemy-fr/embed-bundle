@@ -1,6 +1,6 @@
 webpackJsonp([3],{
 
-/***/ 10:
+/***/ 2:
 /***/ (function(module, exports) {
 
 var g;
@@ -28,7 +28,7 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 132:
+/***/ 23:
 /***/ (function(module, exports, __webpack_require__) {
 
 /// <reference path="../../../../embed/embed.d.ts" />
@@ -37,11 +37,11 @@ module.exports = g;
  */
 // require('html5shiv');
 window.HELP_IMPROVE_VIDEOJS = false;
-var flowplayer = __webpack_require__(133);
-var _ = __webpack_require__(9);
-var service_1 = __webpack_require__(15);
-var resizeEl_1 = __webpack_require__(14);
-var playerTemplate = __webpack_require__(134);
+var flowplayer = __webpack_require__(24);
+var _ = __webpack_require__(1);
+var service_1 = __webpack_require__(4);
+var resizeEl_1 = __webpack_require__(3);
+var playerTemplate = __webpack_require__(25);
 var VideoPlayer = function () {
     function VideoPlayer() {
         this.configService = new service_1.default();
@@ -115,7 +115,7 @@ window.embedPlugin = new VideoPlayer();
 
 /***/ }),
 
-/***/ 133:
+/***/ 24:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var require;var require;/*!
@@ -7031,11 +7031,11 @@ module.exports = function isObject(x) {
 },{}]},{},[19])(19)
 });
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
 
-/***/ 134:
+/***/ 25:
 /***/ (function(module, exports) {
 
 module.exports = function(obj){
@@ -7048,10 +7048,10 @@ return __p;
 
 /***/ }),
 
-/***/ 14:
+/***/ 3:
 /***/ (function(module, exports, __webpack_require__) {
 
-var _ = __webpack_require__(9);
+var _ = __webpack_require__(1);
 var ResizeEl = function () {
     function ResizeEl(options) {
         var _this = this;
@@ -7144,5 +7144,5 @@ exports.default = ResizeEl;
 
 /***/ })
 
-},[132]);
+},[23]);
 //# sourceMappingURL=video_flowplayer.js.map
