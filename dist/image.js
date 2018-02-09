@@ -1,9 +1,49 @@
 webpackJsonp([6],{
 
-/***/ 14:
+/***/ 16:
 /***/ (function(module, exports, __webpack_require__) {
 
-var _ = __webpack_require__(9);
+/**
+ * Entry point for Embed Images
+ */
+/// <reference path="./embed.d.ts" />
+// require('html5shiv');
+//import _ = require('underscore');
+var service_1 = __webpack_require__(4);
+var resizeEl_1 = __webpack_require__(3);
+var Embed = function () {
+    function Embed() {
+        this.configService = new service_1.default();
+        this.$embedContainer = document.getElementById('embed-content');
+        this.$embedResource = document.getElementById('embed-image');
+        this.resourceOriginalWidth = this.configService.get('resource.width');
+        this.resourceOriginalHeight = this.configService.get('resource.height');
+        this.resizer = new resizeEl_1.default({
+            target: this.$embedResource,
+            container: this.$embedContainer,
+            resizeOnWindowChange: this.configService.get('resource.fitIn') === true ? true : false
+        });
+        this.resizer.setContainerDimensions({
+            width: window.innerWidth,
+            height: window.innerHeight
+        });
+        this.resizer.setTargetDimensions({
+            width: this.resourceOriginalWidth,
+            height: this.resourceOriginalHeight
+        });
+        this.resizer.resize();
+    }
+    return Embed;
+}();
+exports.default = Embed;
+window.embedPlugin = new Embed();
+
+/***/ }),
+
+/***/ 3:
+/***/ (function(module, exports, __webpack_require__) {
+
+var _ = __webpack_require__(1);
 var ResizeEl = function () {
     function ResizeEl(options) {
         var _this = this;
@@ -94,47 +134,7 @@ var ResizeEl = function () {
 }();
 exports.default = ResizeEl;
 
-/***/ }),
-
-/***/ 59:
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
- * Entry point for Embed Images
- */
-/// <reference path="./embed.d.ts" />
-// require('html5shiv');
-//import _ = require('underscore');
-var service_1 = __webpack_require__(15);
-var resizeEl_1 = __webpack_require__(14);
-var Embed = function () {
-    function Embed() {
-        this.configService = new service_1.default();
-        this.$embedContainer = document.getElementById('embed-content');
-        this.$embedResource = document.getElementById('embed-image');
-        this.resourceOriginalWidth = this.configService.get('resource.width');
-        this.resourceOriginalHeight = this.configService.get('resource.height');
-        this.resizer = new resizeEl_1.default({
-            target: this.$embedResource,
-            container: this.$embedContainer,
-            resizeOnWindowChange: this.configService.get('resource.fitIn') === true ? true : false
-        });
-        this.resizer.setContainerDimensions({
-            width: window.innerWidth,
-            height: window.innerHeight
-        });
-        this.resizer.setTargetDimensions({
-            width: this.resourceOriginalWidth,
-            height: this.resourceOriginalHeight
-        });
-        this.resizer.resize();
-    }
-    return Embed;
-}();
-exports.default = Embed;
-window.embedPlugin = new Embed();
-
 /***/ })
 
-},[59]);
+},[16]);
 //# sourceMappingURL=image.js.map

@@ -1,6 +1,1119 @@
-webpackJsonp([2],{
+webpackJsonp([1],[
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
 
-/***/ 10:
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global, process) {/* Copyright 2017 Mozilla Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.warn = exports.utf8StringToString = exports.stringToUTF8String = exports.stringToPDFString = exports.stringToBytes = exports.string32 = exports.shadow = exports.setVerbosityLevel = exports.removeNullCharacters = exports.readUint32 = exports.readUint16 = exports.readInt8 = exports.log2 = exports.loadJpegStream = exports.isEvalSupported = exports.isLittleEndian = exports.createValidAbsoluteUrl = exports.isSameOrigin = exports.isNodeJS = exports.isSpace = exports.isString = exports.isNum = exports.isInt = exports.isEmptyObj = exports.isBool = exports.isArrayBuffer = exports.isArray = exports.info = exports.globalScope = exports.getVerbosityLevel = exports.getLookupTableFactory = exports.error = exports.deprecated = exports.createObjectURL = exports.createPromiseCapability = exports.createBlob = exports.bytesToString = exports.assert = exports.arraysToBytes = exports.arrayByteLength = exports.XRefParseException = exports.Util = exports.UnknownErrorException = exports.UnexpectedResponseException = exports.TextRenderingMode = exports.StreamType = exports.StatTimer = exports.PasswordResponses = exports.PasswordException = exports.PageViewport = exports.NotImplementedException = exports.NativeImageDecoding = exports.MissingPDFException = exports.MissingDataException = exports.MessageHandler = exports.InvalidPDFException = exports.CMapCompressionType = exports.ImageKind = exports.FontType = exports.AnnotationType = exports.AnnotationFlag = exports.AnnotationFieldFlag = exports.AnnotationBorderStyleType = exports.UNSUPPORTED_FEATURES = exports.VERBOSITY_LEVELS = exports.OPS = exports.IDENTITY_MATRIX = exports.FONT_IDENTITY_MATRIX = undefined;
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+__webpack_require__(38);
+
+var globalScope = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : undefined;
+var FONT_IDENTITY_MATRIX = [0.001, 0, 0, 0.001, 0, 0];
+var NativeImageDecoding = {
+  NONE: 'none',
+  DECODE: 'decode',
+  DISPLAY: 'display'
+};
+var TextRenderingMode = {
+  FILL: 0,
+  STROKE: 1,
+  FILL_STROKE: 2,
+  INVISIBLE: 3,
+  FILL_ADD_TO_PATH: 4,
+  STROKE_ADD_TO_PATH: 5,
+  FILL_STROKE_ADD_TO_PATH: 6,
+  ADD_TO_PATH: 7,
+  FILL_STROKE_MASK: 3,
+  ADD_TO_PATH_FLAG: 4
+};
+var ImageKind = {
+  GRAYSCALE_1BPP: 1,
+  RGB_24BPP: 2,
+  RGBA_32BPP: 3
+};
+var AnnotationType = {
+  TEXT: 1,
+  LINK: 2,
+  FREETEXT: 3,
+  LINE: 4,
+  SQUARE: 5,
+  CIRCLE: 6,
+  POLYGON: 7,
+  POLYLINE: 8,
+  HIGHLIGHT: 9,
+  UNDERLINE: 10,
+  SQUIGGLY: 11,
+  STRIKEOUT: 12,
+  STAMP: 13,
+  CARET: 14,
+  INK: 15,
+  POPUP: 16,
+  FILEATTACHMENT: 17,
+  SOUND: 18,
+  MOVIE: 19,
+  WIDGET: 20,
+  SCREEN: 21,
+  PRINTERMARK: 22,
+  TRAPNET: 23,
+  WATERMARK: 24,
+  THREED: 25,
+  REDACT: 26
+};
+var AnnotationFlag = {
+  INVISIBLE: 0x01,
+  HIDDEN: 0x02,
+  PRINT: 0x04,
+  NOZOOM: 0x08,
+  NOROTATE: 0x10,
+  NOVIEW: 0x20,
+  READONLY: 0x40,
+  LOCKED: 0x80,
+  TOGGLENOVIEW: 0x100,
+  LOCKEDCONTENTS: 0x200
+};
+var AnnotationFieldFlag = {
+  READONLY: 0x0000001,
+  REQUIRED: 0x0000002,
+  NOEXPORT: 0x0000004,
+  MULTILINE: 0x0001000,
+  PASSWORD: 0x0002000,
+  NOTOGGLETOOFF: 0x0004000,
+  RADIO: 0x0008000,
+  PUSHBUTTON: 0x0010000,
+  COMBO: 0x0020000,
+  EDIT: 0x0040000,
+  SORT: 0x0080000,
+  FILESELECT: 0x0100000,
+  MULTISELECT: 0x0200000,
+  DONOTSPELLCHECK: 0x0400000,
+  DONOTSCROLL: 0x0800000,
+  COMB: 0x1000000,
+  RICHTEXT: 0x2000000,
+  RADIOSINUNISON: 0x2000000,
+  COMMITONSELCHANGE: 0x4000000
+};
+var AnnotationBorderStyleType = {
+  SOLID: 1,
+  DASHED: 2,
+  BEVELED: 3,
+  INSET: 4,
+  UNDERLINE: 5
+};
+var StreamType = {
+  UNKNOWN: 0,
+  FLATE: 1,
+  LZW: 2,
+  DCT: 3,
+  JPX: 4,
+  JBIG: 5,
+  A85: 6,
+  AHX: 7,
+  CCF: 8,
+  RL: 9
+};
+var FontType = {
+  UNKNOWN: 0,
+  TYPE1: 1,
+  TYPE1C: 2,
+  CIDFONTTYPE0: 3,
+  CIDFONTTYPE0C: 4,
+  TRUETYPE: 5,
+  CIDFONTTYPE2: 6,
+  TYPE3: 7,
+  OPENTYPE: 8,
+  TYPE0: 9,
+  MMTYPE1: 10
+};
+var VERBOSITY_LEVELS = {
+  errors: 0,
+  warnings: 1,
+  infos: 5
+};
+var CMapCompressionType = {
+  NONE: 0,
+  BINARY: 1,
+  STREAM: 2
+};
+var OPS = {
+  dependency: 1,
+  setLineWidth: 2,
+  setLineCap: 3,
+  setLineJoin: 4,
+  setMiterLimit: 5,
+  setDash: 6,
+  setRenderingIntent: 7,
+  setFlatness: 8,
+  setGState: 9,
+  save: 10,
+  restore: 11,
+  transform: 12,
+  moveTo: 13,
+  lineTo: 14,
+  curveTo: 15,
+  curveTo2: 16,
+  curveTo3: 17,
+  closePath: 18,
+  rectangle: 19,
+  stroke: 20,
+  closeStroke: 21,
+  fill: 22,
+  eoFill: 23,
+  fillStroke: 24,
+  eoFillStroke: 25,
+  closeFillStroke: 26,
+  closeEOFillStroke: 27,
+  endPath: 28,
+  clip: 29,
+  eoClip: 30,
+  beginText: 31,
+  endText: 32,
+  setCharSpacing: 33,
+  setWordSpacing: 34,
+  setHScale: 35,
+  setLeading: 36,
+  setFont: 37,
+  setTextRenderingMode: 38,
+  setTextRise: 39,
+  moveText: 40,
+  setLeadingMoveText: 41,
+  setTextMatrix: 42,
+  nextLine: 43,
+  showText: 44,
+  showSpacedText: 45,
+  nextLineShowText: 46,
+  nextLineSetSpacingShowText: 47,
+  setCharWidth: 48,
+  setCharWidthAndBounds: 49,
+  setStrokeColorSpace: 50,
+  setFillColorSpace: 51,
+  setStrokeColor: 52,
+  setStrokeColorN: 53,
+  setFillColor: 54,
+  setFillColorN: 55,
+  setStrokeGray: 56,
+  setFillGray: 57,
+  setStrokeRGBColor: 58,
+  setFillRGBColor: 59,
+  setStrokeCMYKColor: 60,
+  setFillCMYKColor: 61,
+  shadingFill: 62,
+  beginInlineImage: 63,
+  beginImageData: 64,
+  endInlineImage: 65,
+  paintXObject: 66,
+  markPoint: 67,
+  markPointProps: 68,
+  beginMarkedContent: 69,
+  beginMarkedContentProps: 70,
+  endMarkedContent: 71,
+  beginCompat: 72,
+  endCompat: 73,
+  paintFormXObjectBegin: 74,
+  paintFormXObjectEnd: 75,
+  beginGroup: 76,
+  endGroup: 77,
+  beginAnnotations: 78,
+  endAnnotations: 79,
+  beginAnnotation: 80,
+  endAnnotation: 81,
+  paintJpegXObject: 82,
+  paintImageMaskXObject: 83,
+  paintImageMaskXObjectGroup: 84,
+  paintImageXObject: 85,
+  paintInlineImageXObject: 86,
+  paintInlineImageXObjectGroup: 87,
+  paintImageXObjectRepeat: 88,
+  paintImageMaskXObjectRepeat: 89,
+  paintSolidColorImageMask: 90,
+  constructPath: 91
+};
+var verbosity = VERBOSITY_LEVELS.warnings;
+function setVerbosityLevel(level) {
+  verbosity = level;
+}
+function getVerbosityLevel() {
+  return verbosity;
+}
+function info(msg) {
+  if (verbosity >= VERBOSITY_LEVELS.infos) {
+    console.log('Info: ' + msg);
+  }
+}
+function warn(msg) {
+  if (verbosity >= VERBOSITY_LEVELS.warnings) {
+    console.log('Warning: ' + msg);
+  }
+}
+function deprecated(details) {
+  console.log('Deprecated API usage: ' + details);
+}
+function error(msg) {
+  if (verbosity >= VERBOSITY_LEVELS.errors) {
+    console.log('Error: ' + msg);
+    console.log(backtrace());
+  }
+  throw new Error(msg);
+}
+function backtrace() {
+  try {
+    throw new Error();
+  } catch (e) {
+    return e.stack ? e.stack.split('\n').slice(2).join('\n') : '';
+  }
+}
+function assert(cond, msg) {
+  if (!cond) {
+    error(msg);
+  }
+}
+var UNSUPPORTED_FEATURES = {
+  unknown: 'unknown',
+  forms: 'forms',
+  javaScript: 'javaScript',
+  smask: 'smask',
+  shadingPattern: 'shadingPattern',
+  font: 'font'
+};
+function isSameOrigin(baseUrl, otherUrl) {
+  try {
+    var base = new URL(baseUrl);
+    if (!base.origin || base.origin === 'null') {
+      return false;
+    }
+  } catch (e) {
+    return false;
+  }
+  var other = new URL(otherUrl, base);
+  return base.origin === other.origin;
+}
+function isValidProtocol(url) {
+  if (!url) {
+    return false;
+  }
+  switch (url.protocol) {
+    case 'http:':
+    case 'https:':
+    case 'ftp:':
+    case 'mailto:':
+    case 'tel:':
+      return true;
+    default:
+      return false;
+  }
+}
+function createValidAbsoluteUrl(url, baseUrl) {
+  if (!url) {
+    return null;
+  }
+  try {
+    var absoluteUrl = baseUrl ? new URL(url, baseUrl) : new URL(url);
+    if (isValidProtocol(absoluteUrl)) {
+      return absoluteUrl;
+    }
+  } catch (ex) {}
+  return null;
+}
+function shadow(obj, prop, value) {
+  Object.defineProperty(obj, prop, {
+    value: value,
+    enumerable: true,
+    configurable: true,
+    writable: false
+  });
+  return value;
+}
+function getLookupTableFactory(initializer) {
+  var lookup;
+  return function () {
+    if (initializer) {
+      lookup = Object.create(null);
+      initializer(lookup);
+      initializer = null;
+    }
+    return lookup;
+  };
+}
+var PasswordResponses = {
+  NEED_PASSWORD: 1,
+  INCORRECT_PASSWORD: 2
+};
+var PasswordException = function PasswordExceptionClosure() {
+  function PasswordException(msg, code) {
+    this.name = 'PasswordException';
+    this.message = msg;
+    this.code = code;
+  }
+  PasswordException.prototype = new Error();
+  PasswordException.constructor = PasswordException;
+  return PasswordException;
+}();
+var UnknownErrorException = function UnknownErrorExceptionClosure() {
+  function UnknownErrorException(msg, details) {
+    this.name = 'UnknownErrorException';
+    this.message = msg;
+    this.details = details;
+  }
+  UnknownErrorException.prototype = new Error();
+  UnknownErrorException.constructor = UnknownErrorException;
+  return UnknownErrorException;
+}();
+var InvalidPDFException = function InvalidPDFExceptionClosure() {
+  function InvalidPDFException(msg) {
+    this.name = 'InvalidPDFException';
+    this.message = msg;
+  }
+  InvalidPDFException.prototype = new Error();
+  InvalidPDFException.constructor = InvalidPDFException;
+  return InvalidPDFException;
+}();
+var MissingPDFException = function MissingPDFExceptionClosure() {
+  function MissingPDFException(msg) {
+    this.name = 'MissingPDFException';
+    this.message = msg;
+  }
+  MissingPDFException.prototype = new Error();
+  MissingPDFException.constructor = MissingPDFException;
+  return MissingPDFException;
+}();
+var UnexpectedResponseException = function UnexpectedResponseExceptionClosure() {
+  function UnexpectedResponseException(msg, status) {
+    this.name = 'UnexpectedResponseException';
+    this.message = msg;
+    this.status = status;
+  }
+  UnexpectedResponseException.prototype = new Error();
+  UnexpectedResponseException.constructor = UnexpectedResponseException;
+  return UnexpectedResponseException;
+}();
+var NotImplementedException = function NotImplementedExceptionClosure() {
+  function NotImplementedException(msg) {
+    this.message = msg;
+  }
+  NotImplementedException.prototype = new Error();
+  NotImplementedException.prototype.name = 'NotImplementedException';
+  NotImplementedException.constructor = NotImplementedException;
+  return NotImplementedException;
+}();
+var MissingDataException = function MissingDataExceptionClosure() {
+  function MissingDataException(begin, end) {
+    this.begin = begin;
+    this.end = end;
+    this.message = 'Missing data [' + begin + ', ' + end + ')';
+  }
+  MissingDataException.prototype = new Error();
+  MissingDataException.prototype.name = 'MissingDataException';
+  MissingDataException.constructor = MissingDataException;
+  return MissingDataException;
+}();
+var XRefParseException = function XRefParseExceptionClosure() {
+  function XRefParseException(msg) {
+    this.message = msg;
+  }
+  XRefParseException.prototype = new Error();
+  XRefParseException.prototype.name = 'XRefParseException';
+  XRefParseException.constructor = XRefParseException;
+  return XRefParseException;
+}();
+var NullCharactersRegExp = /\x00/g;
+function removeNullCharacters(str) {
+  if (typeof str !== 'string') {
+    warn('The argument for removeNullCharacters must be a string.');
+    return str;
+  }
+  return str.replace(NullCharactersRegExp, '');
+}
+function bytesToString(bytes) {
+  assert(bytes !== null && (typeof bytes === 'undefined' ? 'undefined' : _typeof(bytes)) === 'object' && bytes.length !== undefined, 'Invalid argument for bytesToString');
+  var length = bytes.length;
+  var MAX_ARGUMENT_COUNT = 8192;
+  if (length < MAX_ARGUMENT_COUNT) {
+    return String.fromCharCode.apply(null, bytes);
+  }
+  var strBuf = [];
+  for (var i = 0; i < length; i += MAX_ARGUMENT_COUNT) {
+    var chunkEnd = Math.min(i + MAX_ARGUMENT_COUNT, length);
+    var chunk = bytes.subarray(i, chunkEnd);
+    strBuf.push(String.fromCharCode.apply(null, chunk));
+  }
+  return strBuf.join('');
+}
+function stringToBytes(str) {
+  assert(typeof str === 'string', 'Invalid argument for stringToBytes');
+  var length = str.length;
+  var bytes = new Uint8Array(length);
+  for (var i = 0; i < length; ++i) {
+    bytes[i] = str.charCodeAt(i) & 0xFF;
+  }
+  return bytes;
+}
+function arrayByteLength(arr) {
+  if (arr.length !== undefined) {
+    return arr.length;
+  }
+  assert(arr.byteLength !== undefined);
+  return arr.byteLength;
+}
+function arraysToBytes(arr) {
+  if (arr.length === 1 && arr[0] instanceof Uint8Array) {
+    return arr[0];
+  }
+  var resultLength = 0;
+  var i,
+      ii = arr.length;
+  var item, itemLength;
+  for (i = 0; i < ii; i++) {
+    item = arr[i];
+    itemLength = arrayByteLength(item);
+    resultLength += itemLength;
+  }
+  var pos = 0;
+  var data = new Uint8Array(resultLength);
+  for (i = 0; i < ii; i++) {
+    item = arr[i];
+    if (!(item instanceof Uint8Array)) {
+      if (typeof item === 'string') {
+        item = stringToBytes(item);
+      } else {
+        item = new Uint8Array(item);
+      }
+    }
+    itemLength = item.byteLength;
+    data.set(item, pos);
+    pos += itemLength;
+  }
+  return data;
+}
+function string32(value) {
+  return String.fromCharCode(value >> 24 & 0xff, value >> 16 & 0xff, value >> 8 & 0xff, value & 0xff);
+}
+function log2(x) {
+  var n = 1,
+      i = 0;
+  while (x > n) {
+    n <<= 1;
+    i++;
+  }
+  return i;
+}
+function readInt8(data, start) {
+  return data[start] << 24 >> 24;
+}
+function readUint16(data, offset) {
+  return data[offset] << 8 | data[offset + 1];
+}
+function readUint32(data, offset) {
+  return (data[offset] << 24 | data[offset + 1] << 16 | data[offset + 2] << 8 | data[offset + 3]) >>> 0;
+}
+function isLittleEndian() {
+  var buffer8 = new Uint8Array(4);
+  buffer8[0] = 1;
+  var view32 = new Uint32Array(buffer8.buffer, 0, 1);
+  return view32[0] === 1;
+}
+function isEvalSupported() {
+  try {
+    new Function('');
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+var IDENTITY_MATRIX = [1, 0, 0, 1, 0, 0];
+var Util = function UtilClosure() {
+  function Util() {}
+  var rgbBuf = ['rgb(', 0, ',', 0, ',', 0, ')'];
+  Util.makeCssRgb = function Util_makeCssRgb(r, g, b) {
+    rgbBuf[1] = r;
+    rgbBuf[3] = g;
+    rgbBuf[5] = b;
+    return rgbBuf.join('');
+  };
+  Util.transform = function Util_transform(m1, m2) {
+    return [m1[0] * m2[0] + m1[2] * m2[1], m1[1] * m2[0] + m1[3] * m2[1], m1[0] * m2[2] + m1[2] * m2[3], m1[1] * m2[2] + m1[3] * m2[3], m1[0] * m2[4] + m1[2] * m2[5] + m1[4], m1[1] * m2[4] + m1[3] * m2[5] + m1[5]];
+  };
+  Util.applyTransform = function Util_applyTransform(p, m) {
+    var xt = p[0] * m[0] + p[1] * m[2] + m[4];
+    var yt = p[0] * m[1] + p[1] * m[3] + m[5];
+    return [xt, yt];
+  };
+  Util.applyInverseTransform = function Util_applyInverseTransform(p, m) {
+    var d = m[0] * m[3] - m[1] * m[2];
+    var xt = (p[0] * m[3] - p[1] * m[2] + m[2] * m[5] - m[4] * m[3]) / d;
+    var yt = (-p[0] * m[1] + p[1] * m[0] + m[4] * m[1] - m[5] * m[0]) / d;
+    return [xt, yt];
+  };
+  Util.getAxialAlignedBoundingBox = function Util_getAxialAlignedBoundingBox(r, m) {
+    var p1 = Util.applyTransform(r, m);
+    var p2 = Util.applyTransform(r.slice(2, 4), m);
+    var p3 = Util.applyTransform([r[0], r[3]], m);
+    var p4 = Util.applyTransform([r[2], r[1]], m);
+    return [Math.min(p1[0], p2[0], p3[0], p4[0]), Math.min(p1[1], p2[1], p3[1], p4[1]), Math.max(p1[0], p2[0], p3[0], p4[0]), Math.max(p1[1], p2[1], p3[1], p4[1])];
+  };
+  Util.inverseTransform = function Util_inverseTransform(m) {
+    var d = m[0] * m[3] - m[1] * m[2];
+    return [m[3] / d, -m[1] / d, -m[2] / d, m[0] / d, (m[2] * m[5] - m[4] * m[3]) / d, (m[4] * m[1] - m[5] * m[0]) / d];
+  };
+  Util.apply3dTransform = function Util_apply3dTransform(m, v) {
+    return [m[0] * v[0] + m[1] * v[1] + m[2] * v[2], m[3] * v[0] + m[4] * v[1] + m[5] * v[2], m[6] * v[0] + m[7] * v[1] + m[8] * v[2]];
+  };
+  Util.singularValueDecompose2dScale = function Util_singularValueDecompose2dScale(m) {
+    var transpose = [m[0], m[2], m[1], m[3]];
+    var a = m[0] * transpose[0] + m[1] * transpose[2];
+    var b = m[0] * transpose[1] + m[1] * transpose[3];
+    var c = m[2] * transpose[0] + m[3] * transpose[2];
+    var d = m[2] * transpose[1] + m[3] * transpose[3];
+    var first = (a + d) / 2;
+    var second = Math.sqrt((a + d) * (a + d) - 4 * (a * d - c * b)) / 2;
+    var sx = first + second || 1;
+    var sy = first - second || 1;
+    return [Math.sqrt(sx), Math.sqrt(sy)];
+  };
+  Util.normalizeRect = function Util_normalizeRect(rect) {
+    var r = rect.slice(0);
+    if (rect[0] > rect[2]) {
+      r[0] = rect[2];
+      r[2] = rect[0];
+    }
+    if (rect[1] > rect[3]) {
+      r[1] = rect[3];
+      r[3] = rect[1];
+    }
+    return r;
+  };
+  Util.intersect = function Util_intersect(rect1, rect2) {
+    function compare(a, b) {
+      return a - b;
+    }
+    var orderedX = [rect1[0], rect1[2], rect2[0], rect2[2]].sort(compare),
+        orderedY = [rect1[1], rect1[3], rect2[1], rect2[3]].sort(compare),
+        result = [];
+    rect1 = Util.normalizeRect(rect1);
+    rect2 = Util.normalizeRect(rect2);
+    if (orderedX[0] === rect1[0] && orderedX[1] === rect2[0] || orderedX[0] === rect2[0] && orderedX[1] === rect1[0]) {
+      result[0] = orderedX[1];
+      result[2] = orderedX[2];
+    } else {
+      return false;
+    }
+    if (orderedY[0] === rect1[1] && orderedY[1] === rect2[1] || orderedY[0] === rect2[1] && orderedY[1] === rect1[1]) {
+      result[1] = orderedY[1];
+      result[3] = orderedY[2];
+    } else {
+      return false;
+    }
+    return result;
+  };
+  Util.sign = function Util_sign(num) {
+    return num < 0 ? -1 : 1;
+  };
+  var ROMAN_NUMBER_MAP = ['', 'C', 'CC', 'CCC', 'CD', 'D', 'DC', 'DCC', 'DCCC', 'CM', '', 'X', 'XX', 'XXX', 'XL', 'L', 'LX', 'LXX', 'LXXX', 'XC', '', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX'];
+  Util.toRoman = function Util_toRoman(number, lowerCase) {
+    assert(isInt(number) && number > 0, 'The number should be a positive integer.');
+    var pos,
+        romanBuf = [];
+    while (number >= 1000) {
+      number -= 1000;
+      romanBuf.push('M');
+    }
+    pos = number / 100 | 0;
+    number %= 100;
+    romanBuf.push(ROMAN_NUMBER_MAP[pos]);
+    pos = number / 10 | 0;
+    number %= 10;
+    romanBuf.push(ROMAN_NUMBER_MAP[10 + pos]);
+    romanBuf.push(ROMAN_NUMBER_MAP[20 + number]);
+    var romanStr = romanBuf.join('');
+    return lowerCase ? romanStr.toLowerCase() : romanStr;
+  };
+  Util.appendToArray = function Util_appendToArray(arr1, arr2) {
+    Array.prototype.push.apply(arr1, arr2);
+  };
+  Util.prependToArray = function Util_prependToArray(arr1, arr2) {
+    Array.prototype.unshift.apply(arr1, arr2);
+  };
+  Util.extendObj = function extendObj(obj1, obj2) {
+    for (var key in obj2) {
+      obj1[key] = obj2[key];
+    }
+  };
+  Util.getInheritableProperty = function Util_getInheritableProperty(dict, name, getArray) {
+    while (dict && !dict.has(name)) {
+      dict = dict.get('Parent');
+    }
+    if (!dict) {
+      return null;
+    }
+    return getArray ? dict.getArray(name) : dict.get(name);
+  };
+  Util.inherit = function Util_inherit(sub, base, prototype) {
+    sub.prototype = Object.create(base.prototype);
+    sub.prototype.constructor = sub;
+    for (var prop in prototype) {
+      sub.prototype[prop] = prototype[prop];
+    }
+  };
+  Util.loadScript = function Util_loadScript(src, callback) {
+    var script = document.createElement('script');
+    var loaded = false;
+    script.setAttribute('src', src);
+    if (callback) {
+      script.onload = function () {
+        if (!loaded) {
+          callback();
+        }
+        loaded = true;
+      };
+    }
+    document.getElementsByTagName('head')[0].appendChild(script);
+  };
+  return Util;
+}();
+var PageViewport = function PageViewportClosure() {
+  function PageViewport(viewBox, scale, rotation, offsetX, offsetY, dontFlip) {
+    this.viewBox = viewBox;
+    this.scale = scale;
+    this.rotation = rotation;
+    this.offsetX = offsetX;
+    this.offsetY = offsetY;
+    var centerX = (viewBox[2] + viewBox[0]) / 2;
+    var centerY = (viewBox[3] + viewBox[1]) / 2;
+    var rotateA, rotateB, rotateC, rotateD;
+    rotation = rotation % 360;
+    rotation = rotation < 0 ? rotation + 360 : rotation;
+    switch (rotation) {
+      case 180:
+        rotateA = -1;
+        rotateB = 0;
+        rotateC = 0;
+        rotateD = 1;
+        break;
+      case 90:
+        rotateA = 0;
+        rotateB = 1;
+        rotateC = 1;
+        rotateD = 0;
+        break;
+      case 270:
+        rotateA = 0;
+        rotateB = -1;
+        rotateC = -1;
+        rotateD = 0;
+        break;
+      default:
+        rotateA = 1;
+        rotateB = 0;
+        rotateC = 0;
+        rotateD = -1;
+        break;
+    }
+    if (dontFlip) {
+      rotateC = -rotateC;
+      rotateD = -rotateD;
+    }
+    var offsetCanvasX, offsetCanvasY;
+    var width, height;
+    if (rotateA === 0) {
+      offsetCanvasX = Math.abs(centerY - viewBox[1]) * scale + offsetX;
+      offsetCanvasY = Math.abs(centerX - viewBox[0]) * scale + offsetY;
+      width = Math.abs(viewBox[3] - viewBox[1]) * scale;
+      height = Math.abs(viewBox[2] - viewBox[0]) * scale;
+    } else {
+      offsetCanvasX = Math.abs(centerX - viewBox[0]) * scale + offsetX;
+      offsetCanvasY = Math.abs(centerY - viewBox[1]) * scale + offsetY;
+      width = Math.abs(viewBox[2] - viewBox[0]) * scale;
+      height = Math.abs(viewBox[3] - viewBox[1]) * scale;
+    }
+    this.transform = [rotateA * scale, rotateB * scale, rotateC * scale, rotateD * scale, offsetCanvasX - rotateA * scale * centerX - rotateC * scale * centerY, offsetCanvasY - rotateB * scale * centerX - rotateD * scale * centerY];
+    this.width = width;
+    this.height = height;
+    this.fontScale = scale;
+  }
+  PageViewport.prototype = {
+    clone: function PageViewPort_clone(args) {
+      args = args || {};
+      var scale = 'scale' in args ? args.scale : this.scale;
+      var rotation = 'rotation' in args ? args.rotation : this.rotation;
+      return new PageViewport(this.viewBox.slice(), scale, rotation, this.offsetX, this.offsetY, args.dontFlip);
+    },
+    convertToViewportPoint: function PageViewport_convertToViewportPoint(x, y) {
+      return Util.applyTransform([x, y], this.transform);
+    },
+    convertToViewportRectangle: function PageViewport_convertToViewportRectangle(rect) {
+      var tl = Util.applyTransform([rect[0], rect[1]], this.transform);
+      var br = Util.applyTransform([rect[2], rect[3]], this.transform);
+      return [tl[0], tl[1], br[0], br[1]];
+    },
+    convertToPdfPoint: function PageViewport_convertToPdfPoint(x, y) {
+      return Util.applyInverseTransform([x, y], this.transform);
+    }
+  };
+  return PageViewport;
+}();
+var PDFStringTranslateTable = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x2D8, 0x2C7, 0x2C6, 0x2D9, 0x2DD, 0x2DB, 0x2DA, 0x2DC, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x2022, 0x2020, 0x2021, 0x2026, 0x2014, 0x2013, 0x192, 0x2044, 0x2039, 0x203A, 0x2212, 0x2030, 0x201E, 0x201C, 0x201D, 0x2018, 0x2019, 0x201A, 0x2122, 0xFB01, 0xFB02, 0x141, 0x152, 0x160, 0x178, 0x17D, 0x131, 0x142, 0x153, 0x161, 0x17E, 0, 0x20AC];
+function stringToPDFString(str) {
+  var i,
+      n = str.length,
+      strBuf = [];
+  if (str[0] === '\xFE' && str[1] === '\xFF') {
+    for (i = 2; i < n; i += 2) {
+      strBuf.push(String.fromCharCode(str.charCodeAt(i) << 8 | str.charCodeAt(i + 1)));
+    }
+  } else {
+    for (i = 0; i < n; ++i) {
+      var code = PDFStringTranslateTable[str.charCodeAt(i)];
+      strBuf.push(code ? String.fromCharCode(code) : str.charAt(i));
+    }
+  }
+  return strBuf.join('');
+}
+function stringToUTF8String(str) {
+  return decodeURIComponent(escape(str));
+}
+function utf8StringToString(str) {
+  return unescape(encodeURIComponent(str));
+}
+function isEmptyObj(obj) {
+  for (var key in obj) {
+    return false;
+  }
+  return true;
+}
+function isBool(v) {
+  return typeof v === 'boolean';
+}
+function isInt(v) {
+  return typeof v === 'number' && (v | 0) === v;
+}
+function isNum(v) {
+  return typeof v === 'number';
+}
+function isString(v) {
+  return typeof v === 'string';
+}
+function isArray(v) {
+  return v instanceof Array;
+}
+function isArrayBuffer(v) {
+  return (typeof v === 'undefined' ? 'undefined' : _typeof(v)) === 'object' && v !== null && v.byteLength !== undefined;
+}
+function isSpace(ch) {
+  return ch === 0x20 || ch === 0x09 || ch === 0x0D || ch === 0x0A;
+}
+function isNodeJS() {
+  if (typeof __pdfjsdev_webpack__ === 'undefined') {
+    return (typeof process === 'undefined' ? 'undefined' : _typeof(process)) === 'object' && process + '' === '[object process]';
+  }
+  return false;
+}
+function createPromiseCapability() {
+  var capability = {};
+  capability.promise = new Promise(function (resolve, reject) {
+    capability.resolve = resolve;
+    capability.reject = reject;
+  });
+  return capability;
+}
+var StatTimer = function StatTimerClosure() {
+  function rpad(str, pad, length) {
+    while (str.length < length) {
+      str += pad;
+    }
+    return str;
+  }
+  function StatTimer() {
+    this.started = Object.create(null);
+    this.times = [];
+    this.enabled = true;
+  }
+  StatTimer.prototype = {
+    time: function StatTimer_time(name) {
+      if (!this.enabled) {
+        return;
+      }
+      if (name in this.started) {
+        warn('Timer is already running for ' + name);
+      }
+      this.started[name] = Date.now();
+    },
+    timeEnd: function StatTimer_timeEnd(name) {
+      if (!this.enabled) {
+        return;
+      }
+      if (!(name in this.started)) {
+        warn('Timer has not been started for ' + name);
+      }
+      this.times.push({
+        'name': name,
+        'start': this.started[name],
+        'end': Date.now()
+      });
+      delete this.started[name];
+    },
+    toString: function StatTimer_toString() {
+      var i, ii;
+      var times = this.times;
+      var out = '';
+      var longest = 0;
+      for (i = 0, ii = times.length; i < ii; ++i) {
+        var name = times[i]['name'];
+        if (name.length > longest) {
+          longest = name.length;
+        }
+      }
+      for (i = 0, ii = times.length; i < ii; ++i) {
+        var span = times[i];
+        var duration = span.end - span.start;
+        out += rpad(span['name'], ' ', longest) + ' ' + duration + 'ms\n';
+      }
+      return out;
+    }
+  };
+  return StatTimer;
+}();
+var createBlob = function createBlob(data, contentType) {
+  if (typeof Blob !== 'undefined') {
+    return new Blob([data], { type: contentType });
+  }
+  throw new Error('The "Blob" constructor is not supported.');
+};
+var createObjectURL = function createObjectURLClosure() {
+  var digits = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+  return function createObjectURL(data, contentType) {
+    var forceDataSchema = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+    if (!forceDataSchema && URL.createObjectURL) {
+      var blob = createBlob(data, contentType);
+      return URL.createObjectURL(blob);
+    }
+    var buffer = 'data:' + contentType + ';base64,';
+    for (var i = 0, ii = data.length; i < ii; i += 3) {
+      var b1 = data[i] & 0xFF;
+      var b2 = data[i + 1] & 0xFF;
+      var b3 = data[i + 2] & 0xFF;
+      var d1 = b1 >> 2,
+          d2 = (b1 & 3) << 4 | b2 >> 4;
+      var d3 = i + 1 < ii ? (b2 & 0xF) << 2 | b3 >> 6 : 64;
+      var d4 = i + 2 < ii ? b3 & 0x3F : 64;
+      buffer += digits[d1] + digits[d2] + digits[d3] + digits[d4];
+    }
+    return buffer;
+  };
+}();
+function MessageHandler(sourceName, targetName, comObj) {
+  var _this = this;
+
+  this.sourceName = sourceName;
+  this.targetName = targetName;
+  this.comObj = comObj;
+  this.callbackIndex = 1;
+  this.postMessageTransfers = true;
+  var callbacksCapabilities = this.callbacksCapabilities = Object.create(null);
+  var ah = this.actionHandler = Object.create(null);
+  this._onComObjOnMessage = function (event) {
+    var data = event.data;
+    if (data.targetName !== _this.sourceName) {
+      return;
+    }
+    if (data.isReply) {
+      var callbackId = data.callbackId;
+      if (data.callbackId in callbacksCapabilities) {
+        var callback = callbacksCapabilities[callbackId];
+        delete callbacksCapabilities[callbackId];
+        if ('error' in data) {
+          callback.reject(data.error);
+        } else {
+          callback.resolve(data.data);
+        }
+      } else {
+        error('Cannot resolve callback ' + callbackId);
+      }
+    } else if (data.action in ah) {
+      var action = ah[data.action];
+      if (data.callbackId) {
+        var sourceName = _this.sourceName;
+        var targetName = data.sourceName;
+        Promise.resolve().then(function () {
+          return action[0].call(action[1], data.data);
+        }).then(function (result) {
+          comObj.postMessage({
+            sourceName: sourceName,
+            targetName: targetName,
+            isReply: true,
+            callbackId: data.callbackId,
+            data: result
+          });
+        }, function (reason) {
+          if (reason instanceof Error) {
+            reason = reason + '';
+          }
+          comObj.postMessage({
+            sourceName: sourceName,
+            targetName: targetName,
+            isReply: true,
+            callbackId: data.callbackId,
+            error: reason
+          });
+        });
+      } else {
+        action[0].call(action[1], data.data);
+      }
+    } else {
+      error('Unknown action from worker: ' + data.action);
+    }
+  };
+  comObj.addEventListener('message', this._onComObjOnMessage);
+}
+MessageHandler.prototype = {
+  on: function on(actionName, handler, scope) {
+    var ah = this.actionHandler;
+    if (ah[actionName]) {
+      error('There is already an actionName called "' + actionName + '"');
+    }
+    ah[actionName] = [handler, scope];
+  },
+  send: function send(actionName, data, transfers) {
+    var message = {
+      sourceName: this.sourceName,
+      targetName: this.targetName,
+      action: actionName,
+      data: data
+    };
+    this.postMessage(message, transfers);
+  },
+  sendWithPromise: function sendWithPromise(actionName, data, transfers) {
+    var callbackId = this.callbackIndex++;
+    var message = {
+      sourceName: this.sourceName,
+      targetName: this.targetName,
+      action: actionName,
+      data: data,
+      callbackId: callbackId
+    };
+    var capability = createPromiseCapability();
+    this.callbacksCapabilities[callbackId] = capability;
+    try {
+      this.postMessage(message, transfers);
+    } catch (e) {
+      capability.reject(e);
+    }
+    return capability.promise;
+  },
+  postMessage: function postMessage(message, transfers) {
+    if (transfers && this.postMessageTransfers) {
+      this.comObj.postMessage(message, transfers);
+    } else {
+      this.comObj.postMessage(message);
+    }
+  },
+  destroy: function destroy() {
+    this.comObj.removeEventListener('message', this._onComObjOnMessage);
+  }
+};
+function loadJpegStream(id, imageUrl, objs) {
+  var img = new Image();
+  img.onload = function loadJpegStream_onloadClosure() {
+    objs.resolve(id, img);
+  };
+  img.onerror = function loadJpegStream_onerrorClosure() {
+    objs.resolve(id, null);
+    warn('Error during JPEG image loading');
+  };
+  img.src = imageUrl;
+}
+exports.FONT_IDENTITY_MATRIX = FONT_IDENTITY_MATRIX;
+exports.IDENTITY_MATRIX = IDENTITY_MATRIX;
+exports.OPS = OPS;
+exports.VERBOSITY_LEVELS = VERBOSITY_LEVELS;
+exports.UNSUPPORTED_FEATURES = UNSUPPORTED_FEATURES;
+exports.AnnotationBorderStyleType = AnnotationBorderStyleType;
+exports.AnnotationFieldFlag = AnnotationFieldFlag;
+exports.AnnotationFlag = AnnotationFlag;
+exports.AnnotationType = AnnotationType;
+exports.FontType = FontType;
+exports.ImageKind = ImageKind;
+exports.CMapCompressionType = CMapCompressionType;
+exports.InvalidPDFException = InvalidPDFException;
+exports.MessageHandler = MessageHandler;
+exports.MissingDataException = MissingDataException;
+exports.MissingPDFException = MissingPDFException;
+exports.NativeImageDecoding = NativeImageDecoding;
+exports.NotImplementedException = NotImplementedException;
+exports.PageViewport = PageViewport;
+exports.PasswordException = PasswordException;
+exports.PasswordResponses = PasswordResponses;
+exports.StatTimer = StatTimer;
+exports.StreamType = StreamType;
+exports.TextRenderingMode = TextRenderingMode;
+exports.UnexpectedResponseException = UnexpectedResponseException;
+exports.UnknownErrorException = UnknownErrorException;
+exports.Util = Util;
+exports.XRefParseException = XRefParseException;
+exports.arrayByteLength = arrayByteLength;
+exports.arraysToBytes = arraysToBytes;
+exports.assert = assert;
+exports.bytesToString = bytesToString;
+exports.createBlob = createBlob;
+exports.createPromiseCapability = createPromiseCapability;
+exports.createObjectURL = createObjectURL;
+exports.deprecated = deprecated;
+exports.error = error;
+exports.getLookupTableFactory = getLookupTableFactory;
+exports.getVerbosityLevel = getVerbosityLevel;
+exports.globalScope = globalScope;
+exports.info = info;
+exports.isArray = isArray;
+exports.isArrayBuffer = isArrayBuffer;
+exports.isBool = isBool;
+exports.isEmptyObj = isEmptyObj;
+exports.isInt = isInt;
+exports.isNum = isNum;
+exports.isString = isString;
+exports.isSpace = isSpace;
+exports.isNodeJS = isNodeJS;
+exports.isSameOrigin = isSameOrigin;
+exports.createValidAbsoluteUrl = createValidAbsoluteUrl;
+exports.isLittleEndian = isLittleEndian;
+exports.isEvalSupported = isEvalSupported;
+exports.loadJpegStream = loadJpegStream;
+exports.log2 = log2;
+exports.readInt8 = readInt8;
+exports.readUint16 = readUint16;
+exports.readUint32 = readUint32;
+exports.removeNullCharacters = removeNullCharacters;
+exports.setVerbosityLevel = setVerbosityLevel;
+exports.shadow = shadow;
+exports.string32 = string32;
+exports.stringToBytes = stringToBytes;
+exports.stringToPDFString = stringToPDFString;
+exports.stringToUTF8String = stringToUTF8String;
+exports.utf8StringToString = utf8StringToString;
+exports.warn = warn;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(8)))
+
+/***/ }),
+/* 1 */,
+/* 2 */
 /***/ (function(module, exports) {
 
 var g;
@@ -27,11323 +1140,9 @@ module.exports = g;
 
 
 /***/ }),
-
-/***/ 140:
-/***/ (function(module, exports, __webpack_require__) {
-
-/// <reference path="../../../../embed/embed.d.ts" />
-/**
- * FlexPaper Player for Embed Document
- */
-//require('html5shiv');
-__webpack_require__(141);
-__webpack_require__(142); // should be loaded first
-__webpack_require__(50);
-// Webpack returns a string to the url because we configured the url-loader.
-window.PDFJS.workerSrc = __webpack_require__(52);
-var pdfview = __webpack_require__(143);
-var ui_utils = __webpack_require__(144);
-var service_1 = __webpack_require__(15);
-var playerTemplate = __webpack_require__(152);
-var FindStates = {
-    FIND_FOUND: 0,
-    FIND_NOTFOUND: 1,
-    FIND_WRAPPED: 2,
-    FIND_PENDING: 3
-};
-var DocumentPlayer = function () {
-    function DocumentPlayer() {
-        var SCALE_DELTA = 1.5;
-        var MIN_SCALE = 0.25;
-        var MAX_SCALE = 2.5;
-        var opened = false;
-        var isFullScreen = false;
-        this.configService = new service_1.default();
-        var docContainers = document.getElementsByClassName('document-player');
-        this.$documentContainer = docContainers[0];
-        this.$documentContainer.insertAdjacentHTML('afterbegin', playerTemplate(this.configService.get('resource')));
-        var pdf = this.configService.get('resource.url');
-        //let pdf = '/assets/helloworld.pdf';
-        var viewerElement = document.getElementById('viewer');
-        var container = document.getElementById('viewerContainer');
-        var zoomIn = document.getElementById('zoomIn');
-        var zoomOut = document.getElementById('zoomOut');
-        var reset = document.getElementById('reset');
-        var toggleFindButton = document.getElementById('viewFind');
-        var bar = document.getElementById('findbar');
-        var findField = document.getElementById('findInput');
-        var findNextButton = document.getElementById('findNext');
-        var findPreviousButton = document.getElementById('findPrevious');
-        var caseSensitive = document.getElementById('findMatchCase');
-        var highlightAll = document.getElementById('findHighlightAll');
-        var findResultsCount = document.getElementById('findResultsCount');
-        var findMessage = document.getElementById('findMsg');
-        var presentationModeButton = document.getElementById('presentationMode');
-        var pdfViewer = new window.PDFJS.PDFViewer({
-            container: container
-        });
-        //set localization
-        ui_utils.mozL10n.ready(onLocalized);
-        var pdfFindController = new window.PDFJS.PDFFindController({
-            pdfViewer: pdfViewer
-        });
-        pdfFindController.onUpdateResultsCount = function (matchCount) {
-            updateResultsCount(matchCount);
-        };
-        pdfFindController.onUpdateState = function (state, previous, matchCount) {
-            updateUIState(state, previous, matchCount);
-        };
-        pdfViewer.setFindController(pdfFindController);
-        /* HANDLERS FUNCTIONS */
-        zoomIn.addEventListener("click", function () {
-            var newScale = pdfViewer.currentScale;
-            newScale = (newScale * SCALE_DELTA).toFixed(2);
-            if (newScale > MAX_SCALE) {
-                pdfViewer.currentScale = MAX_SCALE;
-            } else {
-                pdfViewer.currentScale = newScale;
-            }
-            updateZoomButton(newScale);
-        });
-        zoomOut.addEventListener("click", function () {
-            var newScale = pdfViewer.currentScale;
-            newScale = (newScale / SCALE_DELTA).toFixed(2);
-            if (newScale < MIN_SCALE) {
-                pdfViewer.currentScale = MIN_SCALE;
-            } else {
-                pdfViewer.currentScale = newScale;
-            }
-            updateZoomButton(newScale);
-        });
-        reset.addEventListener("click", function () {
-            pdfViewer.currentScaleValue = "page-width";
-            var newScale = pdfViewer.currentScale;
-            updateZoomButton(newScale);
-        });
-        toggleFindButton.addEventListener('click', function () {
-            toggle();
-        });
-        findField.addEventListener('input', function () {
-            if (findField.value.length > 2) {
-                dispatchEvent('', false);
-            }
-        });
-        findNextButton.addEventListener('click', function () {
-            dispatchEvent('again', false);
-        });
-        findPreviousButton.addEventListener('click', function () {
-            dispatchEvent('again', true);
-        });
-        highlightAll.addEventListener('click', function () {
-            dispatchEvent('highlightallchange', false);
-        });
-        caseSensitive.addEventListener('click', function () {
-            dispatchEvent('casesensitivitychange', false);
-        });
-        presentationModeButton.addEventListener('click', function () {
-            toggleFullScreen();
-        });
-        document.addEventListener('webkitfullscreenchange', exitHandler, false);
-        document.addEventListener('mozfullscreenchange', exitHandler, false);
-        document.addEventListener('fullscreenchange', exitHandler, false);
-        document.addEventListener('MSFullscreenChange', exitHandler, false);
-        function onLocalized() {
-            ui_utils.mozL10n.setLanguage(document.documentElement.lang);
-        }
-        function exitHandler() {
-            var document = window.document;
-            var fullscreen = document.webkitIsFullScreen || document.mozFullScreen || document.msFullscreenElement;
-            if (fullscreen) {
-                pdfViewer.currentScaleValue = "auto";
-            } else {
-                pdfViewer.currentScaleValue = "page-width";
-            }
-        }
-        function toggleFullScreen() {
-            var elem = viewerElement;
-            var document = window.document;
-            if (!isFullScreen) {
-                if (elem.requestFullscreen) {
-                    elem.requestFullscreen();
-                } else if (elem.mozRequestFullScreen) {
-                    elem.mozRequestFullScreen();
-                } else if (elem.webkitRequestFullscreen) {
-                    elem.webkitRequestFullscreen();
-                } else if (elem.msRequestFullscreen) {
-                    elem.msRequestFullscreen();
-                }
-            } else {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                } else if (document.cancelFullScreen) {
-                    document.cancelFullScreen();
-                } else if (document.mozCancelFullScreen) {
-                    document.mozCancelFullScreen();
-                } else if (document.webkitExitFullscreen) {
-                    document.webkitExitFullscreen();
-                } else if (document.webkitCancelFullScreen) {
-                    document.webkitCancelFullScreen();
-                } else if (document.msExitFullscreen) {
-                    document.msExitFullscreen();
-                }
-            }
-        }
-        function dispatchEvent(type, findPrev) {
-            pdfFindController.executeCommand('find' + type, {
-                query: findField.value,
-                phraseSearch: true,
-                caseSensitive: caseSensitive.checked,
-                highlightAll: highlightAll.checked,
-                findPrevious: findPrev
-            });
-        }
-        function updateZoomButton(scale) {
-            if (scale >= MAX_SCALE) {
-                zoomIn.setAttribute("disabled", "disabled");
-            } else {
-                zoomIn.removeAttribute("disabled");
-            }
-            if (scale <= MIN_SCALE) {
-                zoomOut.setAttribute("disabled", "disabled");
-            } else {
-                zoomOut.removeAttribute("disabled");
-            }
-        }
-        function open() {
-            if (!opened) {
-                opened = true;
-                toggleFindButton.classList.add('toggled');
-                bar.classList.remove('hidden');
-            }
-            if ((sessionStorage.getItem('search') != null || sessionStorage.getItem('search') !== '') && (parent.document.body.getElementsByClassName('documentTips')[0].parentElement.parentElement.getAttribute('class').indexOf('preview_col_cont') > 0 || parent.document.body.getElementsByClassName('popover-content').length > 0)) {
-                findField.value = JSON.parse(sessionStorage.getItem('search'));
-                dispatchEvent('', false);
-            }
-            findField.select();
-            findField.focus();
-            _adjustWidth();
-        }
-        function close() {
-            if (!opened) {
-                return;
-            }
-            opened = false;
-            toggleFindButton.classList.remove('toggled');
-            bar.classList.add('hidden');
-            pdfFindController.active = false;
-        }
-        function toggle() {
-            if (opened) {
-                close();
-            } else {
-                open();
-            }
-        }
-        function _adjustWidth() {
-            if (!opened) {
-                return;
-            }
-            // The find bar has an absolute position and thus the browser extends
-            // its width to the maximum possible width once the find bar does not fit
-            // entirely within the window anymore (and its elements are automatically
-            // wrapped). Here we detect and fix that.
-            bar.classList.remove('wrapContainers');
-            var findbarHeight = bar.clientHeight;
-            var inputContainerHeight = bar.firstElementChild.clientHeight;
-            if (findbarHeight > inputContainerHeight) {
-                // The findbar is taller than the input container, which means that
-                // the browser wrapped some of the elements. For a consistent look,
-                // wrap all of them to adjust the width of the find bar.
-                bar.classList.add('wrapContainers');
-            }
-        }
-        function updateResultsCount(matchCount) {
-            if (!findResultsCount) {
-                return; // No UI control is provided.
-            }
-            // If there are no matches, hide the counter.
-            if (!matchCount) {
-                findResultsCount.classList.add('hidden');
-                return;
-            }
-            // Create and show the match counter.
-            findResultsCount.textContent = matchCount.toLocaleString();
-            findResultsCount.classList.remove('hidden');
-        }
-        function updateUIState(state, previous, matchCount) {
-            var notFound = false;
-            var findMsg = '';
-            var status = '';
-            switch (state) {
-                case FindStates.FIND_FOUND:
-                    break;
-                case FindStates.FIND_PENDING:
-                    status = 'pending';
-                    break;
-                case FindStates.FIND_NOTFOUND:
-                    findMsg = ui_utils.mozL10n.get('find_not_found', null, 'Phrase not found');
-                    notFound = true;
-                    break;
-                case FindStates.FIND_WRAPPED:
-                    if (previous) {
-                        findMsg = ui_utils.mozL10n.get('find_reached_top', null, 'Reached top of document, continued from bottom');
-                    } else {
-                        findMsg = ui_utils.mozL10n.get('find_reached_bottom', null, 'Reached end of document, continued from top');
-                    }
-                    break;
-            }
-            if (notFound) {
-                findField.classList.add('notFound');
-            } else {
-                findField.classList.remove('notFound');
-            }
-            findField.setAttribute('data-status', status);
-            findMessage.textContent = findMsg;
-            updateResultsCount(matchCount);
-            _adjustWidth();
-        }
-        container.addEventListener("pagesinit", function () {
-            pdfViewer.currentScaleValue = "page-width";
-        });
-        window.PDFJS.getDocument(pdf).then(function (document) {
-            console.log("render");
-            pdfViewer.setDocument(document);
-        });
-    }
-    return DocumentPlayer;
-}();
-exports.default = DocumentPlayer;
-window.embedPlugin = new DocumentPlayer();
-
-/***/ }),
-
-/***/ 141:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2011-2013 Fabien Cazenave, Mozilla.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to
- * deal in the Software without restriction, including without limitation the
- * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
- * sell copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
- * IN THE SOFTWARE.
- */
-
-/*jshint browser: true, devel: true, es5: true, globalstrict: true */
-
-
-document.webL10n = (function(window, document, undefined) {
-  var gL10nData = {};
-  var gTextData = '';
-  var gTextProp = 'textContent';
-  var gLanguage = '';
-  var gMacros = {};
-  var gReadyState = 'loading';
-
-
-  /**
-   * Synchronously loading l10n resources significantly minimizes flickering
-   * from displaying the app with non-localized strings and then updating the
-   * strings. Although this will block all script execution on this page, we
-   * expect that the l10n resources are available locally on flash-storage.
-   *
-   * As synchronous XHR is generally considered as a bad idea, we're still
-   * loading l10n resources asynchronously -- but we keep this in a setting,
-   * just in case... and applications using this library should hide their
-   * content until the `localized' event happens.
-   */
-
-  var gAsyncResourceLoading = true; // read-only
-
-
-  /**
-   * Debug helpers
-   *
-   *   gDEBUG == 0: don't display any console message
-   *   gDEBUG == 1: display only warnings, not logs
-   *   gDEBUG == 2: display all console messages
-   */
-
-  var gDEBUG = 1;
-
-  function consoleLog(message) {
-    if (gDEBUG >= 2) {
-      console.log('[l10n] ' + message);
-    }
-  }
-
-  function consoleWarn(message) {
-    if (gDEBUG) {
-      console.warn('[l10n] ' + message);
-    }
-  }
-
-
-  /**
-   * DOM helpers for the so-called "HTML API".
-   *
-   * These functions are written for modern browsers. For old versions of IE,
-   * they're overridden in the 'startup' section at the end of this file.
-   */
-
-  function getL10nResourceLinks() {
-    return document.querySelectorAll('link[type="application/l10n"]');
-  }
-
-  function getL10nDictionary() {
-    var script = document.querySelector('script[type="application/l10n"]');
-    // TODO: support multiple and external JSON dictionaries
-    return script ? JSON.parse(script.innerHTML) : null;
-  }
-
-  function getTranslatableChildren(element) {
-    return element ? element.querySelectorAll('*[data-l10n-id]') : [];
-  }
-
-  function getL10nAttributes(element) {
-    if (!element)
-      return {};
-
-    var l10nId = element.getAttribute('data-l10n-id');
-    var l10nArgs = element.getAttribute('data-l10n-args');
-    var args = {};
-    if (l10nArgs) {
-      try {
-        args = JSON.parse(l10nArgs);
-      } catch (e) {
-        consoleWarn('could not parse arguments for #' + l10nId);
-      }
-    }
-    return { id: l10nId, args: args };
-  }
-
-  function fireL10nReadyEvent(lang) {
-    var evtObject = document.createEvent('Event');
-    evtObject.initEvent('localized', true, false);
-    evtObject.language = lang;
-    document.dispatchEvent(evtObject);
-  }
-
-  function xhrLoadText(url, onSuccess, onFailure) {
-    onSuccess = onSuccess || function _onSuccess(data) {};
-    onFailure = onFailure || function _onFailure() {
-      consoleWarn(url + ' not found.');
-    };
-
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', url, gAsyncResourceLoading);
-    if (xhr.overrideMimeType) {
-      xhr.overrideMimeType('text/plain; charset=utf-8');
-    }
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState == 4) {
-        if (xhr.status == 200 || xhr.status === 0) {
-          onSuccess(xhr.responseText);
-        } else {
-          onFailure();
-        }
-      }
-    };
-    xhr.onerror = onFailure;
-    xhr.ontimeout = onFailure;
-
-    // in Firefox OS with the app:// protocol, trying to XHR a non-existing
-    // URL will raise an exception here -- hence this ugly try...catch.
-    try {
-      xhr.send(null);
-    } catch (e) {
-      onFailure();
-    }
-  }
-
-
-  /**
-   * l10n resource parser:
-   *  - reads (async XHR) the l10n resource matching `lang';
-   *  - imports linked resources (synchronously) when specified;
-   *  - parses the text data (fills `gL10nData' and `gTextData');
-   *  - triggers success/failure callbacks when done.
-   *
-   * @param {string} href
-   *    URL of the l10n resource to parse.
-   *
-   * @param {string} lang
-   *    locale (language) to parse. Must be a lowercase string.
-   *
-   * @param {Function} successCallback
-   *    triggered when the l10n resource has been successully parsed.
-   *
-   * @param {Function} failureCallback
-   *    triggered when the an error has occured.
-   *
-   * @return {void}
-   *    uses the following global variables: gL10nData, gTextData, gTextProp.
-   */
-
-  function parseResource(href, lang, successCallback, failureCallback) {
-    var baseURL = href.replace(/[^\/]*$/, '') || './';
-
-    // handle escaped characters (backslashes) in a string
-    function evalString(text) {
-      if (text.lastIndexOf('\\') < 0)
-        return text;
-      return text.replace(/\\\\/g, '\\')
-                 .replace(/\\n/g, '\n')
-                 .replace(/\\r/g, '\r')
-                 .replace(/\\t/g, '\t')
-                 .replace(/\\b/g, '\b')
-                 .replace(/\\f/g, '\f')
-                 .replace(/\\{/g, '{')
-                 .replace(/\\}/g, '}')
-                 .replace(/\\"/g, '"')
-                 .replace(/\\'/g, "'");
-    }
-
-    // parse *.properties text data into an l10n dictionary
-    // If gAsyncResourceLoading is false, then the callback will be called
-    // synchronously. Otherwise it is called asynchronously.
-    function parseProperties(text, parsedPropertiesCallback) {
-      var dictionary = {};
-
-      // token expressions
-      var reBlank = /^\s*|\s*$/;
-      var reComment = /^\s*#|^\s*$/;
-      var reSection = /^\s*\[(.*)\]\s*$/;
-      var reImport = /^\s*@import\s+url\((.*)\)\s*$/i;
-      var reSplit = /^([^=\s]*)\s*=\s*(.+)$/; // TODO: escape EOLs with '\'
-
-      // parse the *.properties file into an associative array
-      function parseRawLines(rawText, extendedSyntax, parsedRawLinesCallback) {
-        var entries = rawText.replace(reBlank, '').split(/[\r\n]+/);
-        var currentLang = '*';
-        var genericLang = lang.split('-', 1)[0];
-        var skipLang = false;
-        var match = '';
-
-        function nextEntry() {
-          // Use infinite loop instead of recursion to avoid reaching the
-          // maximum recursion limit for content with many lines.
-          while (true) {
-            if (!entries.length) {
-              parsedRawLinesCallback();
-              return;
-            }
-            var line = entries.shift();
-
-            // comment or blank line?
-            if (reComment.test(line))
-              continue;
-
-            // the extended syntax supports [lang] sections and @import rules
-            if (extendedSyntax) {
-              match = reSection.exec(line);
-              if (match) { // section start?
-                // RFC 4646, section 4.4, "All comparisons MUST be performed
-                // in a case-insensitive manner."
-
-                currentLang = match[1].toLowerCase();
-                skipLang = (currentLang !== '*') &&
-                    (currentLang !== lang) && (currentLang !== genericLang);
-                continue;
-              } else if (skipLang) {
-                continue;
-              }
-              match = reImport.exec(line);
-              if (match) { // @import rule?
-                loadImport(baseURL + match[1], nextEntry);
-                return;
-              }
-            }
-
-            // key-value pair
-            var tmp = line.match(reSplit);
-            if (tmp && tmp.length == 3) {
-              dictionary[tmp[1]] = evalString(tmp[2]);
-            }
-          }
-        }
-        nextEntry();
-      }
-
-      // import another *.properties file
-      function loadImport(url, callback) {
-        xhrLoadText(url, function(content) {
-          parseRawLines(content, false, callback); // don't allow recursive imports
-        }, null);
-      }
-
-      // fill the dictionary
-      parseRawLines(text, true, function() {
-        parsedPropertiesCallback(dictionary);
-      });
-    }
-
-    // load and parse l10n data (warning: global variables are used here)
-    xhrLoadText(href, function(response) {
-      gTextData += response; // mostly for debug
-
-      // parse *.properties text data into an l10n dictionary
-      parseProperties(response, function(data) {
-
-        // find attribute descriptions, if any
-        for (var key in data) {
-          var id, prop, index = key.lastIndexOf('.');
-          if (index > 0) { // an attribute has been specified
-            id = key.substring(0, index);
-            prop = key.substr(index + 1);
-          } else { // no attribute: assuming text content by default
-            id = key;
-            prop = gTextProp;
-          }
-          if (!gL10nData[id]) {
-            gL10nData[id] = {};
-          }
-          gL10nData[id][prop] = data[key];
-        }
-
-        // trigger callback
-        if (successCallback) {
-          successCallback();
-        }
-      });
-    }, failureCallback);
-  }
-
-  // load and parse all resources for the specified locale
-  function loadLocale(lang, callback) {
-    // RFC 4646, section 2.1 states that language tags have to be treated as
-    // case-insensitive. Convert to lowercase for case-insensitive comparisons.
-    if (lang) {
-      lang = lang.toLowerCase();
-    }
-
-    callback = callback || function _callback() {};
-
-    clear();
-    gLanguage = lang;
-
-    // check all <link type="application/l10n" href="..." /> nodes
-    // and load the resource files
-    var langLinks = getL10nResourceLinks();
-    var langCount = langLinks.length;
-    if (langCount === 0) {
-      // we might have a pre-compiled dictionary instead
-      var dict = getL10nDictionary();
-      if (dict && dict.locales && dict.default_locale) {
-        consoleLog('using the embedded JSON directory, early way out');
-        gL10nData = dict.locales[lang];
-        if (!gL10nData) {
-          var defaultLocale = dict.default_locale.toLowerCase();
-          for (var anyCaseLang in dict.locales) {
-            anyCaseLang = anyCaseLang.toLowerCase();
-            if (anyCaseLang === lang) {
-              gL10nData = dict.locales[lang];
-              break;
-            } else if (anyCaseLang === defaultLocale) {
-              gL10nData = dict.locales[defaultLocale];
-            }
-          }
-        }
-        callback();
-      } else {
-        consoleLog('no resource to load, early way out');
-      }
-      // early way out
-      fireL10nReadyEvent(lang);
-      gReadyState = 'complete';
-      return;
-    }
-
-    // start the callback when all resources are loaded
-    var onResourceLoaded = null;
-    var gResourceCount = 0;
-    onResourceLoaded = function() {
-      gResourceCount++;
-      if (gResourceCount >= langCount) {
-        callback();
-        fireL10nReadyEvent(lang);
-        gReadyState = 'complete';
-      }
-    };
-
-    // load all resource files
-    function L10nResourceLink(link) {
-      var href = link.href;
-      // Note: If |gAsyncResourceLoading| is false, then the following callbacks
-      // are synchronously called.
-      this.load = function(lang, callback) {
-        parseResource(href, lang, callback, function() {
-          consoleWarn(href + ' not found.');
-          // lang not found, used default resource instead
-          consoleWarn('"' + lang + '" resource not found');
-          gLanguage = '';
-          // Resource not loaded, but we still need to call the callback.
-          callback();
-        });
-      };
-    }
-
-    for (var i = 0; i < langCount; i++) {
-      var resource = new L10nResourceLink(langLinks[i]);
-      resource.load(lang, onResourceLoaded);
-    }
-  }
-
-  // clear all l10n data
-  function clear() {
-    gL10nData = {};
-    gTextData = '';
-    gLanguage = '';
-    // TODO: clear all non predefined macros.
-    // There's no such macro /yet/ but we're planning to have some...
-  }
-
-
-  /**
-   * Get rules for plural forms (shared with JetPack), see:
-   * http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
-   * https://github.com/mozilla/addon-sdk/blob/master/python-lib/plural-rules-generator.p
-   *
-   * @param {string} lang
-   *    locale (language) used.
-   *
-   * @return {Function}
-   *    returns a function that gives the plural form name for a given integer:
-   *       var fun = getPluralRules('en');
-   *       fun(1)    -> 'one'
-   *       fun(0)    -> 'other'
-   *       fun(1000) -> 'other'.
-   */
-
-  function getPluralRules(lang) {
-    var locales2rules = {
-      'af': 3,
-      'ak': 4,
-      'am': 4,
-      'ar': 1,
-      'asa': 3,
-      'az': 0,
-      'be': 11,
-      'bem': 3,
-      'bez': 3,
-      'bg': 3,
-      'bh': 4,
-      'bm': 0,
-      'bn': 3,
-      'bo': 0,
-      'br': 20,
-      'brx': 3,
-      'bs': 11,
-      'ca': 3,
-      'cgg': 3,
-      'chr': 3,
-      'cs': 12,
-      'cy': 17,
-      'da': 3,
-      'de': 3,
-      'dv': 3,
-      'dz': 0,
-      'ee': 3,
-      'el': 3,
-      'en': 3,
-      'eo': 3,
-      'es': 3,
-      'et': 3,
-      'eu': 3,
-      'fa': 0,
-      'ff': 5,
-      'fi': 3,
-      'fil': 4,
-      'fo': 3,
-      'fr': 5,
-      'fur': 3,
-      'fy': 3,
-      'ga': 8,
-      'gd': 24,
-      'gl': 3,
-      'gsw': 3,
-      'gu': 3,
-      'guw': 4,
-      'gv': 23,
-      'ha': 3,
-      'haw': 3,
-      'he': 2,
-      'hi': 4,
-      'hr': 11,
-      'hu': 0,
-      'id': 0,
-      'ig': 0,
-      'ii': 0,
-      'is': 3,
-      'it': 3,
-      'iu': 7,
-      'ja': 0,
-      'jmc': 3,
-      'jv': 0,
-      'ka': 0,
-      'kab': 5,
-      'kaj': 3,
-      'kcg': 3,
-      'kde': 0,
-      'kea': 0,
-      'kk': 3,
-      'kl': 3,
-      'km': 0,
-      'kn': 0,
-      'ko': 0,
-      'ksb': 3,
-      'ksh': 21,
-      'ku': 3,
-      'kw': 7,
-      'lag': 18,
-      'lb': 3,
-      'lg': 3,
-      'ln': 4,
-      'lo': 0,
-      'lt': 10,
-      'lv': 6,
-      'mas': 3,
-      'mg': 4,
-      'mk': 16,
-      'ml': 3,
-      'mn': 3,
-      'mo': 9,
-      'mr': 3,
-      'ms': 0,
-      'mt': 15,
-      'my': 0,
-      'nah': 3,
-      'naq': 7,
-      'nb': 3,
-      'nd': 3,
-      'ne': 3,
-      'nl': 3,
-      'nn': 3,
-      'no': 3,
-      'nr': 3,
-      'nso': 4,
-      'ny': 3,
-      'nyn': 3,
-      'om': 3,
-      'or': 3,
-      'pa': 3,
-      'pap': 3,
-      'pl': 13,
-      'ps': 3,
-      'pt': 3,
-      'rm': 3,
-      'ro': 9,
-      'rof': 3,
-      'ru': 11,
-      'rwk': 3,
-      'sah': 0,
-      'saq': 3,
-      'se': 7,
-      'seh': 3,
-      'ses': 0,
-      'sg': 0,
-      'sh': 11,
-      'shi': 19,
-      'sk': 12,
-      'sl': 14,
-      'sma': 7,
-      'smi': 7,
-      'smj': 7,
-      'smn': 7,
-      'sms': 7,
-      'sn': 3,
-      'so': 3,
-      'sq': 3,
-      'sr': 11,
-      'ss': 3,
-      'ssy': 3,
-      'st': 3,
-      'sv': 3,
-      'sw': 3,
-      'syr': 3,
-      'ta': 3,
-      'te': 3,
-      'teo': 3,
-      'th': 0,
-      'ti': 4,
-      'tig': 3,
-      'tk': 3,
-      'tl': 4,
-      'tn': 3,
-      'to': 0,
-      'tr': 0,
-      'ts': 3,
-      'tzm': 22,
-      'uk': 11,
-      'ur': 3,
-      've': 3,
-      'vi': 0,
-      'vun': 3,
-      'wa': 4,
-      'wae': 3,
-      'wo': 0,
-      'xh': 3,
-      'xog': 3,
-      'yo': 0,
-      'zh': 0,
-      'zu': 3
-    };
-
-    // utility functions for plural rules methods
-    function isIn(n, list) {
-      return list.indexOf(n) !== -1;
-    }
-    function isBetween(n, start, end) {
-      return start <= n && n <= end;
-    }
-
-    // list of all plural rules methods:
-    // map an integer to the plural form name to use
-    var pluralRules = {
-      '0': function(n) {
-        return 'other';
-      },
-      '1': function(n) {
-        if ((isBetween((n % 100), 3, 10)))
-          return 'few';
-        if (n === 0)
-          return 'zero';
-        if ((isBetween((n % 100), 11, 99)))
-          return 'many';
-        if (n == 2)
-          return 'two';
-        if (n == 1)
-          return 'one';
-        return 'other';
-      },
-      '2': function(n) {
-        if (n !== 0 && (n % 10) === 0)
-          return 'many';
-        if (n == 2)
-          return 'two';
-        if (n == 1)
-          return 'one';
-        return 'other';
-      },
-      '3': function(n) {
-        if (n == 1)
-          return 'one';
-        return 'other';
-      },
-      '4': function(n) {
-        if ((isBetween(n, 0, 1)))
-          return 'one';
-        return 'other';
-      },
-      '5': function(n) {
-        if ((isBetween(n, 0, 2)) && n != 2)
-          return 'one';
-        return 'other';
-      },
-      '6': function(n) {
-        if (n === 0)
-          return 'zero';
-        if ((n % 10) == 1 && (n % 100) != 11)
-          return 'one';
-        return 'other';
-      },
-      '7': function(n) {
-        if (n == 2)
-          return 'two';
-        if (n == 1)
-          return 'one';
-        return 'other';
-      },
-      '8': function(n) {
-        if ((isBetween(n, 3, 6)))
-          return 'few';
-        if ((isBetween(n, 7, 10)))
-          return 'many';
-        if (n == 2)
-          return 'two';
-        if (n == 1)
-          return 'one';
-        return 'other';
-      },
-      '9': function(n) {
-        if (n === 0 || n != 1 && (isBetween((n % 100), 1, 19)))
-          return 'few';
-        if (n == 1)
-          return 'one';
-        return 'other';
-      },
-      '10': function(n) {
-        if ((isBetween((n % 10), 2, 9)) && !(isBetween((n % 100), 11, 19)))
-          return 'few';
-        if ((n % 10) == 1 && !(isBetween((n % 100), 11, 19)))
-          return 'one';
-        return 'other';
-      },
-      '11': function(n) {
-        if ((isBetween((n % 10), 2, 4)) && !(isBetween((n % 100), 12, 14)))
-          return 'few';
-        if ((n % 10) === 0 ||
-            (isBetween((n % 10), 5, 9)) ||
-            (isBetween((n % 100), 11, 14)))
-          return 'many';
-        if ((n % 10) == 1 && (n % 100) != 11)
-          return 'one';
-        return 'other';
-      },
-      '12': function(n) {
-        if ((isBetween(n, 2, 4)))
-          return 'few';
-        if (n == 1)
-          return 'one';
-        return 'other';
-      },
-      '13': function(n) {
-        if ((isBetween((n % 10), 2, 4)) && !(isBetween((n % 100), 12, 14)))
-          return 'few';
-        if (n != 1 && (isBetween((n % 10), 0, 1)) ||
-            (isBetween((n % 10), 5, 9)) ||
-            (isBetween((n % 100), 12, 14)))
-          return 'many';
-        if (n == 1)
-          return 'one';
-        return 'other';
-      },
-      '14': function(n) {
-        if ((isBetween((n % 100), 3, 4)))
-          return 'few';
-        if ((n % 100) == 2)
-          return 'two';
-        if ((n % 100) == 1)
-          return 'one';
-        return 'other';
-      },
-      '15': function(n) {
-        if (n === 0 || (isBetween((n % 100), 2, 10)))
-          return 'few';
-        if ((isBetween((n % 100), 11, 19)))
-          return 'many';
-        if (n == 1)
-          return 'one';
-        return 'other';
-      },
-      '16': function(n) {
-        if ((n % 10) == 1 && n != 11)
-          return 'one';
-        return 'other';
-      },
-      '17': function(n) {
-        if (n == 3)
-          return 'few';
-        if (n === 0)
-          return 'zero';
-        if (n == 6)
-          return 'many';
-        if (n == 2)
-          return 'two';
-        if (n == 1)
-          return 'one';
-        return 'other';
-      },
-      '18': function(n) {
-        if (n === 0)
-          return 'zero';
-        if ((isBetween(n, 0, 2)) && n !== 0 && n != 2)
-          return 'one';
-        return 'other';
-      },
-      '19': function(n) {
-        if ((isBetween(n, 2, 10)))
-          return 'few';
-        if ((isBetween(n, 0, 1)))
-          return 'one';
-        return 'other';
-      },
-      '20': function(n) {
-        if ((isBetween((n % 10), 3, 4) || ((n % 10) == 9)) && !(
-            isBetween((n % 100), 10, 19) ||
-            isBetween((n % 100), 70, 79) ||
-            isBetween((n % 100), 90, 99)
-            ))
-          return 'few';
-        if ((n % 1000000) === 0 && n !== 0)
-          return 'many';
-        if ((n % 10) == 2 && !isIn((n % 100), [12, 72, 92]))
-          return 'two';
-        if ((n % 10) == 1 && !isIn((n % 100), [11, 71, 91]))
-          return 'one';
-        return 'other';
-      },
-      '21': function(n) {
-        if (n === 0)
-          return 'zero';
-        if (n == 1)
-          return 'one';
-        return 'other';
-      },
-      '22': function(n) {
-        if ((isBetween(n, 0, 1)) || (isBetween(n, 11, 99)))
-          return 'one';
-        return 'other';
-      },
-      '23': function(n) {
-        if ((isBetween((n % 10), 1, 2)) || (n % 20) === 0)
-          return 'one';
-        return 'other';
-      },
-      '24': function(n) {
-        if ((isBetween(n, 3, 10) || isBetween(n, 13, 19)))
-          return 'few';
-        if (isIn(n, [2, 12]))
-          return 'two';
-        if (isIn(n, [1, 11]))
-          return 'one';
-        return 'other';
-      }
-    };
-
-    // return a function that gives the plural form name for a given integer
-    var index = locales2rules[lang.replace(/-.*$/, '')];
-    if (!(index in pluralRules)) {
-      consoleWarn('plural form unknown for [' + lang + ']');
-      return function() { return 'other'; };
-    }
-    return pluralRules[index];
-  }
-
-  // pre-defined 'plural' macro
-  gMacros.plural = function(str, param, key, prop) {
-    var n = parseFloat(param);
-    if (isNaN(n))
-      return str;
-
-    // TODO: support other properties (l20n still doesn't...)
-    if (prop != gTextProp)
-      return str;
-
-    // initialize _pluralRules
-    if (!gMacros._pluralRules) {
-      gMacros._pluralRules = getPluralRules(gLanguage);
-    }
-    var index = '[' + gMacros._pluralRules(n) + ']';
-
-    // try to find a [zero|one|two] key if it's defined
-    if (n === 0 && (key + '[zero]') in gL10nData) {
-      str = gL10nData[key + '[zero]'][prop];
-    } else if (n == 1 && (key + '[one]') in gL10nData) {
-      str = gL10nData[key + '[one]'][prop];
-    } else if (n == 2 && (key + '[two]') in gL10nData) {
-      str = gL10nData[key + '[two]'][prop];
-    } else if ((key + index) in gL10nData) {
-      str = gL10nData[key + index][prop];
-    } else if ((key + '[other]') in gL10nData) {
-      str = gL10nData[key + '[other]'][prop];
-    }
-
-    return str;
-  };
-
-
-  /**
-   * l10n dictionary functions
-   */
-
-  // fetch an l10n object, warn if not found, apply `args' if possible
-  function getL10nData(key, args, fallback) {
-    var data = gL10nData[key];
-    if (!data) {
-      consoleWarn('#' + key + ' is undefined.');
-      if (!fallback) {
-        return null;
-      }
-      data = fallback;
-    }
-
-    /** This is where l10n expressions should be processed.
-      * The plan is to support C-style expressions from the l20n project;
-      * until then, only two kinds of simple expressions are supported:
-      *   {[ index ]} and {{ arguments }}.
-      */
-    var rv = {};
-    for (var prop in data) {
-      var str = data[prop];
-      str = substIndexes(str, args, key, prop);
-      str = substArguments(str, args, key);
-      rv[prop] = str;
-    }
-    return rv;
-  }
-
-  // replace {[macros]} with their values
-  function substIndexes(str, args, key, prop) {
-    var reIndex = /\{\[\s*([a-zA-Z]+)\(([a-zA-Z]+)\)\s*\]\}/;
-    var reMatch = reIndex.exec(str);
-    if (!reMatch || !reMatch.length)
-      return str;
-
-    // an index/macro has been found
-    // Note: at the moment, only one parameter is supported
-    var macroName = reMatch[1];
-    var paramName = reMatch[2];
-    var param;
-    if (args && paramName in args) {
-      param = args[paramName];
-    } else if (paramName in gL10nData) {
-      param = gL10nData[paramName];
-    }
-
-    // there's no macro parser yet: it has to be defined in gMacros
-    if (macroName in gMacros) {
-      var macro = gMacros[macroName];
-      str = macro(str, param, key, prop);
-    }
-    return str;
-  }
-
-  // replace {{arguments}} with their values
-  function substArguments(str, args, key) {
-    var reArgs = /\{\{\s*(.+?)\s*\}\}/g;
-    return str.replace(reArgs, function(matched_text, arg) {
-      if (args && arg in args) {
-        return args[arg];
-      }
-      if (arg in gL10nData) {
-        return gL10nData[arg];
-      }
-      consoleLog('argument {{' + arg + '}} for #' + key + ' is undefined.');
-      return matched_text;
-    });
-  }
-
-  // translate an HTML element
-  function translateElement(element) {
-    var l10n = getL10nAttributes(element);
-    if (!l10n.id)
-      return;
-
-    // get the related l10n object
-    var data = getL10nData(l10n.id, l10n.args);
-    if (!data) {
-      consoleWarn('#' + l10n.id + ' is undefined.');
-      return;
-    }
-
-    // translate element (TODO: security checks?)
-    if (data[gTextProp]) { // XXX
-      if (getChildElementCount(element) === 0) {
-        element[gTextProp] = data[gTextProp];
-      } else {
-        // this element has element children: replace the content of the first
-        // (non-empty) child textNode and clear other child textNodes
-        var children = element.childNodes;
-        var found = false;
-        for (var i = 0, l = children.length; i < l; i++) {
-          if (children[i].nodeType === 3 && /\S/.test(children[i].nodeValue)) {
-            if (found) {
-              children[i].nodeValue = '';
-            } else {
-              children[i].nodeValue = data[gTextProp];
-              found = true;
-            }
-          }
-        }
-        // if no (non-empty) textNode is found, insert a textNode before the
-        // first element child.
-        if (!found) {
-          var textNode = document.createTextNode(data[gTextProp]);
-          element.insertBefore(textNode, element.firstChild);
-        }
-      }
-      delete data[gTextProp];
-    }
-
-    for (var k in data) {
-      element[k] = data[k];
-    }
-  }
-
-  // webkit browsers don't currently support 'children' on SVG elements...
-  function getChildElementCount(element) {
-    if (element.children) {
-      return element.children.length;
-    }
-    if (typeof element.childElementCount !== 'undefined') {
-      return element.childElementCount;
-    }
-    var count = 0;
-    for (var i = 0; i < element.childNodes.length; i++) {
-      count += element.nodeType === 1 ? 1 : 0;
-    }
-    return count;
-  }
-
-  // translate an HTML subtree
-  function translateFragment(element) {
-    element = element || document.documentElement;
-
-    // check all translatable children (= w/ a `data-l10n-id' attribute)
-    var children = getTranslatableChildren(element);
-    var elementCount = children.length;
-    for (var i = 0; i < elementCount; i++) {
-      translateElement(children[i]);
-    }
-
-    // translate element itself if necessary
-    translateElement(element);
-  }
-
-
-  /**
-   * Startup & Public API
-   *
-   * Warning: this part of the code contains browser-specific chunks --
-   * that's where obsolete browsers, namely IE8 and earlier, are handled.
-   *
-   * Unlike the rest of the lib, this section is not shared with FirefoxOS/Gaia.
-   */
-
-  // load the default locale on startup
-  function l10nStartup() {
-    gReadyState = 'interactive';
-
-    // most browsers expose the UI language as `navigator.language'
-    // but IE uses `navigator.userLanguage' instead
-    var userLocale = navigator.language || navigator.userLanguage;
-    consoleLog('loading [' + userLocale + '] resources, ' +
-        (gAsyncResourceLoading ? 'asynchronously.' : 'synchronously.'));
-
-    // load the default locale and translate the document if required
-    if (document.documentElement.lang === userLocale) {
-      loadLocale(userLocale);
-    } else {
-      loadLocale(userLocale, translateFragment);
-    }
-  }
-
-  // browser-specific startup
-  if (document.addEventListener) { // modern browsers and IE9+
-    if (document.readyState === 'loading') {
-      // the document is not fully loaded yet: wait for DOMContentLoaded.
-      document.addEventListener('DOMContentLoaded', l10nStartup);
-    } else {
-      // l10n.js is being loaded with <script defer> or <script async>,
-      // the DOM is ready for parsing.
-      window.setTimeout(l10nStartup);
-    }
-  } else if (window.attachEvent) { // IE8 and before (= oldIE)
-    // TODO: check if jQuery is loaded (CSS selector + JSON + events)
-
-    // dummy `console.log' and `console.warn' functions
-    if (!window.console) {
-      consoleLog = function(message) {}; // just ignore console.log calls
-      consoleWarn = function(message) {
-        if (gDEBUG) {
-          alert('[l10n] ' + message); // vintage debugging, baby!
-        }
-      };
-    }
-
-    // XMLHttpRequest for IE6
-    if (!window.XMLHttpRequest) {
-      xhrLoadText = function(url, onSuccess, onFailure) {
-        onSuccess = onSuccess || function _onSuccess(data) {};
-        onFailure = onFailure || function _onFailure() {
-          consoleWarn(url + ' not found.');
-        };
-        var xhr = new ActiveXObject('Microsoft.XMLHTTP');
-        xhr.open('GET', url, gAsyncResourceLoading);
-        xhr.onreadystatechange = function() {
-          if (xhr.readyState == 4) {
-            if (xhr.status == 200) {
-              onSuccess(xhr.responseText);
-            } else {
-              onFailure();
-            }
-          }
-        };
-        xhr.send(null);
-      };
-    }
-
-    // worst hack ever for IE6 and IE7
-    if (!window.JSON) {
-      getL10nAttributes = function(element) {
-        if (!element)
-          return {};
-        var l10nId = element.getAttribute('data-l10n-id'),
-            l10nArgs = element.getAttribute('data-l10n-args'),
-            args = {};
-        if (l10nArgs) try {
-          args = eval(l10nArgs); // XXX yeah, I know...
-        } catch (e) {
-          consoleWarn('could not parse arguments for #' + l10nId);
-        }
-        return { id: l10nId, args: args };
-      };
-    }
-
-    // override `getTranslatableChildren' and `getL10nResourceLinks'
-    if (!document.querySelectorAll) {
-      getTranslatableChildren = function(element) {
-        if (!element)
-          return [];
-        var nodes = element.getElementsByTagName('*'),
-            l10nElements = [],
-            n = nodes.length;
-        for (var i = 0; i < n; i++) {
-          if (nodes[i].getAttribute('data-l10n-id'))
-            l10nElements.push(nodes[i]);
-        }
-        return l10nElements;
-      };
-      getL10nResourceLinks = function() {
-        var links = document.getElementsByTagName('link'),
-            l10nLinks = [],
-            n = links.length;
-        for (var i = 0; i < n; i++) {
-          if (links[i].type == 'application/l10n')
-            l10nLinks.push(links[i]);
-        }
-        return l10nLinks;
-      };
-    }
-
-    // override `getL10nDictionary'
-    if (!window.JSON || !document.querySelectorAll) {
-      getL10nDictionary = function() {
-        var scripts = document.getElementsByName('script');
-        for (var i = 0; i < scripts.length; i++) {
-          if (scripts[i].type == 'application/l10n') {
-            return eval(scripts[i].innerHTML);
-          }
-        }
-        return null;
-      };
-    }
-
-    // fire non-standard `localized' DOM events
-    if (document.createEventObject && !document.createEvent) {
-      fireL10nReadyEvent = function(lang) {
-        // hack to simulate a custom event in IE:
-        // to catch this event, add an event handler to `onpropertychange'
-        document.documentElement.localized = 1;
-      };
-    }
-
-    // startup for IE<9
-    window.attachEvent('onload', function() {
-      gTextProp = document.textContent === null ? 'textContent' : 'innerText';
-      l10nStartup();
-    });
-  }
-
-  // cross-browser API (sorry, oldIE doesn't support getters & setters)
-  return {
-    // get a localized string
-    get: function(key, args, fallbackString) {
-      var index = key.lastIndexOf('.');
-      var prop = gTextProp;
-      if (index > 0) { // An attribute has been specified
-        prop = key.substr(index + 1);
-        key = key.substring(0, index);
-      }
-      var fallback;
-      if (fallbackString) {
-        fallback = {};
-        fallback[prop] = fallbackString;
-      }
-      var data = getL10nData(key, args, fallback);
-      if (data && prop in data) {
-        return data[prop];
-      }
-      return '{{' + key + '}}';
-    },
-
-    // debug
-    getData: function() { return gL10nData; },
-    getText: function() { return gTextData; },
-
-    // get|set the document language
-    getLanguage: function() { return gLanguage; },
-    setLanguage: function(lang, callback) {
-      loadLocale(lang, function() {
-        if (callback)
-          callback();
-        translateFragment();
-      });
-    },
-
-    // get the direction (ltr|rtl) of the current language
-    getDirection: function() {
-      // http://www.w3.org/International/questions/qa-scripts
-      // Arabic, Hebrew, Farsi, Pashto, Urdu
-      var rtlList = ['ar', 'he', 'fa', 'ps', 'ur'];
-      return (rtlList.indexOf(gLanguage) >= 0) ? 'rtl' : 'ltr';
-    },
-
-    // translate an element or document fragment
-    translate: translateFragment,
-
-    // this can be used to prevent race conditions
-    getReadyState: function() { return gReadyState; },
-    ready: function(callback) {
-      if (!callback) {
-        return;
-      } else if (gReadyState == 'complete' || gReadyState == 'interactive') {
-        window.setTimeout(function() {
-          callback();
-        });
-      } else if (document.addEventListener) {
-        document.addEventListener('localized', function once() {
-          document.removeEventListener('localized', once);
-          callback();
-        });
-      } else if (document.attachEvent) {
-        document.documentElement.attachEvent('onpropertychange', function once(e) {
-          if (e.propertyName === 'localized') {
-            document.documentElement.detachEvent('onpropertychange', once);
-            callback();
-          }
-        });
-      }
-    }
-  };
-}) (window, document);
-
-// gettext-like shortcut for document.webL10n.get
-if (window._ === undefined) {
-  var _ = document.webL10n.get;
-}
-
-
-
-/***/ }),
-
-/***/ 142:
-/***/ (function(module, exports, __webpack_require__) {
-
-/* Copyright 2017 Mozilla Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(true)
-		module.exports = factory();
-	else if(typeof define === 'function' && define.amd)
-		define("pdfjs-dist/web/compatibility", [], factory);
-	else if(typeof exports === 'object')
-		exports["pdfjs-dist/web/compatibility"] = factory();
-	else
-		root["pdfjs-dist/web/compatibility"] = factory();
-})(this, function() {
-return /******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// identity function for calling harmony imports with the correct context
-/******/ 	__webpack_require__.i = function(value) { return value; };
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
-/******/ })
-/************************************************************************/
-/******/ ([
-/* 0 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(global) {
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-if (typeof PDFJS === 'undefined' || !PDFJS.compatibilityChecked) {
-  var globalScope = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : undefined;
-  var userAgent = typeof navigator !== 'undefined' && navigator.userAgent || '';
-  var isAndroid = /Android/.test(userAgent);
-  var isAndroidPre3 = /Android\s[0-2][^\d]/.test(userAgent);
-  var isAndroidPre5 = /Android\s[0-4][^\d]/.test(userAgent);
-  var isChrome = userAgent.indexOf('Chrom') >= 0;
-  var isChromeWithRangeBug = /Chrome\/(39|40)\./.test(userAgent);
-  var isIOSChrome = userAgent.indexOf('CriOS') >= 0;
-  var isIE = userAgent.indexOf('Trident') >= 0;
-  var isIOS = /\b(iPad|iPhone|iPod)(?=;)/.test(userAgent);
-  var isOpera = userAgent.indexOf('Opera') >= 0;
-  var isSafari = /Safari\//.test(userAgent) && !/(Chrome\/|Android\s)/.test(userAgent);
-  var hasDOM = (typeof window === 'undefined' ? 'undefined' : _typeof(window)) === 'object' && (typeof document === 'undefined' ? 'undefined' : _typeof(document)) === 'object';
-  if (typeof PDFJS === 'undefined') {
-    globalScope.PDFJS = {};
-  }
-  PDFJS.compatibilityChecked = true;
-  (function checkTypedArrayCompatibility() {
-    if (typeof Uint8Array !== 'undefined') {
-      if (typeof Uint8Array.prototype.subarray === 'undefined') {
-        Uint8Array.prototype.subarray = function subarray(start, end) {
-          return new Uint8Array(this.slice(start, end));
-        };
-        Float32Array.prototype.subarray = function subarray(start, end) {
-          return new Float32Array(this.slice(start, end));
-        };
-      }
-      if (typeof Float64Array === 'undefined') {
-        globalScope.Float64Array = Float32Array;
-      }
-      return;
-    }
-    function subarray(start, end) {
-      return new TypedArray(this.slice(start, end));
-    }
-    function setArrayOffset(array, offset) {
-      if (arguments.length < 2) {
-        offset = 0;
-      }
-      for (var i = 0, n = array.length; i < n; ++i, ++offset) {
-        this[offset] = array[i] & 0xFF;
-      }
-    }
-    function Uint32ArrayView(buffer, length) {
-      this.buffer = buffer;
-      this.byteLength = buffer.length;
-      this.length = length;
-      ensureUint32ArrayViewProps(this.length);
-    }
-    Uint32ArrayView.prototype = Object.create(null);
-    var uint32ArrayViewSetters = 0;
-    function createUint32ArrayProp(index) {
-      return {
-        get: function get() {
-          var buffer = this.buffer,
-              offset = index << 2;
-          return (buffer[offset] | buffer[offset + 1] << 8 | buffer[offset + 2] << 16 | buffer[offset + 3] << 24) >>> 0;
-        },
-        set: function set(value) {
-          var buffer = this.buffer,
-              offset = index << 2;
-          buffer[offset] = value & 255;
-          buffer[offset + 1] = value >> 8 & 255;
-          buffer[offset + 2] = value >> 16 & 255;
-          buffer[offset + 3] = value >>> 24 & 255;
-        }
-      };
-    }
-    function ensureUint32ArrayViewProps(length) {
-      while (uint32ArrayViewSetters < length) {
-        Object.defineProperty(Uint32ArrayView.prototype, uint32ArrayViewSetters, createUint32ArrayProp(uint32ArrayViewSetters));
-        uint32ArrayViewSetters++;
-      }
-    }
-    function TypedArray(arg1) {
-      var result, i, n;
-      if (typeof arg1 === 'number') {
-        result = [];
-        for (i = 0; i < arg1; ++i) {
-          result[i] = 0;
-        }
-      } else if ('slice' in arg1) {
-        result = arg1.slice(0);
-      } else {
-        result = [];
-        for (i = 0, n = arg1.length; i < n; ++i) {
-          result[i] = arg1[i];
-        }
-      }
-      result.subarray = subarray;
-      result.buffer = result;
-      result.byteLength = result.length;
-      result.set = setArrayOffset;
-      if ((typeof arg1 === 'undefined' ? 'undefined' : _typeof(arg1)) === 'object' && arg1.buffer) {
-        result.buffer = arg1.buffer;
-      }
-      return result;
-    }
-    globalScope.Uint8Array = TypedArray;
-    globalScope.Int8Array = TypedArray;
-    globalScope.Int32Array = TypedArray;
-    globalScope.Uint16Array = TypedArray;
-    globalScope.Float32Array = TypedArray;
-    globalScope.Float64Array = TypedArray;
-    globalScope.Uint32Array = function () {
-      if (arguments.length === 3) {
-        if (arguments[1] !== 0) {
-          throw new Error('offset !== 0 is not supported');
-        }
-        return new Uint32ArrayView(arguments[0], arguments[2]);
-      }
-      return TypedArray.apply(this, arguments);
-    };
-  })();
-  (function canvasPixelArrayBuffer() {
-    if (!hasDOM || !window.CanvasPixelArray) {
-      return;
-    }
-    var cpaProto = window.CanvasPixelArray.prototype;
-    if ('buffer' in cpaProto) {
-      return;
-    }
-    Object.defineProperty(cpaProto, 'buffer', {
-      get: function get() {
-        return this;
-      },
-
-      enumerable: false,
-      configurable: true
-    });
-    Object.defineProperty(cpaProto, 'byteLength', {
-      get: function get() {
-        return this.length;
-      },
-
-      enumerable: false,
-      configurable: true
-    });
-  })();
-  (function normalizeURLObject() {
-    if (!globalScope.URL) {
-      globalScope.URL = globalScope.webkitURL;
-    }
-  })();
-  (function checkObjectDefinePropertyCompatibility() {
-    if (typeof Object.defineProperty !== 'undefined') {
-      var definePropertyPossible = true;
-      try {
-        if (hasDOM) {
-          Object.defineProperty(new Image(), 'id', { value: 'test' });
-        }
-        var Test = function Test() {};
-        Test.prototype = {
-          get id() {}
-        };
-        Object.defineProperty(new Test(), 'id', {
-          value: '',
-          configurable: true,
-          enumerable: true,
-          writable: false
-        });
-      } catch (e) {
-        definePropertyPossible = false;
-      }
-      if (definePropertyPossible) {
-        return;
-      }
-    }
-    Object.defineProperty = function objectDefineProperty(obj, name, def) {
-      delete obj[name];
-      if ('get' in def) {
-        obj.__defineGetter__(name, def['get']);
-      }
-      if ('set' in def) {
-        obj.__defineSetter__(name, def['set']);
-      }
-      if ('value' in def) {
-        obj.__defineSetter__(name, function objectDefinePropertySetter(value) {
-          this.__defineGetter__(name, function objectDefinePropertyGetter() {
-            return value;
-          });
-          return value;
-        });
-        obj[name] = def.value;
-      }
-    };
-  })();
-  (function checkXMLHttpRequestResponseCompatibility() {
-    if (typeof XMLHttpRequest === 'undefined') {
-      return;
-    }
-    var xhrPrototype = XMLHttpRequest.prototype;
-    var xhr = new XMLHttpRequest();
-    if (!('overrideMimeType' in xhr)) {
-      Object.defineProperty(xhrPrototype, 'overrideMimeType', {
-        value: function xmlHttpRequestOverrideMimeType(mimeType) {}
-      });
-    }
-    if ('responseType' in xhr) {
-      return;
-    }
-    Object.defineProperty(xhrPrototype, 'responseType', {
-      get: function xmlHttpRequestGetResponseType() {
-        return this._responseType || 'text';
-      },
-      set: function xmlHttpRequestSetResponseType(value) {
-        if (value === 'text' || value === 'arraybuffer') {
-          this._responseType = value;
-          if (value === 'arraybuffer' && typeof this.overrideMimeType === 'function') {
-            this.overrideMimeType('text/plain; charset=x-user-defined');
-          }
-        }
-      }
-    });
-    if (typeof VBArray !== 'undefined') {
-      Object.defineProperty(xhrPrototype, 'response', {
-        get: function xmlHttpRequestResponseGet() {
-          if (this.responseType === 'arraybuffer') {
-            return new Uint8Array(new VBArray(this.responseBody).toArray());
-          }
-          return this.responseText;
-        }
-      });
-      return;
-    }
-    Object.defineProperty(xhrPrototype, 'response', {
-      get: function xmlHttpRequestResponseGet() {
-        if (this.responseType !== 'arraybuffer') {
-          return this.responseText;
-        }
-        var text = this.responseText;
-        var i,
-            n = text.length;
-        var result = new Uint8Array(n);
-        for (i = 0; i < n; ++i) {
-          result[i] = text.charCodeAt(i) & 0xFF;
-        }
-        return result.buffer;
-      }
-    });
-  })();
-  (function checkWindowBtoaCompatibility() {
-    if ('btoa' in globalScope) {
-      return;
-    }
-    var digits = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-    globalScope.btoa = function (chars) {
-      var buffer = '';
-      var i, n;
-      for (i = 0, n = chars.length; i < n; i += 3) {
-        var b1 = chars.charCodeAt(i) & 0xFF;
-        var b2 = chars.charCodeAt(i + 1) & 0xFF;
-        var b3 = chars.charCodeAt(i + 2) & 0xFF;
-        var d1 = b1 >> 2,
-            d2 = (b1 & 3) << 4 | b2 >> 4;
-        var d3 = i + 1 < n ? (b2 & 0xF) << 2 | b3 >> 6 : 64;
-        var d4 = i + 2 < n ? b3 & 0x3F : 64;
-        buffer += digits.charAt(d1) + digits.charAt(d2) + digits.charAt(d3) + digits.charAt(d4);
-      }
-      return buffer;
-    };
-  })();
-  (function checkWindowAtobCompatibility() {
-    if ('atob' in globalScope) {
-      return;
-    }
-    var digits = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-    globalScope.atob = function (input) {
-      input = input.replace(/=+$/, '');
-      if (input.length % 4 === 1) {
-        throw new Error('bad atob input');
-      }
-      for (var bc = 0, bs, buffer, idx = 0, output = ''; buffer = input.charAt(idx++); ~buffer && (bs = bc % 4 ? bs * 64 + buffer : buffer, bc++ % 4) ? output += String.fromCharCode(255 & bs >> (-2 * bc & 6)) : 0) {
-        buffer = digits.indexOf(buffer);
-      }
-      return output;
-    };
-  })();
-  (function checkFunctionPrototypeBindCompatibility() {
-    if (typeof Function.prototype.bind !== 'undefined') {
-      return;
-    }
-    Function.prototype.bind = function functionPrototypeBind(obj) {
-      var fn = this,
-          headArgs = Array.prototype.slice.call(arguments, 1);
-      var bound = function functionPrototypeBindBound() {
-        var args = headArgs.concat(Array.prototype.slice.call(arguments));
-        return fn.apply(obj, args);
-      };
-      return bound;
-    };
-  })();
-  (function checkDatasetProperty() {
-    if (!hasDOM) {
-      return;
-    }
-    var div = document.createElement('div');
-    if ('dataset' in div) {
-      return;
-    }
-    Object.defineProperty(HTMLElement.prototype, 'dataset', {
-      get: function get() {
-        if (this._dataset) {
-          return this._dataset;
-        }
-        var dataset = {};
-        for (var j = 0, jj = this.attributes.length; j < jj; j++) {
-          var attribute = this.attributes[j];
-          if (attribute.name.substring(0, 5) !== 'data-') {
-            continue;
-          }
-          var key = attribute.name.substring(5).replace(/\-([a-z])/g, function (all, ch) {
-            return ch.toUpperCase();
-          });
-          dataset[key] = attribute.value;
-        }
-        Object.defineProperty(this, '_dataset', {
-          value: dataset,
-          writable: false,
-          enumerable: false
-        });
-        return dataset;
-      },
-
-      enumerable: true
-    });
-  })();
-  (function checkClassListProperty() {
-    function changeList(element, itemName, add, remove) {
-      var s = element.className || '';
-      var list = s.split(/\s+/g);
-      if (list[0] === '') {
-        list.shift();
-      }
-      var index = list.indexOf(itemName);
-      if (index < 0 && add) {
-        list.push(itemName);
-      }
-      if (index >= 0 && remove) {
-        list.splice(index, 1);
-      }
-      element.className = list.join(' ');
-      return index >= 0;
-    }
-    if (!hasDOM) {
-      return;
-    }
-    var div = document.createElement('div');
-    if ('classList' in div) {
-      return;
-    }
-    var classListPrototype = {
-      add: function add(name) {
-        changeList(this.element, name, true, false);
-      },
-      contains: function contains(name) {
-        return changeList(this.element, name, false, false);
-      },
-      remove: function remove(name) {
-        changeList(this.element, name, false, true);
-      },
-      toggle: function toggle(name) {
-        changeList(this.element, name, true, true);
-      }
-    };
-    Object.defineProperty(HTMLElement.prototype, 'classList', {
-      get: function get() {
-        if (this._classList) {
-          return this._classList;
-        }
-        var classList = Object.create(classListPrototype, {
-          element: {
-            value: this,
-            writable: false,
-            enumerable: true
-          }
-        });
-        Object.defineProperty(this, '_classList', {
-          value: classList,
-          writable: false,
-          enumerable: false
-        });
-        return classList;
-      },
-
-      enumerable: true
-    });
-  })();
-  (function checkWorkerConsoleCompatibility() {
-    if (typeof importScripts === 'undefined' || 'console' in globalScope) {
-      return;
-    }
-    var consoleTimer = {};
-    var workerConsole = {
-      log: function log() {
-        var args = Array.prototype.slice.call(arguments);
-        globalScope.postMessage({
-          targetName: 'main',
-          action: 'console_log',
-          data: args
-        });
-      },
-      error: function error() {
-        var args = Array.prototype.slice.call(arguments);
-        globalScope.postMessage({
-          targetName: 'main',
-          action: 'console_error',
-          data: args
-        });
-      },
-      time: function time(name) {
-        consoleTimer[name] = Date.now();
-      },
-      timeEnd: function timeEnd(name) {
-        var time = consoleTimer[name];
-        if (!time) {
-          throw new Error('Unknown timer name ' + name);
-        }
-        this.log('Timer:', name, Date.now() - time);
-      }
-    };
-    globalScope.console = workerConsole;
-  })();
-  (function checkConsoleCompatibility() {
-    if (!hasDOM) {
-      return;
-    }
-    if (!('console' in window)) {
-      window.console = {
-        log: function log() {},
-        error: function error() {},
-        warn: function warn() {}
-      };
-      return;
-    }
-    if (!('bind' in console.log)) {
-      console.log = function (fn) {
-        return function (msg) {
-          return fn(msg);
-        };
-      }(console.log);
-      console.error = function (fn) {
-        return function (msg) {
-          return fn(msg);
-        };
-      }(console.error);
-      console.warn = function (fn) {
-        return function (msg) {
-          return fn(msg);
-        };
-      }(console.warn);
-      return;
-    }
-  })();
-  (function checkOnClickCompatibility() {
-    function ignoreIfTargetDisabled(event) {
-      if (isDisabled(event.target)) {
-        event.stopPropagation();
-      }
-    }
-    function isDisabled(node) {
-      return node.disabled || node.parentNode && isDisabled(node.parentNode);
-    }
-    if (isOpera) {
-      document.addEventListener('click', ignoreIfTargetDisabled, true);
-    }
-  })();
-  (function checkOnBlobSupport() {
-    if (isIE || isIOSChrome) {
-      PDFJS.disableCreateObjectURL = true;
-    }
-  })();
-  (function checkNavigatorLanguage() {
-    if (typeof navigator === 'undefined') {
-      return;
-    }
-    if ('language' in navigator) {
-      return;
-    }
-    PDFJS.locale = navigator.userLanguage || 'en-US';
-  })();
-  (function checkRangeRequests() {
-    if (isSafari || isAndroidPre3 || isChromeWithRangeBug || isIOS) {
-      PDFJS.disableRange = true;
-      PDFJS.disableStream = true;
-    }
-  })();
-  (function checkHistoryManipulation() {
-    if (!hasDOM) {
-      return;
-    }
-    if (!history.pushState || isAndroidPre3) {
-      PDFJS.disableHistory = true;
-    }
-  })();
-  (function checkSetPresenceInImageData() {
-    if (!hasDOM) {
-      return;
-    }
-    if (window.CanvasPixelArray) {
-      if (typeof window.CanvasPixelArray.prototype.set !== 'function') {
-        window.CanvasPixelArray.prototype.set = function (arr) {
-          for (var i = 0, ii = this.length; i < ii; i++) {
-            this[i] = arr[i];
-          }
-        };
-      }
-    } else {
-      var polyfill = false,
-          versionMatch;
-      if (isChrome) {
-        versionMatch = userAgent.match(/Chrom(e|ium)\/([0-9]+)\./);
-        polyfill = versionMatch && parseInt(versionMatch[2]) < 21;
-      } else if (isAndroid) {
-        polyfill = isAndroidPre5;
-      } else if (isSafari) {
-        versionMatch = userAgent.match(/Version\/([0-9]+)\.([0-9]+)\.([0-9]+) Safari\//);
-        polyfill = versionMatch && parseInt(versionMatch[1]) < 6;
-      }
-      if (polyfill) {
-        var contextPrototype = window.CanvasRenderingContext2D.prototype;
-        var createImageData = contextPrototype.createImageData;
-        contextPrototype.createImageData = function (w, h) {
-          var imageData = createImageData.call(this, w, h);
-          imageData.data.set = function (arr) {
-            for (var i = 0, ii = this.length; i < ii; i++) {
-              this[i] = arr[i];
-            }
-          };
-          return imageData;
-        };
-        contextPrototype = null;
-      }
-    }
-  })();
-  (function checkRequestAnimationFrame() {
-    function installFakeAnimationFrameFunctions() {
-      window.requestAnimationFrame = function (callback) {
-        return window.setTimeout(callback, 20);
-      };
-      window.cancelAnimationFrame = function (timeoutID) {
-        window.clearTimeout(timeoutID);
-      };
-    }
-    if (!hasDOM) {
-      return;
-    }
-    if (isIOS) {
-      installFakeAnimationFrameFunctions();
-      return;
-    }
-    if ('requestAnimationFrame' in window) {
-      return;
-    }
-    window.requestAnimationFrame = window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
-    if (window.requestAnimationFrame) {
-      return;
-    }
-    installFakeAnimationFrameFunctions();
-  })();
-  (function checkCanvasSizeLimitation() {
-    if (isIOS || isAndroid) {
-      PDFJS.maxCanvasPixels = 5242880;
-    }
-  })();
-  (function checkFullscreenSupport() {
-    if (!hasDOM) {
-      return;
-    }
-    if (isIE && window.parent !== window) {
-      PDFJS.disableFullscreen = true;
-    }
-  })();
-  (function checkCurrentScript() {
-    if (!hasDOM) {
-      return;
-    }
-    if ('currentScript' in document) {
-      return;
-    }
-    Object.defineProperty(document, 'currentScript', {
-      get: function get() {
-        var scripts = document.getElementsByTagName('script');
-        return scripts[scripts.length - 1];
-      },
-
-      enumerable: true,
-      configurable: true
-    });
-  })();
-  (function checkInputTypeNumberAssign() {
-    if (!hasDOM) {
-      return;
-    }
-    var el = document.createElement('input');
-    try {
-      el.type = 'number';
-    } catch (ex) {
-      var inputProto = el.constructor.prototype;
-      var typeProperty = Object.getOwnPropertyDescriptor(inputProto, 'type');
-      Object.defineProperty(inputProto, 'type', {
-        get: function get() {
-          return typeProperty.get.call(this);
-        },
-        set: function set(value) {
-          typeProperty.set.call(this, value === 'number' ? 'text' : value);
-        },
-
-        enumerable: true,
-        configurable: true
-      });
-    }
-  })();
-  (function checkDocumentReadyState() {
-    if (!hasDOM) {
-      return;
-    }
-    if (!document.attachEvent) {
-      return;
-    }
-    var documentProto = document.constructor.prototype;
-    var readyStateProto = Object.getOwnPropertyDescriptor(documentProto, 'readyState');
-    Object.defineProperty(documentProto, 'readyState', {
-      get: function get() {
-        var value = readyStateProto.get.call(this);
-        return value === 'interactive' ? 'loading' : value;
-      },
-      set: function set(value) {
-        readyStateProto.set.call(this, value);
-      },
-
-      enumerable: true,
-      configurable: true
-    });
-  })();
-  (function checkChildNodeRemove() {
-    if (!hasDOM) {
-      return;
-    }
-    if (typeof Element.prototype.remove !== 'undefined') {
-      return;
-    }
-    Element.prototype.remove = function () {
-      if (this.parentNode) {
-        this.parentNode.removeChild(this);
-      }
-    };
-  })();
-  (function checkPromise() {
-    if (globalScope.Promise) {
-      if (typeof globalScope.Promise.all !== 'function') {
-        globalScope.Promise.all = function (iterable) {
-          var count = 0,
-              results = [],
-              resolve,
-              reject;
-          var promise = new globalScope.Promise(function (resolve_, reject_) {
-            resolve = resolve_;
-            reject = reject_;
-          });
-          iterable.forEach(function (p, i) {
-            count++;
-            p.then(function (result) {
-              results[i] = result;
-              count--;
-              if (count === 0) {
-                resolve(results);
-              }
-            }, reject);
-          });
-          if (count === 0) {
-            resolve(results);
-          }
-          return promise;
-        };
-      }
-      if (typeof globalScope.Promise.resolve !== 'function') {
-        globalScope.Promise.resolve = function (value) {
-          return new globalScope.Promise(function (resolve) {
-            resolve(value);
-          });
-        };
-      }
-      if (typeof globalScope.Promise.reject !== 'function') {
-        globalScope.Promise.reject = function (reason) {
-          return new globalScope.Promise(function (resolve, reject) {
-            reject(reason);
-          });
-        };
-      }
-      if (typeof globalScope.Promise.prototype.catch !== 'function') {
-        globalScope.Promise.prototype.catch = function (onReject) {
-          return globalScope.Promise.prototype.then(undefined, onReject);
-        };
-      }
-      return;
-    }
-    var STATUS_PENDING = 0;
-    var STATUS_RESOLVED = 1;
-    var STATUS_REJECTED = 2;
-    var REJECTION_TIMEOUT = 500;
-    var HandlerManager = {
-      handlers: [],
-      running: false,
-      unhandledRejections: [],
-      pendingRejectionCheck: false,
-      scheduleHandlers: function scheduleHandlers(promise) {
-        if (promise._status === STATUS_PENDING) {
-          return;
-        }
-        this.handlers = this.handlers.concat(promise._handlers);
-        promise._handlers = [];
-        if (this.running) {
-          return;
-        }
-        this.running = true;
-        setTimeout(this.runHandlers.bind(this), 0);
-      },
-      runHandlers: function runHandlers() {
-        var RUN_TIMEOUT = 1;
-        var timeoutAt = Date.now() + RUN_TIMEOUT;
-        while (this.handlers.length > 0) {
-          var handler = this.handlers.shift();
-          var nextStatus = handler.thisPromise._status;
-          var nextValue = handler.thisPromise._value;
-          try {
-            if (nextStatus === STATUS_RESOLVED) {
-              if (typeof handler.onResolve === 'function') {
-                nextValue = handler.onResolve(nextValue);
-              }
-            } else if (typeof handler.onReject === 'function') {
-              nextValue = handler.onReject(nextValue);
-              nextStatus = STATUS_RESOLVED;
-              if (handler.thisPromise._unhandledRejection) {
-                this.removeUnhandeledRejection(handler.thisPromise);
-              }
-            }
-          } catch (ex) {
-            nextStatus = STATUS_REJECTED;
-            nextValue = ex;
-          }
-          handler.nextPromise._updateStatus(nextStatus, nextValue);
-          if (Date.now() >= timeoutAt) {
-            break;
-          }
-        }
-        if (this.handlers.length > 0) {
-          setTimeout(this.runHandlers.bind(this), 0);
-          return;
-        }
-        this.running = false;
-      },
-      addUnhandledRejection: function addUnhandledRejection(promise) {
-        this.unhandledRejections.push({
-          promise: promise,
-          time: Date.now()
-        });
-        this.scheduleRejectionCheck();
-      },
-      removeUnhandeledRejection: function removeUnhandeledRejection(promise) {
-        promise._unhandledRejection = false;
-        for (var i = 0; i < this.unhandledRejections.length; i++) {
-          if (this.unhandledRejections[i].promise === promise) {
-            this.unhandledRejections.splice(i);
-            i--;
-          }
-        }
-      },
-      scheduleRejectionCheck: function scheduleRejectionCheck() {
-        var _this = this;
-
-        if (this.pendingRejectionCheck) {
-          return;
-        }
-        this.pendingRejectionCheck = true;
-        setTimeout(function () {
-          _this.pendingRejectionCheck = false;
-          var now = Date.now();
-          for (var i = 0; i < _this.unhandledRejections.length; i++) {
-            if (now - _this.unhandledRejections[i].time > REJECTION_TIMEOUT) {
-              var unhandled = _this.unhandledRejections[i].promise._value;
-              var msg = 'Unhandled rejection: ' + unhandled;
-              if (unhandled.stack) {
-                msg += '\n' + unhandled.stack;
-              }
-              try {
-                throw new Error(msg);
-              } catch (_) {
-                console.warn(msg);
-              }
-              _this.unhandledRejections.splice(i);
-              i--;
-            }
-          }
-          if (_this.unhandledRejections.length) {
-            _this.scheduleRejectionCheck();
-          }
-        }, REJECTION_TIMEOUT);
-      }
-    };
-    var Promise = function Promise(resolver) {
-      this._status = STATUS_PENDING;
-      this._handlers = [];
-      try {
-        resolver.call(this, this._resolve.bind(this), this._reject.bind(this));
-      } catch (e) {
-        this._reject(e);
-      }
-    };
-    Promise.all = function Promise_all(promises) {
-      var resolveAll, rejectAll;
-      var deferred = new Promise(function (resolve, reject) {
-        resolveAll = resolve;
-        rejectAll = reject;
-      });
-      var unresolved = promises.length;
-      var results = [];
-      if (unresolved === 0) {
-        resolveAll(results);
-        return deferred;
-      }
-      function reject(reason) {
-        if (deferred._status === STATUS_REJECTED) {
-          return;
-        }
-        results = [];
-        rejectAll(reason);
-      }
-      for (var i = 0, ii = promises.length; i < ii; ++i) {
-        var promise = promises[i];
-        var resolve = function (i) {
-          return function (value) {
-            if (deferred._status === STATUS_REJECTED) {
-              return;
-            }
-            results[i] = value;
-            unresolved--;
-            if (unresolved === 0) {
-              resolveAll(results);
-            }
-          };
-        }(i);
-        if (Promise.isPromise(promise)) {
-          promise.then(resolve, reject);
-        } else {
-          resolve(promise);
-        }
-      }
-      return deferred;
-    };
-    Promise.isPromise = function Promise_isPromise(value) {
-      return value && typeof value.then === 'function';
-    };
-    Promise.resolve = function Promise_resolve(value) {
-      return new Promise(function (resolve) {
-        resolve(value);
-      });
-    };
-    Promise.reject = function Promise_reject(reason) {
-      return new Promise(function (resolve, reject) {
-        reject(reason);
-      });
-    };
-    Promise.prototype = {
-      _status: null,
-      _value: null,
-      _handlers: null,
-      _unhandledRejection: null,
-      _updateStatus: function Promise__updateStatus(status, value) {
-        if (this._status === STATUS_RESOLVED || this._status === STATUS_REJECTED) {
-          return;
-        }
-        if (status === STATUS_RESOLVED && Promise.isPromise(value)) {
-          value.then(this._updateStatus.bind(this, STATUS_RESOLVED), this._updateStatus.bind(this, STATUS_REJECTED));
-          return;
-        }
-        this._status = status;
-        this._value = value;
-        if (status === STATUS_REJECTED && this._handlers.length === 0) {
-          this._unhandledRejection = true;
-          HandlerManager.addUnhandledRejection(this);
-        }
-        HandlerManager.scheduleHandlers(this);
-      },
-      _resolve: function Promise_resolve(value) {
-        this._updateStatus(STATUS_RESOLVED, value);
-      },
-      _reject: function Promise_reject(reason) {
-        this._updateStatus(STATUS_REJECTED, reason);
-      },
-      then: function Promise_then(onResolve, onReject) {
-        var nextPromise = new Promise(function (resolve, reject) {
-          this.resolve = resolve;
-          this.reject = reject;
-        });
-        this._handlers.push({
-          thisPromise: this,
-          onResolve: onResolve,
-          onReject: onReject,
-          nextPromise: nextPromise
-        });
-        HandlerManager.scheduleHandlers(this);
-        return nextPromise;
-      },
-      catch: function Promise_catch(onReject) {
-        return this.then(undefined, onReject);
-      }
-    };
-    globalScope.Promise = Promise;
-  })();
-  (function checkWeakMap() {
-    if (globalScope.WeakMap) {
-      return;
-    }
-    var id = 0;
-    function WeakMap() {
-      this.id = '$weakmap' + id++;
-    }
-    WeakMap.prototype = {
-      has: function has(obj) {
-        return !!Object.getOwnPropertyDescriptor(obj, this.id);
-      },
-      get: function get(obj, defaultValue) {
-        return this.has(obj) ? obj[this.id] : defaultValue;
-      },
-      set: function set(obj, value) {
-        Object.defineProperty(obj, this.id, {
-          value: value,
-          enumerable: false,
-          configurable: true
-        });
-      },
-      delete: function _delete(obj) {
-        delete obj[this.id];
-      }
-    };
-    globalScope.WeakMap = WeakMap;
-  })();
-  (function checkURLConstructor() {
-    var hasWorkingUrl = false;
-    try {
-      if (typeof URL === 'function' && _typeof(URL.prototype) === 'object' && 'origin' in URL.prototype) {
-        var u = new URL('b', 'http://a');
-        u.pathname = 'c%20d';
-        hasWorkingUrl = u.href === 'http://a/c%20d';
-      }
-    } catch (e) {}
-    if (hasWorkingUrl) {
-      return;
-    }
-    var relative = Object.create(null);
-    relative['ftp'] = 21;
-    relative['file'] = 0;
-    relative['gopher'] = 70;
-    relative['http'] = 80;
-    relative['https'] = 443;
-    relative['ws'] = 80;
-    relative['wss'] = 443;
-    var relativePathDotMapping = Object.create(null);
-    relativePathDotMapping['%2e'] = '.';
-    relativePathDotMapping['.%2e'] = '..';
-    relativePathDotMapping['%2e.'] = '..';
-    relativePathDotMapping['%2e%2e'] = '..';
-    function isRelativeScheme(scheme) {
-      return relative[scheme] !== undefined;
-    }
-    function invalid() {
-      clear.call(this);
-      this._isInvalid = true;
-    }
-    function IDNAToASCII(h) {
-      if (h === '') {
-        invalid.call(this);
-      }
-      return h.toLowerCase();
-    }
-    function percentEscape(c) {
-      var unicode = c.charCodeAt(0);
-      if (unicode > 0x20 && unicode < 0x7F && [0x22, 0x23, 0x3C, 0x3E, 0x3F, 0x60].indexOf(unicode) === -1) {
-        return c;
-      }
-      return encodeURIComponent(c);
-    }
-    function percentEscapeQuery(c) {
-      var unicode = c.charCodeAt(0);
-      if (unicode > 0x20 && unicode < 0x7F && [0x22, 0x23, 0x3C, 0x3E, 0x60].indexOf(unicode) === -1) {
-        return c;
-      }
-      return encodeURIComponent(c);
-    }
-    var EOF,
-        ALPHA = /[a-zA-Z]/,
-        ALPHANUMERIC = /[a-zA-Z0-9\+\-\.]/;
-    function parse(input, stateOverride, base) {
-      function err(message) {
-        errors.push(message);
-      }
-      var state = stateOverride || 'scheme start',
-          cursor = 0,
-          buffer = '',
-          seenAt = false,
-          seenBracket = false,
-          errors = [];
-      loop: while ((input[cursor - 1] !== EOF || cursor === 0) && !this._isInvalid) {
-        var c = input[cursor];
-        switch (state) {
-          case 'scheme start':
-            if (c && ALPHA.test(c)) {
-              buffer += c.toLowerCase();
-              state = 'scheme';
-            } else if (!stateOverride) {
-              buffer = '';
-              state = 'no scheme';
-              continue;
-            } else {
-              err('Invalid scheme.');
-              break loop;
-            }
-            break;
-          case 'scheme':
-            if (c && ALPHANUMERIC.test(c)) {
-              buffer += c.toLowerCase();
-            } else if (c === ':') {
-              this._scheme = buffer;
-              buffer = '';
-              if (stateOverride) {
-                break loop;
-              }
-              if (isRelativeScheme(this._scheme)) {
-                this._isRelative = true;
-              }
-              if (this._scheme === 'file') {
-                state = 'relative';
-              } else if (this._isRelative && base && base._scheme === this._scheme) {
-                state = 'relative or authority';
-              } else if (this._isRelative) {
-                state = 'authority first slash';
-              } else {
-                state = 'scheme data';
-              }
-            } else if (!stateOverride) {
-              buffer = '';
-              cursor = 0;
-              state = 'no scheme';
-              continue;
-            } else if (c === EOF) {
-              break loop;
-            } else {
-              err('Code point not allowed in scheme: ' + c);
-              break loop;
-            }
-            break;
-          case 'scheme data':
-            if (c === '?') {
-              this._query = '?';
-              state = 'query';
-            } else if (c === '#') {
-              this._fragment = '#';
-              state = 'fragment';
-            } else {
-              if (c !== EOF && c !== '\t' && c !== '\n' && c !== '\r') {
-                this._schemeData += percentEscape(c);
-              }
-            }
-            break;
-          case 'no scheme':
-            if (!base || !isRelativeScheme(base._scheme)) {
-              err('Missing scheme.');
-              invalid.call(this);
-            } else {
-              state = 'relative';
-              continue;
-            }
-            break;
-          case 'relative or authority':
-            if (c === '/' && input[cursor + 1] === '/') {
-              state = 'authority ignore slashes';
-            } else {
-              err('Expected /, got: ' + c);
-              state = 'relative';
-              continue;
-            }
-            break;
-          case 'relative':
-            this._isRelative = true;
-            if (this._scheme !== 'file') {
-              this._scheme = base._scheme;
-            }
-            if (c === EOF) {
-              this._host = base._host;
-              this._port = base._port;
-              this._path = base._path.slice();
-              this._query = base._query;
-              this._username = base._username;
-              this._password = base._password;
-              break loop;
-            } else if (c === '/' || c === '\\') {
-              if (c === '\\') {
-                err('\\ is an invalid code point.');
-              }
-              state = 'relative slash';
-            } else if (c === '?') {
-              this._host = base._host;
-              this._port = base._port;
-              this._path = base._path.slice();
-              this._query = '?';
-              this._username = base._username;
-              this._password = base._password;
-              state = 'query';
-            } else if (c === '#') {
-              this._host = base._host;
-              this._port = base._port;
-              this._path = base._path.slice();
-              this._query = base._query;
-              this._fragment = '#';
-              this._username = base._username;
-              this._password = base._password;
-              state = 'fragment';
-            } else {
-              var nextC = input[cursor + 1];
-              var nextNextC = input[cursor + 2];
-              if (this._scheme !== 'file' || !ALPHA.test(c) || nextC !== ':' && nextC !== '|' || nextNextC !== EOF && nextNextC !== '/' && nextNextC !== '\\' && nextNextC !== '?' && nextNextC !== '#') {
-                this._host = base._host;
-                this._port = base._port;
-                this._username = base._username;
-                this._password = base._password;
-                this._path = base._path.slice();
-                this._path.pop();
-              }
-              state = 'relative path';
-              continue;
-            }
-            break;
-          case 'relative slash':
-            if (c === '/' || c === '\\') {
-              if (c === '\\') {
-                err('\\ is an invalid code point.');
-              }
-              if (this._scheme === 'file') {
-                state = 'file host';
-              } else {
-                state = 'authority ignore slashes';
-              }
-            } else {
-              if (this._scheme !== 'file') {
-                this._host = base._host;
-                this._port = base._port;
-                this._username = base._username;
-                this._password = base._password;
-              }
-              state = 'relative path';
-              continue;
-            }
-            break;
-          case 'authority first slash':
-            if (c === '/') {
-              state = 'authority second slash';
-            } else {
-              err('Expected \'/\', got: ' + c);
-              state = 'authority ignore slashes';
-              continue;
-            }
-            break;
-          case 'authority second slash':
-            state = 'authority ignore slashes';
-            if (c !== '/') {
-              err('Expected \'/\', got: ' + c);
-              continue;
-            }
-            break;
-          case 'authority ignore slashes':
-            if (c !== '/' && c !== '\\') {
-              state = 'authority';
-              continue;
-            } else {
-              err('Expected authority, got: ' + c);
-            }
-            break;
-          case 'authority':
-            if (c === '@') {
-              if (seenAt) {
-                err('@ already seen.');
-                buffer += '%40';
-              }
-              seenAt = true;
-              for (var i = 0; i < buffer.length; i++) {
-                var cp = buffer[i];
-                if (cp === '\t' || cp === '\n' || cp === '\r') {
-                  err('Invalid whitespace in authority.');
-                  continue;
-                }
-                if (cp === ':' && this._password === null) {
-                  this._password = '';
-                  continue;
-                }
-                var tempC = percentEscape(cp);
-                if (this._password !== null) {
-                  this._password += tempC;
-                } else {
-                  this._username += tempC;
-                }
-              }
-              buffer = '';
-            } else if (c === EOF || c === '/' || c === '\\' || c === '?' || c === '#') {
-              cursor -= buffer.length;
-              buffer = '';
-              state = 'host';
-              continue;
-            } else {
-              buffer += c;
-            }
-            break;
-          case 'file host':
-            if (c === EOF || c === '/' || c === '\\' || c === '?' || c === '#') {
-              if (buffer.length === 2 && ALPHA.test(buffer[0]) && (buffer[1] === ':' || buffer[1] === '|')) {
-                state = 'relative path';
-              } else if (buffer.length === 0) {
-                state = 'relative path start';
-              } else {
-                this._host = IDNAToASCII.call(this, buffer);
-                buffer = '';
-                state = 'relative path start';
-              }
-              continue;
-            } else if (c === '\t' || c === '\n' || c === '\r') {
-              err('Invalid whitespace in file host.');
-            } else {
-              buffer += c;
-            }
-            break;
-          case 'host':
-          case 'hostname':
-            if (c === ':' && !seenBracket) {
-              this._host = IDNAToASCII.call(this, buffer);
-              buffer = '';
-              state = 'port';
-              if (stateOverride === 'hostname') {
-                break loop;
-              }
-            } else if (c === EOF || c === '/' || c === '\\' || c === '?' || c === '#') {
-              this._host = IDNAToASCII.call(this, buffer);
-              buffer = '';
-              state = 'relative path start';
-              if (stateOverride) {
-                break loop;
-              }
-              continue;
-            } else if (c !== '\t' && c !== '\n' && c !== '\r') {
-              if (c === '[') {
-                seenBracket = true;
-              } else if (c === ']') {
-                seenBracket = false;
-              }
-              buffer += c;
-            } else {
-              err('Invalid code point in host/hostname: ' + c);
-            }
-            break;
-          case 'port':
-            if (/[0-9]/.test(c)) {
-              buffer += c;
-            } else if (c === EOF || c === '/' || c === '\\' || c === '?' || c === '#' || stateOverride) {
-              if (buffer !== '') {
-                var temp = parseInt(buffer, 10);
-                if (temp !== relative[this._scheme]) {
-                  this._port = temp + '';
-                }
-                buffer = '';
-              }
-              if (stateOverride) {
-                break loop;
-              }
-              state = 'relative path start';
-              continue;
-            } else if (c === '\t' || c === '\n' || c === '\r') {
-              err('Invalid code point in port: ' + c);
-            } else {
-              invalid.call(this);
-            }
-            break;
-          case 'relative path start':
-            if (c === '\\') {
-              err('\'\\\' not allowed in path.');
-            }
-            state = 'relative path';
-            if (c !== '/' && c !== '\\') {
-              continue;
-            }
-            break;
-          case 'relative path':
-            if (c === EOF || c === '/' || c === '\\' || !stateOverride && (c === '?' || c === '#')) {
-              if (c === '\\') {
-                err('\\ not allowed in relative path.');
-              }
-              var tmp;
-              if (tmp = relativePathDotMapping[buffer.toLowerCase()]) {
-                buffer = tmp;
-              }
-              if (buffer === '..') {
-                this._path.pop();
-                if (c !== '/' && c !== '\\') {
-                  this._path.push('');
-                }
-              } else if (buffer === '.' && c !== '/' && c !== '\\') {
-                this._path.push('');
-              } else if (buffer !== '.') {
-                if (this._scheme === 'file' && this._path.length === 0 && buffer.length === 2 && ALPHA.test(buffer[0]) && buffer[1] === '|') {
-                  buffer = buffer[0] + ':';
-                }
-                this._path.push(buffer);
-              }
-              buffer = '';
-              if (c === '?') {
-                this._query = '?';
-                state = 'query';
-              } else if (c === '#') {
-                this._fragment = '#';
-                state = 'fragment';
-              }
-            } else if (c !== '\t' && c !== '\n' && c !== '\r') {
-              buffer += percentEscape(c);
-            }
-            break;
-          case 'query':
-            if (!stateOverride && c === '#') {
-              this._fragment = '#';
-              state = 'fragment';
-            } else if (c !== EOF && c !== '\t' && c !== '\n' && c !== '\r') {
-              this._query += percentEscapeQuery(c);
-            }
-            break;
-          case 'fragment':
-            if (c !== EOF && c !== '\t' && c !== '\n' && c !== '\r') {
-              this._fragment += c;
-            }
-            break;
-        }
-        cursor++;
-      }
-    }
-    function clear() {
-      this._scheme = '';
-      this._schemeData = '';
-      this._username = '';
-      this._password = null;
-      this._host = '';
-      this._port = '';
-      this._path = [];
-      this._query = '';
-      this._fragment = '';
-      this._isInvalid = false;
-      this._isRelative = false;
-    }
-    function JURL(url, base) {
-      if (base !== undefined && !(base instanceof JURL)) {
-        base = new JURL(String(base));
-      }
-      this._url = url;
-      clear.call(this);
-      var input = url.replace(/^[ \t\r\n\f]+|[ \t\r\n\f]+$/g, '');
-      parse.call(this, input, null, base);
-    }
-    JURL.prototype = {
-      toString: function toString() {
-        return this.href;
-      },
-
-      get href() {
-        if (this._isInvalid) {
-          return this._url;
-        }
-        var authority = '';
-        if (this._username !== '' || this._password !== null) {
-          authority = this._username + (this._password !== null ? ':' + this._password : '') + '@';
-        }
-        return this.protocol + (this._isRelative ? '//' + authority + this.host : '') + this.pathname + this._query + this._fragment;
-      },
-      set href(href) {
-        clear.call(this);
-        parse.call(this, href);
-      },
-      get protocol() {
-        return this._scheme + ':';
-      },
-      set protocol(protocol) {
-        if (this._isInvalid) {
-          return;
-        }
-        parse.call(this, protocol + ':', 'scheme start');
-      },
-      get host() {
-        return this._isInvalid ? '' : this._port ? this._host + ':' + this._port : this._host;
-      },
-      set host(host) {
-        if (this._isInvalid || !this._isRelative) {
-          return;
-        }
-        parse.call(this, host, 'host');
-      },
-      get hostname() {
-        return this._host;
-      },
-      set hostname(hostname) {
-        if (this._isInvalid || !this._isRelative) {
-          return;
-        }
-        parse.call(this, hostname, 'hostname');
-      },
-      get port() {
-        return this._port;
-      },
-      set port(port) {
-        if (this._isInvalid || !this._isRelative) {
-          return;
-        }
-        parse.call(this, port, 'port');
-      },
-      get pathname() {
-        return this._isInvalid ? '' : this._isRelative ? '/' + this._path.join('/') : this._schemeData;
-      },
-      set pathname(pathname) {
-        if (this._isInvalid || !this._isRelative) {
-          return;
-        }
-        this._path = [];
-        parse.call(this, pathname, 'relative path start');
-      },
-      get search() {
-        return this._isInvalid || !this._query || this._query === '?' ? '' : this._query;
-      },
-      set search(search) {
-        if (this._isInvalid || !this._isRelative) {
-          return;
-        }
-        this._query = '?';
-        if (search[0] === '?') {
-          search = search.slice(1);
-        }
-        parse.call(this, search, 'query');
-      },
-      get hash() {
-        return this._isInvalid || !this._fragment || this._fragment === '#' ? '' : this._fragment;
-      },
-      set hash(hash) {
-        if (this._isInvalid) {
-          return;
-        }
-        this._fragment = '#';
-        if (hash[0] === '#') {
-          hash = hash.slice(1);
-        }
-        parse.call(this, hash, 'fragment');
-      },
-      get origin() {
-        var host;
-        if (this._isInvalid || !this._scheme) {
-          return '';
-        }
-        switch (this._scheme) {
-          case 'data':
-          case 'file':
-          case 'javascript':
-          case 'mailto':
-            return 'null';
-        }
-        host = this.host;
-        if (!host) {
-          return '';
-        }
-        return this._scheme + '://' + host;
-      }
-    };
-    var OriginalURL = globalScope.URL;
-    if (OriginalURL) {
-      JURL.createObjectURL = function (blob) {
-        return OriginalURL.createObjectURL.apply(OriginalURL, arguments);
-      };
-      JURL.revokeObjectURL = function (url) {
-        OriginalURL.revokeObjectURL(url);
-      };
-    }
-    globalScope.URL = JURL;
-  })();
-}
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var g;
-g = function () {
-  return this;
-}();
-try {
-  g = g || Function("return this")() || (1, eval)("this");
-} catch (e) {
-  if ((typeof window === "undefined" ? "undefined" : _typeof(window)) === "object") g = window;
-}
-module.exports = g;
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-__webpack_require__(0);
-
-/***/ })
-/******/ ]);
-});
-//# sourceMappingURL=compatibility.js.map
-
-/***/ }),
-
-/***/ 143:
-/***/ (function(module, exports, __webpack_require__) {
-
-/* Copyright 2017 Mozilla Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(true)
-		module.exports = factory();
-	else if(typeof define === 'function' && define.amd)
-		define("pdfjs-dist/web/pdf_viewer", [], factory);
-	else if(typeof exports === 'object')
-		exports["pdfjs-dist/web/pdf_viewer"] = factory();
-	else
-		root["pdfjs-dist/web/pdf_viewer"] = root.pdfjsDistWebPdfViewer = factory();
-})(this, function() {
-return /******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// The require function
-/******/ 	function __w_pdfjs_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __w_pdfjs_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__w_pdfjs_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__w_pdfjs_require__.c = installedModules;
-/******/
-/******/ 	// identity function for calling harmony imports with the correct context
-/******/ 	__w_pdfjs_require__.i = function(value) { return value; };
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__w_pdfjs_require__.d = function(exports, name, getter) {
-/******/ 		if(!__w_pdfjs_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__w_pdfjs_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__w_pdfjs_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__w_pdfjs_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__w_pdfjs_require__.p = "";
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __w_pdfjs_require__(__w_pdfjs_require__.s = 12);
-/******/ })
-/************************************************************************/
-/******/ ([
-/* 0 */
-/***/ (function(module, exports, __w_pdfjs_require__) {
-
-"use strict";
-
-
-{
-  var pdfjsLib;
-  if (typeof __pdfjsdev_webpack__ === 'undefined') {
-    if (typeof window !== 'undefined' && window['pdfjs-dist/build/pdf']) {
-      pdfjsLib = window['pdfjs-dist/build/pdf'];
-    } else if (true) {
-      pdfjsLib = __webpack_require__(50);
-    } else {
-      throw new Error('Neither `require` nor `window` found');
-    }
-  }
-  module.exports = pdfjsLib;
-}
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __w_pdfjs_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.localized = exports.animationStarted = exports.normalizeWheelEventDelta = exports.binarySearchFirstItem = exports.watchScroll = exports.scrollIntoView = exports.getOutputScale = exports.approximateFraction = exports.roundToDivide = exports.getVisibleElements = exports.parseQueryString = exports.noContextMenuHandler = exports.getPDFFileNameFromURL = exports.ProgressBar = exports.EventBus = exports.mozL10n = exports.RendererType = exports.cloneObj = exports.VERTICAL_PADDING = exports.SCROLLBAR_PADDING = exports.MAX_AUTO_SCALE = exports.UNKNOWN_SCALE = exports.MAX_SCALE = exports.MIN_SCALE = exports.DEFAULT_SCALE = exports.DEFAULT_SCALE_VALUE = exports.CSS_UNITS = undefined;
-
-var _pdfjs = __w_pdfjs_require__(0);
-
-var CSS_UNITS = 96.0 / 72.0;
-var DEFAULT_SCALE_VALUE = 'auto';
-var DEFAULT_SCALE = 1.0;
-var MIN_SCALE = 0.25;
-var MAX_SCALE = 10.0;
-var UNKNOWN_SCALE = 0;
-var MAX_AUTO_SCALE = 1.25;
-var SCROLLBAR_PADDING = 40;
-var VERTICAL_PADDING = 5;
-var RendererType = {
-  CANVAS: 'canvas',
-  SVG: 'svg'
-};
-var mozL10n = typeof document !== 'undefined' ? document.mozL10n || document.webL10n : undefined;
-_pdfjs.PDFJS.disableFullscreen = _pdfjs.PDFJS.disableFullscreen === undefined ? false : _pdfjs.PDFJS.disableFullscreen;
-_pdfjs.PDFJS.useOnlyCssZoom = _pdfjs.PDFJS.useOnlyCssZoom === undefined ? false : _pdfjs.PDFJS.useOnlyCssZoom;
-_pdfjs.PDFJS.maxCanvasPixels = _pdfjs.PDFJS.maxCanvasPixels === undefined ? 16777216 : _pdfjs.PDFJS.maxCanvasPixels;
-_pdfjs.PDFJS.disableHistory = _pdfjs.PDFJS.disableHistory === undefined ? false : _pdfjs.PDFJS.disableHistory;
-_pdfjs.PDFJS.disableTextLayer = _pdfjs.PDFJS.disableTextLayer === undefined ? false : _pdfjs.PDFJS.disableTextLayer;
-_pdfjs.PDFJS.ignoreCurrentPositionOnZoom = _pdfjs.PDFJS.ignoreCurrentPositionOnZoom === undefined ? false : _pdfjs.PDFJS.ignoreCurrentPositionOnZoom;
-{
-  _pdfjs.PDFJS.locale = _pdfjs.PDFJS.locale === undefined && typeof navigator !== 'undefined' ? navigator.language : _pdfjs.PDFJS.locale;
-}
-function getOutputScale(ctx) {
-  var devicePixelRatio = window.devicePixelRatio || 1;
-  var backingStoreRatio = ctx.webkitBackingStorePixelRatio || ctx.mozBackingStorePixelRatio || ctx.msBackingStorePixelRatio || ctx.oBackingStorePixelRatio || ctx.backingStorePixelRatio || 1;
-  var pixelRatio = devicePixelRatio / backingStoreRatio;
-  return {
-    sx: pixelRatio,
-    sy: pixelRatio,
-    scaled: pixelRatio !== 1
-  };
-}
-function scrollIntoView(element, spot, skipOverflowHiddenElements) {
-  var parent = element.offsetParent;
-  if (!parent) {
-    console.error('offsetParent is not set -- cannot scroll');
-    return;
-  }
-  var checkOverflow = skipOverflowHiddenElements || false;
-  var offsetY = element.offsetTop + element.clientTop;
-  var offsetX = element.offsetLeft + element.clientLeft;
-  while (parent.clientHeight === parent.scrollHeight || checkOverflow && getComputedStyle(parent).overflow === 'hidden') {
-    if (parent.dataset._scaleY) {
-      offsetY /= parent.dataset._scaleY;
-      offsetX /= parent.dataset._scaleX;
-    }
-    offsetY += parent.offsetTop;
-    offsetX += parent.offsetLeft;
-    parent = parent.offsetParent;
-    if (!parent) {
-      return;
-    }
-  }
-  if (spot) {
-    if (spot.top !== undefined) {
-      offsetY += spot.top;
-    }
-    if (spot.left !== undefined) {
-      offsetX += spot.left;
-      parent.scrollLeft = offsetX;
-    }
-  }
-  parent.scrollTop = offsetY;
-}
-function watchScroll(viewAreaElement, callback) {
-  var debounceScroll = function debounceScroll(evt) {
-    if (rAF) {
-      return;
-    }
-    rAF = window.requestAnimationFrame(function viewAreaElementScrolled() {
-      rAF = null;
-      var currentY = viewAreaElement.scrollTop;
-      var lastY = state.lastY;
-      if (currentY !== lastY) {
-        state.down = currentY > lastY;
-      }
-      state.lastY = currentY;
-      callback(state);
-    });
-  };
-  var state = {
-    down: true,
-    lastY: viewAreaElement.scrollTop,
-    _eventHandler: debounceScroll
-  };
-  var rAF = null;
-  viewAreaElement.addEventListener('scroll', debounceScroll, true);
-  return state;
-}
-function parseQueryString(query) {
-  var parts = query.split('&');
-  var params = {};
-  for (var i = 0, ii = parts.length; i < ii; ++i) {
-    var param = parts[i].split('=');
-    var key = param[0].toLowerCase();
-    var value = param.length > 1 ? param[1] : null;
-    params[decodeURIComponent(key)] = decodeURIComponent(value);
-  }
-  return params;
-}
-function binarySearchFirstItem(items, condition) {
-  var minIndex = 0;
-  var maxIndex = items.length - 1;
-  if (items.length === 0 || !condition(items[maxIndex])) {
-    return items.length;
-  }
-  if (condition(items[minIndex])) {
-    return minIndex;
-  }
-  while (minIndex < maxIndex) {
-    var currentIndex = minIndex + maxIndex >> 1;
-    var currentItem = items[currentIndex];
-    if (condition(currentItem)) {
-      maxIndex = currentIndex;
-    } else {
-      minIndex = currentIndex + 1;
-    }
-  }
-  return minIndex;
-}
-function approximateFraction(x) {
-  if (Math.floor(x) === x) {
-    return [x, 1];
-  }
-  var xinv = 1 / x;
-  var limit = 8;
-  if (xinv > limit) {
-    return [1, limit];
-  } else if (Math.floor(xinv) === xinv) {
-    return [1, xinv];
-  }
-  var x_ = x > 1 ? xinv : x;
-  var a = 0,
-      b = 1,
-      c = 1,
-      d = 1;
-  while (true) {
-    var p = a + c,
-        q = b + d;
-    if (q > limit) {
-      break;
-    }
-    if (x_ <= p / q) {
-      c = p;
-      d = q;
-    } else {
-      a = p;
-      b = q;
-    }
-  }
-  var result;
-  if (x_ - a / b < c / d - x_) {
-    result = x_ === x ? [a, b] : [b, a];
-  } else {
-    result = x_ === x ? [c, d] : [d, c];
-  }
-  return result;
-}
-function roundToDivide(x, div) {
-  var r = x % div;
-  return r === 0 ? x : Math.round(x - r + div);
-}
-function getVisibleElements(scrollEl, views, sortByVisibility) {
-  var top = scrollEl.scrollTop,
-      bottom = top + scrollEl.clientHeight;
-  var left = scrollEl.scrollLeft,
-      right = left + scrollEl.clientWidth;
-  function isElementBottomBelowViewTop(view) {
-    var element = view.div;
-    var elementBottom = element.offsetTop + element.clientTop + element.clientHeight;
-    return elementBottom > top;
-  }
-  var visible = [],
-      view,
-      element;
-  var currentHeight, viewHeight, hiddenHeight, percentHeight;
-  var currentWidth, viewWidth;
-  var firstVisibleElementInd = views.length === 0 ? 0 : binarySearchFirstItem(views, isElementBottomBelowViewTop);
-  for (var i = firstVisibleElementInd, ii = views.length; i < ii; i++) {
-    view = views[i];
-    element = view.div;
-    currentHeight = element.offsetTop + element.clientTop;
-    viewHeight = element.clientHeight;
-    if (currentHeight > bottom) {
-      break;
-    }
-    currentWidth = element.offsetLeft + element.clientLeft;
-    viewWidth = element.clientWidth;
-    if (currentWidth + viewWidth < left || currentWidth > right) {
-      continue;
-    }
-    hiddenHeight = Math.max(0, top - currentHeight) + Math.max(0, currentHeight + viewHeight - bottom);
-    percentHeight = (viewHeight - hiddenHeight) * 100 / viewHeight | 0;
-    visible.push({
-      id: view.id,
-      x: currentWidth,
-      y: currentHeight,
-      view: view,
-      percent: percentHeight
-    });
-  }
-  var first = visible[0];
-  var last = visible[visible.length - 1];
-  if (sortByVisibility) {
-    visible.sort(function (a, b) {
-      var pc = a.percent - b.percent;
-      if (Math.abs(pc) > 0.001) {
-        return -pc;
-      }
-      return a.id - b.id;
-    });
-  }
-  return {
-    first: first,
-    last: last,
-    views: visible
-  };
-}
-function noContextMenuHandler(e) {
-  e.preventDefault();
-}
-function isDataSchema(url) {
-  var i = 0,
-      ii = url.length;
-  while (i < ii && url[i].trim() === '') {
-    i++;
-  }
-  return url.substr(i, 5).toLowerCase() === 'data:';
-}
-function getPDFFileNameFromURL(url) {
-  var defaultFilename = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'document.pdf';
-
-  if (isDataSchema(url)) {
-    console.warn('getPDFFileNameFromURL: ' + 'ignoring "data:" URL for performance reasons.');
-    return defaultFilename;
-  }
-  var reURI = /^(?:(?:[^:]+:)?\/\/[^\/]+)?([^?#]*)(\?[^#]*)?(#.*)?$/;
-  var reFilename = /[^\/?#=]+\.pdf\b(?!.*\.pdf\b)/i;
-  var splitURI = reURI.exec(url);
-  var suggestedFilename = reFilename.exec(splitURI[1]) || reFilename.exec(splitURI[2]) || reFilename.exec(splitURI[3]);
-  if (suggestedFilename) {
-    suggestedFilename = suggestedFilename[0];
-    if (suggestedFilename.indexOf('%') !== -1) {
-      try {
-        suggestedFilename = reFilename.exec(decodeURIComponent(suggestedFilename))[0];
-      } catch (e) {}
-    }
-  }
-  return suggestedFilename || defaultFilename;
-}
-function normalizeWheelEventDelta(evt) {
-  var delta = Math.sqrt(evt.deltaX * evt.deltaX + evt.deltaY * evt.deltaY);
-  var angle = Math.atan2(evt.deltaY, evt.deltaX);
-  if (-0.25 * Math.PI < angle && angle < 0.75 * Math.PI) {
-    delta = -delta;
-  }
-  var MOUSE_DOM_DELTA_PIXEL_MODE = 0;
-  var MOUSE_DOM_DELTA_LINE_MODE = 1;
-  var MOUSE_PIXELS_PER_LINE = 30;
-  var MOUSE_LINES_PER_PAGE = 30;
-  if (evt.deltaMode === MOUSE_DOM_DELTA_PIXEL_MODE) {
-    delta /= MOUSE_PIXELS_PER_LINE * MOUSE_LINES_PER_PAGE;
-  } else if (evt.deltaMode === MOUSE_DOM_DELTA_LINE_MODE) {
-    delta /= MOUSE_LINES_PER_PAGE;
-  }
-  return delta;
-}
-function cloneObj(obj) {
-  var result = {};
-  for (var i in obj) {
-    if (Object.prototype.hasOwnProperty.call(obj, i)) {
-      result[i] = obj[i];
-    }
-  }
-  return result;
-}
-var animationStarted = new Promise(function (resolve) {
-  window.requestAnimationFrame(resolve);
-});
-var localized = new Promise(function (resolve, reject) {
-  if (!mozL10n) {
-    resolve();
-    return;
-  }
-  if (mozL10n.getReadyState() !== 'loading') {
-    resolve();
-    return;
-  }
-  window.addEventListener('localized', function localized(evt) {
-    resolve();
-  });
-});
-var EventBus = function EventBusClosure() {
-  function EventBus() {
-    this._listeners = Object.create(null);
-  }
-  EventBus.prototype = {
-    on: function EventBus_on(eventName, listener) {
-      var eventListeners = this._listeners[eventName];
-      if (!eventListeners) {
-        eventListeners = [];
-        this._listeners[eventName] = eventListeners;
-      }
-      eventListeners.push(listener);
-    },
-    off: function EventBus_on(eventName, listener) {
-      var eventListeners = this._listeners[eventName];
-      var i;
-      if (!eventListeners || (i = eventListeners.indexOf(listener)) < 0) {
-        return;
-      }
-      eventListeners.splice(i, 1);
-    },
-    dispatch: function EventBus_dispath(eventName) {
-      var eventListeners = this._listeners[eventName];
-      if (!eventListeners || eventListeners.length === 0) {
-        return;
-      }
-      var args = Array.prototype.slice.call(arguments, 1);
-      eventListeners.slice(0).forEach(function (listener) {
-        listener.apply(null, args);
-      });
-    }
-  };
-  return EventBus;
-}();
-var ProgressBar = function ProgressBarClosure() {
-  function clamp(v, min, max) {
-    return Math.min(Math.max(v, min), max);
-  }
-  function ProgressBar(id, opts) {
-    this.visible = true;
-    this.div = document.querySelector(id + ' .progress');
-    this.bar = this.div.parentNode;
-    this.height = opts.height || 100;
-    this.width = opts.width || 100;
-    this.units = opts.units || '%';
-    this.div.style.height = this.height + this.units;
-    this.percent = 0;
-  }
-  ProgressBar.prototype = {
-    updateBar: function ProgressBar_updateBar() {
-      if (this._indeterminate) {
-        this.div.classList.add('indeterminate');
-        this.div.style.width = this.width + this.units;
-        return;
-      }
-      this.div.classList.remove('indeterminate');
-      var progressSize = this.width * this._percent / 100;
-      this.div.style.width = progressSize + this.units;
-    },
-    get percent() {
-      return this._percent;
-    },
-    set percent(val) {
-      this._indeterminate = isNaN(val);
-      this._percent = clamp(val, 0, 100);
-      this.updateBar();
-    },
-    setWidth: function ProgressBar_setWidth(viewer) {
-      if (viewer) {
-        var container = viewer.parentNode;
-        var scrollbarWidth = container.offsetWidth - viewer.offsetWidth;
-        if (scrollbarWidth > 0) {
-          this.bar.setAttribute('style', 'width: calc(100% - ' + scrollbarWidth + 'px);');
-        }
-      }
-    },
-    hide: function ProgressBar_hide() {
-      if (!this.visible) {
-        return;
-      }
-      this.visible = false;
-      this.bar.classList.add('hidden');
-      document.body.classList.remove('loadingInProgress');
-    },
-    show: function ProgressBar_show() {
-      if (this.visible) {
-        return;
-      }
-      this.visible = true;
-      document.body.classList.add('loadingInProgress');
-      this.bar.classList.remove('hidden');
-    }
-  };
-  return ProgressBar;
-}();
-exports.CSS_UNITS = CSS_UNITS;
-exports.DEFAULT_SCALE_VALUE = DEFAULT_SCALE_VALUE;
-exports.DEFAULT_SCALE = DEFAULT_SCALE;
-exports.MIN_SCALE = MIN_SCALE;
-exports.MAX_SCALE = MAX_SCALE;
-exports.UNKNOWN_SCALE = UNKNOWN_SCALE;
-exports.MAX_AUTO_SCALE = MAX_AUTO_SCALE;
-exports.SCROLLBAR_PADDING = SCROLLBAR_PADDING;
-exports.VERTICAL_PADDING = VERTICAL_PADDING;
-exports.cloneObj = cloneObj;
-exports.RendererType = RendererType;
-exports.mozL10n = mozL10n;
-exports.EventBus = EventBus;
-exports.ProgressBar = ProgressBar;
-exports.getPDFFileNameFromURL = getPDFFileNameFromURL;
-exports.noContextMenuHandler = noContextMenuHandler;
-exports.parseQueryString = parseQueryString;
-exports.getVisibleElements = getVisibleElements;
-exports.roundToDivide = roundToDivide;
-exports.approximateFraction = approximateFraction;
-exports.getOutputScale = getOutputScale;
-exports.scrollIntoView = scrollIntoView;
-exports.watchScroll = watchScroll;
-exports.binarySearchFirstItem = binarySearchFirstItem;
-exports.normalizeWheelEventDelta = normalizeWheelEventDelta;
-exports.animationStarted = animationStarted;
-exports.localized = localized;
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __w_pdfjs_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.getGlobalEventBus = exports.attachDOMEventsToEventBus = undefined;
-
-var _ui_utils = __w_pdfjs_require__(1);
-
-function attachDOMEventsToEventBus(eventBus) {
-  eventBus.on('documentload', function () {
-    var event = document.createEvent('CustomEvent');
-    event.initCustomEvent('documentload', true, true, {});
-    window.dispatchEvent(event);
-  });
-  eventBus.on('pagerendered', function (e) {
-    var event = document.createEvent('CustomEvent');
-    event.initCustomEvent('pagerendered', true, true, {
-      pageNumber: e.pageNumber,
-      cssTransform: e.cssTransform
-    });
-    e.source.div.dispatchEvent(event);
-  });
-  eventBus.on('textlayerrendered', function (e) {
-    var event = document.createEvent('CustomEvent');
-    event.initCustomEvent('textlayerrendered', true, true, { pageNumber: e.pageNumber });
-    e.source.textLayerDiv.dispatchEvent(event);
-  });
-  eventBus.on('pagechange', function (e) {
-    var event = document.createEvent('UIEvents');
-    event.initUIEvent('pagechange', true, true, window, 0);
-    event.pageNumber = e.pageNumber;
-    e.source.container.dispatchEvent(event);
-  });
-  eventBus.on('pagesinit', function (e) {
-    var event = document.createEvent('CustomEvent');
-    event.initCustomEvent('pagesinit', true, true, null);
-    e.source.container.dispatchEvent(event);
-  });
-  eventBus.on('pagesloaded', function (e) {
-    var event = document.createEvent('CustomEvent');
-    event.initCustomEvent('pagesloaded', true, true, { pagesCount: e.pagesCount });
-    e.source.container.dispatchEvent(event);
-  });
-  eventBus.on('scalechange', function (e) {
-    var event = document.createEvent('UIEvents');
-    event.initUIEvent('scalechange', true, true, window, 0);
-    event.scale = e.scale;
-    event.presetValue = e.presetValue;
-    e.source.container.dispatchEvent(event);
-  });
-  eventBus.on('updateviewarea', function (e) {
-    var event = document.createEvent('UIEvents');
-    event.initUIEvent('updateviewarea', true, true, window, 0);
-    event.location = e.location;
-    e.source.container.dispatchEvent(event);
-  });
-  eventBus.on('find', function (e) {
-    if (e.source === window) {
-      return;
-    }
-    var event = document.createEvent('CustomEvent');
-    event.initCustomEvent('find' + e.type, true, true, {
-      query: e.query,
-      phraseSearch: e.phraseSearch,
-      caseSensitive: e.caseSensitive,
-      highlightAll: e.highlightAll,
-      findPrevious: e.findPrevious
-    });
-    window.dispatchEvent(event);
-  });
-  eventBus.on('attachmentsloaded', function (e) {
-    var event = document.createEvent('CustomEvent');
-    event.initCustomEvent('attachmentsloaded', true, true, { attachmentsCount: e.attachmentsCount });
-    e.source.container.dispatchEvent(event);
-  });
-  eventBus.on('sidebarviewchanged', function (e) {
-    var event = document.createEvent('CustomEvent');
-    event.initCustomEvent('sidebarviewchanged', true, true, { view: e.view });
-    e.source.outerContainer.dispatchEvent(event);
-  });
-  eventBus.on('pagemode', function (e) {
-    var event = document.createEvent('CustomEvent');
-    event.initCustomEvent('pagemode', true, true, { mode: e.mode });
-    e.source.pdfViewer.container.dispatchEvent(event);
-  });
-  eventBus.on('namedaction', function (e) {
-    var event = document.createEvent('CustomEvent');
-    event.initCustomEvent('namedaction', true, true, { action: e.action });
-    e.source.pdfViewer.container.dispatchEvent(event);
-  });
-  eventBus.on('presentationmodechanged', function (e) {
-    var event = document.createEvent('CustomEvent');
-    event.initCustomEvent('presentationmodechanged', true, true, {
-      active: e.active,
-      switchInProgress: e.switchInProgress
-    });
-    window.dispatchEvent(event);
-  });
-  eventBus.on('outlineloaded', function (e) {
-    var event = document.createEvent('CustomEvent');
-    event.initCustomEvent('outlineloaded', true, true, { outlineCount: e.outlineCount });
-    e.source.container.dispatchEvent(event);
-  });
-}
-var globalEventBus = null;
-function getGlobalEventBus() {
-  if (globalEventBus) {
-    return globalEventBus;
-  }
-  globalEventBus = new _ui_utils.EventBus();
-  attachDOMEventsToEventBus(globalEventBus);
-  return globalEventBus;
-}
-exports.attachDOMEventsToEventBus = attachDOMEventsToEventBus;
-exports.getGlobalEventBus = getGlobalEventBus;
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __w_pdfjs_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.SimpleLinkService = exports.PDFLinkService = undefined;
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var _dom_events = __w_pdfjs_require__(2);
-
-var _ui_utils = __w_pdfjs_require__(1);
-
-var PageNumberRegExp = /^\d+$/;
-function isPageNumber(str) {
-  return PageNumberRegExp.test(str);
-}
-var PDFLinkService = function PDFLinkServiceClosure() {
-  function PDFLinkService(options) {
-    options = options || {};
-    this.eventBus = options.eventBus || (0, _dom_events.getGlobalEventBus)();
-    this.baseUrl = null;
-    this.pdfDocument = null;
-    this.pdfViewer = null;
-    this.pdfHistory = null;
-    this._pagesRefCache = null;
-  }
-  PDFLinkService.prototype = {
-    setDocument: function PDFLinkService_setDocument(pdfDocument, baseUrl) {
-      this.baseUrl = baseUrl;
-      this.pdfDocument = pdfDocument;
-      this._pagesRefCache = Object.create(null);
-    },
-    setViewer: function PDFLinkService_setViewer(pdfViewer) {
-      this.pdfViewer = pdfViewer;
-    },
-    setHistory: function PDFLinkService_setHistory(pdfHistory) {
-      this.pdfHistory = pdfHistory;
-    },
-    get pagesCount() {
-      return this.pdfDocument ? this.pdfDocument.numPages : 0;
-    },
-    get page() {
-      return this.pdfViewer.currentPageNumber;
-    },
-    set page(value) {
-      this.pdfViewer.currentPageNumber = value;
-    },
-    navigateTo: function PDFLinkService_navigateTo(dest) {
-      var destString = '';
-      var self = this;
-      var goToDestination = function goToDestination(destRef) {
-        var pageNumber;
-        if (destRef instanceof Object) {
-          pageNumber = self._cachedPageNumber(destRef);
-        } else if ((destRef | 0) === destRef) {
-          pageNumber = destRef + 1;
-        } else {
-          console.error('PDFLinkService_navigateTo: "' + destRef + '" is not a valid destination reference.');
-          return;
-        }
-        if (pageNumber) {
-          if (pageNumber < 1 || pageNumber > self.pagesCount) {
-            console.error('PDFLinkService_navigateTo: "' + pageNumber + '" is a non-existent page number.');
-            return;
-          }
-          self.pdfViewer.scrollPageIntoView({
-            pageNumber: pageNumber,
-            destArray: dest
-          });
-          if (self.pdfHistory) {
-            self.pdfHistory.push({
-              dest: dest,
-              hash: destString,
-              page: pageNumber
-            });
-          }
-        } else {
-          self.pdfDocument.getPageIndex(destRef).then(function (pageIndex) {
-            self.cachePageRef(pageIndex + 1, destRef);
-            goToDestination(destRef);
-          }).catch(function () {
-            console.error('PDFLinkService_navigateTo: "' + destRef + '" is not a valid page reference.');
-          });
-        }
-      };
-      var destinationPromise;
-      if (typeof dest === 'string') {
-        destString = dest;
-        destinationPromise = this.pdfDocument.getDestination(dest);
-      } else {
-        destinationPromise = Promise.resolve(dest);
-      }
-      destinationPromise.then(function (destination) {
-        dest = destination;
-        if (!(destination instanceof Array)) {
-          console.error('PDFLinkService_navigateTo: "' + destination + '" is not a valid destination array.');
-          return;
-        }
-        goToDestination(destination[0]);
-      });
-    },
-    getDestinationHash: function PDFLinkService_getDestinationHash(dest) {
-      if (typeof dest === 'string') {
-        return this.getAnchorUrl('#' + (isPageNumber(dest) ? 'nameddest=' : '') + escape(dest));
-      }
-      if (dest instanceof Array) {
-        var str = JSON.stringify(dest);
-        return this.getAnchorUrl('#' + escape(str));
-      }
-      return this.getAnchorUrl('');
-    },
-    getAnchorUrl: function PDFLinkService_getAnchorUrl(anchor) {
-      return (this.baseUrl || '') + anchor;
-    },
-    setHash: function PDFLinkService_setHash(hash) {
-      var pageNumber, dest;
-      if (hash.indexOf('=') >= 0) {
-        var params = (0, _ui_utils.parseQueryString)(hash);
-        if ('search' in params) {
-          this.eventBus.dispatch('findfromurlhash', {
-            source: this,
-            query: params['search'].replace(/"/g, ''),
-            phraseSearch: params['phrase'] === 'true'
-          });
-        }
-        if ('nameddest' in params) {
-          if (this.pdfHistory) {
-            this.pdfHistory.updateNextHashParam(params.nameddest);
-          }
-          this.navigateTo(params.nameddest);
-          return;
-        }
-        if ('page' in params) {
-          pageNumber = params.page | 0 || 1;
-        }
-        if ('zoom' in params) {
-          var zoomArgs = params.zoom.split(',');
-          var zoomArg = zoomArgs[0];
-          var zoomArgNumber = parseFloat(zoomArg);
-          if (zoomArg.indexOf('Fit') === -1) {
-            dest = [null, { name: 'XYZ' }, zoomArgs.length > 1 ? zoomArgs[1] | 0 : null, zoomArgs.length > 2 ? zoomArgs[2] | 0 : null, zoomArgNumber ? zoomArgNumber / 100 : zoomArg];
-          } else {
-            if (zoomArg === 'Fit' || zoomArg === 'FitB') {
-              dest = [null, { name: zoomArg }];
-            } else if (zoomArg === 'FitH' || zoomArg === 'FitBH' || zoomArg === 'FitV' || zoomArg === 'FitBV') {
-              dest = [null, { name: zoomArg }, zoomArgs.length > 1 ? zoomArgs[1] | 0 : null];
-            } else if (zoomArg === 'FitR') {
-              if (zoomArgs.length !== 5) {
-                console.error('PDFLinkService_setHash: ' + 'Not enough parameters for \'FitR\'.');
-              } else {
-                dest = [null, { name: zoomArg }, zoomArgs[1] | 0, zoomArgs[2] | 0, zoomArgs[3] | 0, zoomArgs[4] | 0];
-              }
-            } else {
-              console.error('PDFLinkService_setHash: \'' + zoomArg + '\' is not a valid zoom value.');
-            }
-          }
-        }
-        if (dest) {
-          this.pdfViewer.scrollPageIntoView({
-            pageNumber: pageNumber || this.page,
-            destArray: dest,
-            allowNegativeOffset: true
-          });
-        } else if (pageNumber) {
-          this.page = pageNumber;
-        }
-        if ('pagemode' in params) {
-          this.eventBus.dispatch('pagemode', {
-            source: this,
-            mode: params.pagemode
-          });
-        }
-      } else {
-        if (isPageNumber(hash) && hash <= this.pagesCount) {
-          console.warn('PDFLinkService_setHash: specifying a page number ' + 'directly after the hash symbol (#) is deprecated, ' + 'please use the "#page=' + hash + '" form instead.');
-          this.page = hash | 0;
-        }
-        dest = unescape(hash);
-        try {
-          dest = JSON.parse(dest);
-          if (!(dest instanceof Array)) {
-            dest = dest.toString();
-          }
-        } catch (ex) {}
-        if (typeof dest === 'string' || isValidExplicitDestination(dest)) {
-          if (this.pdfHistory) {
-            this.pdfHistory.updateNextHashParam(dest);
-          }
-          this.navigateTo(dest);
-          return;
-        }
-        console.error('PDFLinkService_setHash: \'' + unescape(hash) + '\' is not a valid destination.');
-      }
-    },
-    executeNamedAction: function PDFLinkService_executeNamedAction(action) {
-      switch (action) {
-        case 'GoBack':
-          if (this.pdfHistory) {
-            this.pdfHistory.back();
-          }
-          break;
-        case 'GoForward':
-          if (this.pdfHistory) {
-            this.pdfHistory.forward();
-          }
-          break;
-        case 'NextPage':
-          if (this.page < this.pagesCount) {
-            this.page++;
-          }
-          break;
-        case 'PrevPage':
-          if (this.page > 1) {
-            this.page--;
-          }
-          break;
-        case 'LastPage':
-          this.page = this.pagesCount;
-          break;
-        case 'FirstPage':
-          this.page = 1;
-          break;
-        default:
-          break;
-      }
-      this.eventBus.dispatch('namedaction', {
-        source: this,
-        action: action
-      });
-    },
-    onFileAttachmentAnnotation: function onFileAttachmentAnnotation() {
-      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-      this.eventBus.dispatch('fileattachmentannotation', {
-        source: this,
-        id: params.id,
-        filename: params.filename,
-        content: params.content
-      });
-    },
-
-    cachePageRef: function PDFLinkService_cachePageRef(pageNum, pageRef) {
-      var refStr = pageRef.num + ' ' + pageRef.gen + ' R';
-      this._pagesRefCache[refStr] = pageNum;
-    },
-    _cachedPageNumber: function PDFLinkService_cachedPageNumber(pageRef) {
-      var refStr = pageRef.num + ' ' + pageRef.gen + ' R';
-      return this._pagesRefCache && this._pagesRefCache[refStr] || null;
-    }
-  };
-  function isValidExplicitDestination(dest) {
-    if (!(dest instanceof Array)) {
-      return false;
-    }
-    var destLength = dest.length,
-        allowNull = true;
-    if (destLength < 2) {
-      return false;
-    }
-    var page = dest[0];
-    if (!((typeof page === 'undefined' ? 'undefined' : _typeof(page)) === 'object' && typeof page.num === 'number' && (page.num | 0) === page.num && typeof page.gen === 'number' && (page.gen | 0) === page.gen) && !(typeof page === 'number' && (page | 0) === page && page >= 0)) {
-      return false;
-    }
-    var zoom = dest[1];
-    if (!((typeof zoom === 'undefined' ? 'undefined' : _typeof(zoom)) === 'object' && typeof zoom.name === 'string')) {
-      return false;
-    }
-    switch (zoom.name) {
-      case 'XYZ':
-        if (destLength !== 5) {
-          return false;
-        }
-        break;
-      case 'Fit':
-      case 'FitB':
-        return destLength === 2;
-      case 'FitH':
-      case 'FitBH':
-      case 'FitV':
-      case 'FitBV':
-        if (destLength !== 3) {
-          return false;
-        }
-        break;
-      case 'FitR':
-        if (destLength !== 6) {
-          return false;
-        }
-        allowNull = false;
-        break;
-      default:
-        return false;
-    }
-    for (var i = 2; i < destLength; i++) {
-      var param = dest[i];
-      if (!(typeof param === 'number' || allowNull && param === null)) {
-        return false;
-      }
-    }
-    return true;
-  }
-  return PDFLinkService;
-}();
-var SimpleLinkService = function SimpleLinkServiceClosure() {
-  function SimpleLinkService() {}
-  SimpleLinkService.prototype = {
-    get page() {
-      return 0;
-    },
-    set page(value) {},
-    navigateTo: function navigateTo(dest) {},
-    getDestinationHash: function getDestinationHash(dest) {
-      return '#';
-    },
-    getAnchorUrl: function getAnchorUrl(hash) {
-      return '#';
-    },
-    setHash: function setHash(hash) {},
-    executeNamedAction: function executeNamedAction(action) {},
-    onFileAttachmentAnnotation: function onFileAttachmentAnnotation(params) {},
-    cachePageRef: function cachePageRef(pageNum, pageRef) {}
-  };
-  return SimpleLinkService;
-}();
-exports.PDFLinkService = PDFLinkService;
-exports.SimpleLinkService = SimpleLinkService;
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __w_pdfjs_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.DefaultAnnotationLayerFactory = exports.AnnotationLayerBuilder = undefined;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _pdfjs = __w_pdfjs_require__(0);
-
-var _ui_utils = __w_pdfjs_require__(1);
-
-var _pdf_link_service = __w_pdfjs_require__(3);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var AnnotationLayerBuilder = function () {
-  function AnnotationLayerBuilder(options) {
-    _classCallCheck(this, AnnotationLayerBuilder);
-
-    this.pageDiv = options.pageDiv;
-    this.pdfPage = options.pdfPage;
-    this.renderInteractiveForms = options.renderInteractiveForms;
-    this.linkService = options.linkService;
-    this.downloadManager = options.downloadManager;
-    this.div = null;
-  }
-
-  _createClass(AnnotationLayerBuilder, [{
-    key: 'render',
-    value: function render(viewport) {
-      var _this = this;
-
-      var intent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'display';
-
-      this.pdfPage.getAnnotations({ intent: intent }).then(function (annotations) {
-        var parameters = {
-          viewport: viewport.clone({ dontFlip: true }),
-          div: _this.div,
-          annotations: annotations,
-          page: _this.pdfPage,
-          renderInteractiveForms: _this.renderInteractiveForms,
-          linkService: _this.linkService,
-          downloadManager: _this.downloadManager
-        };
-        if (_this.div) {
-          _pdfjs.AnnotationLayer.update(parameters);
-        } else {
-          if (annotations.length === 0) {
-            return;
-          }
-          _this.div = document.createElement('div');
-          _this.div.className = 'annotationLayer';
-          _this.pageDiv.appendChild(_this.div);
-          parameters.div = _this.div;
-          _pdfjs.AnnotationLayer.render(parameters);
-          if (typeof _ui_utils.mozL10n !== 'undefined') {
-            _ui_utils.mozL10n.translate(_this.div);
-          }
-        }
-      });
-    }
-  }, {
-    key: 'hide',
-    value: function hide() {
-      if (!this.div) {
-        return;
-      }
-      this.div.setAttribute('hidden', 'true');
-    }
-  }]);
-
-  return AnnotationLayerBuilder;
-}();
-
-var DefaultAnnotationLayerFactory = function () {
-  function DefaultAnnotationLayerFactory() {
-    _classCallCheck(this, DefaultAnnotationLayerFactory);
-  }
-
-  _createClass(DefaultAnnotationLayerFactory, [{
-    key: 'createAnnotationLayerBuilder',
-    value: function createAnnotationLayerBuilder(pageDiv, pdfPage) {
-      var renderInteractiveForms = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-
-      return new AnnotationLayerBuilder({
-        pageDiv: pageDiv,
-        pdfPage: pdfPage,
-        renderInteractiveForms: renderInteractiveForms,
-        linkService: new _pdf_link_service.SimpleLinkService()
-      });
-    }
-  }]);
-
-  return DefaultAnnotationLayerFactory;
-}();
-
-exports.AnnotationLayerBuilder = AnnotationLayerBuilder;
-exports.DefaultAnnotationLayerFactory = DefaultAnnotationLayerFactory;
-
-/***/ }),
+/* 3 */,
+/* 4 */,
 /* 5 */
-/***/ (function(module, exports, __w_pdfjs_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.PDFPageView = undefined;
-
-var _ui_utils = __w_pdfjs_require__(1);
-
-var _pdfjs = __w_pdfjs_require__(0);
-
-var _dom_events = __w_pdfjs_require__(2);
-
-var _pdf_rendering_queue = __w_pdfjs_require__(7);
-
-var TEXT_LAYER_RENDER_DELAY = 200;
-var PDFPageView = function PDFPageViewClosure() {
-  function PDFPageView(options) {
-    var container = options.container;
-    var id = options.id;
-    var scale = options.scale;
-    var defaultViewport = options.defaultViewport;
-    var renderingQueue = options.renderingQueue;
-    var textLayerFactory = options.textLayerFactory;
-    var annotationLayerFactory = options.annotationLayerFactory;
-    var enhanceTextSelection = options.enhanceTextSelection || false;
-    var renderInteractiveForms = options.renderInteractiveForms || false;
-    this.id = id;
-    this.renderingId = 'page' + id;
-    this.pageLabel = null;
-    this.rotation = 0;
-    this.scale = scale || _ui_utils.DEFAULT_SCALE;
-    this.viewport = defaultViewport;
-    this.pdfPageRotate = defaultViewport.rotation;
-    this.hasRestrictedScaling = false;
-    this.enhanceTextSelection = enhanceTextSelection;
-    this.renderInteractiveForms = renderInteractiveForms;
-    this.eventBus = options.eventBus || (0, _dom_events.getGlobalEventBus)();
-    this.renderingQueue = renderingQueue;
-    this.textLayerFactory = textLayerFactory;
-    this.annotationLayerFactory = annotationLayerFactory;
-    this.renderer = options.renderer || _ui_utils.RendererType.CANVAS;
-    this.paintTask = null;
-    this.paintedViewportMap = new WeakMap();
-    this.renderingState = _pdf_rendering_queue.RenderingStates.INITIAL;
-    this.resume = null;
-    this.error = null;
-    this.onBeforeDraw = null;
-    this.onAfterDraw = null;
-    this.textLayer = null;
-    this.zoomLayer = null;
-    this.annotationLayer = null;
-    var div = document.createElement('div');
-    div.className = 'page';
-    div.style.width = Math.floor(this.viewport.width) + 'px';
-    div.style.height = Math.floor(this.viewport.height) + 'px';
-    div.setAttribute('data-page-number', this.id);
-    this.div = div;
-    container.appendChild(div);
-  }
-  PDFPageView.prototype = {
-    setPdfPage: function PDFPageView_setPdfPage(pdfPage) {
-      this.pdfPage = pdfPage;
-      this.pdfPageRotate = pdfPage.rotate;
-      var totalRotation = (this.rotation + this.pdfPageRotate) % 360;
-      this.viewport = pdfPage.getViewport(this.scale * _ui_utils.CSS_UNITS, totalRotation);
-      this.stats = pdfPage.stats;
-      this.reset();
-    },
-    destroy: function PDFPageView_destroy() {
-      this.reset();
-      if (this.pdfPage) {
-        this.pdfPage.cleanup();
-      }
-    },
-    _resetZoomLayer: function _resetZoomLayer() {
-      var removeFromDOM = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-
-      if (!this.zoomLayer) {
-        return;
-      }
-      var zoomLayerCanvas = this.zoomLayer.firstChild;
-      this.paintedViewportMap.delete(zoomLayerCanvas);
-      zoomLayerCanvas.width = 0;
-      zoomLayerCanvas.height = 0;
-      if (removeFromDOM) {
-        this.zoomLayer.remove();
-      }
-      this.zoomLayer = null;
-    },
-
-    reset: function PDFPageView_reset(keepZoomLayer, keepAnnotations) {
-      this.cancelRendering();
-      var div = this.div;
-      div.style.width = Math.floor(this.viewport.width) + 'px';
-      div.style.height = Math.floor(this.viewport.height) + 'px';
-      var childNodes = div.childNodes;
-      var currentZoomLayerNode = keepZoomLayer && this.zoomLayer || null;
-      var currentAnnotationNode = keepAnnotations && this.annotationLayer && this.annotationLayer.div || null;
-      for (var i = childNodes.length - 1; i >= 0; i--) {
-        var node = childNodes[i];
-        if (currentZoomLayerNode === node || currentAnnotationNode === node) {
-          continue;
-        }
-        div.removeChild(node);
-      }
-      div.removeAttribute('data-loaded');
-      if (currentAnnotationNode) {
-        this.annotationLayer.hide();
-      } else {
-        this.annotationLayer = null;
-      }
-      if (!currentZoomLayerNode) {
-        if (this.canvas) {
-          this.paintedViewportMap.delete(this.canvas);
-          this.canvas.width = 0;
-          this.canvas.height = 0;
-          delete this.canvas;
-        }
-        this._resetZoomLayer();
-      }
-      if (this.svg) {
-        this.paintedViewportMap.delete(this.svg);
-        delete this.svg;
-      }
-      this.loadingIconDiv = document.createElement('div');
-      this.loadingIconDiv.className = 'loadingIcon';
-      div.appendChild(this.loadingIconDiv);
-    },
-    update: function PDFPageView_update(scale, rotation) {
-      this.scale = scale || this.scale;
-      if (typeof rotation !== 'undefined') {
-        this.rotation = rotation;
-      }
-      var totalRotation = (this.rotation + this.pdfPageRotate) % 360;
-      this.viewport = this.viewport.clone({
-        scale: this.scale * _ui_utils.CSS_UNITS,
-        rotation: totalRotation
-      });
-      if (this.svg) {
-        this.cssTransform(this.svg, true);
-        this.eventBus.dispatch('pagerendered', {
-          source: this,
-          pageNumber: this.id,
-          cssTransform: true
-        });
-        return;
-      }
-      var isScalingRestricted = false;
-      if (this.canvas && _pdfjs.PDFJS.maxCanvasPixels > 0) {
-        var outputScale = this.outputScale;
-        if ((Math.floor(this.viewport.width) * outputScale.sx | 0) * (Math.floor(this.viewport.height) * outputScale.sy | 0) > _pdfjs.PDFJS.maxCanvasPixels) {
-          isScalingRestricted = true;
-        }
-      }
-      if (this.canvas) {
-        if (_pdfjs.PDFJS.useOnlyCssZoom || this.hasRestrictedScaling && isScalingRestricted) {
-          this.cssTransform(this.canvas, true);
-          this.eventBus.dispatch('pagerendered', {
-            source: this,
-            pageNumber: this.id,
-            cssTransform: true
-          });
-          return;
-        }
-        if (!this.zoomLayer) {
-          this.zoomLayer = this.canvas.parentNode;
-          this.zoomLayer.style.position = 'absolute';
-        }
-      }
-      if (this.zoomLayer) {
-        this.cssTransform(this.zoomLayer.firstChild);
-      }
-      this.reset(true, true);
-    },
-    cancelRendering: function PDFPageView_cancelRendering() {
-      if (this.paintTask) {
-        this.paintTask.cancel();
-        this.paintTask = null;
-      }
-      this.renderingState = _pdf_rendering_queue.RenderingStates.INITIAL;
-      this.resume = null;
-      if (this.textLayer) {
-        this.textLayer.cancel();
-        this.textLayer = null;
-      }
-    },
-    updatePosition: function PDFPageView_updatePosition() {
-      if (this.textLayer) {
-        this.textLayer.render(TEXT_LAYER_RENDER_DELAY);
-      }
-    },
-    cssTransform: function PDFPageView_transform(target, redrawAnnotations) {
-      var width = this.viewport.width;
-      var height = this.viewport.height;
-      var div = this.div;
-      target.style.width = target.parentNode.style.width = div.style.width = Math.floor(width) + 'px';
-      target.style.height = target.parentNode.style.height = div.style.height = Math.floor(height) + 'px';
-      var relativeRotation = this.viewport.rotation - this.paintedViewportMap.get(target).rotation;
-      var absRotation = Math.abs(relativeRotation);
-      var scaleX = 1,
-          scaleY = 1;
-      if (absRotation === 90 || absRotation === 270) {
-        scaleX = height / width;
-        scaleY = width / height;
-      }
-      var cssTransform = 'rotate(' + relativeRotation + 'deg) ' + 'scale(' + scaleX + ',' + scaleY + ')';
-      _pdfjs.CustomStyle.setProp('transform', target, cssTransform);
-      if (this.textLayer) {
-        var textLayerViewport = this.textLayer.viewport;
-        var textRelativeRotation = this.viewport.rotation - textLayerViewport.rotation;
-        var textAbsRotation = Math.abs(textRelativeRotation);
-        var scale = width / textLayerViewport.width;
-        if (textAbsRotation === 90 || textAbsRotation === 270) {
-          scale = width / textLayerViewport.height;
-        }
-        var textLayerDiv = this.textLayer.textLayerDiv;
-        var transX, transY;
-        switch (textAbsRotation) {
-          case 0:
-            transX = transY = 0;
-            break;
-          case 90:
-            transX = 0;
-            transY = '-' + textLayerDiv.style.height;
-            break;
-          case 180:
-            transX = '-' + textLayerDiv.style.width;
-            transY = '-' + textLayerDiv.style.height;
-            break;
-          case 270:
-            transX = '-' + textLayerDiv.style.width;
-            transY = 0;
-            break;
-          default:
-            console.error('Bad rotation value.');
-            break;
-        }
-        _pdfjs.CustomStyle.setProp('transform', textLayerDiv, 'rotate(' + textAbsRotation + 'deg) ' + 'scale(' + scale + ', ' + scale + ') ' + 'translate(' + transX + ', ' + transY + ')');
-        _pdfjs.CustomStyle.setProp('transformOrigin', textLayerDiv, '0% 0%');
-      }
-      if (redrawAnnotations && this.annotationLayer) {
-        this.annotationLayer.render(this.viewport, 'display');
-      }
-    },
-    get width() {
-      return this.viewport.width;
-    },
-    get height() {
-      return this.viewport.height;
-    },
-    getPagePoint: function PDFPageView_getPagePoint(x, y) {
-      return this.viewport.convertToPdfPoint(x, y);
-    },
-    draw: function draw() {
-      var _this = this;
-
-      if (this.renderingState !== _pdf_rendering_queue.RenderingStates.INITIAL) {
-        console.error('Must be in new state before drawing');
-        this.reset();
-      }
-      this.renderingState = _pdf_rendering_queue.RenderingStates.RUNNING;
-      var pdfPage = this.pdfPage;
-      var div = this.div;
-      var canvasWrapper = document.createElement('div');
-      canvasWrapper.style.width = div.style.width;
-      canvasWrapper.style.height = div.style.height;
-      canvasWrapper.classList.add('canvasWrapper');
-      if (this.annotationLayer && this.annotationLayer.div) {
-        div.insertBefore(canvasWrapper, this.annotationLayer.div);
-      } else {
-        div.appendChild(canvasWrapper);
-      }
-      var textLayer = null;
-      if (this.textLayerFactory) {
-        var textLayerDiv = document.createElement('div');
-        textLayerDiv.className = 'textLayer';
-        textLayerDiv.style.width = canvasWrapper.style.width;
-        textLayerDiv.style.height = canvasWrapper.style.height;
-        if (this.annotationLayer && this.annotationLayer.div) {
-          div.insertBefore(textLayerDiv, this.annotationLayer.div);
-        } else {
-          div.appendChild(textLayerDiv);
-        }
-        textLayer = this.textLayerFactory.createTextLayerBuilder(textLayerDiv, this.id - 1, this.viewport, this.enhanceTextSelection);
-      }
-      this.textLayer = textLayer;
-      var renderContinueCallback = null;
-      if (this.renderingQueue) {
-        renderContinueCallback = function renderContinueCallback(cont) {
-          if (!_this.renderingQueue.isHighestPriority(_this)) {
-            _this.renderingState = _pdf_rendering_queue.RenderingStates.PAUSED;
-            _this.resume = function () {
-              _this.renderingState = _pdf_rendering_queue.RenderingStates.RUNNING;
-              cont();
-            };
-            return;
-          }
-          cont();
-        };
-      }
-      var finishPaintTask = function finishPaintTask(error) {
-        if (paintTask === _this.paintTask) {
-          _this.paintTask = null;
-        }
-        if (error === 'cancelled' || error instanceof _pdfjs.RenderingCancelledException) {
-          _this.error = null;
-          return Promise.resolve(undefined);
-        }
-        _this.renderingState = _pdf_rendering_queue.RenderingStates.FINISHED;
-        if (_this.loadingIconDiv) {
-          div.removeChild(_this.loadingIconDiv);
-          delete _this.loadingIconDiv;
-        }
-        _this._resetZoomLayer(true);
-        _this.error = error;
-        _this.stats = pdfPage.stats;
-        if (_this.onAfterDraw) {
-          _this.onAfterDraw();
-        }
-        _this.eventBus.dispatch('pagerendered', {
-          source: _this,
-          pageNumber: _this.id,
-          cssTransform: false
-        });
-        if (error) {
-          return Promise.reject(error);
-        }
-        return Promise.resolve(undefined);
-      };
-      var paintTask = this.renderer === _ui_utils.RendererType.SVG ? this.paintOnSvg(canvasWrapper) : this.paintOnCanvas(canvasWrapper);
-      paintTask.onRenderContinue = renderContinueCallback;
-      this.paintTask = paintTask;
-      var resultPromise = paintTask.promise.then(function () {
-        return finishPaintTask(null).then(function () {
-          if (textLayer) {
-            pdfPage.getTextContent({ normalizeWhitespace: true }).then(function textContentResolved(textContent) {
-              textLayer.setTextContent(textContent);
-              textLayer.render(TEXT_LAYER_RENDER_DELAY);
-            });
-          }
-        });
-      }, function (reason) {
-        return finishPaintTask(reason);
-      });
-      if (this.annotationLayerFactory) {
-        if (!this.annotationLayer) {
-          this.annotationLayer = this.annotationLayerFactory.createAnnotationLayerBuilder(div, pdfPage, this.renderInteractiveForms);
-        }
-        this.annotationLayer.render(this.viewport, 'display');
-      }
-      div.setAttribute('data-loaded', true);
-      if (this.onBeforeDraw) {
-        this.onBeforeDraw();
-      }
-      return resultPromise;
-    },
-    paintOnCanvas: function paintOnCanvas(canvasWrapper) {
-      var renderCapability = (0, _pdfjs.createPromiseCapability)();
-      var result = {
-        promise: renderCapability.promise,
-        onRenderContinue: function onRenderContinue(cont) {
-          cont();
-        },
-        cancel: function cancel() {
-          renderTask.cancel();
-        }
-      };
-      var viewport = this.viewport;
-      var canvas = document.createElement('canvas');
-      canvas.id = 'page' + this.id;
-      canvas.setAttribute('hidden', 'hidden');
-      var isCanvasHidden = true;
-      var showCanvas = function showCanvas() {
-        if (isCanvasHidden) {
-          canvas.removeAttribute('hidden');
-          isCanvasHidden = false;
-        }
-      };
-      canvasWrapper.appendChild(canvas);
-      this.canvas = canvas;
-      canvas.mozOpaque = true;
-      var ctx = canvas.getContext('2d', { alpha: false });
-      var outputScale = (0, _ui_utils.getOutputScale)(ctx);
-      this.outputScale = outputScale;
-      if (_pdfjs.PDFJS.useOnlyCssZoom) {
-        var actualSizeViewport = viewport.clone({ scale: _ui_utils.CSS_UNITS });
-        outputScale.sx *= actualSizeViewport.width / viewport.width;
-        outputScale.sy *= actualSizeViewport.height / viewport.height;
-        outputScale.scaled = true;
-      }
-      if (_pdfjs.PDFJS.maxCanvasPixels > 0) {
-        var pixelsInViewport = viewport.width * viewport.height;
-        var maxScale = Math.sqrt(_pdfjs.PDFJS.maxCanvasPixels / pixelsInViewport);
-        if (outputScale.sx > maxScale || outputScale.sy > maxScale) {
-          outputScale.sx = maxScale;
-          outputScale.sy = maxScale;
-          outputScale.scaled = true;
-          this.hasRestrictedScaling = true;
-        } else {
-          this.hasRestrictedScaling = false;
-        }
-      }
-      var sfx = (0, _ui_utils.approximateFraction)(outputScale.sx);
-      var sfy = (0, _ui_utils.approximateFraction)(outputScale.sy);
-      canvas.width = (0, _ui_utils.roundToDivide)(viewport.width * outputScale.sx, sfx[0]);
-      canvas.height = (0, _ui_utils.roundToDivide)(viewport.height * outputScale.sy, sfy[0]);
-      canvas.style.width = (0, _ui_utils.roundToDivide)(viewport.width, sfx[1]) + 'px';
-      canvas.style.height = (0, _ui_utils.roundToDivide)(viewport.height, sfy[1]) + 'px';
-      this.paintedViewportMap.set(canvas, viewport);
-      var transform = !outputScale.scaled ? null : [outputScale.sx, 0, 0, outputScale.sy, 0, 0];
-      var renderContext = {
-        canvasContext: ctx,
-        transform: transform,
-        viewport: this.viewport,
-        renderInteractiveForms: this.renderInteractiveForms
-      };
-      var renderTask = this.pdfPage.render(renderContext);
-      renderTask.onContinue = function (cont) {
-        showCanvas();
-        if (result.onRenderContinue) {
-          result.onRenderContinue(cont);
-        } else {
-          cont();
-        }
-      };
-      renderTask.promise.then(function () {
-        showCanvas();
-        renderCapability.resolve(undefined);
-      }, function (error) {
-        showCanvas();
-        renderCapability.reject(error);
-      });
-      return result;
-    },
-    paintOnSvg: function paintOnSvg(wrapper) {
-      var _this2 = this;
-
-      var cancelled = false;
-      var ensureNotCancelled = function ensureNotCancelled() {
-        if (cancelled) {
-          if (_pdfjs.PDFJS.pdfjsNext) {
-            throw new _pdfjs.RenderingCancelledException('Rendering cancelled, page ' + _this2.id, 'svg');
-          } else {
-            throw 'cancelled';
-          }
-        }
-      };
-      var pdfPage = this.pdfPage;
-      var actualSizeViewport = this.viewport.clone({ scale: _ui_utils.CSS_UNITS });
-      var promise = pdfPage.getOperatorList().then(function (opList) {
-        ensureNotCancelled();
-        var svgGfx = new _pdfjs.SVGGraphics(pdfPage.commonObjs, pdfPage.objs);
-        return svgGfx.getSVG(opList, actualSizeViewport).then(function (svg) {
-          ensureNotCancelled();
-          _this2.svg = svg;
-          _this2.paintedViewportMap.set(svg, actualSizeViewport);
-          svg.style.width = wrapper.style.width;
-          svg.style.height = wrapper.style.height;
-          _this2.renderingState = _pdf_rendering_queue.RenderingStates.FINISHED;
-          wrapper.appendChild(svg);
-        });
-      });
-      return {
-        promise: promise,
-        onRenderContinue: function onRenderContinue(cont) {
-          cont();
-        },
-        cancel: function cancel() {
-          cancelled = true;
-        }
-      };
-    },
-
-    setPageLabel: function PDFView_setPageLabel(label) {
-      this.pageLabel = typeof label === 'string' ? label : null;
-      if (this.pageLabel !== null) {
-        this.div.setAttribute('data-page-label', this.pageLabel);
-      } else {
-        this.div.removeAttribute('data-page-label');
-      }
-    }
-  };
-  return PDFPageView;
-}();
-exports.PDFPageView = PDFPageView;
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __w_pdfjs_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.DefaultTextLayerFactory = exports.TextLayerBuilder = undefined;
-
-var _dom_events = __w_pdfjs_require__(2);
-
-var _pdfjs = __w_pdfjs_require__(0);
-
-var EXPAND_DIVS_TIMEOUT = 300;
-var TextLayerBuilder = function TextLayerBuilderClosure() {
-  function TextLayerBuilder(options) {
-    this.textLayerDiv = options.textLayerDiv;
-    this.eventBus = options.eventBus || (0, _dom_events.getGlobalEventBus)();
-    this.textContent = null;
-    this.renderingDone = false;
-    this.pageIdx = options.pageIndex;
-    this.pageNumber = this.pageIdx + 1;
-    this.matches = [];
-    this.viewport = options.viewport;
-    this.textDivs = [];
-    this.findController = options.findController || null;
-    this.textLayerRenderTask = null;
-    this.enhanceTextSelection = options.enhanceTextSelection;
-    this._bindMouse();
-  }
-  TextLayerBuilder.prototype = {
-    _finishRendering: function TextLayerBuilder_finishRendering() {
-      this.renderingDone = true;
-      if (!this.enhanceTextSelection) {
-        var endOfContent = document.createElement('div');
-        endOfContent.className = 'endOfContent';
-        this.textLayerDiv.appendChild(endOfContent);
-      }
-      this.eventBus.dispatch('textlayerrendered', {
-        source: this,
-        pageNumber: this.pageNumber,
-        numTextDivs: this.textDivs.length
-      });
-    },
-    render: function TextLayerBuilder_render(timeout) {
-      var _this = this;
-
-      if (!this.textContent || this.renderingDone) {
-        return;
-      }
-      this.cancel();
-      this.textDivs = [];
-      var textLayerFrag = document.createDocumentFragment();
-      this.textLayerRenderTask = (0, _pdfjs.renderTextLayer)({
-        textContent: this.textContent,
-        container: textLayerFrag,
-        viewport: this.viewport,
-        textDivs: this.textDivs,
-        timeout: timeout,
-        enhanceTextSelection: this.enhanceTextSelection
-      });
-      this.textLayerRenderTask.promise.then(function () {
-        _this.textLayerDiv.appendChild(textLayerFrag);
-        _this._finishRendering();
-        _this.updateMatches();
-      }, function (reason) {});
-    },
-    cancel: function TextLayerBuilder_cancel() {
-      if (this.textLayerRenderTask) {
-        this.textLayerRenderTask.cancel();
-        this.textLayerRenderTask = null;
-      }
-    },
-    setTextContent: function TextLayerBuilder_setTextContent(textContent) {
-      this.cancel();
-      this.textContent = textContent;
-    },
-    convertMatches: function TextLayerBuilder_convertMatches(matches, matchesLength) {
-      var i = 0;
-      var iIndex = 0;
-      var bidiTexts = this.textContent.items;
-      var end = bidiTexts.length - 1;
-      var queryLen = this.findController === null ? 0 : this.findController.state.query.length;
-      var ret = [];
-      if (!matches) {
-        return ret;
-      }
-      for (var m = 0, len = matches.length; m < len; m++) {
-        var matchIdx = matches[m];
-        while (i !== end && matchIdx >= iIndex + bidiTexts[i].str.length) {
-          iIndex += bidiTexts[i].str.length;
-          i++;
-        }
-        if (i === bidiTexts.length) {
-          console.error('Could not find a matching mapping');
-        }
-        var match = {
-          begin: {
-            divIdx: i,
-            offset: matchIdx - iIndex
-          }
-        };
-        if (matchesLength) {
-          matchIdx += matchesLength[m];
-        } else {
-          matchIdx += queryLen;
-        }
-        while (i !== end && matchIdx > iIndex + bidiTexts[i].str.length) {
-          iIndex += bidiTexts[i].str.length;
-          i++;
-        }
-        match.end = {
-          divIdx: i,
-          offset: matchIdx - iIndex
-        };
-        ret.push(match);
-      }
-      return ret;
-    },
-    renderMatches: function TextLayerBuilder_renderMatches(matches) {
-      if (matches.length === 0) {
-        return;
-      }
-      var bidiTexts = this.textContent.items;
-      var textDivs = this.textDivs;
-      var prevEnd = null;
-      var pageIdx = this.pageIdx;
-      var isSelectedPage = this.findController === null ? false : pageIdx === this.findController.selected.pageIdx;
-      var selectedMatchIdx = this.findController === null ? -1 : this.findController.selected.matchIdx;
-      var highlightAll = this.findController === null ? false : this.findController.state.highlightAll;
-      var infinity = {
-        divIdx: -1,
-        offset: undefined
-      };
-      function beginText(begin, className) {
-        var divIdx = begin.divIdx;
-        textDivs[divIdx].textContent = '';
-        appendTextToDiv(divIdx, 0, begin.offset, className);
-      }
-      function appendTextToDiv(divIdx, fromOffset, toOffset, className) {
-        var div = textDivs[divIdx];
-        var content = bidiTexts[divIdx].str.substring(fromOffset, toOffset);
-        var node = document.createTextNode(content);
-        if (className) {
-          var span = document.createElement('span');
-          span.className = className;
-          span.appendChild(node);
-          div.appendChild(span);
-          return;
-        }
-        div.appendChild(node);
-      }
-      var i0 = selectedMatchIdx,
-          i1 = i0 + 1;
-      if (highlightAll) {
-        i0 = 0;
-        i1 = matches.length;
-      } else if (!isSelectedPage) {
-        return;
-      }
-      for (var i = i0; i < i1; i++) {
-        var match = matches[i];
-        var begin = match.begin;
-        var end = match.end;
-        var isSelected = isSelectedPage && i === selectedMatchIdx;
-        var highlightSuffix = isSelected ? ' selected' : '';
-        if (this.findController) {
-          this.findController.updateMatchPosition(pageIdx, i, textDivs, begin.divIdx);
-        }
-        if (!prevEnd || begin.divIdx !== prevEnd.divIdx) {
-          if (prevEnd !== null) {
-            appendTextToDiv(prevEnd.divIdx, prevEnd.offset, infinity.offset);
-          }
-          beginText(begin);
-        } else {
-          appendTextToDiv(prevEnd.divIdx, prevEnd.offset, begin.offset);
-        }
-        if (begin.divIdx === end.divIdx) {
-          appendTextToDiv(begin.divIdx, begin.offset, end.offset, 'highlight' + highlightSuffix);
-        } else {
-          appendTextToDiv(begin.divIdx, begin.offset, infinity.offset, 'highlight begin' + highlightSuffix);
-          for (var n0 = begin.divIdx + 1, n1 = end.divIdx; n0 < n1; n0++) {
-            textDivs[n0].className = 'highlight middle' + highlightSuffix;
-          }
-          beginText(end, 'highlight end' + highlightSuffix);
-        }
-        prevEnd = end;
-      }
-      if (prevEnd) {
-        appendTextToDiv(prevEnd.divIdx, prevEnd.offset, infinity.offset);
-      }
-    },
-    updateMatches: function TextLayerBuilder_updateMatches() {
-      if (!this.renderingDone) {
-        return;
-      }
-      var matches = this.matches;
-      var textDivs = this.textDivs;
-      var bidiTexts = this.textContent.items;
-      var clearedUntilDivIdx = -1;
-      for (var i = 0, len = matches.length; i < len; i++) {
-        var match = matches[i];
-        var begin = Math.max(clearedUntilDivIdx, match.begin.divIdx);
-        for (var n = begin, end = match.end.divIdx; n <= end; n++) {
-          var div = textDivs[n];
-          div.textContent = bidiTexts[n].str;
-          div.className = '';
-        }
-        clearedUntilDivIdx = match.end.divIdx + 1;
-      }
-      if (this.findController === null || !this.findController.active) {
-        return;
-      }
-      var pageMatches, pageMatchesLength;
-      if (this.findController !== null) {
-        pageMatches = this.findController.pageMatches[this.pageIdx] || null;
-        pageMatchesLength = this.findController.pageMatchesLength ? this.findController.pageMatchesLength[this.pageIdx] || null : null;
-      }
-      this.matches = this.convertMatches(pageMatches, pageMatchesLength);
-      this.renderMatches(this.matches);
-    },
-    _bindMouse: function TextLayerBuilder_bindMouse() {
-      var div = this.textLayerDiv;
-      var self = this;
-      var expandDivsTimer = null;
-      div.addEventListener('mousedown', function (e) {
-        if (self.enhanceTextSelection && self.textLayerRenderTask) {
-          self.textLayerRenderTask.expandTextDivs(true);
-          if (expandDivsTimer) {
-            clearTimeout(expandDivsTimer);
-            expandDivsTimer = null;
-          }
-          return;
-        }
-        var end = div.querySelector('.endOfContent');
-        if (!end) {
-          return;
-        }
-        var adjustTop = e.target !== div;
-        adjustTop = adjustTop && window.getComputedStyle(end).getPropertyValue('-moz-user-select') !== 'none';
-        if (adjustTop) {
-          var divBounds = div.getBoundingClientRect();
-          var r = Math.max(0, (e.pageY - divBounds.top) / divBounds.height);
-          end.style.top = (r * 100).toFixed(2) + '%';
-        }
-        end.classList.add('active');
-      });
-      div.addEventListener('mouseup', function (e) {
-        if (self.enhanceTextSelection && self.textLayerRenderTask) {
-          expandDivsTimer = setTimeout(function () {
-            if (self.textLayerRenderTask) {
-              self.textLayerRenderTask.expandTextDivs(false);
-            }
-            expandDivsTimer = null;
-          }, EXPAND_DIVS_TIMEOUT);
-          return;
-        }
-        var end = div.querySelector('.endOfContent');
-        if (!end) {
-          return;
-        }
-        end.style.top = '';
-        end.classList.remove('active');
-      });
-    }
-  };
-  return TextLayerBuilder;
-}();
-function DefaultTextLayerFactory() {}
-DefaultTextLayerFactory.prototype = {
-  createTextLayerBuilder: function createTextLayerBuilder(textLayerDiv, pageIndex, viewport) {
-    var enhanceTextSelection = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
-
-    return new TextLayerBuilder({
-      textLayerDiv: textLayerDiv,
-      pageIndex: pageIndex,
-      viewport: viewport,
-      enhanceTextSelection: enhanceTextSelection
-    });
-  }
-};
-exports.TextLayerBuilder = TextLayerBuilder;
-exports.DefaultTextLayerFactory = DefaultTextLayerFactory;
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __w_pdfjs_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var CLEANUP_TIMEOUT = 30000;
-var RenderingStates = {
-  INITIAL: 0,
-  RUNNING: 1,
-  PAUSED: 2,
-  FINISHED: 3
-};
-
-var PDFRenderingQueue = function () {
-  function PDFRenderingQueue() {
-    _classCallCheck(this, PDFRenderingQueue);
-
-    this.pdfViewer = null;
-    this.pdfThumbnailViewer = null;
-    this.onIdle = null;
-    this.highestPriorityPage = null;
-    this.idleTimeout = null;
-    this.printing = false;
-    this.isThumbnailViewEnabled = false;
-  }
-
-  _createClass(PDFRenderingQueue, [{
-    key: "setViewer",
-    value: function setViewer(pdfViewer) {
-      this.pdfViewer = pdfViewer;
-    }
-  }, {
-    key: "setThumbnailViewer",
-    value: function setThumbnailViewer(pdfThumbnailViewer) {
-      this.pdfThumbnailViewer = pdfThumbnailViewer;
-    }
-  }, {
-    key: "isHighestPriority",
-    value: function isHighestPriority(view) {
-      return this.highestPriorityPage === view.renderingId;
-    }
-  }, {
-    key: "renderHighestPriority",
-    value: function renderHighestPriority(currentlyVisiblePages) {
-      if (this.idleTimeout) {
-        clearTimeout(this.idleTimeout);
-        this.idleTimeout = null;
-      }
-      if (this.pdfViewer.forceRendering(currentlyVisiblePages)) {
-        return;
-      }
-      if (this.pdfThumbnailViewer && this.isThumbnailViewEnabled) {
-        if (this.pdfThumbnailViewer.forceRendering()) {
-          return;
-        }
-      }
-      if (this.printing) {
-        return;
-      }
-      if (this.onIdle) {
-        this.idleTimeout = setTimeout(this.onIdle.bind(this), CLEANUP_TIMEOUT);
-      }
-    }
-  }, {
-    key: "getHighestPriority",
-    value: function getHighestPriority(visible, views, scrolledDown) {
-      var visibleViews = visible.views;
-      var numVisible = visibleViews.length;
-      if (numVisible === 0) {
-        return false;
-      }
-      for (var i = 0; i < numVisible; ++i) {
-        var view = visibleViews[i].view;
-        if (!this.isViewFinished(view)) {
-          return view;
-        }
-      }
-      if (scrolledDown) {
-        var nextPageIndex = visible.last.id;
-        if (views[nextPageIndex] && !this.isViewFinished(views[nextPageIndex])) {
-          return views[nextPageIndex];
-        }
-      } else {
-        var previousPageIndex = visible.first.id - 2;
-        if (views[previousPageIndex] && !this.isViewFinished(views[previousPageIndex])) {
-          return views[previousPageIndex];
-        }
-      }
-      return null;
-    }
-  }, {
-    key: "isViewFinished",
-    value: function isViewFinished(view) {
-      return view.renderingState === RenderingStates.FINISHED;
-    }
-  }, {
-    key: "renderView",
-    value: function renderView(view) {
-      var _this = this;
-
-      switch (view.renderingState) {
-        case RenderingStates.FINISHED:
-          return false;
-        case RenderingStates.PAUSED:
-          this.highestPriorityPage = view.renderingId;
-          view.resume();
-          break;
-        case RenderingStates.RUNNING:
-          this.highestPriorityPage = view.renderingId;
-          break;
-        case RenderingStates.INITIAL:
-          this.highestPriorityPage = view.renderingId;
-          var continueRendering = function continueRendering() {
-            _this.renderHighestPriority();
-          };
-          view.draw().then(continueRendering, continueRendering);
-          break;
-      }
-      return true;
-    }
-  }]);
-
-  return PDFRenderingQueue;
-}();
-
-exports.RenderingStates = RenderingStates;
-exports.PDFRenderingQueue = PDFRenderingQueue;
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __w_pdfjs_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.DownloadManager = undefined;
-
-var _pdfjs = __w_pdfjs_require__(0);
-
-;
-function download(blobUrl, filename) {
-  var a = document.createElement('a');
-  if (a.click) {
-    a.href = blobUrl;
-    a.target = '_parent';
-    if ('download' in a) {
-      a.download = filename;
-    }
-    (document.body || document.documentElement).appendChild(a);
-    a.click();
-    a.parentNode.removeChild(a);
-  } else {
-    if (window.top === window && blobUrl.split('#')[0] === window.location.href.split('#')[0]) {
-      var padCharacter = blobUrl.indexOf('?') === -1 ? '?' : '&';
-      blobUrl = blobUrl.replace(/#|$/, padCharacter + '$&');
-    }
-    window.open(blobUrl, '_parent');
-  }
-}
-function DownloadManager() {}
-DownloadManager.prototype = {
-  downloadUrl: function DownloadManager_downloadUrl(url, filename) {
-    if (!(0, _pdfjs.createValidAbsoluteUrl)(url, 'http://example.com')) {
-      return;
-    }
-    download(url + '#pdfjs.action=download', filename);
-  },
-  downloadData: function DownloadManager_downloadData(data, filename, contentType) {
-    if (navigator.msSaveBlob) {
-      return navigator.msSaveBlob(new Blob([data], { type: contentType }), filename);
-    }
-    var blobUrl = (0, _pdfjs.createObjectURL)(data, contentType, _pdfjs.PDFJS.disableCreateObjectURL);
-    download(blobUrl, filename);
-  },
-  download: function DownloadManager_download(blob, url, filename) {
-    if (navigator.msSaveBlob) {
-      if (!navigator.msSaveBlob(blob, filename)) {
-        this.downloadUrl(url, filename);
-      }
-      return;
-    }
-    if (_pdfjs.PDFJS.disableCreateObjectURL) {
-      this.downloadUrl(url, filename);
-      return;
-    }
-    var blobUrl = URL.createObjectURL(blob);
-    download(blobUrl, filename);
-  }
-};
-exports.DownloadManager = DownloadManager;
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __w_pdfjs_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.PDFFindController = exports.FindStates = undefined;
-
-var _pdfjs = __w_pdfjs_require__(0);
-
-var _ui_utils = __w_pdfjs_require__(1);
-
-var FindStates = {
-  FIND_FOUND: 0,
-  FIND_NOTFOUND: 1,
-  FIND_WRAPPED: 2,
-  FIND_PENDING: 3
-};
-var FIND_SCROLL_OFFSET_TOP = -50;
-var FIND_SCROLL_OFFSET_LEFT = -400;
-var CHARACTERS_TO_NORMALIZE = {
-  '\u2018': '\'',
-  '\u2019': '\'',
-  '\u201A': '\'',
-  '\u201B': '\'',
-  '\u201C': '"',
-  '\u201D': '"',
-  '\u201E': '"',
-  '\u201F': '"',
-  '\xBC': '1/4',
-  '\xBD': '1/2',
-  '\xBE': '3/4'
-};
-var PDFFindController = function PDFFindControllerClosure() {
-  function PDFFindController(options) {
-    this.pdfViewer = options.pdfViewer || null;
-    this.onUpdateResultsCount = null;
-    this.onUpdateState = null;
-    this.reset();
-    var replace = Object.keys(CHARACTERS_TO_NORMALIZE).join('');
-    this.normalizationRegex = new RegExp('[' + replace + ']', 'g');
-  }
-  PDFFindController.prototype = {
-    reset: function PDFFindController_reset() {
-      var _this = this;
-
-      this.startedTextExtraction = false;
-      this.extractTextPromises = [];
-      this.pendingFindMatches = Object.create(null);
-      this.active = false;
-      this.pageContents = [];
-      this.pageMatches = [];
-      this.pageMatchesLength = null;
-      this.matchCount = 0;
-      this.selected = {
-        pageIdx: -1,
-        matchIdx: -1
-      };
-      this.offset = {
-        pageIdx: null,
-        matchIdx: null
-      };
-      this.pagesToSearch = null;
-      this.resumePageIdx = null;
-      this.state = null;
-      this.dirtyMatch = false;
-      this.findTimeout = null;
-      this._firstPagePromise = new Promise(function (resolve) {
-        _this.resolveFirstPage = resolve;
-      });
-    },
-    normalize: function PDFFindController_normalize(text) {
-      return text.replace(this.normalizationRegex, function (ch) {
-        return CHARACTERS_TO_NORMALIZE[ch];
-      });
-    },
-    _prepareMatches: function PDFFindController_prepareMatches(matchesWithLength, matches, matchesLength) {
-      function isSubTerm(matchesWithLength, currentIndex) {
-        var currentElem, prevElem, nextElem;
-        currentElem = matchesWithLength[currentIndex];
-        nextElem = matchesWithLength[currentIndex + 1];
-        if (currentIndex < matchesWithLength.length - 1 && currentElem.match === nextElem.match) {
-          currentElem.skipped = true;
-          return true;
-        }
-        for (var i = currentIndex - 1; i >= 0; i--) {
-          prevElem = matchesWithLength[i];
-          if (prevElem.skipped) {
-            continue;
-          }
-          if (prevElem.match + prevElem.matchLength < currentElem.match) {
-            break;
-          }
-          if (prevElem.match + prevElem.matchLength >= currentElem.match + currentElem.matchLength) {
-            currentElem.skipped = true;
-            return true;
-          }
-        }
-        return false;
-      }
-      var i, len;
-      matchesWithLength.sort(function (a, b) {
-        return a.match === b.match ? a.matchLength - b.matchLength : a.match - b.match;
-      });
-      for (i = 0, len = matchesWithLength.length; i < len; i++) {
-        if (isSubTerm(matchesWithLength, i)) {
-          continue;
-        }
-        matches.push(matchesWithLength[i].match);
-        matchesLength.push(matchesWithLength[i].matchLength);
-      }
-    },
-    calcFindPhraseMatch: function PDFFindController_calcFindPhraseMatch(query, pageIndex, pageContent) {
-      var matches = [];
-      var queryLen = query.length;
-      var matchIdx = -queryLen;
-      while (true) {
-        matchIdx = pageContent.indexOf(query, matchIdx + queryLen);
-        if (matchIdx === -1) {
-          break;
-        }
-        matches.push(matchIdx);
-      }
-      this.pageMatches[pageIndex] = matches;
-    },
-    calcFindWordMatch: function PDFFindController_calcFindWordMatch(query, pageIndex, pageContent) {
-      var matchesWithLength = [];
-      var queryArray = query.match(/\S+/g);
-      var subquery, subqueryLen, matchIdx;
-      for (var i = 0, len = queryArray.length; i < len; i++) {
-        subquery = queryArray[i];
-        subqueryLen = subquery.length;
-        matchIdx = -subqueryLen;
-        while (true) {
-          matchIdx = pageContent.indexOf(subquery, matchIdx + subqueryLen);
-          if (matchIdx === -1) {
-            break;
-          }
-          matchesWithLength.push({
-            match: matchIdx,
-            matchLength: subqueryLen,
-            skipped: false
-          });
-        }
-      }
-      if (!this.pageMatchesLength) {
-        this.pageMatchesLength = [];
-      }
-      this.pageMatchesLength[pageIndex] = [];
-      this.pageMatches[pageIndex] = [];
-      this._prepareMatches(matchesWithLength, this.pageMatches[pageIndex], this.pageMatchesLength[pageIndex]);
-    },
-    calcFindMatch: function PDFFindController_calcFindMatch(pageIndex) {
-      var pageContent = this.normalize(this.pageContents[pageIndex]);
-      var query = this.normalize(this.state.query);
-      var caseSensitive = this.state.caseSensitive;
-      var phraseSearch = this.state.phraseSearch;
-      var queryLen = query.length;
-      if (queryLen === 0) {
-        return;
-      }
-      if (!caseSensitive) {
-        pageContent = pageContent.toLowerCase();
-        query = query.toLowerCase();
-      }
-      if (phraseSearch) {
-        this.calcFindPhraseMatch(query, pageIndex, pageContent);
-      } else {
-        this.calcFindWordMatch(query, pageIndex, pageContent);
-      }
-      this.updatePage(pageIndex);
-      if (this.resumePageIdx === pageIndex) {
-        this.resumePageIdx = null;
-        this.nextPageMatch();
-      }
-      if (this.pageMatches[pageIndex].length > 0) {
-        this.matchCount += this.pageMatches[pageIndex].length;
-        this.updateUIResultsCount();
-      }
-    },
-    extractText: function extractText() {
-      var _this2 = this;
-
-      if (this.startedTextExtraction) {
-        return;
-      }
-      this.startedTextExtraction = true;
-      this.pageContents.length = 0;
-      var promise = Promise.resolve();
-
-      var _loop = function _loop(i, ii) {
-        var extractTextCapability = (0, _pdfjs.createPromiseCapability)();
-        _this2.extractTextPromises[i] = extractTextCapability.promise;
-        promise = promise.then(function () {
-          return _this2.pdfViewer.getPageTextContent(i).then(function (textContent) {
-            var textItems = textContent.items;
-            var strBuf = [];
-            for (var j = 0, jj = textItems.length; j < jj; j++) {
-              strBuf.push(textItems[j].str);
-            }
-            _this2.pageContents[i] = strBuf.join('');
-            extractTextCapability.resolve(i);
-          });
-        });
-      };
-
-      for (var i = 0, ii = this.pdfViewer.pagesCount; i < ii; i++) {
-        _loop(i, ii);
-      }
-    },
-
-    executeCommand: function PDFFindController_executeCommand(cmd, state) {
-      var _this3 = this;
-
-      if (this.state === null || cmd !== 'findagain') {
-        this.dirtyMatch = true;
-      }
-      this.state = state;
-      this.updateUIState(FindStates.FIND_PENDING);
-      this._firstPagePromise.then(function () {
-        _this3.extractText();
-        clearTimeout(_this3.findTimeout);
-        if (cmd === 'find') {
-          _this3.findTimeout = setTimeout(_this3.nextMatch.bind(_this3), 250);
-        } else {
-          _this3.nextMatch();
-        }
-      });
-    },
-    updatePage: function PDFFindController_updatePage(index) {
-      if (this.selected.pageIdx === index) {
-        this.pdfViewer.currentPageNumber = index + 1;
-      }
-      var page = this.pdfViewer.getPageView(index);
-      if (page.textLayer) {
-        page.textLayer.updateMatches();
-      }
-    },
-    nextMatch: function PDFFindController_nextMatch() {
-      var _this4 = this;
-
-      var previous = this.state.findPrevious;
-      var currentPageIndex = this.pdfViewer.currentPageNumber - 1;
-      var numPages = this.pdfViewer.pagesCount;
-      this.active = true;
-      if (this.dirtyMatch) {
-        this.dirtyMatch = false;
-        this.selected.pageIdx = this.selected.matchIdx = -1;
-        this.offset.pageIdx = currentPageIndex;
-        this.offset.matchIdx = null;
-        this.hadMatch = false;
-        this.resumePageIdx = null;
-        this.pageMatches = [];
-        this.matchCount = 0;
-        this.pageMatchesLength = null;
-        for (var i = 0; i < numPages; i++) {
-          this.updatePage(i);
-          if (!(i in this.pendingFindMatches)) {
-            this.pendingFindMatches[i] = true;
-            this.extractTextPromises[i].then(function (pageIdx) {
-              delete _this4.pendingFindMatches[pageIdx];
-              _this4.calcFindMatch(pageIdx);
-            });
-          }
-        }
-      }
-      if (this.state.query === '') {
-        this.updateUIState(FindStates.FIND_FOUND);
-        return;
-      }
-      if (this.resumePageIdx) {
-        return;
-      }
-      var offset = this.offset;
-      this.pagesToSearch = numPages;
-      if (offset.matchIdx !== null) {
-        var numPageMatches = this.pageMatches[offset.pageIdx].length;
-        if (!previous && offset.matchIdx + 1 < numPageMatches || previous && offset.matchIdx > 0) {
-          this.hadMatch = true;
-          offset.matchIdx = previous ? offset.matchIdx - 1 : offset.matchIdx + 1;
-          this.updateMatch(true);
-          return;
-        }
-        this.advanceOffsetPage(previous);
-      }
-      this.nextPageMatch();
-    },
-    matchesReady: function PDFFindController_matchesReady(matches) {
-      var offset = this.offset;
-      var numMatches = matches.length;
-      var previous = this.state.findPrevious;
-      if (numMatches) {
-        this.hadMatch = true;
-        offset.matchIdx = previous ? numMatches - 1 : 0;
-        this.updateMatch(true);
-        return true;
-      }
-      this.advanceOffsetPage(previous);
-      if (offset.wrapped) {
-        offset.matchIdx = null;
-        if (this.pagesToSearch < 0) {
-          this.updateMatch(false);
-          return true;
-        }
-      }
-      return false;
-    },
-    updateMatchPosition: function PDFFindController_updateMatchPosition(pageIndex, index, elements, beginIdx) {
-      if (this.selected.matchIdx === index && this.selected.pageIdx === pageIndex) {
-        var spot = {
-          top: FIND_SCROLL_OFFSET_TOP,
-          left: FIND_SCROLL_OFFSET_LEFT
-        };
-        (0, _ui_utils.scrollIntoView)(elements[beginIdx], spot, true);
-      }
-    },
-    nextPageMatch: function PDFFindController_nextPageMatch() {
-      if (this.resumePageIdx !== null) {
-        console.error('There can only be one pending page.');
-      }
-      do {
-        var pageIdx = this.offset.pageIdx;
-        var matches = this.pageMatches[pageIdx];
-        if (!matches) {
-          this.resumePageIdx = pageIdx;
-          break;
-        }
-      } while (!this.matchesReady(matches));
-    },
-    advanceOffsetPage: function PDFFindController_advanceOffsetPage(previous) {
-      var offset = this.offset;
-      var numPages = this.extractTextPromises.length;
-      offset.pageIdx = previous ? offset.pageIdx - 1 : offset.pageIdx + 1;
-      offset.matchIdx = null;
-      this.pagesToSearch--;
-      if (offset.pageIdx >= numPages || offset.pageIdx < 0) {
-        offset.pageIdx = previous ? numPages - 1 : 0;
-        offset.wrapped = true;
-      }
-    },
-    updateMatch: function PDFFindController_updateMatch(found) {
-      var state = FindStates.FIND_NOTFOUND;
-      var wrapped = this.offset.wrapped;
-      this.offset.wrapped = false;
-      if (found) {
-        var previousPage = this.selected.pageIdx;
-        this.selected.pageIdx = this.offset.pageIdx;
-        this.selected.matchIdx = this.offset.matchIdx;
-        state = wrapped ? FindStates.FIND_WRAPPED : FindStates.FIND_FOUND;
-        if (previousPage !== -1 && previousPage !== this.selected.pageIdx) {
-          this.updatePage(previousPage);
-        }
-      }
-      this.updateUIState(state, this.state.findPrevious);
-      if (this.selected.pageIdx !== -1) {
-        this.updatePage(this.selected.pageIdx);
-      }
-    },
-    updateUIResultsCount: function PDFFindController_updateUIResultsCount() {
-      if (this.onUpdateResultsCount) {
-        this.onUpdateResultsCount(this.matchCount);
-      }
-    },
-    updateUIState: function PDFFindController_updateUIState(state, previous) {
-      if (this.onUpdateState) {
-        this.onUpdateState(state, previous, this.matchCount);
-      }
-    }
-  };
-  return PDFFindController;
-}();
-exports.FindStates = FindStates;
-exports.PDFFindController = PDFFindController;
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __w_pdfjs_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.PDFHistory = undefined;
-
-var _dom_events = __w_pdfjs_require__(2);
-
-function PDFHistory(options) {
-  this.linkService = options.linkService;
-  this.eventBus = options.eventBus || (0, _dom_events.getGlobalEventBus)();
-  this.initialized = false;
-  this.initialDestination = null;
-  this.initialBookmark = null;
-}
-PDFHistory.prototype = {
-  initialize: function pdfHistoryInitialize(fingerprint) {
-    this.initialized = true;
-    this.reInitialized = false;
-    this.allowHashChange = true;
-    this.historyUnlocked = true;
-    this.isViewerInPresentationMode = false;
-    this.previousHash = window.location.hash.substring(1);
-    this.currentBookmark = '';
-    this.currentPage = 0;
-    this.updatePreviousBookmark = false;
-    this.previousBookmark = '';
-    this.previousPage = 0;
-    this.nextHashParam = '';
-    this.fingerprint = fingerprint;
-    this.currentUid = this.uid = 0;
-    this.current = {};
-    var state = window.history.state;
-    if (this._isStateObjectDefined(state)) {
-      if (state.target.dest) {
-        this.initialDestination = state.target.dest;
-      } else {
-        this.initialBookmark = state.target.hash;
-      }
-      this.currentUid = state.uid;
-      this.uid = state.uid + 1;
-      this.current = state.target;
-    } else {
-      if (state && state.fingerprint && this.fingerprint !== state.fingerprint) {
-        this.reInitialized = true;
-      }
-      this._pushOrReplaceState({ fingerprint: this.fingerprint }, true);
-    }
-    var self = this;
-    window.addEventListener('popstate', function pdfHistoryPopstate(evt) {
-      if (!self.historyUnlocked) {
-        return;
-      }
-      if (evt.state) {
-        self._goTo(evt.state);
-        return;
-      }
-      if (self.uid === 0) {
-        var previousParams = self.previousHash && self.currentBookmark && self.previousHash !== self.currentBookmark ? {
-          hash: self.currentBookmark,
-          page: self.currentPage
-        } : { page: 1 };
-        replacePreviousHistoryState(previousParams, function () {
-          updateHistoryWithCurrentHash();
-        });
-      } else {
-        updateHistoryWithCurrentHash();
-      }
-    });
-    function updateHistoryWithCurrentHash() {
-      self.previousHash = window.location.hash.slice(1);
-      self._pushToHistory({ hash: self.previousHash }, false, true);
-      self._updatePreviousBookmark();
-    }
-    function replacePreviousHistoryState(params, callback) {
-      self.historyUnlocked = false;
-      self.allowHashChange = false;
-      window.addEventListener('popstate', rewriteHistoryAfterBack);
-      history.back();
-      function rewriteHistoryAfterBack() {
-        window.removeEventListener('popstate', rewriteHistoryAfterBack);
-        window.addEventListener('popstate', rewriteHistoryAfterForward);
-        self._pushToHistory(params, false, true);
-        history.forward();
-      }
-      function rewriteHistoryAfterForward() {
-        window.removeEventListener('popstate', rewriteHistoryAfterForward);
-        self.allowHashChange = true;
-        self.historyUnlocked = true;
-        callback();
-      }
-    }
-    function pdfHistoryBeforeUnload() {
-      var previousParams = self._getPreviousParams(null, true);
-      if (previousParams) {
-        var replacePrevious = !self.current.dest && self.current.hash !== self.previousHash;
-        self._pushToHistory(previousParams, false, replacePrevious);
-        self._updatePreviousBookmark();
-      }
-      window.removeEventListener('beforeunload', pdfHistoryBeforeUnload);
-    }
-    window.addEventListener('beforeunload', pdfHistoryBeforeUnload);
-    window.addEventListener('pageshow', function pdfHistoryPageShow(evt) {
-      window.addEventListener('beforeunload', pdfHistoryBeforeUnload);
-    });
-    self.eventBus.on('presentationmodechanged', function (e) {
-      self.isViewerInPresentationMode = e.active;
-    });
-  },
-  clearHistoryState: function pdfHistory_clearHistoryState() {
-    this._pushOrReplaceState(null, true);
-  },
-  _isStateObjectDefined: function pdfHistory_isStateObjectDefined(state) {
-    return state && state.uid >= 0 && state.fingerprint && this.fingerprint === state.fingerprint && state.target && state.target.hash ? true : false;
-  },
-  _pushOrReplaceState: function pdfHistory_pushOrReplaceState(stateObj, replace) {
-    if (replace) {
-      window.history.replaceState(stateObj, '', document.URL);
-    } else {
-      window.history.pushState(stateObj, '', document.URL);
-    }
-  },
-  get isHashChangeUnlocked() {
-    if (!this.initialized) {
-      return true;
-    }
-    return this.allowHashChange;
-  },
-  _updatePreviousBookmark: function pdfHistory_updatePreviousBookmark() {
-    if (this.updatePreviousBookmark && this.currentBookmark && this.currentPage) {
-      this.previousBookmark = this.currentBookmark;
-      this.previousPage = this.currentPage;
-      this.updatePreviousBookmark = false;
-    }
-  },
-  updateCurrentBookmark: function pdfHistoryUpdateCurrentBookmark(bookmark, pageNum) {
-    if (this.initialized) {
-      this.currentBookmark = bookmark.substring(1);
-      this.currentPage = pageNum | 0;
-      this._updatePreviousBookmark();
-    }
-  },
-  updateNextHashParam: function pdfHistoryUpdateNextHashParam(param) {
-    if (this.initialized) {
-      this.nextHashParam = param;
-    }
-  },
-  push: function pdfHistoryPush(params, isInitialBookmark) {
-    if (!(this.initialized && this.historyUnlocked)) {
-      return;
-    }
-    if (params.dest && !params.hash) {
-      params.hash = this.current.hash && this.current.dest && this.current.dest === params.dest ? this.current.hash : this.linkService.getDestinationHash(params.dest).split('#')[1];
-    }
-    if (params.page) {
-      params.page |= 0;
-    }
-    if (isInitialBookmark) {
-      var target = window.history.state.target;
-      if (!target) {
-        this._pushToHistory(params, false);
-        this.previousHash = window.location.hash.substring(1);
-      }
-      this.updatePreviousBookmark = this.nextHashParam ? false : true;
-      if (target) {
-        this._updatePreviousBookmark();
-      }
-      return;
-    }
-    if (this.nextHashParam) {
-      if (this.nextHashParam === params.hash) {
-        this.nextHashParam = null;
-        this.updatePreviousBookmark = true;
-        return;
-      }
-      this.nextHashParam = null;
-    }
-    if (params.hash) {
-      if (this.current.hash) {
-        if (this.current.hash !== params.hash) {
-          this._pushToHistory(params, true);
-        } else {
-          if (!this.current.page && params.page) {
-            this._pushToHistory(params, false, true);
-          }
-          this.updatePreviousBookmark = true;
-        }
-      } else {
-        this._pushToHistory(params, true);
-      }
-    } else if (this.current.page && params.page && this.current.page !== params.page) {
-      this._pushToHistory(params, true);
-    }
-  },
-  _getPreviousParams: function pdfHistory_getPreviousParams(onlyCheckPage, beforeUnload) {
-    if (!(this.currentBookmark && this.currentPage)) {
-      return null;
-    } else if (this.updatePreviousBookmark) {
-      this.updatePreviousBookmark = false;
-    }
-    if (this.uid > 0 && !(this.previousBookmark && this.previousPage)) {
-      return null;
-    }
-    if (!this.current.dest && !onlyCheckPage || beforeUnload) {
-      if (this.previousBookmark === this.currentBookmark) {
-        return null;
-      }
-    } else if (this.current.page || onlyCheckPage) {
-      if (this.previousPage === this.currentPage) {
-        return null;
-      }
-    } else {
-      return null;
-    }
-    var params = {
-      hash: this.currentBookmark,
-      page: this.currentPage
-    };
-    if (this.isViewerInPresentationMode) {
-      params.hash = null;
-    }
-    return params;
-  },
-  _stateObj: function pdfHistory_stateObj(params) {
-    return {
-      fingerprint: this.fingerprint,
-      uid: this.uid,
-      target: params
-    };
-  },
-  _pushToHistory: function pdfHistory_pushToHistory(params, addPrevious, overwrite) {
-    if (!this.initialized) {
-      return;
-    }
-    if (!params.hash && params.page) {
-      params.hash = 'page=' + params.page;
-    }
-    if (addPrevious && !overwrite) {
-      var previousParams = this._getPreviousParams();
-      if (previousParams) {
-        var replacePrevious = !this.current.dest && this.current.hash !== this.previousHash;
-        this._pushToHistory(previousParams, false, replacePrevious);
-      }
-    }
-    this._pushOrReplaceState(this._stateObj(params), overwrite || this.uid === 0);
-    this.currentUid = this.uid++;
-    this.current = params;
-    this.updatePreviousBookmark = true;
-  },
-  _goTo: function pdfHistory_goTo(state) {
-    if (!(this.initialized && this.historyUnlocked && this._isStateObjectDefined(state))) {
-      return;
-    }
-    if (!this.reInitialized && state.uid < this.currentUid) {
-      var previousParams = this._getPreviousParams(true);
-      if (previousParams) {
-        this._pushToHistory(this.current, false);
-        this._pushToHistory(previousParams, false);
-        this.currentUid = state.uid;
-        window.history.back();
-        return;
-      }
-    }
-    this.historyUnlocked = false;
-    if (state.target.dest) {
-      this.linkService.navigateTo(state.target.dest);
-    } else {
-      this.linkService.setHash(state.target.hash);
-    }
-    this.currentUid = state.uid;
-    if (state.uid > this.uid) {
-      this.uid = state.uid;
-    }
-    this.current = state.target;
-    this.updatePreviousBookmark = true;
-    var currentHash = window.location.hash.substring(1);
-    if (this.previousHash !== currentHash) {
-      this.allowHashChange = false;
-    }
-    this.previousHash = currentHash;
-    this.historyUnlocked = true;
-  },
-  back: function pdfHistoryBack() {
-    this.go(-1);
-  },
-  forward: function pdfHistoryForward() {
-    this.go(1);
-  },
-  go: function pdfHistoryGo(direction) {
-    if (this.initialized && this.historyUnlocked) {
-      var state = window.history.state;
-      if (direction === -1 && state && state.uid > 0) {
-        window.history.back();
-      } else if (direction === 1 && state && state.uid < this.uid - 1) {
-        window.history.forward();
-      }
-    }
-  }
-};
-exports.PDFHistory = PDFHistory;
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __w_pdfjs_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.PDFViewer = exports.PresentationModeState = undefined;
-
-var _pdfjs = __w_pdfjs_require__(0);
-
-var _ui_utils = __w_pdfjs_require__(1);
-
-var _pdf_rendering_queue = __w_pdfjs_require__(7);
-
-var _annotation_layer_builder = __w_pdfjs_require__(4);
-
-var _dom_events = __w_pdfjs_require__(2);
-
-var _pdf_page_view = __w_pdfjs_require__(5);
-
-var _pdf_link_service = __w_pdfjs_require__(3);
-
-var _text_layer_builder = __w_pdfjs_require__(6);
-
-var PresentationModeState = {
-  UNKNOWN: 0,
-  NORMAL: 1,
-  CHANGING: 2,
-  FULLSCREEN: 3
-};
-var DEFAULT_CACHE_SIZE = 10;
-var PDFViewer = function pdfViewer() {
-  function PDFPageViewBuffer(size) {
-    var data = [];
-    this.push = function cachePush(view) {
-      var i = data.indexOf(view);
-      if (i >= 0) {
-        data.splice(i, 1);
-      }
-      data.push(view);
-      if (data.length > size) {
-        data.shift().destroy();
-      }
-    };
-    this.resize = function (newSize) {
-      size = newSize;
-      while (data.length > size) {
-        data.shift().destroy();
-      }
-    };
-  }
-  function isSameScale(oldScale, newScale) {
-    if (newScale === oldScale) {
-      return true;
-    }
-    if (Math.abs(newScale - oldScale) < 1e-15) {
-      return true;
-    }
-    return false;
-  }
-  function isPortraitOrientation(size) {
-    return size.width <= size.height;
-  }
-  function PDFViewer(options) {
-    this.container = options.container;
-    this.viewer = options.viewer || options.container.firstElementChild;
-    this.eventBus = options.eventBus || (0, _dom_events.getGlobalEventBus)();
-    this.linkService = options.linkService || new _pdf_link_service.SimpleLinkService();
-    this.downloadManager = options.downloadManager || null;
-    this.removePageBorders = options.removePageBorders || false;
-    this.enhanceTextSelection = options.enhanceTextSelection || false;
-    this.renderInteractiveForms = options.renderInteractiveForms || false;
-    this.enablePrintAutoRotate = options.enablePrintAutoRotate || false;
-    this.renderer = options.renderer || _ui_utils.RendererType.CANVAS;
-    this.defaultRenderingQueue = !options.renderingQueue;
-    if (this.defaultRenderingQueue) {
-      this.renderingQueue = new _pdf_rendering_queue.PDFRenderingQueue();
-      this.renderingQueue.setViewer(this);
-    } else {
-      this.renderingQueue = options.renderingQueue;
-    }
-    this.scroll = (0, _ui_utils.watchScroll)(this.container, this._scrollUpdate.bind(this));
-    this.presentationModeState = PresentationModeState.UNKNOWN;
-    this._resetView();
-    if (this.removePageBorders) {
-      this.viewer.classList.add('removePageBorders');
-    }
-  }
-  PDFViewer.prototype = {
-    get pagesCount() {
-      return this._pages.length;
-    },
-    getPageView: function getPageView(index) {
-      return this._pages[index];
-    },
-
-    get pageViewsReady() {
-      return this._pageViewsReady;
-    },
-    get currentPageNumber() {
-      return this._currentPageNumber;
-    },
-    set currentPageNumber(val) {
-      if ((val | 0) !== val) {
-        throw new Error('Invalid page number.');
-      }
-      if (!this.pdfDocument) {
-        this._currentPageNumber = val;
-        return;
-      }
-      this._setCurrentPageNumber(val, true);
-    },
-    _setCurrentPageNumber: function PDFViewer_setCurrentPageNumber(val, resetCurrentPageView) {
-      if (this._currentPageNumber === val) {
-        if (resetCurrentPageView) {
-          this._resetCurrentPageView();
-        }
-        return;
-      }
-      if (!(0 < val && val <= this.pagesCount)) {
-        console.error('PDFViewer_setCurrentPageNumber: "' + val + '" is out of bounds.');
-        return;
-      }
-      var arg = {
-        source: this,
-        pageNumber: val,
-        pageLabel: this._pageLabels && this._pageLabels[val - 1]
-      };
-      this._currentPageNumber = val;
-      this.eventBus.dispatch('pagechanging', arg);
-      this.eventBus.dispatch('pagechange', arg);
-      if (resetCurrentPageView) {
-        this._resetCurrentPageView();
-      }
-    },
-    get currentPageLabel() {
-      return this._pageLabels && this._pageLabels[this._currentPageNumber - 1];
-    },
-    set currentPageLabel(val) {
-      var pageNumber = val | 0;
-      if (this._pageLabels) {
-        var i = this._pageLabels.indexOf(val);
-        if (i >= 0) {
-          pageNumber = i + 1;
-        }
-      }
-      this.currentPageNumber = pageNumber;
-    },
-    get currentScale() {
-      return this._currentScale !== _ui_utils.UNKNOWN_SCALE ? this._currentScale : _ui_utils.DEFAULT_SCALE;
-    },
-    set currentScale(val) {
-      if (isNaN(val)) {
-        throw new Error('Invalid numeric scale');
-      }
-      if (!this.pdfDocument) {
-        this._currentScale = val;
-        this._currentScaleValue = val !== _ui_utils.UNKNOWN_SCALE ? val.toString() : null;
-        return;
-      }
-      this._setScale(val, false);
-    },
-    get currentScaleValue() {
-      return this._currentScaleValue;
-    },
-    set currentScaleValue(val) {
-      if (!this.pdfDocument) {
-        this._currentScale = isNaN(val) ? _ui_utils.UNKNOWN_SCALE : val;
-        this._currentScaleValue = val.toString();
-        return;
-      }
-      this._setScale(val, false);
-    },
-    get pagesRotation() {
-      return this._pagesRotation;
-    },
-    set pagesRotation(rotation) {
-      if (!(typeof rotation === 'number' && rotation % 90 === 0)) {
-        throw new Error('Invalid pages rotation angle.');
-      }
-      this._pagesRotation = rotation;
-      if (!this.pdfDocument) {
-        return;
-      }
-      for (var i = 0, l = this._pages.length; i < l; i++) {
-        var pageView = this._pages[i];
-        pageView.update(pageView.scale, rotation);
-      }
-      this._setScale(this._currentScaleValue, true);
-      if (this.defaultRenderingQueue) {
-        this.update();
-      }
-    },
-    setDocument: function setDocument(pdfDocument) {
-      var _this = this;
-
-      if (this.pdfDocument) {
-        this._cancelRendering();
-        this._resetView();
-      }
-      this.pdfDocument = pdfDocument;
-      if (!pdfDocument) {
-        return;
-      }
-      var pagesCount = pdfDocument.numPages;
-      var pagesCapability = (0, _pdfjs.createPromiseCapability)();
-      this.pagesPromise = pagesCapability.promise;
-      pagesCapability.promise.then(function () {
-        _this._pageViewsReady = true;
-        _this.eventBus.dispatch('pagesloaded', {
-          source: _this,
-          pagesCount: pagesCount
-        });
-      });
-      var isOnePageRenderedResolved = false;
-      var onePageRenderedCapability = (0, _pdfjs.createPromiseCapability)();
-      this.onePageRendered = onePageRenderedCapability.promise;
-      var bindOnAfterAndBeforeDraw = function bindOnAfterAndBeforeDraw(pageView) {
-        pageView.onBeforeDraw = function () {
-          _this._buffer.push(pageView);
-        };
-        pageView.onAfterDraw = function () {
-          if (!isOnePageRenderedResolved) {
-            isOnePageRenderedResolved = true;
-            onePageRenderedCapability.resolve();
-          }
-        };
-      };
-      var firstPagePromise = pdfDocument.getPage(1);
-      this.firstPagePromise = firstPagePromise;
-      return firstPagePromise.then(function (pdfPage) {
-        var scale = _this.currentScale;
-        var viewport = pdfPage.getViewport(scale * _ui_utils.CSS_UNITS);
-        for (var pageNum = 1; pageNum <= pagesCount; ++pageNum) {
-          var textLayerFactory = null;
-          if (!_pdfjs.PDFJS.disableTextLayer) {
-            textLayerFactory = _this;
-          }
-          var pageView = new _pdf_page_view.PDFPageView({
-            container: _this.viewer,
-            eventBus: _this.eventBus,
-            id: pageNum,
-            scale: scale,
-            defaultViewport: viewport.clone(),
-            renderingQueue: _this.renderingQueue,
-            textLayerFactory: textLayerFactory,
-            annotationLayerFactory: _this,
-            enhanceTextSelection: _this.enhanceTextSelection,
-            renderInteractiveForms: _this.renderInteractiveForms,
-            renderer: _this.renderer
-          });
-          bindOnAfterAndBeforeDraw(pageView);
-          _this._pages.push(pageView);
-        }
-        onePageRenderedCapability.promise.then(function () {
-          if (_pdfjs.PDFJS.disableAutoFetch) {
-            pagesCapability.resolve();
-            return;
-          }
-          var getPagesLeft = pagesCount;
-
-          var _loop = function _loop(_pageNum) {
-            pdfDocument.getPage(_pageNum).then(function (pdfPage) {
-              var pageView = _this._pages[_pageNum - 1];
-              if (!pageView.pdfPage) {
-                pageView.setPdfPage(pdfPage);
-              }
-              _this.linkService.cachePageRef(_pageNum, pdfPage.ref);
-              if (--getPagesLeft === 0) {
-                pagesCapability.resolve();
-              }
-            });
-          };
-
-          for (var _pageNum = 1; _pageNum <= pagesCount; ++_pageNum) {
-            _loop(_pageNum);
-          }
-        });
-        _this.eventBus.dispatch('pagesinit', { source: _this });
-        if (_this.defaultRenderingQueue) {
-          _this.update();
-        }
-        if (_this.findController) {
-          _this.findController.resolveFirstPage();
-        }
-      });
-    },
-
-    setPageLabels: function PDFViewer_setPageLabels(labels) {
-      if (!this.pdfDocument) {
-        return;
-      }
-      if (!labels) {
-        this._pageLabels = null;
-      } else if (!(labels instanceof Array && this.pdfDocument.numPages === labels.length)) {
-        this._pageLabels = null;
-        console.error('PDFViewer_setPageLabels: Invalid page labels.');
-      } else {
-        this._pageLabels = labels;
-      }
-      for (var i = 0, ii = this._pages.length; i < ii; i++) {
-        var pageView = this._pages[i];
-        var label = this._pageLabels && this._pageLabels[i];
-        pageView.setPageLabel(label);
-      }
-    },
-    _resetView: function _resetView() {
-      this._pages = [];
-      this._currentPageNumber = 1;
-      this._currentScale = _ui_utils.UNKNOWN_SCALE;
-      this._currentScaleValue = null;
-      this._pageLabels = null;
-      this._buffer = new PDFPageViewBuffer(DEFAULT_CACHE_SIZE);
-      this._location = null;
-      this._pagesRotation = 0;
-      this._pagesRequests = [];
-      this._pageViewsReady = false;
-      this.viewer.textContent = '';
-    },
-
-    _scrollUpdate: function PDFViewer_scrollUpdate() {
-      if (this.pagesCount === 0) {
-        return;
-      }
-      this.update();
-      for (var i = 0, ii = this._pages.length; i < ii; i++) {
-        this._pages[i].updatePosition();
-      }
-    },
-    _setScaleDispatchEvent: function pdfViewer_setScaleDispatchEvent(newScale, newValue, preset) {
-      var arg = {
-        source: this,
-        scale: newScale,
-        presetValue: preset ? newValue : undefined
-      };
-      this.eventBus.dispatch('scalechanging', arg);
-      this.eventBus.dispatch('scalechange', arg);
-    },
-    _setScaleUpdatePages: function pdfViewer_setScaleUpdatePages(newScale, newValue, noScroll, preset) {
-      this._currentScaleValue = newValue.toString();
-      if (isSameScale(this._currentScale, newScale)) {
-        if (preset) {
-          this._setScaleDispatchEvent(newScale, newValue, true);
-        }
-        return;
-      }
-      for (var i = 0, ii = this._pages.length; i < ii; i++) {
-        this._pages[i].update(newScale);
-      }
-      this._currentScale = newScale;
-      if (!noScroll) {
-        var page = this._currentPageNumber,
-            dest;
-        if (this._location && !_pdfjs.PDFJS.ignoreCurrentPositionOnZoom && !(this.isInPresentationMode || this.isChangingPresentationMode)) {
-          page = this._location.pageNumber;
-          dest = [null, { name: 'XYZ' }, this._location.left, this._location.top, null];
-        }
-        this.scrollPageIntoView({
-          pageNumber: page,
-          destArray: dest,
-          allowNegativeOffset: true
-        });
-      }
-      this._setScaleDispatchEvent(newScale, newValue, preset);
-      if (this.defaultRenderingQueue) {
-        this.update();
-      }
-    },
-    _setScale: function PDFViewer_setScale(value, noScroll) {
-      var scale = parseFloat(value);
-      if (scale > 0) {
-        this._setScaleUpdatePages(scale, value, noScroll, false);
-      } else {
-        var currentPage = this._pages[this._currentPageNumber - 1];
-        if (!currentPage) {
-          return;
-        }
-        var hPadding = this.isInPresentationMode || this.removePageBorders ? 0 : _ui_utils.SCROLLBAR_PADDING;
-        var vPadding = this.isInPresentationMode || this.removePageBorders ? 0 : _ui_utils.VERTICAL_PADDING;
-        var pageWidthScale = (this.container.clientWidth - hPadding) / currentPage.width * currentPage.scale;
-        var pageHeightScale = (this.container.clientHeight - vPadding) / currentPage.height * currentPage.scale;
-        switch (value) {
-          case 'page-actual':
-            scale = 1;
-            break;
-          case 'page-width':
-            scale = pageWidthScale;
-            break;
-          case 'page-height':
-            scale = pageHeightScale;
-            break;
-          case 'page-fit':
-            scale = Math.min(pageWidthScale, pageHeightScale);
-            break;
-          case 'auto':
-            var isLandscape = currentPage.width > currentPage.height;
-            var horizontalScale = isLandscape ? Math.min(pageHeightScale, pageWidthScale) : pageWidthScale;
-            scale = Math.min(_ui_utils.MAX_AUTO_SCALE, horizontalScale);
-            break;
-          default:
-            console.error('PDFViewer_setScale: "' + value + '" is an unknown zoom value.');
-            return;
-        }
-        this._setScaleUpdatePages(scale, value, noScroll, true);
-      }
-    },
-    _resetCurrentPageView: function _resetCurrentPageView() {
-      if (this.isInPresentationMode) {
-        this._setScale(this._currentScaleValue, true);
-      }
-      var pageView = this._pages[this._currentPageNumber - 1];
-      (0, _ui_utils.scrollIntoView)(pageView.div);
-    },
-
-    scrollPageIntoView: function PDFViewer_scrollPageIntoView(params) {
-      if (!this.pdfDocument) {
-        return;
-      }
-      if (arguments.length > 1 || typeof params === 'number') {
-        console.warn('Call of scrollPageIntoView() with obsolete signature.');
-        var paramObj = {};
-        if (typeof params === 'number') {
-          paramObj.pageNumber = params;
-        }
-        if (arguments[1] instanceof Array) {
-          paramObj.destArray = arguments[1];
-        }
-        params = paramObj;
-      }
-      var pageNumber = params.pageNumber || 0;
-      var dest = params.destArray || null;
-      var allowNegativeOffset = params.allowNegativeOffset || false;
-      if (this.isInPresentationMode || !dest) {
-        this._setCurrentPageNumber(pageNumber, true);
-        return;
-      }
-      var pageView = this._pages[pageNumber - 1];
-      if (!pageView) {
-        console.error('PDFViewer_scrollPageIntoView: ' + 'Invalid "pageNumber" parameter.');
-        return;
-      }
-      var x = 0,
-          y = 0;
-      var width = 0,
-          height = 0,
-          widthScale,
-          heightScale;
-      var changeOrientation = pageView.rotation % 180 === 0 ? false : true;
-      var pageWidth = (changeOrientation ? pageView.height : pageView.width) / pageView.scale / _ui_utils.CSS_UNITS;
-      var pageHeight = (changeOrientation ? pageView.width : pageView.height) / pageView.scale / _ui_utils.CSS_UNITS;
-      var scale = 0;
-      switch (dest[1].name) {
-        case 'XYZ':
-          x = dest[2];
-          y = dest[3];
-          scale = dest[4];
-          x = x !== null ? x : 0;
-          y = y !== null ? y : pageHeight;
-          break;
-        case 'Fit':
-        case 'FitB':
-          scale = 'page-fit';
-          break;
-        case 'FitH':
-        case 'FitBH':
-          y = dest[2];
-          scale = 'page-width';
-          if (y === null && this._location) {
-            x = this._location.left;
-            y = this._location.top;
-          }
-          break;
-        case 'FitV':
-        case 'FitBV':
-          x = dest[2];
-          width = pageWidth;
-          height = pageHeight;
-          scale = 'page-height';
-          break;
-        case 'FitR':
-          x = dest[2];
-          y = dest[3];
-          width = dest[4] - x;
-          height = dest[5] - y;
-          var hPadding = this.removePageBorders ? 0 : _ui_utils.SCROLLBAR_PADDING;
-          var vPadding = this.removePageBorders ? 0 : _ui_utils.VERTICAL_PADDING;
-          widthScale = (this.container.clientWidth - hPadding) / width / _ui_utils.CSS_UNITS;
-          heightScale = (this.container.clientHeight - vPadding) / height / _ui_utils.CSS_UNITS;
-          scale = Math.min(Math.abs(widthScale), Math.abs(heightScale));
-          break;
-        default:
-          console.error('PDFViewer_scrollPageIntoView: \'' + dest[1].name + '\' is not a valid destination type.');
-          return;
-      }
-      if (scale && scale !== this._currentScale) {
-        this.currentScaleValue = scale;
-      } else if (this._currentScale === _ui_utils.UNKNOWN_SCALE) {
-        this.currentScaleValue = _ui_utils.DEFAULT_SCALE_VALUE;
-      }
-      if (scale === 'page-fit' && !dest[4]) {
-        (0, _ui_utils.scrollIntoView)(pageView.div);
-        return;
-      }
-      var boundingRect = [pageView.viewport.convertToViewportPoint(x, y), pageView.viewport.convertToViewportPoint(x + width, y + height)];
-      var left = Math.min(boundingRect[0][0], boundingRect[1][0]);
-      var top = Math.min(boundingRect[0][1], boundingRect[1][1]);
-      if (!allowNegativeOffset) {
-        left = Math.max(left, 0);
-        top = Math.max(top, 0);
-      }
-      (0, _ui_utils.scrollIntoView)(pageView.div, {
-        left: left,
-        top: top
-      });
-    },
-    _updateLocation: function _updateLocation(firstPage) {
-      var currentScale = this._currentScale;
-      var currentScaleValue = this._currentScaleValue;
-      var normalizedScaleValue = parseFloat(currentScaleValue) === currentScale ? Math.round(currentScale * 10000) / 100 : currentScaleValue;
-      var pageNumber = firstPage.id;
-      var pdfOpenParams = '#page=' + pageNumber;
-      pdfOpenParams += '&zoom=' + normalizedScaleValue;
-      var currentPageView = this._pages[pageNumber - 1];
-      var container = this.container;
-      var topLeft = currentPageView.getPagePoint(container.scrollLeft - firstPage.x, container.scrollTop - firstPage.y);
-      var intLeft = Math.round(topLeft[0]);
-      var intTop = Math.round(topLeft[1]);
-      pdfOpenParams += ',' + intLeft + ',' + intTop;
-      this._location = {
-        pageNumber: pageNumber,
-        scale: normalizedScaleValue,
-        top: intTop,
-        left: intLeft,
-        pdfOpenParams: pdfOpenParams
-      };
-    },
-
-    update: function PDFViewer_update() {
-      var visible = this._getVisiblePages();
-      var visiblePages = visible.views;
-      if (visiblePages.length === 0) {
-        return;
-      }
-      var suggestedCacheSize = Math.max(DEFAULT_CACHE_SIZE, 2 * visiblePages.length + 1);
-      this._buffer.resize(suggestedCacheSize);
-      this.renderingQueue.renderHighestPriority(visible);
-      var currentId = this._currentPageNumber;
-      var firstPage = visible.first;
-      for (var i = 0, ii = visiblePages.length, stillFullyVisible = false; i < ii; ++i) {
-        var page = visiblePages[i];
-        if (page.percent < 100) {
-          break;
-        }
-        if (page.id === currentId) {
-          stillFullyVisible = true;
-          break;
-        }
-      }
-      if (!stillFullyVisible) {
-        currentId = visiblePages[0].id;
-      }
-      if (!this.isInPresentationMode) {
-        this._setCurrentPageNumber(currentId);
-      }
-      this._updateLocation(firstPage);
-      this.eventBus.dispatch('updateviewarea', {
-        source: this,
-        location: this._location
-      });
-    },
-    containsElement: function containsElement(element) {
-      return this.container.contains(element);
-    },
-    focus: function focus() {
-      this.container.focus();
-    },
-
-    get isInPresentationMode() {
-      return this.presentationModeState === PresentationModeState.FULLSCREEN;
-    },
-    get isChangingPresentationMode() {
-      return this.presentationModeState === PresentationModeState.CHANGING;
-    },
-    get isHorizontalScrollbarEnabled() {
-      return this.isInPresentationMode ? false : this.container.scrollWidth > this.container.clientWidth;
-    },
-    _getVisiblePages: function _getVisiblePages() {
-      if (!this.isInPresentationMode) {
-        return (0, _ui_utils.getVisibleElements)(this.container, this._pages, true);
-      }
-      var visible = [];
-      var currentPage = this._pages[this._currentPageNumber - 1];
-      visible.push({
-        id: currentPage.id,
-        view: currentPage
-      });
-      return {
-        first: currentPage,
-        last: currentPage,
-        views: visible
-      };
-    },
-    cleanup: function cleanup() {
-      for (var i = 0, ii = this._pages.length; i < ii; i++) {
-        if (this._pages[i] && this._pages[i].renderingState !== _pdf_rendering_queue.RenderingStates.FINISHED) {
-          this._pages[i].reset();
-        }
-      }
-    },
-
-    _cancelRendering: function PDFViewer_cancelRendering() {
-      for (var i = 0, ii = this._pages.length; i < ii; i++) {
-        if (this._pages[i]) {
-          this._pages[i].cancelRendering();
-        }
-      }
-    },
-    _ensurePdfPageLoaded: function _ensurePdfPageLoaded(pageView) {
-      var _this2 = this;
-
-      if (pageView.pdfPage) {
-        return Promise.resolve(pageView.pdfPage);
-      }
-      var pageNumber = pageView.id;
-      if (this._pagesRequests[pageNumber]) {
-        return this._pagesRequests[pageNumber];
-      }
-      var promise = this.pdfDocument.getPage(pageNumber).then(function (pdfPage) {
-        if (!pageView.pdfPage) {
-          pageView.setPdfPage(pdfPage);
-        }
-        _this2._pagesRequests[pageNumber] = null;
-        return pdfPage;
-      });
-      this._pagesRequests[pageNumber] = promise;
-      return promise;
-    },
-    forceRendering: function forceRendering(currentlyVisiblePages) {
-      var _this3 = this;
-
-      var visiblePages = currentlyVisiblePages || this._getVisiblePages();
-      var pageView = this.renderingQueue.getHighestPriority(visiblePages, this._pages, this.scroll.down);
-      if (pageView) {
-        this._ensurePdfPageLoaded(pageView).then(function () {
-          _this3.renderingQueue.renderView(pageView);
-        });
-        return true;
-      }
-      return false;
-    },
-    getPageTextContent: function getPageTextContent(pageIndex) {
-      return this.pdfDocument.getPage(pageIndex + 1).then(function (page) {
-        return page.getTextContent({ normalizeWhitespace: true });
-      });
-    },
-    createTextLayerBuilder: function createTextLayerBuilder(textLayerDiv, pageIndex, viewport) {
-      var enhanceTextSelection = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
-
-      return new _text_layer_builder.TextLayerBuilder({
-        textLayerDiv: textLayerDiv,
-        eventBus: this.eventBus,
-        pageIndex: pageIndex,
-        viewport: viewport,
-        findController: this.isInPresentationMode ? null : this.findController,
-        enhanceTextSelection: this.isInPresentationMode ? false : enhanceTextSelection
-      });
-    },
-    createAnnotationLayerBuilder: function createAnnotationLayerBuilder(pageDiv, pdfPage) {
-      var renderInteractiveForms = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-
-      return new _annotation_layer_builder.AnnotationLayerBuilder({
-        pageDiv: pageDiv,
-        pdfPage: pdfPage,
-        renderInteractiveForms: renderInteractiveForms,
-        linkService: this.linkService,
-        downloadManager: this.downloadManager
-      });
-    },
-    setFindController: function setFindController(findController) {
-      this.findController = findController;
-    },
-    getPagesOverview: function getPagesOverview() {
-      var pagesOverview = this._pages.map(function (pageView) {
-        var viewport = pageView.pdfPage.getViewport(1);
-        return {
-          width: viewport.width,
-          height: viewport.height,
-          rotation: viewport.rotation
-        };
-      });
-      if (!this.enablePrintAutoRotate) {
-        return pagesOverview;
-      }
-      var isFirstPagePortrait = isPortraitOrientation(pagesOverview[0]);
-      return pagesOverview.map(function (size) {
-        if (isFirstPagePortrait === isPortraitOrientation(size)) {
-          return size;
-        }
-        return {
-          width: size.height,
-          height: size.width,
-          rotation: (size.rotation + 90) % 360
-        };
-      });
-    }
-  };
-  return PDFViewer;
-}();
-exports.PresentationModeState = PresentationModeState;
-exports.PDFViewer = PDFViewer;
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __w_pdfjs_require__) {
-
-"use strict";
-
-
-var pdfjsLib = __w_pdfjs_require__(0);
-var pdfjsWebPDFViewer = __w_pdfjs_require__(11);
-var pdfjsWebPDFPageView = __w_pdfjs_require__(5);
-var pdfjsWebPDFLinkService = __w_pdfjs_require__(3);
-var pdfjsWebTextLayerBuilder = __w_pdfjs_require__(6);
-var pdfjsWebAnnotationLayerBuilder = __w_pdfjs_require__(4);
-var pdfjsWebPDFHistory = __w_pdfjs_require__(10);
-var pdfjsWebPDFFindController = __w_pdfjs_require__(9);
-var pdfjsWebUIUtils = __w_pdfjs_require__(1);
-var pdfjsWebDownloadManager = __w_pdfjs_require__(8);
-var PDFJS = pdfjsLib.PDFJS;
-PDFJS.PDFViewer = pdfjsWebPDFViewer.PDFViewer;
-PDFJS.PDFPageView = pdfjsWebPDFPageView.PDFPageView;
-PDFJS.PDFLinkService = pdfjsWebPDFLinkService.PDFLinkService;
-PDFJS.TextLayerBuilder = pdfjsWebTextLayerBuilder.TextLayerBuilder;
-PDFJS.DefaultTextLayerFactory = pdfjsWebTextLayerBuilder.DefaultTextLayerFactory;
-PDFJS.AnnotationLayerBuilder = pdfjsWebAnnotationLayerBuilder.AnnotationLayerBuilder;
-PDFJS.DefaultAnnotationLayerFactory = pdfjsWebAnnotationLayerBuilder.DefaultAnnotationLayerFactory;
-PDFJS.PDFHistory = pdfjsWebPDFHistory.PDFHistory;
-PDFJS.PDFFindController = pdfjsWebPDFFindController.PDFFindController;
-PDFJS.EventBus = pdfjsWebUIUtils.EventBus;
-PDFJS.DownloadManager = pdfjsWebDownloadManager.DownloadManager;
-PDFJS.ProgressBar = pdfjsWebUIUtils.ProgressBar;
-exports.PDFJS = PDFJS;
-
-/***/ })
-/******/ ]);
-});
-//# sourceMappingURL=pdf_viewer.js.map
-
-/***/ }),
-
-/***/ 144:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* Copyright 2017 Mozilla Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.localized = exports.animationStarted = exports.normalizeWheelEventDelta = exports.binarySearchFirstItem = exports.watchScroll = exports.scrollIntoView = exports.getOutputScale = exports.approximateFraction = exports.roundToDivide = exports.getVisibleElements = exports.parseQueryString = exports.noContextMenuHandler = exports.getPDFFileNameFromURL = exports.ProgressBar = exports.EventBus = exports.mozL10n = exports.RendererType = exports.cloneObj = exports.VERTICAL_PADDING = exports.SCROLLBAR_PADDING = exports.MAX_AUTO_SCALE = exports.UNKNOWN_SCALE = exports.MAX_SCALE = exports.MIN_SCALE = exports.DEFAULT_SCALE = exports.DEFAULT_SCALE_VALUE = exports.CSS_UNITS = undefined;
-
-var _pdfjs = __webpack_require__(145);
-
-var CSS_UNITS = 96.0 / 72.0;
-var DEFAULT_SCALE_VALUE = 'auto';
-var DEFAULT_SCALE = 1.0;
-var MIN_SCALE = 0.25;
-var MAX_SCALE = 10.0;
-var UNKNOWN_SCALE = 0;
-var MAX_AUTO_SCALE = 1.25;
-var SCROLLBAR_PADDING = 40;
-var VERTICAL_PADDING = 5;
-var RendererType = {
-  CANVAS: 'canvas',
-  SVG: 'svg'
-};
-var mozL10n = typeof document !== 'undefined' ? document.mozL10n || document.webL10n : undefined;
-_pdfjs.PDFJS.disableFullscreen = _pdfjs.PDFJS.disableFullscreen === undefined ? false : _pdfjs.PDFJS.disableFullscreen;
-_pdfjs.PDFJS.useOnlyCssZoom = _pdfjs.PDFJS.useOnlyCssZoom === undefined ? false : _pdfjs.PDFJS.useOnlyCssZoom;
-_pdfjs.PDFJS.maxCanvasPixels = _pdfjs.PDFJS.maxCanvasPixels === undefined ? 16777216 : _pdfjs.PDFJS.maxCanvasPixels;
-_pdfjs.PDFJS.disableHistory = _pdfjs.PDFJS.disableHistory === undefined ? false : _pdfjs.PDFJS.disableHistory;
-_pdfjs.PDFJS.disableTextLayer = _pdfjs.PDFJS.disableTextLayer === undefined ? false : _pdfjs.PDFJS.disableTextLayer;
-_pdfjs.PDFJS.ignoreCurrentPositionOnZoom = _pdfjs.PDFJS.ignoreCurrentPositionOnZoom === undefined ? false : _pdfjs.PDFJS.ignoreCurrentPositionOnZoom;
-{
-  _pdfjs.PDFJS.locale = _pdfjs.PDFJS.locale === undefined && typeof navigator !== 'undefined' ? navigator.language : _pdfjs.PDFJS.locale;
-}
-function getOutputScale(ctx) {
-  var devicePixelRatio = window.devicePixelRatio || 1;
-  var backingStoreRatio = ctx.webkitBackingStorePixelRatio || ctx.mozBackingStorePixelRatio || ctx.msBackingStorePixelRatio || ctx.oBackingStorePixelRatio || ctx.backingStorePixelRatio || 1;
-  var pixelRatio = devicePixelRatio / backingStoreRatio;
-  return {
-    sx: pixelRatio,
-    sy: pixelRatio,
-    scaled: pixelRatio !== 1
-  };
-}
-function scrollIntoView(element, spot, skipOverflowHiddenElements) {
-  var parent = element.offsetParent;
-  if (!parent) {
-    console.error('offsetParent is not set -- cannot scroll');
-    return;
-  }
-  var checkOverflow = skipOverflowHiddenElements || false;
-  var offsetY = element.offsetTop + element.clientTop;
-  var offsetX = element.offsetLeft + element.clientLeft;
-  while (parent.clientHeight === parent.scrollHeight || checkOverflow && getComputedStyle(parent).overflow === 'hidden') {
-    if (parent.dataset._scaleY) {
-      offsetY /= parent.dataset._scaleY;
-      offsetX /= parent.dataset._scaleX;
-    }
-    offsetY += parent.offsetTop;
-    offsetX += parent.offsetLeft;
-    parent = parent.offsetParent;
-    if (!parent) {
-      return;
-    }
-  }
-  if (spot) {
-    if (spot.top !== undefined) {
-      offsetY += spot.top;
-    }
-    if (spot.left !== undefined) {
-      offsetX += spot.left;
-      parent.scrollLeft = offsetX;
-    }
-  }
-  parent.scrollTop = offsetY;
-}
-function watchScroll(viewAreaElement, callback) {
-  var debounceScroll = function debounceScroll(evt) {
-    if (rAF) {
-      return;
-    }
-    rAF = window.requestAnimationFrame(function viewAreaElementScrolled() {
-      rAF = null;
-      var currentY = viewAreaElement.scrollTop;
-      var lastY = state.lastY;
-      if (currentY !== lastY) {
-        state.down = currentY > lastY;
-      }
-      state.lastY = currentY;
-      callback(state);
-    });
-  };
-  var state = {
-    down: true,
-    lastY: viewAreaElement.scrollTop,
-    _eventHandler: debounceScroll
-  };
-  var rAF = null;
-  viewAreaElement.addEventListener('scroll', debounceScroll, true);
-  return state;
-}
-function parseQueryString(query) {
-  var parts = query.split('&');
-  var params = {};
-  for (var i = 0, ii = parts.length; i < ii; ++i) {
-    var param = parts[i].split('=');
-    var key = param[0].toLowerCase();
-    var value = param.length > 1 ? param[1] : null;
-    params[decodeURIComponent(key)] = decodeURIComponent(value);
-  }
-  return params;
-}
-function binarySearchFirstItem(items, condition) {
-  var minIndex = 0;
-  var maxIndex = items.length - 1;
-  if (items.length === 0 || !condition(items[maxIndex])) {
-    return items.length;
-  }
-  if (condition(items[minIndex])) {
-    return minIndex;
-  }
-  while (minIndex < maxIndex) {
-    var currentIndex = minIndex + maxIndex >> 1;
-    var currentItem = items[currentIndex];
-    if (condition(currentItem)) {
-      maxIndex = currentIndex;
-    } else {
-      minIndex = currentIndex + 1;
-    }
-  }
-  return minIndex;
-}
-function approximateFraction(x) {
-  if (Math.floor(x) === x) {
-    return [x, 1];
-  }
-  var xinv = 1 / x;
-  var limit = 8;
-  if (xinv > limit) {
-    return [1, limit];
-  } else if (Math.floor(xinv) === xinv) {
-    return [1, xinv];
-  }
-  var x_ = x > 1 ? xinv : x;
-  var a = 0,
-      b = 1,
-      c = 1,
-      d = 1;
-  while (true) {
-    var p = a + c,
-        q = b + d;
-    if (q > limit) {
-      break;
-    }
-    if (x_ <= p / q) {
-      c = p;
-      d = q;
-    } else {
-      a = p;
-      b = q;
-    }
-  }
-  var result;
-  if (x_ - a / b < c / d - x_) {
-    result = x_ === x ? [a, b] : [b, a];
-  } else {
-    result = x_ === x ? [c, d] : [d, c];
-  }
-  return result;
-}
-function roundToDivide(x, div) {
-  var r = x % div;
-  return r === 0 ? x : Math.round(x - r + div);
-}
-function getVisibleElements(scrollEl, views, sortByVisibility) {
-  var top = scrollEl.scrollTop,
-      bottom = top + scrollEl.clientHeight;
-  var left = scrollEl.scrollLeft,
-      right = left + scrollEl.clientWidth;
-  function isElementBottomBelowViewTop(view) {
-    var element = view.div;
-    var elementBottom = element.offsetTop + element.clientTop + element.clientHeight;
-    return elementBottom > top;
-  }
-  var visible = [],
-      view,
-      element;
-  var currentHeight, viewHeight, hiddenHeight, percentHeight;
-  var currentWidth, viewWidth;
-  var firstVisibleElementInd = views.length === 0 ? 0 : binarySearchFirstItem(views, isElementBottomBelowViewTop);
-  for (var i = firstVisibleElementInd, ii = views.length; i < ii; i++) {
-    view = views[i];
-    element = view.div;
-    currentHeight = element.offsetTop + element.clientTop;
-    viewHeight = element.clientHeight;
-    if (currentHeight > bottom) {
-      break;
-    }
-    currentWidth = element.offsetLeft + element.clientLeft;
-    viewWidth = element.clientWidth;
-    if (currentWidth + viewWidth < left || currentWidth > right) {
-      continue;
-    }
-    hiddenHeight = Math.max(0, top - currentHeight) + Math.max(0, currentHeight + viewHeight - bottom);
-    percentHeight = (viewHeight - hiddenHeight) * 100 / viewHeight | 0;
-    visible.push({
-      id: view.id,
-      x: currentWidth,
-      y: currentHeight,
-      view: view,
-      percent: percentHeight
-    });
-  }
-  var first = visible[0];
-  var last = visible[visible.length - 1];
-  if (sortByVisibility) {
-    visible.sort(function (a, b) {
-      var pc = a.percent - b.percent;
-      if (Math.abs(pc) > 0.001) {
-        return -pc;
-      }
-      return a.id - b.id;
-    });
-  }
-  return {
-    first: first,
-    last: last,
-    views: visible
-  };
-}
-function noContextMenuHandler(e) {
-  e.preventDefault();
-}
-function isDataSchema(url) {
-  var i = 0,
-      ii = url.length;
-  while (i < ii && url[i].trim() === '') {
-    i++;
-  }
-  return url.substr(i, 5).toLowerCase() === 'data:';
-}
-function getPDFFileNameFromURL(url) {
-  var defaultFilename = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'document.pdf';
-
-  if (isDataSchema(url)) {
-    console.warn('getPDFFileNameFromURL: ' + 'ignoring "data:" URL for performance reasons.');
-    return defaultFilename;
-  }
-  var reURI = /^(?:(?:[^:]+:)?\/\/[^\/]+)?([^?#]*)(\?[^#]*)?(#.*)?$/;
-  var reFilename = /[^\/?#=]+\.pdf\b(?!.*\.pdf\b)/i;
-  var splitURI = reURI.exec(url);
-  var suggestedFilename = reFilename.exec(splitURI[1]) || reFilename.exec(splitURI[2]) || reFilename.exec(splitURI[3]);
-  if (suggestedFilename) {
-    suggestedFilename = suggestedFilename[0];
-    if (suggestedFilename.indexOf('%') !== -1) {
-      try {
-        suggestedFilename = reFilename.exec(decodeURIComponent(suggestedFilename))[0];
-      } catch (e) {}
-    }
-  }
-  return suggestedFilename || defaultFilename;
-}
-function normalizeWheelEventDelta(evt) {
-  var delta = Math.sqrt(evt.deltaX * evt.deltaX + evt.deltaY * evt.deltaY);
-  var angle = Math.atan2(evt.deltaY, evt.deltaX);
-  if (-0.25 * Math.PI < angle && angle < 0.75 * Math.PI) {
-    delta = -delta;
-  }
-  var MOUSE_DOM_DELTA_PIXEL_MODE = 0;
-  var MOUSE_DOM_DELTA_LINE_MODE = 1;
-  var MOUSE_PIXELS_PER_LINE = 30;
-  var MOUSE_LINES_PER_PAGE = 30;
-  if (evt.deltaMode === MOUSE_DOM_DELTA_PIXEL_MODE) {
-    delta /= MOUSE_PIXELS_PER_LINE * MOUSE_LINES_PER_PAGE;
-  } else if (evt.deltaMode === MOUSE_DOM_DELTA_LINE_MODE) {
-    delta /= MOUSE_LINES_PER_PAGE;
-  }
-  return delta;
-}
-function cloneObj(obj) {
-  var result = {};
-  for (var i in obj) {
-    if (Object.prototype.hasOwnProperty.call(obj, i)) {
-      result[i] = obj[i];
-    }
-  }
-  return result;
-}
-var animationStarted = new Promise(function (resolve) {
-  window.requestAnimationFrame(resolve);
-});
-var localized = new Promise(function (resolve, reject) {
-  if (!mozL10n) {
-    resolve();
-    return;
-  }
-  if (mozL10n.getReadyState() !== 'loading') {
-    resolve();
-    return;
-  }
-  window.addEventListener('localized', function localized(evt) {
-    resolve();
-  });
-});
-var EventBus = function EventBusClosure() {
-  function EventBus() {
-    this._listeners = Object.create(null);
-  }
-  EventBus.prototype = {
-    on: function EventBus_on(eventName, listener) {
-      var eventListeners = this._listeners[eventName];
-      if (!eventListeners) {
-        eventListeners = [];
-        this._listeners[eventName] = eventListeners;
-      }
-      eventListeners.push(listener);
-    },
-    off: function EventBus_on(eventName, listener) {
-      var eventListeners = this._listeners[eventName];
-      var i;
-      if (!eventListeners || (i = eventListeners.indexOf(listener)) < 0) {
-        return;
-      }
-      eventListeners.splice(i, 1);
-    },
-    dispatch: function EventBus_dispath(eventName) {
-      var eventListeners = this._listeners[eventName];
-      if (!eventListeners || eventListeners.length === 0) {
-        return;
-      }
-      var args = Array.prototype.slice.call(arguments, 1);
-      eventListeners.slice(0).forEach(function (listener) {
-        listener.apply(null, args);
-      });
-    }
-  };
-  return EventBus;
-}();
-var ProgressBar = function ProgressBarClosure() {
-  function clamp(v, min, max) {
-    return Math.min(Math.max(v, min), max);
-  }
-  function ProgressBar(id, opts) {
-    this.visible = true;
-    this.div = document.querySelector(id + ' .progress');
-    this.bar = this.div.parentNode;
-    this.height = opts.height || 100;
-    this.width = opts.width || 100;
-    this.units = opts.units || '%';
-    this.div.style.height = this.height + this.units;
-    this.percent = 0;
-  }
-  ProgressBar.prototype = {
-    updateBar: function ProgressBar_updateBar() {
-      if (this._indeterminate) {
-        this.div.classList.add('indeterminate');
-        this.div.style.width = this.width + this.units;
-        return;
-      }
-      this.div.classList.remove('indeterminate');
-      var progressSize = this.width * this._percent / 100;
-      this.div.style.width = progressSize + this.units;
-    },
-    get percent() {
-      return this._percent;
-    },
-    set percent(val) {
-      this._indeterminate = isNaN(val);
-      this._percent = clamp(val, 0, 100);
-      this.updateBar();
-    },
-    setWidth: function ProgressBar_setWidth(viewer) {
-      if (viewer) {
-        var container = viewer.parentNode;
-        var scrollbarWidth = container.offsetWidth - viewer.offsetWidth;
-        if (scrollbarWidth > 0) {
-          this.bar.setAttribute('style', 'width: calc(100% - ' + scrollbarWidth + 'px);');
-        }
-      }
-    },
-    hide: function ProgressBar_hide() {
-      if (!this.visible) {
-        return;
-      }
-      this.visible = false;
-      this.bar.classList.add('hidden');
-      document.body.classList.remove('loadingInProgress');
-    },
-    show: function ProgressBar_show() {
-      if (this.visible) {
-        return;
-      }
-      this.visible = true;
-      document.body.classList.add('loadingInProgress');
-      this.bar.classList.remove('hidden');
-    }
-  };
-  return ProgressBar;
-}();
-exports.CSS_UNITS = CSS_UNITS;
-exports.DEFAULT_SCALE_VALUE = DEFAULT_SCALE_VALUE;
-exports.DEFAULT_SCALE = DEFAULT_SCALE;
-exports.MIN_SCALE = MIN_SCALE;
-exports.MAX_SCALE = MAX_SCALE;
-exports.UNKNOWN_SCALE = UNKNOWN_SCALE;
-exports.MAX_AUTO_SCALE = MAX_AUTO_SCALE;
-exports.SCROLLBAR_PADDING = SCROLLBAR_PADDING;
-exports.VERTICAL_PADDING = VERTICAL_PADDING;
-exports.cloneObj = cloneObj;
-exports.RendererType = RendererType;
-exports.mozL10n = mozL10n;
-exports.EventBus = EventBus;
-exports.ProgressBar = ProgressBar;
-exports.getPDFFileNameFromURL = getPDFFileNameFromURL;
-exports.noContextMenuHandler = noContextMenuHandler;
-exports.parseQueryString = parseQueryString;
-exports.getVisibleElements = getVisibleElements;
-exports.roundToDivide = roundToDivide;
-exports.approximateFraction = approximateFraction;
-exports.getOutputScale = getOutputScale;
-exports.scrollIntoView = scrollIntoView;
-exports.watchScroll = watchScroll;
-exports.binarySearchFirstItem = binarySearchFirstItem;
-exports.normalizeWheelEventDelta = normalizeWheelEventDelta;
-exports.animationStarted = animationStarted;
-exports.localized = localized;
-
-/***/ }),
-
-/***/ 145:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* Copyright 2017 Mozilla Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-
-{
-  var pdfjsLib;
-  if (typeof __pdfjsdev_webpack__ === 'undefined') {
-    if (typeof window !== 'undefined' && window['pdfjs-dist/build/pdf']) {
-      pdfjsLib = window['pdfjs-dist/build/pdf'];
-    } else if (true) {
-      pdfjsLib = __webpack_require__(146);
-    } else {
-      throw new Error('Neither `require` nor `window` found');
-    }
-  }
-  module.exports = pdfjsLib;
-}
-
-/***/ }),
-
-/***/ 146:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* Copyright 2017 Mozilla Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-
-var pdfjsVersion = '1.8.366';
-var pdfjsBuild = '32bb0e8c';
-var pdfjsSharedUtil = __webpack_require__(8);
-var pdfjsDisplayGlobal = __webpack_require__(148);
-var pdfjsDisplayAPI = __webpack_require__(53);
-var pdfjsDisplayTextLayer = __webpack_require__(57);
-var pdfjsDisplayAnnotationLayer = __webpack_require__(56);
-var pdfjsDisplayDOMUtils = __webpack_require__(18);
-var pdfjsDisplaySVG = __webpack_require__(58);
-exports.PDFJS = pdfjsDisplayGlobal.PDFJS;
-exports.build = pdfjsDisplayAPI.build;
-exports.version = pdfjsDisplayAPI.version;
-exports.getDocument = pdfjsDisplayAPI.getDocument;
-exports.LoopbackPort = pdfjsDisplayAPI.LoopbackPort;
-exports.PDFDataRangeTransport = pdfjsDisplayAPI.PDFDataRangeTransport;
-exports.PDFWorker = pdfjsDisplayAPI.PDFWorker;
-exports.renderTextLayer = pdfjsDisplayTextLayer.renderTextLayer;
-exports.AnnotationLayer = pdfjsDisplayAnnotationLayer.AnnotationLayer;
-exports.CustomStyle = pdfjsDisplayDOMUtils.CustomStyle;
-exports.createPromiseCapability = pdfjsSharedUtil.createPromiseCapability;
-exports.PasswordResponses = pdfjsSharedUtil.PasswordResponses;
-exports.InvalidPDFException = pdfjsSharedUtil.InvalidPDFException;
-exports.MissingPDFException = pdfjsSharedUtil.MissingPDFException;
-exports.SVGGraphics = pdfjsDisplaySVG.SVGGraphics;
-exports.NativeImageDecoding = pdfjsSharedUtil.NativeImageDecoding;
-exports.UnexpectedResponseException = pdfjsSharedUtil.UnexpectedResponseException;
-exports.OPS = pdfjsSharedUtil.OPS;
-exports.UNSUPPORTED_FEATURES = pdfjsSharedUtil.UNSUPPORTED_FEATURES;
-exports.isValidUrl = pdfjsDisplayDOMUtils.isValidUrl;
-exports.createValidAbsoluteUrl = pdfjsSharedUtil.createValidAbsoluteUrl;
-exports.createObjectURL = pdfjsSharedUtil.createObjectURL;
-exports.removeNullCharacters = pdfjsSharedUtil.removeNullCharacters;
-exports.shadow = pdfjsSharedUtil.shadow;
-exports.createBlob = pdfjsSharedUtil.createBlob;
-exports.RenderingCancelledException = pdfjsDisplayDOMUtils.RenderingCancelledException;
-exports.getFilenameFromUrl = pdfjsDisplayDOMUtils.getFilenameFromUrl;
-exports.addLinkAttributes = pdfjsDisplayDOMUtils.addLinkAttributes;
-
-/***/ }),
-
-/***/ 147:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(global) {/* Copyright 2017 Mozilla Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-if (typeof PDFJS === 'undefined' || !PDFJS.compatibilityChecked) {
-  var globalScope = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : undefined;
-  var userAgent = typeof navigator !== 'undefined' && navigator.userAgent || '';
-  var isAndroid = /Android/.test(userAgent);
-  var isAndroidPre3 = /Android\s[0-2][^\d]/.test(userAgent);
-  var isAndroidPre5 = /Android\s[0-4][^\d]/.test(userAgent);
-  var isChrome = userAgent.indexOf('Chrom') >= 0;
-  var isChromeWithRangeBug = /Chrome\/(39|40)\./.test(userAgent);
-  var isIOSChrome = userAgent.indexOf('CriOS') >= 0;
-  var isIE = userAgent.indexOf('Trident') >= 0;
-  var isIOS = /\b(iPad|iPhone|iPod)(?=;)/.test(userAgent);
-  var isOpera = userAgent.indexOf('Opera') >= 0;
-  var isSafari = /Safari\//.test(userAgent) && !/(Chrome\/|Android\s)/.test(userAgent);
-  var hasDOM = (typeof window === 'undefined' ? 'undefined' : _typeof(window)) === 'object' && (typeof document === 'undefined' ? 'undefined' : _typeof(document)) === 'object';
-  if (typeof PDFJS === 'undefined') {
-    globalScope.PDFJS = {};
-  }
-  PDFJS.compatibilityChecked = true;
-  (function checkTypedArrayCompatibility() {
-    if (typeof Uint8Array !== 'undefined') {
-      if (typeof Uint8Array.prototype.subarray === 'undefined') {
-        Uint8Array.prototype.subarray = function subarray(start, end) {
-          return new Uint8Array(this.slice(start, end));
-        };
-        Float32Array.prototype.subarray = function subarray(start, end) {
-          return new Float32Array(this.slice(start, end));
-        };
-      }
-      if (typeof Float64Array === 'undefined') {
-        globalScope.Float64Array = Float32Array;
-      }
-      return;
-    }
-    function subarray(start, end) {
-      return new TypedArray(this.slice(start, end));
-    }
-    function setArrayOffset(array, offset) {
-      if (arguments.length < 2) {
-        offset = 0;
-      }
-      for (var i = 0, n = array.length; i < n; ++i, ++offset) {
-        this[offset] = array[i] & 0xFF;
-      }
-    }
-    function Uint32ArrayView(buffer, length) {
-      this.buffer = buffer;
-      this.byteLength = buffer.length;
-      this.length = length;
-      ensureUint32ArrayViewProps(this.length);
-    }
-    Uint32ArrayView.prototype = Object.create(null);
-    var uint32ArrayViewSetters = 0;
-    function createUint32ArrayProp(index) {
-      return {
-        get: function get() {
-          var buffer = this.buffer,
-              offset = index << 2;
-          return (buffer[offset] | buffer[offset + 1] << 8 | buffer[offset + 2] << 16 | buffer[offset + 3] << 24) >>> 0;
-        },
-        set: function set(value) {
-          var buffer = this.buffer,
-              offset = index << 2;
-          buffer[offset] = value & 255;
-          buffer[offset + 1] = value >> 8 & 255;
-          buffer[offset + 2] = value >> 16 & 255;
-          buffer[offset + 3] = value >>> 24 & 255;
-        }
-      };
-    }
-    function ensureUint32ArrayViewProps(length) {
-      while (uint32ArrayViewSetters < length) {
-        Object.defineProperty(Uint32ArrayView.prototype, uint32ArrayViewSetters, createUint32ArrayProp(uint32ArrayViewSetters));
-        uint32ArrayViewSetters++;
-      }
-    }
-    function TypedArray(arg1) {
-      var result, i, n;
-      if (typeof arg1 === 'number') {
-        result = [];
-        for (i = 0; i < arg1; ++i) {
-          result[i] = 0;
-        }
-      } else if ('slice' in arg1) {
-        result = arg1.slice(0);
-      } else {
-        result = [];
-        for (i = 0, n = arg1.length; i < n; ++i) {
-          result[i] = arg1[i];
-        }
-      }
-      result.subarray = subarray;
-      result.buffer = result;
-      result.byteLength = result.length;
-      result.set = setArrayOffset;
-      if ((typeof arg1 === 'undefined' ? 'undefined' : _typeof(arg1)) === 'object' && arg1.buffer) {
-        result.buffer = arg1.buffer;
-      }
-      return result;
-    }
-    globalScope.Uint8Array = TypedArray;
-    globalScope.Int8Array = TypedArray;
-    globalScope.Int32Array = TypedArray;
-    globalScope.Uint16Array = TypedArray;
-    globalScope.Float32Array = TypedArray;
-    globalScope.Float64Array = TypedArray;
-    globalScope.Uint32Array = function () {
-      if (arguments.length === 3) {
-        if (arguments[1] !== 0) {
-          throw new Error('offset !== 0 is not supported');
-        }
-        return new Uint32ArrayView(arguments[0], arguments[2]);
-      }
-      return TypedArray.apply(this, arguments);
-    };
-  })();
-  (function canvasPixelArrayBuffer() {
-    if (!hasDOM || !window.CanvasPixelArray) {
-      return;
-    }
-    var cpaProto = window.CanvasPixelArray.prototype;
-    if ('buffer' in cpaProto) {
-      return;
-    }
-    Object.defineProperty(cpaProto, 'buffer', {
-      get: function get() {
-        return this;
-      },
-
-      enumerable: false,
-      configurable: true
-    });
-    Object.defineProperty(cpaProto, 'byteLength', {
-      get: function get() {
-        return this.length;
-      },
-
-      enumerable: false,
-      configurable: true
-    });
-  })();
-  (function normalizeURLObject() {
-    if (!globalScope.URL) {
-      globalScope.URL = globalScope.webkitURL;
-    }
-  })();
-  (function checkObjectDefinePropertyCompatibility() {
-    if (typeof Object.defineProperty !== 'undefined') {
-      var definePropertyPossible = true;
-      try {
-        if (hasDOM) {
-          Object.defineProperty(new Image(), 'id', { value: 'test' });
-        }
-        var Test = function Test() {};
-        Test.prototype = {
-          get id() {}
-        };
-        Object.defineProperty(new Test(), 'id', {
-          value: '',
-          configurable: true,
-          enumerable: true,
-          writable: false
-        });
-      } catch (e) {
-        definePropertyPossible = false;
-      }
-      if (definePropertyPossible) {
-        return;
-      }
-    }
-    Object.defineProperty = function objectDefineProperty(obj, name, def) {
-      delete obj[name];
-      if ('get' in def) {
-        obj.__defineGetter__(name, def['get']);
-      }
-      if ('set' in def) {
-        obj.__defineSetter__(name, def['set']);
-      }
-      if ('value' in def) {
-        obj.__defineSetter__(name, function objectDefinePropertySetter(value) {
-          this.__defineGetter__(name, function objectDefinePropertyGetter() {
-            return value;
-          });
-          return value;
-        });
-        obj[name] = def.value;
-      }
-    };
-  })();
-  (function checkXMLHttpRequestResponseCompatibility() {
-    if (typeof XMLHttpRequest === 'undefined') {
-      return;
-    }
-    var xhrPrototype = XMLHttpRequest.prototype;
-    var xhr = new XMLHttpRequest();
-    if (!('overrideMimeType' in xhr)) {
-      Object.defineProperty(xhrPrototype, 'overrideMimeType', {
-        value: function xmlHttpRequestOverrideMimeType(mimeType) {}
-      });
-    }
-    if ('responseType' in xhr) {
-      return;
-    }
-    Object.defineProperty(xhrPrototype, 'responseType', {
-      get: function xmlHttpRequestGetResponseType() {
-        return this._responseType || 'text';
-      },
-      set: function xmlHttpRequestSetResponseType(value) {
-        if (value === 'text' || value === 'arraybuffer') {
-          this._responseType = value;
-          if (value === 'arraybuffer' && typeof this.overrideMimeType === 'function') {
-            this.overrideMimeType('text/plain; charset=x-user-defined');
-          }
-        }
-      }
-    });
-    if (typeof VBArray !== 'undefined') {
-      Object.defineProperty(xhrPrototype, 'response', {
-        get: function xmlHttpRequestResponseGet() {
-          if (this.responseType === 'arraybuffer') {
-            return new Uint8Array(new VBArray(this.responseBody).toArray());
-          }
-          return this.responseText;
-        }
-      });
-      return;
-    }
-    Object.defineProperty(xhrPrototype, 'response', {
-      get: function xmlHttpRequestResponseGet() {
-        if (this.responseType !== 'arraybuffer') {
-          return this.responseText;
-        }
-        var text = this.responseText;
-        var i,
-            n = text.length;
-        var result = new Uint8Array(n);
-        for (i = 0; i < n; ++i) {
-          result[i] = text.charCodeAt(i) & 0xFF;
-        }
-        return result.buffer;
-      }
-    });
-  })();
-  (function checkWindowBtoaCompatibility() {
-    if ('btoa' in globalScope) {
-      return;
-    }
-    var digits = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-    globalScope.btoa = function (chars) {
-      var buffer = '';
-      var i, n;
-      for (i = 0, n = chars.length; i < n; i += 3) {
-        var b1 = chars.charCodeAt(i) & 0xFF;
-        var b2 = chars.charCodeAt(i + 1) & 0xFF;
-        var b3 = chars.charCodeAt(i + 2) & 0xFF;
-        var d1 = b1 >> 2,
-            d2 = (b1 & 3) << 4 | b2 >> 4;
-        var d3 = i + 1 < n ? (b2 & 0xF) << 2 | b3 >> 6 : 64;
-        var d4 = i + 2 < n ? b3 & 0x3F : 64;
-        buffer += digits.charAt(d1) + digits.charAt(d2) + digits.charAt(d3) + digits.charAt(d4);
-      }
-      return buffer;
-    };
-  })();
-  (function checkWindowAtobCompatibility() {
-    if ('atob' in globalScope) {
-      return;
-    }
-    var digits = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-    globalScope.atob = function (input) {
-      input = input.replace(/=+$/, '');
-      if (input.length % 4 === 1) {
-        throw new Error('bad atob input');
-      }
-      for (var bc = 0, bs, buffer, idx = 0, output = ''; buffer = input.charAt(idx++); ~buffer && (bs = bc % 4 ? bs * 64 + buffer : buffer, bc++ % 4) ? output += String.fromCharCode(255 & bs >> (-2 * bc & 6)) : 0) {
-        buffer = digits.indexOf(buffer);
-      }
-      return output;
-    };
-  })();
-  (function checkFunctionPrototypeBindCompatibility() {
-    if (typeof Function.prototype.bind !== 'undefined') {
-      return;
-    }
-    Function.prototype.bind = function functionPrototypeBind(obj) {
-      var fn = this,
-          headArgs = Array.prototype.slice.call(arguments, 1);
-      var bound = function functionPrototypeBindBound() {
-        var args = headArgs.concat(Array.prototype.slice.call(arguments));
-        return fn.apply(obj, args);
-      };
-      return bound;
-    };
-  })();
-  (function checkDatasetProperty() {
-    if (!hasDOM) {
-      return;
-    }
-    var div = document.createElement('div');
-    if ('dataset' in div) {
-      return;
-    }
-    Object.defineProperty(HTMLElement.prototype, 'dataset', {
-      get: function get() {
-        if (this._dataset) {
-          return this._dataset;
-        }
-        var dataset = {};
-        for (var j = 0, jj = this.attributes.length; j < jj; j++) {
-          var attribute = this.attributes[j];
-          if (attribute.name.substring(0, 5) !== 'data-') {
-            continue;
-          }
-          var key = attribute.name.substring(5).replace(/\-([a-z])/g, function (all, ch) {
-            return ch.toUpperCase();
-          });
-          dataset[key] = attribute.value;
-        }
-        Object.defineProperty(this, '_dataset', {
-          value: dataset,
-          writable: false,
-          enumerable: false
-        });
-        return dataset;
-      },
-
-      enumerable: true
-    });
-  })();
-  (function checkClassListProperty() {
-    function changeList(element, itemName, add, remove) {
-      var s = element.className || '';
-      var list = s.split(/\s+/g);
-      if (list[0] === '') {
-        list.shift();
-      }
-      var index = list.indexOf(itemName);
-      if (index < 0 && add) {
-        list.push(itemName);
-      }
-      if (index >= 0 && remove) {
-        list.splice(index, 1);
-      }
-      element.className = list.join(' ');
-      return index >= 0;
-    }
-    if (!hasDOM) {
-      return;
-    }
-    var div = document.createElement('div');
-    if ('classList' in div) {
-      return;
-    }
-    var classListPrototype = {
-      add: function add(name) {
-        changeList(this.element, name, true, false);
-      },
-      contains: function contains(name) {
-        return changeList(this.element, name, false, false);
-      },
-      remove: function remove(name) {
-        changeList(this.element, name, false, true);
-      },
-      toggle: function toggle(name) {
-        changeList(this.element, name, true, true);
-      }
-    };
-    Object.defineProperty(HTMLElement.prototype, 'classList', {
-      get: function get() {
-        if (this._classList) {
-          return this._classList;
-        }
-        var classList = Object.create(classListPrototype, {
-          element: {
-            value: this,
-            writable: false,
-            enumerable: true
-          }
-        });
-        Object.defineProperty(this, '_classList', {
-          value: classList,
-          writable: false,
-          enumerable: false
-        });
-        return classList;
-      },
-
-      enumerable: true
-    });
-  })();
-  (function checkWorkerConsoleCompatibility() {
-    if (typeof importScripts === 'undefined' || 'console' in globalScope) {
-      return;
-    }
-    var consoleTimer = {};
-    var workerConsole = {
-      log: function log() {
-        var args = Array.prototype.slice.call(arguments);
-        globalScope.postMessage({
-          targetName: 'main',
-          action: 'console_log',
-          data: args
-        });
-      },
-      error: function error() {
-        var args = Array.prototype.slice.call(arguments);
-        globalScope.postMessage({
-          targetName: 'main',
-          action: 'console_error',
-          data: args
-        });
-      },
-      time: function time(name) {
-        consoleTimer[name] = Date.now();
-      },
-      timeEnd: function timeEnd(name) {
-        var time = consoleTimer[name];
-        if (!time) {
-          throw new Error('Unknown timer name ' + name);
-        }
-        this.log('Timer:', name, Date.now() - time);
-      }
-    };
-    globalScope.console = workerConsole;
-  })();
-  (function checkConsoleCompatibility() {
-    if (!hasDOM) {
-      return;
-    }
-    if (!('console' in window)) {
-      window.console = {
-        log: function log() {},
-        error: function error() {},
-        warn: function warn() {}
-      };
-      return;
-    }
-    if (!('bind' in console.log)) {
-      console.log = function (fn) {
-        return function (msg) {
-          return fn(msg);
-        };
-      }(console.log);
-      console.error = function (fn) {
-        return function (msg) {
-          return fn(msg);
-        };
-      }(console.error);
-      console.warn = function (fn) {
-        return function (msg) {
-          return fn(msg);
-        };
-      }(console.warn);
-      return;
-    }
-  })();
-  (function checkOnClickCompatibility() {
-    function ignoreIfTargetDisabled(event) {
-      if (isDisabled(event.target)) {
-        event.stopPropagation();
-      }
-    }
-    function isDisabled(node) {
-      return node.disabled || node.parentNode && isDisabled(node.parentNode);
-    }
-    if (isOpera) {
-      document.addEventListener('click', ignoreIfTargetDisabled, true);
-    }
-  })();
-  (function checkOnBlobSupport() {
-    if (isIE || isIOSChrome) {
-      PDFJS.disableCreateObjectURL = true;
-    }
-  })();
-  (function checkNavigatorLanguage() {
-    if (typeof navigator === 'undefined') {
-      return;
-    }
-    if ('language' in navigator) {
-      return;
-    }
-    PDFJS.locale = navigator.userLanguage || 'en-US';
-  })();
-  (function checkRangeRequests() {
-    if (isSafari || isAndroidPre3 || isChromeWithRangeBug || isIOS) {
-      PDFJS.disableRange = true;
-      PDFJS.disableStream = true;
-    }
-  })();
-  (function checkHistoryManipulation() {
-    if (!hasDOM) {
-      return;
-    }
-    if (!history.pushState || isAndroidPre3) {
-      PDFJS.disableHistory = true;
-    }
-  })();
-  (function checkSetPresenceInImageData() {
-    if (!hasDOM) {
-      return;
-    }
-    if (window.CanvasPixelArray) {
-      if (typeof window.CanvasPixelArray.prototype.set !== 'function') {
-        window.CanvasPixelArray.prototype.set = function (arr) {
-          for (var i = 0, ii = this.length; i < ii; i++) {
-            this[i] = arr[i];
-          }
-        };
-      }
-    } else {
-      var polyfill = false,
-          versionMatch;
-      if (isChrome) {
-        versionMatch = userAgent.match(/Chrom(e|ium)\/([0-9]+)\./);
-        polyfill = versionMatch && parseInt(versionMatch[2]) < 21;
-      } else if (isAndroid) {
-        polyfill = isAndroidPre5;
-      } else if (isSafari) {
-        versionMatch = userAgent.match(/Version\/([0-9]+)\.([0-9]+)\.([0-9]+) Safari\//);
-        polyfill = versionMatch && parseInt(versionMatch[1]) < 6;
-      }
-      if (polyfill) {
-        var contextPrototype = window.CanvasRenderingContext2D.prototype;
-        var createImageData = contextPrototype.createImageData;
-        contextPrototype.createImageData = function (w, h) {
-          var imageData = createImageData.call(this, w, h);
-          imageData.data.set = function (arr) {
-            for (var i = 0, ii = this.length; i < ii; i++) {
-              this[i] = arr[i];
-            }
-          };
-          return imageData;
-        };
-        contextPrototype = null;
-      }
-    }
-  })();
-  (function checkRequestAnimationFrame() {
-    function installFakeAnimationFrameFunctions() {
-      window.requestAnimationFrame = function (callback) {
-        return window.setTimeout(callback, 20);
-      };
-      window.cancelAnimationFrame = function (timeoutID) {
-        window.clearTimeout(timeoutID);
-      };
-    }
-    if (!hasDOM) {
-      return;
-    }
-    if (isIOS) {
-      installFakeAnimationFrameFunctions();
-      return;
-    }
-    if ('requestAnimationFrame' in window) {
-      return;
-    }
-    window.requestAnimationFrame = window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
-    if (window.requestAnimationFrame) {
-      return;
-    }
-    installFakeAnimationFrameFunctions();
-  })();
-  (function checkCanvasSizeLimitation() {
-    if (isIOS || isAndroid) {
-      PDFJS.maxCanvasPixels = 5242880;
-    }
-  })();
-  (function checkFullscreenSupport() {
-    if (!hasDOM) {
-      return;
-    }
-    if (isIE && window.parent !== window) {
-      PDFJS.disableFullscreen = true;
-    }
-  })();
-  (function checkCurrentScript() {
-    if (!hasDOM) {
-      return;
-    }
-    if ('currentScript' in document) {
-      return;
-    }
-    Object.defineProperty(document, 'currentScript', {
-      get: function get() {
-        var scripts = document.getElementsByTagName('script');
-        return scripts[scripts.length - 1];
-      },
-
-      enumerable: true,
-      configurable: true
-    });
-  })();
-  (function checkInputTypeNumberAssign() {
-    if (!hasDOM) {
-      return;
-    }
-    var el = document.createElement('input');
-    try {
-      el.type = 'number';
-    } catch (ex) {
-      var inputProto = el.constructor.prototype;
-      var typeProperty = Object.getOwnPropertyDescriptor(inputProto, 'type');
-      Object.defineProperty(inputProto, 'type', {
-        get: function get() {
-          return typeProperty.get.call(this);
-        },
-        set: function set(value) {
-          typeProperty.set.call(this, value === 'number' ? 'text' : value);
-        },
-
-        enumerable: true,
-        configurable: true
-      });
-    }
-  })();
-  (function checkDocumentReadyState() {
-    if (!hasDOM) {
-      return;
-    }
-    if (!document.attachEvent) {
-      return;
-    }
-    var documentProto = document.constructor.prototype;
-    var readyStateProto = Object.getOwnPropertyDescriptor(documentProto, 'readyState');
-    Object.defineProperty(documentProto, 'readyState', {
-      get: function get() {
-        var value = readyStateProto.get.call(this);
-        return value === 'interactive' ? 'loading' : value;
-      },
-      set: function set(value) {
-        readyStateProto.set.call(this, value);
-      },
-
-      enumerable: true,
-      configurable: true
-    });
-  })();
-  (function checkChildNodeRemove() {
-    if (!hasDOM) {
-      return;
-    }
-    if (typeof Element.prototype.remove !== 'undefined') {
-      return;
-    }
-    Element.prototype.remove = function () {
-      if (this.parentNode) {
-        this.parentNode.removeChild(this);
-      }
-    };
-  })();
-  (function checkPromise() {
-    if (globalScope.Promise) {
-      if (typeof globalScope.Promise.all !== 'function') {
-        globalScope.Promise.all = function (iterable) {
-          var count = 0,
-              results = [],
-              resolve,
-              reject;
-          var promise = new globalScope.Promise(function (resolve_, reject_) {
-            resolve = resolve_;
-            reject = reject_;
-          });
-          iterable.forEach(function (p, i) {
-            count++;
-            p.then(function (result) {
-              results[i] = result;
-              count--;
-              if (count === 0) {
-                resolve(results);
-              }
-            }, reject);
-          });
-          if (count === 0) {
-            resolve(results);
-          }
-          return promise;
-        };
-      }
-      if (typeof globalScope.Promise.resolve !== 'function') {
-        globalScope.Promise.resolve = function (value) {
-          return new globalScope.Promise(function (resolve) {
-            resolve(value);
-          });
-        };
-      }
-      if (typeof globalScope.Promise.reject !== 'function') {
-        globalScope.Promise.reject = function (reason) {
-          return new globalScope.Promise(function (resolve, reject) {
-            reject(reason);
-          });
-        };
-      }
-      if (typeof globalScope.Promise.prototype.catch !== 'function') {
-        globalScope.Promise.prototype.catch = function (onReject) {
-          return globalScope.Promise.prototype.then(undefined, onReject);
-        };
-      }
-      return;
-    }
-    var STATUS_PENDING = 0;
-    var STATUS_RESOLVED = 1;
-    var STATUS_REJECTED = 2;
-    var REJECTION_TIMEOUT = 500;
-    var HandlerManager = {
-      handlers: [],
-      running: false,
-      unhandledRejections: [],
-      pendingRejectionCheck: false,
-      scheduleHandlers: function scheduleHandlers(promise) {
-        if (promise._status === STATUS_PENDING) {
-          return;
-        }
-        this.handlers = this.handlers.concat(promise._handlers);
-        promise._handlers = [];
-        if (this.running) {
-          return;
-        }
-        this.running = true;
-        setTimeout(this.runHandlers.bind(this), 0);
-      },
-      runHandlers: function runHandlers() {
-        var RUN_TIMEOUT = 1;
-        var timeoutAt = Date.now() + RUN_TIMEOUT;
-        while (this.handlers.length > 0) {
-          var handler = this.handlers.shift();
-          var nextStatus = handler.thisPromise._status;
-          var nextValue = handler.thisPromise._value;
-          try {
-            if (nextStatus === STATUS_RESOLVED) {
-              if (typeof handler.onResolve === 'function') {
-                nextValue = handler.onResolve(nextValue);
-              }
-            } else if (typeof handler.onReject === 'function') {
-              nextValue = handler.onReject(nextValue);
-              nextStatus = STATUS_RESOLVED;
-              if (handler.thisPromise._unhandledRejection) {
-                this.removeUnhandeledRejection(handler.thisPromise);
-              }
-            }
-          } catch (ex) {
-            nextStatus = STATUS_REJECTED;
-            nextValue = ex;
-          }
-          handler.nextPromise._updateStatus(nextStatus, nextValue);
-          if (Date.now() >= timeoutAt) {
-            break;
-          }
-        }
-        if (this.handlers.length > 0) {
-          setTimeout(this.runHandlers.bind(this), 0);
-          return;
-        }
-        this.running = false;
-      },
-      addUnhandledRejection: function addUnhandledRejection(promise) {
-        this.unhandledRejections.push({
-          promise: promise,
-          time: Date.now()
-        });
-        this.scheduleRejectionCheck();
-      },
-      removeUnhandeledRejection: function removeUnhandeledRejection(promise) {
-        promise._unhandledRejection = false;
-        for (var i = 0; i < this.unhandledRejections.length; i++) {
-          if (this.unhandledRejections[i].promise === promise) {
-            this.unhandledRejections.splice(i);
-            i--;
-          }
-        }
-      },
-      scheduleRejectionCheck: function scheduleRejectionCheck() {
-        var _this = this;
-
-        if (this.pendingRejectionCheck) {
-          return;
-        }
-        this.pendingRejectionCheck = true;
-        setTimeout(function () {
-          _this.pendingRejectionCheck = false;
-          var now = Date.now();
-          for (var i = 0; i < _this.unhandledRejections.length; i++) {
-            if (now - _this.unhandledRejections[i].time > REJECTION_TIMEOUT) {
-              var unhandled = _this.unhandledRejections[i].promise._value;
-              var msg = 'Unhandled rejection: ' + unhandled;
-              if (unhandled.stack) {
-                msg += '\n' + unhandled.stack;
-              }
-              try {
-                throw new Error(msg);
-              } catch (_) {
-                console.warn(msg);
-              }
-              _this.unhandledRejections.splice(i);
-              i--;
-            }
-          }
-          if (_this.unhandledRejections.length) {
-            _this.scheduleRejectionCheck();
-          }
-        }, REJECTION_TIMEOUT);
-      }
-    };
-    var Promise = function Promise(resolver) {
-      this._status = STATUS_PENDING;
-      this._handlers = [];
-      try {
-        resolver.call(this, this._resolve.bind(this), this._reject.bind(this));
-      } catch (e) {
-        this._reject(e);
-      }
-    };
-    Promise.all = function Promise_all(promises) {
-      var resolveAll, rejectAll;
-      var deferred = new Promise(function (resolve, reject) {
-        resolveAll = resolve;
-        rejectAll = reject;
-      });
-      var unresolved = promises.length;
-      var results = [];
-      if (unresolved === 0) {
-        resolveAll(results);
-        return deferred;
-      }
-      function reject(reason) {
-        if (deferred._status === STATUS_REJECTED) {
-          return;
-        }
-        results = [];
-        rejectAll(reason);
-      }
-      for (var i = 0, ii = promises.length; i < ii; ++i) {
-        var promise = promises[i];
-        var resolve = function (i) {
-          return function (value) {
-            if (deferred._status === STATUS_REJECTED) {
-              return;
-            }
-            results[i] = value;
-            unresolved--;
-            if (unresolved === 0) {
-              resolveAll(results);
-            }
-          };
-        }(i);
-        if (Promise.isPromise(promise)) {
-          promise.then(resolve, reject);
-        } else {
-          resolve(promise);
-        }
-      }
-      return deferred;
-    };
-    Promise.isPromise = function Promise_isPromise(value) {
-      return value && typeof value.then === 'function';
-    };
-    Promise.resolve = function Promise_resolve(value) {
-      return new Promise(function (resolve) {
-        resolve(value);
-      });
-    };
-    Promise.reject = function Promise_reject(reason) {
-      return new Promise(function (resolve, reject) {
-        reject(reason);
-      });
-    };
-    Promise.prototype = {
-      _status: null,
-      _value: null,
-      _handlers: null,
-      _unhandledRejection: null,
-      _updateStatus: function Promise__updateStatus(status, value) {
-        if (this._status === STATUS_RESOLVED || this._status === STATUS_REJECTED) {
-          return;
-        }
-        if (status === STATUS_RESOLVED && Promise.isPromise(value)) {
-          value.then(this._updateStatus.bind(this, STATUS_RESOLVED), this._updateStatus.bind(this, STATUS_REJECTED));
-          return;
-        }
-        this._status = status;
-        this._value = value;
-        if (status === STATUS_REJECTED && this._handlers.length === 0) {
-          this._unhandledRejection = true;
-          HandlerManager.addUnhandledRejection(this);
-        }
-        HandlerManager.scheduleHandlers(this);
-      },
-      _resolve: function Promise_resolve(value) {
-        this._updateStatus(STATUS_RESOLVED, value);
-      },
-      _reject: function Promise_reject(reason) {
-        this._updateStatus(STATUS_REJECTED, reason);
-      },
-      then: function Promise_then(onResolve, onReject) {
-        var nextPromise = new Promise(function (resolve, reject) {
-          this.resolve = resolve;
-          this.reject = reject;
-        });
-        this._handlers.push({
-          thisPromise: this,
-          onResolve: onResolve,
-          onReject: onReject,
-          nextPromise: nextPromise
-        });
-        HandlerManager.scheduleHandlers(this);
-        return nextPromise;
-      },
-      catch: function Promise_catch(onReject) {
-        return this.then(undefined, onReject);
-      }
-    };
-    globalScope.Promise = Promise;
-  })();
-  (function checkWeakMap() {
-    if (globalScope.WeakMap) {
-      return;
-    }
-    var id = 0;
-    function WeakMap() {
-      this.id = '$weakmap' + id++;
-    }
-    WeakMap.prototype = {
-      has: function has(obj) {
-        return !!Object.getOwnPropertyDescriptor(obj, this.id);
-      },
-      get: function get(obj, defaultValue) {
-        return this.has(obj) ? obj[this.id] : defaultValue;
-      },
-      set: function set(obj, value) {
-        Object.defineProperty(obj, this.id, {
-          value: value,
-          enumerable: false,
-          configurable: true
-        });
-      },
-      delete: function _delete(obj) {
-        delete obj[this.id];
-      }
-    };
-    globalScope.WeakMap = WeakMap;
-  })();
-  (function checkURLConstructor() {
-    var hasWorkingUrl = false;
-    try {
-      if (typeof URL === 'function' && _typeof(URL.prototype) === 'object' && 'origin' in URL.prototype) {
-        var u = new URL('b', 'http://a');
-        u.pathname = 'c%20d';
-        hasWorkingUrl = u.href === 'http://a/c%20d';
-      }
-    } catch (e) {}
-    if (hasWorkingUrl) {
-      return;
-    }
-    var relative = Object.create(null);
-    relative['ftp'] = 21;
-    relative['file'] = 0;
-    relative['gopher'] = 70;
-    relative['http'] = 80;
-    relative['https'] = 443;
-    relative['ws'] = 80;
-    relative['wss'] = 443;
-    var relativePathDotMapping = Object.create(null);
-    relativePathDotMapping['%2e'] = '.';
-    relativePathDotMapping['.%2e'] = '..';
-    relativePathDotMapping['%2e.'] = '..';
-    relativePathDotMapping['%2e%2e'] = '..';
-    function isRelativeScheme(scheme) {
-      return relative[scheme] !== undefined;
-    }
-    function invalid() {
-      clear.call(this);
-      this._isInvalid = true;
-    }
-    function IDNAToASCII(h) {
-      if (h === '') {
-        invalid.call(this);
-      }
-      return h.toLowerCase();
-    }
-    function percentEscape(c) {
-      var unicode = c.charCodeAt(0);
-      if (unicode > 0x20 && unicode < 0x7F && [0x22, 0x23, 0x3C, 0x3E, 0x3F, 0x60].indexOf(unicode) === -1) {
-        return c;
-      }
-      return encodeURIComponent(c);
-    }
-    function percentEscapeQuery(c) {
-      var unicode = c.charCodeAt(0);
-      if (unicode > 0x20 && unicode < 0x7F && [0x22, 0x23, 0x3C, 0x3E, 0x60].indexOf(unicode) === -1) {
-        return c;
-      }
-      return encodeURIComponent(c);
-    }
-    var EOF,
-        ALPHA = /[a-zA-Z]/,
-        ALPHANUMERIC = /[a-zA-Z0-9\+\-\.]/;
-    function parse(input, stateOverride, base) {
-      function err(message) {
-        errors.push(message);
-      }
-      var state = stateOverride || 'scheme start',
-          cursor = 0,
-          buffer = '',
-          seenAt = false,
-          seenBracket = false,
-          errors = [];
-      loop: while ((input[cursor - 1] !== EOF || cursor === 0) && !this._isInvalid) {
-        var c = input[cursor];
-        switch (state) {
-          case 'scheme start':
-            if (c && ALPHA.test(c)) {
-              buffer += c.toLowerCase();
-              state = 'scheme';
-            } else if (!stateOverride) {
-              buffer = '';
-              state = 'no scheme';
-              continue;
-            } else {
-              err('Invalid scheme.');
-              break loop;
-            }
-            break;
-          case 'scheme':
-            if (c && ALPHANUMERIC.test(c)) {
-              buffer += c.toLowerCase();
-            } else if (c === ':') {
-              this._scheme = buffer;
-              buffer = '';
-              if (stateOverride) {
-                break loop;
-              }
-              if (isRelativeScheme(this._scheme)) {
-                this._isRelative = true;
-              }
-              if (this._scheme === 'file') {
-                state = 'relative';
-              } else if (this._isRelative && base && base._scheme === this._scheme) {
-                state = 'relative or authority';
-              } else if (this._isRelative) {
-                state = 'authority first slash';
-              } else {
-                state = 'scheme data';
-              }
-            } else if (!stateOverride) {
-              buffer = '';
-              cursor = 0;
-              state = 'no scheme';
-              continue;
-            } else if (c === EOF) {
-              break loop;
-            } else {
-              err('Code point not allowed in scheme: ' + c);
-              break loop;
-            }
-            break;
-          case 'scheme data':
-            if (c === '?') {
-              this._query = '?';
-              state = 'query';
-            } else if (c === '#') {
-              this._fragment = '#';
-              state = 'fragment';
-            } else {
-              if (c !== EOF && c !== '\t' && c !== '\n' && c !== '\r') {
-                this._schemeData += percentEscape(c);
-              }
-            }
-            break;
-          case 'no scheme':
-            if (!base || !isRelativeScheme(base._scheme)) {
-              err('Missing scheme.');
-              invalid.call(this);
-            } else {
-              state = 'relative';
-              continue;
-            }
-            break;
-          case 'relative or authority':
-            if (c === '/' && input[cursor + 1] === '/') {
-              state = 'authority ignore slashes';
-            } else {
-              err('Expected /, got: ' + c);
-              state = 'relative';
-              continue;
-            }
-            break;
-          case 'relative':
-            this._isRelative = true;
-            if (this._scheme !== 'file') {
-              this._scheme = base._scheme;
-            }
-            if (c === EOF) {
-              this._host = base._host;
-              this._port = base._port;
-              this._path = base._path.slice();
-              this._query = base._query;
-              this._username = base._username;
-              this._password = base._password;
-              break loop;
-            } else if (c === '/' || c === '\\') {
-              if (c === '\\') {
-                err('\\ is an invalid code point.');
-              }
-              state = 'relative slash';
-            } else if (c === '?') {
-              this._host = base._host;
-              this._port = base._port;
-              this._path = base._path.slice();
-              this._query = '?';
-              this._username = base._username;
-              this._password = base._password;
-              state = 'query';
-            } else if (c === '#') {
-              this._host = base._host;
-              this._port = base._port;
-              this._path = base._path.slice();
-              this._query = base._query;
-              this._fragment = '#';
-              this._username = base._username;
-              this._password = base._password;
-              state = 'fragment';
-            } else {
-              var nextC = input[cursor + 1];
-              var nextNextC = input[cursor + 2];
-              if (this._scheme !== 'file' || !ALPHA.test(c) || nextC !== ':' && nextC !== '|' || nextNextC !== EOF && nextNextC !== '/' && nextNextC !== '\\' && nextNextC !== '?' && nextNextC !== '#') {
-                this._host = base._host;
-                this._port = base._port;
-                this._username = base._username;
-                this._password = base._password;
-                this._path = base._path.slice();
-                this._path.pop();
-              }
-              state = 'relative path';
-              continue;
-            }
-            break;
-          case 'relative slash':
-            if (c === '/' || c === '\\') {
-              if (c === '\\') {
-                err('\\ is an invalid code point.');
-              }
-              if (this._scheme === 'file') {
-                state = 'file host';
-              } else {
-                state = 'authority ignore slashes';
-              }
-            } else {
-              if (this._scheme !== 'file') {
-                this._host = base._host;
-                this._port = base._port;
-                this._username = base._username;
-                this._password = base._password;
-              }
-              state = 'relative path';
-              continue;
-            }
-            break;
-          case 'authority first slash':
-            if (c === '/') {
-              state = 'authority second slash';
-            } else {
-              err('Expected \'/\', got: ' + c);
-              state = 'authority ignore slashes';
-              continue;
-            }
-            break;
-          case 'authority second slash':
-            state = 'authority ignore slashes';
-            if (c !== '/') {
-              err('Expected \'/\', got: ' + c);
-              continue;
-            }
-            break;
-          case 'authority ignore slashes':
-            if (c !== '/' && c !== '\\') {
-              state = 'authority';
-              continue;
-            } else {
-              err('Expected authority, got: ' + c);
-            }
-            break;
-          case 'authority':
-            if (c === '@') {
-              if (seenAt) {
-                err('@ already seen.');
-                buffer += '%40';
-              }
-              seenAt = true;
-              for (var i = 0; i < buffer.length; i++) {
-                var cp = buffer[i];
-                if (cp === '\t' || cp === '\n' || cp === '\r') {
-                  err('Invalid whitespace in authority.');
-                  continue;
-                }
-                if (cp === ':' && this._password === null) {
-                  this._password = '';
-                  continue;
-                }
-                var tempC = percentEscape(cp);
-                if (this._password !== null) {
-                  this._password += tempC;
-                } else {
-                  this._username += tempC;
-                }
-              }
-              buffer = '';
-            } else if (c === EOF || c === '/' || c === '\\' || c === '?' || c === '#') {
-              cursor -= buffer.length;
-              buffer = '';
-              state = 'host';
-              continue;
-            } else {
-              buffer += c;
-            }
-            break;
-          case 'file host':
-            if (c === EOF || c === '/' || c === '\\' || c === '?' || c === '#') {
-              if (buffer.length === 2 && ALPHA.test(buffer[0]) && (buffer[1] === ':' || buffer[1] === '|')) {
-                state = 'relative path';
-              } else if (buffer.length === 0) {
-                state = 'relative path start';
-              } else {
-                this._host = IDNAToASCII.call(this, buffer);
-                buffer = '';
-                state = 'relative path start';
-              }
-              continue;
-            } else if (c === '\t' || c === '\n' || c === '\r') {
-              err('Invalid whitespace in file host.');
-            } else {
-              buffer += c;
-            }
-            break;
-          case 'host':
-          case 'hostname':
-            if (c === ':' && !seenBracket) {
-              this._host = IDNAToASCII.call(this, buffer);
-              buffer = '';
-              state = 'port';
-              if (stateOverride === 'hostname') {
-                break loop;
-              }
-            } else if (c === EOF || c === '/' || c === '\\' || c === '?' || c === '#') {
-              this._host = IDNAToASCII.call(this, buffer);
-              buffer = '';
-              state = 'relative path start';
-              if (stateOverride) {
-                break loop;
-              }
-              continue;
-            } else if (c !== '\t' && c !== '\n' && c !== '\r') {
-              if (c === '[') {
-                seenBracket = true;
-              } else if (c === ']') {
-                seenBracket = false;
-              }
-              buffer += c;
-            } else {
-              err('Invalid code point in host/hostname: ' + c);
-            }
-            break;
-          case 'port':
-            if (/[0-9]/.test(c)) {
-              buffer += c;
-            } else if (c === EOF || c === '/' || c === '\\' || c === '?' || c === '#' || stateOverride) {
-              if (buffer !== '') {
-                var temp = parseInt(buffer, 10);
-                if (temp !== relative[this._scheme]) {
-                  this._port = temp + '';
-                }
-                buffer = '';
-              }
-              if (stateOverride) {
-                break loop;
-              }
-              state = 'relative path start';
-              continue;
-            } else if (c === '\t' || c === '\n' || c === '\r') {
-              err('Invalid code point in port: ' + c);
-            } else {
-              invalid.call(this);
-            }
-            break;
-          case 'relative path start':
-            if (c === '\\') {
-              err('\'\\\' not allowed in path.');
-            }
-            state = 'relative path';
-            if (c !== '/' && c !== '\\') {
-              continue;
-            }
-            break;
-          case 'relative path':
-            if (c === EOF || c === '/' || c === '\\' || !stateOverride && (c === '?' || c === '#')) {
-              if (c === '\\') {
-                err('\\ not allowed in relative path.');
-              }
-              var tmp;
-              if (tmp = relativePathDotMapping[buffer.toLowerCase()]) {
-                buffer = tmp;
-              }
-              if (buffer === '..') {
-                this._path.pop();
-                if (c !== '/' && c !== '\\') {
-                  this._path.push('');
-                }
-              } else if (buffer === '.' && c !== '/' && c !== '\\') {
-                this._path.push('');
-              } else if (buffer !== '.') {
-                if (this._scheme === 'file' && this._path.length === 0 && buffer.length === 2 && ALPHA.test(buffer[0]) && buffer[1] === '|') {
-                  buffer = buffer[0] + ':';
-                }
-                this._path.push(buffer);
-              }
-              buffer = '';
-              if (c === '?') {
-                this._query = '?';
-                state = 'query';
-              } else if (c === '#') {
-                this._fragment = '#';
-                state = 'fragment';
-              }
-            } else if (c !== '\t' && c !== '\n' && c !== '\r') {
-              buffer += percentEscape(c);
-            }
-            break;
-          case 'query':
-            if (!stateOverride && c === '#') {
-              this._fragment = '#';
-              state = 'fragment';
-            } else if (c !== EOF && c !== '\t' && c !== '\n' && c !== '\r') {
-              this._query += percentEscapeQuery(c);
-            }
-            break;
-          case 'fragment':
-            if (c !== EOF && c !== '\t' && c !== '\n' && c !== '\r') {
-              this._fragment += c;
-            }
-            break;
-        }
-        cursor++;
-      }
-    }
-    function clear() {
-      this._scheme = '';
-      this._schemeData = '';
-      this._username = '';
-      this._password = null;
-      this._host = '';
-      this._port = '';
-      this._path = [];
-      this._query = '';
-      this._fragment = '';
-      this._isInvalid = false;
-      this._isRelative = false;
-    }
-    function JURL(url, base) {
-      if (base !== undefined && !(base instanceof JURL)) {
-        base = new JURL(String(base));
-      }
-      this._url = url;
-      clear.call(this);
-      var input = url.replace(/^[ \t\r\n\f]+|[ \t\r\n\f]+$/g, '');
-      parse.call(this, input, null, base);
-    }
-    JURL.prototype = {
-      toString: function toString() {
-        return this.href;
-      },
-
-      get href() {
-        if (this._isInvalid) {
-          return this._url;
-        }
-        var authority = '';
-        if (this._username !== '' || this._password !== null) {
-          authority = this._username + (this._password !== null ? ':' + this._password : '') + '@';
-        }
-        return this.protocol + (this._isRelative ? '//' + authority + this.host : '') + this.pathname + this._query + this._fragment;
-      },
-      set href(href) {
-        clear.call(this);
-        parse.call(this, href);
-      },
-      get protocol() {
-        return this._scheme + ':';
-      },
-      set protocol(protocol) {
-        if (this._isInvalid) {
-          return;
-        }
-        parse.call(this, protocol + ':', 'scheme start');
-      },
-      get host() {
-        return this._isInvalid ? '' : this._port ? this._host + ':' + this._port : this._host;
-      },
-      set host(host) {
-        if (this._isInvalid || !this._isRelative) {
-          return;
-        }
-        parse.call(this, host, 'host');
-      },
-      get hostname() {
-        return this._host;
-      },
-      set hostname(hostname) {
-        if (this._isInvalid || !this._isRelative) {
-          return;
-        }
-        parse.call(this, hostname, 'hostname');
-      },
-      get port() {
-        return this._port;
-      },
-      set port(port) {
-        if (this._isInvalid || !this._isRelative) {
-          return;
-        }
-        parse.call(this, port, 'port');
-      },
-      get pathname() {
-        return this._isInvalid ? '' : this._isRelative ? '/' + this._path.join('/') : this._schemeData;
-      },
-      set pathname(pathname) {
-        if (this._isInvalid || !this._isRelative) {
-          return;
-        }
-        this._path = [];
-        parse.call(this, pathname, 'relative path start');
-      },
-      get search() {
-        return this._isInvalid || !this._query || this._query === '?' ? '' : this._query;
-      },
-      set search(search) {
-        if (this._isInvalid || !this._isRelative) {
-          return;
-        }
-        this._query = '?';
-        if (search[0] === '?') {
-          search = search.slice(1);
-        }
-        parse.call(this, search, 'query');
-      },
-      get hash() {
-        return this._isInvalid || !this._fragment || this._fragment === '#' ? '' : this._fragment;
-      },
-      set hash(hash) {
-        if (this._isInvalid) {
-          return;
-        }
-        this._fragment = '#';
-        if (hash[0] === '#') {
-          hash = hash.slice(1);
-        }
-        parse.call(this, hash, 'fragment');
-      },
-      get origin() {
-        var host;
-        if (this._isInvalid || !this._scheme) {
-          return '';
-        }
-        switch (this._scheme) {
-          case 'data':
-          case 'file':
-          case 'javascript':
-          case 'mailto':
-            return 'null';
-        }
-        host = this.host;
-        if (!host) {
-          return '';
-        }
-        return this._scheme + '://' + host;
-      }
-    };
-    var OriginalURL = globalScope.URL;
-    if (OriginalURL) {
-      JURL.createObjectURL = function (blob) {
-        return OriginalURL.createObjectURL.apply(OriginalURL, arguments);
-      };
-      JURL.revokeObjectURL = function (url) {
-        OriginalURL.revokeObjectURL(url);
-      };
-    }
-    globalScope.URL = JURL;
-  })();
-}
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
-
-/***/ }),
-
-/***/ 148:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* Copyright 2017 Mozilla Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.PDFJS = exports.isWorker = exports.globalScope = undefined;
-
-var _api = __webpack_require__(53);
-
-var _dom_utils = __webpack_require__(18);
-
-var _util = __webpack_require__(8);
-
-var _annotation_layer = __webpack_require__(56);
-
-var _metadata = __webpack_require__(55);
-
-var _text_layer = __webpack_require__(57);
-
-var _svg = __webpack_require__(58);
-
-var isWorker = typeof window === 'undefined';
-if (!_util.globalScope.PDFJS) {
-  _util.globalScope.PDFJS = {};
-}
-var PDFJS = _util.globalScope.PDFJS;
-{
-  PDFJS.version = '1.8.366';
-  PDFJS.build = '32bb0e8c';
-}
-PDFJS.pdfBug = false;
-if (PDFJS.verbosity !== undefined) {
-  (0, _util.setVerbosityLevel)(PDFJS.verbosity);
-}
-delete PDFJS.verbosity;
-Object.defineProperty(PDFJS, 'verbosity', {
-  get: function get() {
-    return (0, _util.getVerbosityLevel)();
-  },
-  set: function set(level) {
-    (0, _util.setVerbosityLevel)(level);
-  },
-
-  enumerable: true,
-  configurable: true
-});
-PDFJS.VERBOSITY_LEVELS = _util.VERBOSITY_LEVELS;
-PDFJS.OPS = _util.OPS;
-PDFJS.UNSUPPORTED_FEATURES = _util.UNSUPPORTED_FEATURES;
-PDFJS.isValidUrl = _dom_utils.isValidUrl;
-PDFJS.shadow = _util.shadow;
-PDFJS.createBlob = _util.createBlob;
-PDFJS.createObjectURL = function PDFJS_createObjectURL(data, contentType) {
-  return (0, _util.createObjectURL)(data, contentType, PDFJS.disableCreateObjectURL);
-};
-Object.defineProperty(PDFJS, 'isLittleEndian', {
-  configurable: true,
-  get: function PDFJS_isLittleEndian() {
-    return (0, _util.shadow)(PDFJS, 'isLittleEndian', (0, _util.isLittleEndian)());
-  }
-});
-PDFJS.removeNullCharacters = _util.removeNullCharacters;
-PDFJS.PasswordResponses = _util.PasswordResponses;
-PDFJS.PasswordException = _util.PasswordException;
-PDFJS.UnknownErrorException = _util.UnknownErrorException;
-PDFJS.InvalidPDFException = _util.InvalidPDFException;
-PDFJS.MissingPDFException = _util.MissingPDFException;
-PDFJS.UnexpectedResponseException = _util.UnexpectedResponseException;
-PDFJS.Util = _util.Util;
-PDFJS.PageViewport = _util.PageViewport;
-PDFJS.createPromiseCapability = _util.createPromiseCapability;
-PDFJS.maxImageSize = PDFJS.maxImageSize === undefined ? -1 : PDFJS.maxImageSize;
-PDFJS.cMapUrl = PDFJS.cMapUrl === undefined ? null : PDFJS.cMapUrl;
-PDFJS.cMapPacked = PDFJS.cMapPacked === undefined ? false : PDFJS.cMapPacked;
-PDFJS.disableFontFace = PDFJS.disableFontFace === undefined ? false : PDFJS.disableFontFace;
-PDFJS.imageResourcesPath = PDFJS.imageResourcesPath === undefined ? '' : PDFJS.imageResourcesPath;
-PDFJS.disableWorker = PDFJS.disableWorker === undefined ? false : PDFJS.disableWorker;
-PDFJS.workerSrc = PDFJS.workerSrc === undefined ? null : PDFJS.workerSrc;
-PDFJS.workerPort = PDFJS.workerPort === undefined ? null : PDFJS.workerPort;
-PDFJS.disableRange = PDFJS.disableRange === undefined ? false : PDFJS.disableRange;
-PDFJS.disableStream = PDFJS.disableStream === undefined ? false : PDFJS.disableStream;
-PDFJS.disableAutoFetch = PDFJS.disableAutoFetch === undefined ? false : PDFJS.disableAutoFetch;
-PDFJS.pdfBug = PDFJS.pdfBug === undefined ? false : PDFJS.pdfBug;
-PDFJS.postMessageTransfers = PDFJS.postMessageTransfers === undefined ? true : PDFJS.postMessageTransfers;
-PDFJS.disableCreateObjectURL = PDFJS.disableCreateObjectURL === undefined ? false : PDFJS.disableCreateObjectURL;
-PDFJS.disableWebGL = PDFJS.disableWebGL === undefined ? true : PDFJS.disableWebGL;
-PDFJS.externalLinkTarget = PDFJS.externalLinkTarget === undefined ? _dom_utils.LinkTarget.NONE : PDFJS.externalLinkTarget;
-PDFJS.externalLinkRel = PDFJS.externalLinkRel === undefined ? _dom_utils.DEFAULT_LINK_REL : PDFJS.externalLinkRel;
-PDFJS.isEvalSupported = PDFJS.isEvalSupported === undefined ? true : PDFJS.isEvalSupported;
-PDFJS.pdfjsNext = PDFJS.pdfjsNext === undefined ? false : PDFJS.pdfjsNext;
-{
-  var savedOpenExternalLinksInNewWindow = PDFJS.openExternalLinksInNewWindow;
-  delete PDFJS.openExternalLinksInNewWindow;
-  Object.defineProperty(PDFJS, 'openExternalLinksInNewWindow', {
-    get: function get() {
-      return PDFJS.externalLinkTarget === _dom_utils.LinkTarget.BLANK;
-    },
-    set: function set(value) {
-      if (value) {
-        (0, _util.deprecated)('PDFJS.openExternalLinksInNewWindow, please use ' + '"PDFJS.externalLinkTarget = PDFJS.LinkTarget.BLANK" instead.');
-      }
-      if (PDFJS.externalLinkTarget !== _dom_utils.LinkTarget.NONE) {
-        (0, _util.warn)('PDFJS.externalLinkTarget is already initialized');
-        return;
-      }
-      PDFJS.externalLinkTarget = value ? _dom_utils.LinkTarget.BLANK : _dom_utils.LinkTarget.NONE;
-    },
-
-    enumerable: true,
-    configurable: true
-  });
-  if (savedOpenExternalLinksInNewWindow) {
-    PDFJS.openExternalLinksInNewWindow = savedOpenExternalLinksInNewWindow;
-  }
-}
-PDFJS.getDocument = _api.getDocument;
-PDFJS.LoopbackPort = _api.LoopbackPort;
-PDFJS.PDFDataRangeTransport = _api.PDFDataRangeTransport;
-PDFJS.PDFWorker = _api.PDFWorker;
-PDFJS.hasCanvasTypedArrays = true;
-PDFJS.CustomStyle = _dom_utils.CustomStyle;
-PDFJS.LinkTarget = _dom_utils.LinkTarget;
-PDFJS.addLinkAttributes = _dom_utils.addLinkAttributes;
-PDFJS.getFilenameFromUrl = _dom_utils.getFilenameFromUrl;
-PDFJS.isExternalLinkTargetSet = _dom_utils.isExternalLinkTargetSet;
-PDFJS.AnnotationLayer = _annotation_layer.AnnotationLayer;
-PDFJS.renderTextLayer = _text_layer.renderTextLayer;
-PDFJS.Metadata = _metadata.Metadata;
-PDFJS.SVGGraphics = _svg.SVGGraphics;
-PDFJS.UnsupportedManager = _api._UnsupportedManager;
-exports.globalScope = _util.globalScope;
-exports.isWorker = isWorker;
-exports.PDFJS = PDFJS;
-
-/***/ }),
-
-/***/ 149:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* Copyright 2017 Mozilla Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.FontLoader = exports.FontFaceObject = undefined;
-
-var _util = __webpack_require__(8);
-
-function FontLoader(docId) {
-  this.docId = docId;
-  this.styleElement = null;
-  this.nativeFontFaces = [];
-  this.loadTestFontId = 0;
-  this.loadingContext = {
-    requests: [],
-    nextRequestId: 0
-  };
-}
-FontLoader.prototype = {
-  insertRule: function fontLoaderInsertRule(rule) {
-    var styleElement = this.styleElement;
-    if (!styleElement) {
-      styleElement = this.styleElement = document.createElement('style');
-      styleElement.id = 'PDFJS_FONT_STYLE_TAG_' + this.docId;
-      document.documentElement.getElementsByTagName('head')[0].appendChild(styleElement);
-    }
-    var styleSheet = styleElement.sheet;
-    styleSheet.insertRule(rule, styleSheet.cssRules.length);
-  },
-  clear: function fontLoaderClear() {
-    if (this.styleElement) {
-      this.styleElement.remove();
-      this.styleElement = null;
-    }
-    this.nativeFontFaces.forEach(function (nativeFontFace) {
-      document.fonts.delete(nativeFontFace);
-    });
-    this.nativeFontFaces.length = 0;
-  }
-};
-{
-  var getLoadTestFont = function getLoadTestFont() {
-    return atob('T1RUTwALAIAAAwAwQ0ZGIDHtZg4AAAOYAAAAgUZGVE1lkzZwAAAEHAAAABxHREVGABQAFQ' + 'AABDgAAAAeT1MvMlYNYwkAAAEgAAAAYGNtYXABDQLUAAACNAAAAUJoZWFk/xVFDQAAALwA' + 'AAA2aGhlYQdkA+oAAAD0AAAAJGhtdHgD6AAAAAAEWAAAAAZtYXhwAAJQAAAAARgAAAAGbm' + 'FtZVjmdH4AAAGAAAAAsXBvc3T/hgAzAAADeAAAACAAAQAAAAEAALZRFsRfDzz1AAsD6AAA' + 'AADOBOTLAAAAAM4KHDwAAAAAA+gDIQAAAAgAAgAAAAAAAAABAAADIQAAAFoD6AAAAAAD6A' + 'ABAAAAAAAAAAAAAAAAAAAAAQAAUAAAAgAAAAQD6AH0AAUAAAKKArwAAACMAooCvAAAAeAA' + 'MQECAAACAAYJAAAAAAAAAAAAAQAAAAAAAAAAAAAAAFBmRWQAwAAuAC4DIP84AFoDIQAAAA' + 'AAAQAAAAAAAAAAACAAIAABAAAADgCuAAEAAAAAAAAAAQAAAAEAAAAAAAEAAQAAAAEAAAAA' + 'AAIAAQAAAAEAAAAAAAMAAQAAAAEAAAAAAAQAAQAAAAEAAAAAAAUAAQAAAAEAAAAAAAYAAQ' + 'AAAAMAAQQJAAAAAgABAAMAAQQJAAEAAgABAAMAAQQJAAIAAgABAAMAAQQJAAMAAgABAAMA' + 'AQQJAAQAAgABAAMAAQQJAAUAAgABAAMAAQQJAAYAAgABWABYAAAAAAAAAwAAAAMAAAAcAA' + 'EAAAAAADwAAwABAAAAHAAEACAAAAAEAAQAAQAAAC7//wAAAC7////TAAEAAAAAAAABBgAA' + 'AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAA' + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAA' + 'AAAAD/gwAyAAAAAQAAAAAAAAAAAAAAAAAAAAABAAQEAAEBAQJYAAEBASH4DwD4GwHEAvgc' + 'A/gXBIwMAYuL+nz5tQXkD5j3CBLnEQACAQEBIVhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWF' + 'hYWFhYWFhYAAABAQAADwACAQEEE/t3Dov6fAH6fAT+fPp8+nwHDosMCvm1Cvm1DAz6fBQA' + 'AAAAAAABAAAAAMmJbzEAAAAAzgTjFQAAAADOBOQpAAEAAAAAAAAADAAUAAQAAAABAAAAAg' + 'ABAAAAAAAAAAAD6AAAAAAAAA==');
-  };
-  Object.defineProperty(FontLoader.prototype, 'loadTestFont', {
-    get: function get() {
-      return (0, _util.shadow)(this, 'loadTestFont', getLoadTestFont());
-    },
-
-    configurable: true
-  });
-  FontLoader.prototype.addNativeFontFace = function fontLoader_addNativeFontFace(nativeFontFace) {
-    this.nativeFontFaces.push(nativeFontFace);
-    document.fonts.add(nativeFontFace);
-  };
-  FontLoader.prototype.bind = function fontLoaderBind(fonts, callback) {
-    var rules = [];
-    var fontsToLoad = [];
-    var fontLoadPromises = [];
-    var getNativeFontPromise = function getNativeFontPromise(nativeFontFace) {
-      return nativeFontFace.loaded.catch(function (e) {
-        (0, _util.warn)('Failed to load font "' + nativeFontFace.family + '": ' + e);
-      });
-    };
-    var isFontLoadingAPISupported = FontLoader.isFontLoadingAPISupported && !FontLoader.isSyncFontLoadingSupported;
-    for (var i = 0, ii = fonts.length; i < ii; i++) {
-      var font = fonts[i];
-      if (font.attached || font.loading === false) {
-        continue;
-      }
-      font.attached = true;
-      if (isFontLoadingAPISupported) {
-        var nativeFontFace = font.createNativeFontFace();
-        if (nativeFontFace) {
-          this.addNativeFontFace(nativeFontFace);
-          fontLoadPromises.push(getNativeFontPromise(nativeFontFace));
-        }
-      } else {
-        var rule = font.createFontFaceRule();
-        if (rule) {
-          this.insertRule(rule);
-          rules.push(rule);
-          fontsToLoad.push(font);
-        }
-      }
-    }
-    var request = this.queueLoadingCallback(callback);
-    if (isFontLoadingAPISupported) {
-      Promise.all(fontLoadPromises).then(function () {
-        request.complete();
-      });
-    } else if (rules.length > 0 && !FontLoader.isSyncFontLoadingSupported) {
-      this.prepareFontLoadEvent(rules, fontsToLoad, request);
-    } else {
-      request.complete();
-    }
-  };
-  FontLoader.prototype.queueLoadingCallback = function FontLoader_queueLoadingCallback(callback) {
-    function LoadLoader_completeRequest() {
-      (0, _util.assert)(!request.end, 'completeRequest() cannot be called twice');
-      request.end = Date.now();
-      while (context.requests.length > 0 && context.requests[0].end) {
-        var otherRequest = context.requests.shift();
-        setTimeout(otherRequest.callback, 0);
-      }
-    }
-    var context = this.loadingContext;
-    var requestId = 'pdfjs-font-loading-' + context.nextRequestId++;
-    var request = {
-      id: requestId,
-      complete: LoadLoader_completeRequest,
-      callback: callback,
-      started: Date.now()
-    };
-    context.requests.push(request);
-    return request;
-  };
-  FontLoader.prototype.prepareFontLoadEvent = function fontLoaderPrepareFontLoadEvent(rules, fonts, request) {
-    function int32(data, offset) {
-      return data.charCodeAt(offset) << 24 | data.charCodeAt(offset + 1) << 16 | data.charCodeAt(offset + 2) << 8 | data.charCodeAt(offset + 3) & 0xff;
-    }
-    function spliceString(s, offset, remove, insert) {
-      var chunk1 = s.substr(0, offset);
-      var chunk2 = s.substr(offset + remove);
-      return chunk1 + insert + chunk2;
-    }
-    var i, ii;
-    var canvas = document.createElement('canvas');
-    canvas.width = 1;
-    canvas.height = 1;
-    var ctx = canvas.getContext('2d');
-    var called = 0;
-    function isFontReady(name, callback) {
-      called++;
-      if (called > 30) {
-        (0, _util.warn)('Load test font never loaded.');
-        callback();
-        return;
-      }
-      ctx.font = '30px ' + name;
-      ctx.fillText('.', 0, 20);
-      var imageData = ctx.getImageData(0, 0, 1, 1);
-      if (imageData.data[3] > 0) {
-        callback();
-        return;
-      }
-      setTimeout(isFontReady.bind(null, name, callback));
-    }
-    var loadTestFontId = 'lt' + Date.now() + this.loadTestFontId++;
-    var data = this.loadTestFont;
-    var COMMENT_OFFSET = 976;
-    data = spliceString(data, COMMENT_OFFSET, loadTestFontId.length, loadTestFontId);
-    var CFF_CHECKSUM_OFFSET = 16;
-    var XXXX_VALUE = 0x58585858;
-    var checksum = int32(data, CFF_CHECKSUM_OFFSET);
-    for (i = 0, ii = loadTestFontId.length - 3; i < ii; i += 4) {
-      checksum = checksum - XXXX_VALUE + int32(loadTestFontId, i) | 0;
-    }
-    if (i < loadTestFontId.length) {
-      checksum = checksum - XXXX_VALUE + int32(loadTestFontId + 'XXX', i) | 0;
-    }
-    data = spliceString(data, CFF_CHECKSUM_OFFSET, 4, (0, _util.string32)(checksum));
-    var url = 'url(data:font/opentype;base64,' + btoa(data) + ');';
-    var rule = '@font-face { font-family:"' + loadTestFontId + '";src:' + url + '}';
-    this.insertRule(rule);
-    var names = [];
-    for (i = 0, ii = fonts.length; i < ii; i++) {
-      names.push(fonts[i].loadedName);
-    }
-    names.push(loadTestFontId);
-    var div = document.createElement('div');
-    div.setAttribute('style', 'visibility: hidden;' + 'width: 10px; height: 10px;' + 'position: absolute; top: 0px; left: 0px;');
-    for (i = 0, ii = names.length; i < ii; ++i) {
-      var span = document.createElement('span');
-      span.textContent = 'Hi';
-      span.style.fontFamily = names[i];
-      div.appendChild(span);
-    }
-    document.body.appendChild(div);
-    isFontReady(loadTestFontId, function () {
-      document.body.removeChild(div);
-      request.complete();
-    });
-  };
-}
-{
-  FontLoader.isFontLoadingAPISupported = typeof document !== 'undefined' && !!document.fonts;
-}
-{
-  var isSyncFontLoadingSupported = function isSyncFontLoadingSupported() {
-    if (typeof navigator === 'undefined') {
-      return true;
-    }
-    var supported = false;
-    var m = /Mozilla\/5.0.*?rv:(\d+).*? Gecko/.exec(navigator.userAgent);
-    if (m && m[1] >= 14) {
-      supported = true;
-    }
-    return supported;
-  };
-  Object.defineProperty(FontLoader, 'isSyncFontLoadingSupported', {
-    get: function get() {
-      return (0, _util.shadow)(FontLoader, 'isSyncFontLoadingSupported', isSyncFontLoadingSupported());
-    },
-
-    enumerable: true,
-    configurable: true
-  });
-}
-var IsEvalSupportedCached = {
-  get value() {
-    return (0, _util.shadow)(this, 'value', (0, _util.isEvalSupported)());
-  }
-};
-var FontFaceObject = function FontFaceObjectClosure() {
-  function FontFaceObject(translatedData, options) {
-    this.compiledGlyphs = Object.create(null);
-    for (var i in translatedData) {
-      this[i] = translatedData[i];
-    }
-    this.options = options;
-  }
-  FontFaceObject.prototype = {
-    createNativeFontFace: function FontFaceObject_createNativeFontFace() {
-      if (!this.data) {
-        return null;
-      }
-      if (this.options.disableFontFace) {
-        this.disableFontFace = true;
-        return null;
-      }
-      var nativeFontFace = new FontFace(this.loadedName, this.data, {});
-      if (this.options.fontRegistry) {
-        this.options.fontRegistry.registerFont(this);
-      }
-      return nativeFontFace;
-    },
-    createFontFaceRule: function FontFaceObject_createFontFaceRule() {
-      if (!this.data) {
-        return null;
-      }
-      if (this.options.disableFontFace) {
-        this.disableFontFace = true;
-        return null;
-      }
-      var data = (0, _util.bytesToString)(new Uint8Array(this.data));
-      var fontName = this.loadedName;
-      var url = 'url(data:' + this.mimetype + ';base64,' + btoa(data) + ');';
-      var rule = '@font-face { font-family:"' + fontName + '";src:' + url + '}';
-      if (this.options.fontRegistry) {
-        this.options.fontRegistry.registerFont(this, url);
-      }
-      return rule;
-    },
-    getPathGenerator: function FontFaceObject_getPathGenerator(objs, character) {
-      if (!(character in this.compiledGlyphs)) {
-        var cmds = objs.get(this.loadedName + '_path_' + character);
-        var current, i, len;
-        if (this.options.isEvalSupported && IsEvalSupportedCached.value) {
-          var args,
-              js = '';
-          for (i = 0, len = cmds.length; i < len; i++) {
-            current = cmds[i];
-            if (current.args !== undefined) {
-              args = current.args.join(',');
-            } else {
-              args = '';
-            }
-            js += 'c.' + current.cmd + '(' + args + ');\n';
-          }
-          this.compiledGlyphs[character] = new Function('c', 'size', js);
-        } else {
-          this.compiledGlyphs[character] = function (c, size) {
-            for (i = 0, len = cmds.length; i < len; i++) {
-              current = cmds[i];
-              if (current.cmd === 'scale') {
-                current.args = [size, -size];
-              }
-              c[current.cmd].apply(c, current.args);
-            }
-          };
-        }
-      }
-      return this.compiledGlyphs[character];
-    }
-  };
-  return FontFaceObject;
-}();
-exports.FontFaceObject = FontFaceObject;
-exports.FontLoader = FontLoader;
-
-/***/ }),
-
-/***/ 150:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* Copyright 2017 Mozilla Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.CanvasGraphics = undefined;
-
-var _util = __webpack_require__(8);
-
-var _pattern_helper = __webpack_require__(151);
-
-var _webgl = __webpack_require__(54);
-
-var MIN_FONT_SIZE = 16;
-var MAX_FONT_SIZE = 100;
-var MAX_GROUP_SIZE = 4096;
-var MIN_WIDTH_FACTOR = 0.65;
-var COMPILE_TYPE3_GLYPHS = true;
-var MAX_SIZE_TO_COMPILE = 1000;
-var FULL_CHUNK_HEIGHT = 16;
-var IsLittleEndianCached = {
-  get value() {
-    return (0, _util.shadow)(IsLittleEndianCached, 'value', (0, _util.isLittleEndian)());
-  }
-};
-function addContextCurrentTransform(ctx) {
-  if (!ctx.mozCurrentTransform) {
-    ctx._originalSave = ctx.save;
-    ctx._originalRestore = ctx.restore;
-    ctx._originalRotate = ctx.rotate;
-    ctx._originalScale = ctx.scale;
-    ctx._originalTranslate = ctx.translate;
-    ctx._originalTransform = ctx.transform;
-    ctx._originalSetTransform = ctx.setTransform;
-    ctx._transformMatrix = ctx._transformMatrix || [1, 0, 0, 1, 0, 0];
-    ctx._transformStack = [];
-    Object.defineProperty(ctx, 'mozCurrentTransform', {
-      get: function getCurrentTransform() {
-        return this._transformMatrix;
-      }
-    });
-    Object.defineProperty(ctx, 'mozCurrentTransformInverse', {
-      get: function getCurrentTransformInverse() {
-        var m = this._transformMatrix;
-        var a = m[0],
-            b = m[1],
-            c = m[2],
-            d = m[3],
-            e = m[4],
-            f = m[5];
-        var ad_bc = a * d - b * c;
-        var bc_ad = b * c - a * d;
-        return [d / ad_bc, b / bc_ad, c / bc_ad, a / ad_bc, (d * e - c * f) / bc_ad, (b * e - a * f) / ad_bc];
-      }
-    });
-    ctx.save = function ctxSave() {
-      var old = this._transformMatrix;
-      this._transformStack.push(old);
-      this._transformMatrix = old.slice(0, 6);
-      this._originalSave();
-    };
-    ctx.restore = function ctxRestore() {
-      var prev = this._transformStack.pop();
-      if (prev) {
-        this._transformMatrix = prev;
-        this._originalRestore();
-      }
-    };
-    ctx.translate = function ctxTranslate(x, y) {
-      var m = this._transformMatrix;
-      m[4] = m[0] * x + m[2] * y + m[4];
-      m[5] = m[1] * x + m[3] * y + m[5];
-      this._originalTranslate(x, y);
-    };
-    ctx.scale = function ctxScale(x, y) {
-      var m = this._transformMatrix;
-      m[0] = m[0] * x;
-      m[1] = m[1] * x;
-      m[2] = m[2] * y;
-      m[3] = m[3] * y;
-      this._originalScale(x, y);
-    };
-    ctx.transform = function ctxTransform(a, b, c, d, e, f) {
-      var m = this._transformMatrix;
-      this._transformMatrix = [m[0] * a + m[2] * b, m[1] * a + m[3] * b, m[0] * c + m[2] * d, m[1] * c + m[3] * d, m[0] * e + m[2] * f + m[4], m[1] * e + m[3] * f + m[5]];
-      ctx._originalTransform(a, b, c, d, e, f);
-    };
-    ctx.setTransform = function ctxSetTransform(a, b, c, d, e, f) {
-      this._transformMatrix = [a, b, c, d, e, f];
-      ctx._originalSetTransform(a, b, c, d, e, f);
-    };
-    ctx.rotate = function ctxRotate(angle) {
-      var cosValue = Math.cos(angle);
-      var sinValue = Math.sin(angle);
-      var m = this._transformMatrix;
-      this._transformMatrix = [m[0] * cosValue + m[2] * sinValue, m[1] * cosValue + m[3] * sinValue, m[0] * -sinValue + m[2] * cosValue, m[1] * -sinValue + m[3] * cosValue, m[4], m[5]];
-      this._originalRotate(angle);
-    };
-  }
-}
-var CachedCanvases = function CachedCanvasesClosure() {
-  function CachedCanvases(canvasFactory) {
-    this.canvasFactory = canvasFactory;
-    this.cache = Object.create(null);
-  }
-  CachedCanvases.prototype = {
-    getCanvas: function CachedCanvases_getCanvas(id, width, height, trackTransform) {
-      var canvasEntry;
-      if (this.cache[id] !== undefined) {
-        canvasEntry = this.cache[id];
-        this.canvasFactory.reset(canvasEntry, width, height);
-        canvasEntry.context.setTransform(1, 0, 0, 1, 0, 0);
-      } else {
-        canvasEntry = this.canvasFactory.create(width, height);
-        this.cache[id] = canvasEntry;
-      }
-      if (trackTransform) {
-        addContextCurrentTransform(canvasEntry.context);
-      }
-      return canvasEntry;
-    },
-    clear: function clear() {
-      for (var id in this.cache) {
-        var canvasEntry = this.cache[id];
-        this.canvasFactory.destroy(canvasEntry);
-        delete this.cache[id];
-      }
-    }
-  };
-  return CachedCanvases;
-}();
-function compileType3Glyph(imgData) {
-  var POINT_TO_PROCESS_LIMIT = 1000;
-  var width = imgData.width,
-      height = imgData.height;
-  var i,
-      j,
-      j0,
-      width1 = width + 1;
-  var points = new Uint8Array(width1 * (height + 1));
-  var POINT_TYPES = new Uint8Array([0, 2, 4, 0, 1, 0, 5, 4, 8, 10, 0, 8, 0, 2, 1, 0]);
-  var lineSize = width + 7 & ~7,
-      data0 = imgData.data;
-  var data = new Uint8Array(lineSize * height),
-      pos = 0,
-      ii;
-  for (i = 0, ii = data0.length; i < ii; i++) {
-    var mask = 128,
-        elem = data0[i];
-    while (mask > 0) {
-      data[pos++] = elem & mask ? 0 : 255;
-      mask >>= 1;
-    }
-  }
-  var count = 0;
-  pos = 0;
-  if (data[pos] !== 0) {
-    points[0] = 1;
-    ++count;
-  }
-  for (j = 1; j < width; j++) {
-    if (data[pos] !== data[pos + 1]) {
-      points[j] = data[pos] ? 2 : 1;
-      ++count;
-    }
-    pos++;
-  }
-  if (data[pos] !== 0) {
-    points[j] = 2;
-    ++count;
-  }
-  for (i = 1; i < height; i++) {
-    pos = i * lineSize;
-    j0 = i * width1;
-    if (data[pos - lineSize] !== data[pos]) {
-      points[j0] = data[pos] ? 1 : 8;
-      ++count;
-    }
-    var sum = (data[pos] ? 4 : 0) + (data[pos - lineSize] ? 8 : 0);
-    for (j = 1; j < width; j++) {
-      sum = (sum >> 2) + (data[pos + 1] ? 4 : 0) + (data[pos - lineSize + 1] ? 8 : 0);
-      if (POINT_TYPES[sum]) {
-        points[j0 + j] = POINT_TYPES[sum];
-        ++count;
-      }
-      pos++;
-    }
-    if (data[pos - lineSize] !== data[pos]) {
-      points[j0 + j] = data[pos] ? 2 : 4;
-      ++count;
-    }
-    if (count > POINT_TO_PROCESS_LIMIT) {
-      return null;
-    }
-  }
-  pos = lineSize * (height - 1);
-  j0 = i * width1;
-  if (data[pos] !== 0) {
-    points[j0] = 8;
-    ++count;
-  }
-  for (j = 1; j < width; j++) {
-    if (data[pos] !== data[pos + 1]) {
-      points[j0 + j] = data[pos] ? 4 : 8;
-      ++count;
-    }
-    pos++;
-  }
-  if (data[pos] !== 0) {
-    points[j0 + j] = 4;
-    ++count;
-  }
-  if (count > POINT_TO_PROCESS_LIMIT) {
-    return null;
-  }
-  var steps = new Int32Array([0, width1, -1, 0, -width1, 0, 0, 0, 1]);
-  var outlines = [];
-  for (i = 0; count && i <= height; i++) {
-    var p = i * width1;
-    var end = p + width;
-    while (p < end && !points[p]) {
-      p++;
-    }
-    if (p === end) {
-      continue;
-    }
-    var coords = [p % width1, i];
-    var type = points[p],
-        p0 = p,
-        pp;
-    do {
-      var step = steps[type];
-      do {
-        p += step;
-      } while (!points[p]);
-      pp = points[p];
-      if (pp !== 5 && pp !== 10) {
-        type = pp;
-        points[p] = 0;
-      } else {
-        type = pp & 0x33 * type >> 4;
-        points[p] &= type >> 2 | type << 2;
-      }
-      coords.push(p % width1);
-      coords.push(p / width1 | 0);
-      --count;
-    } while (p0 !== p);
-    outlines.push(coords);
-    --i;
-  }
-  var drawOutline = function drawOutline(c) {
-    c.save();
-    c.scale(1 / width, -1 / height);
-    c.translate(0, -height);
-    c.beginPath();
-    for (var i = 0, ii = outlines.length; i < ii; i++) {
-      var o = outlines[i];
-      c.moveTo(o[0], o[1]);
-      for (var j = 2, jj = o.length; j < jj; j += 2) {
-        c.lineTo(o[j], o[j + 1]);
-      }
-    }
-    c.fill();
-    c.beginPath();
-    c.restore();
-  };
-  return drawOutline;
-}
-var CanvasExtraState = function CanvasExtraStateClosure() {
-  function CanvasExtraState(old) {
-    this.alphaIsShape = false;
-    this.fontSize = 0;
-    this.fontSizeScale = 1;
-    this.textMatrix = _util.IDENTITY_MATRIX;
-    this.textMatrixScale = 1;
-    this.fontMatrix = _util.FONT_IDENTITY_MATRIX;
-    this.leading = 0;
-    this.x = 0;
-    this.y = 0;
-    this.lineX = 0;
-    this.lineY = 0;
-    this.charSpacing = 0;
-    this.wordSpacing = 0;
-    this.textHScale = 1;
-    this.textRenderingMode = _util.TextRenderingMode.FILL;
-    this.textRise = 0;
-    this.fillColor = '#000000';
-    this.strokeColor = '#000000';
-    this.patternFill = false;
-    this.fillAlpha = 1;
-    this.strokeAlpha = 1;
-    this.lineWidth = 1;
-    this.activeSMask = null;
-    this.resumeSMaskCtx = null;
-    this.old = old;
-  }
-  CanvasExtraState.prototype = {
-    clone: function CanvasExtraState_clone() {
-      return Object.create(this);
-    },
-    setCurrentPoint: function CanvasExtraState_setCurrentPoint(x, y) {
-      this.x = x;
-      this.y = y;
-    }
-  };
-  return CanvasExtraState;
-}();
-var CanvasGraphics = function CanvasGraphicsClosure() {
-  var EXECUTION_TIME = 15;
-  var EXECUTION_STEPS = 10;
-  function CanvasGraphics(canvasCtx, commonObjs, objs, canvasFactory, imageLayer) {
-    this.ctx = canvasCtx;
-    this.current = new CanvasExtraState();
-    this.stateStack = [];
-    this.pendingClip = null;
-    this.pendingEOFill = false;
-    this.res = null;
-    this.xobjs = null;
-    this.commonObjs = commonObjs;
-    this.objs = objs;
-    this.canvasFactory = canvasFactory;
-    this.imageLayer = imageLayer;
-    this.groupStack = [];
-    this.processingType3 = null;
-    this.baseTransform = null;
-    this.baseTransformStack = [];
-    this.groupLevel = 0;
-    this.smaskStack = [];
-    this.smaskCounter = 0;
-    this.tempSMask = null;
-    this.cachedCanvases = new CachedCanvases(this.canvasFactory);
-    if (canvasCtx) {
-      addContextCurrentTransform(canvasCtx);
-    }
-    this.cachedGetSinglePixelWidth = null;
-  }
-  function putBinaryImageData(ctx, imgData) {
-    if (typeof ImageData !== 'undefined' && imgData instanceof ImageData) {
-      ctx.putImageData(imgData, 0, 0);
-      return;
-    }
-    var height = imgData.height,
-        width = imgData.width;
-    var partialChunkHeight = height % FULL_CHUNK_HEIGHT;
-    var fullChunks = (height - partialChunkHeight) / FULL_CHUNK_HEIGHT;
-    var totalChunks = partialChunkHeight === 0 ? fullChunks : fullChunks + 1;
-    var chunkImgData = ctx.createImageData(width, FULL_CHUNK_HEIGHT);
-    var srcPos = 0,
-        destPos;
-    var src = imgData.data;
-    var dest = chunkImgData.data;
-    var i, j, thisChunkHeight, elemsInThisChunk;
-    if (imgData.kind === _util.ImageKind.GRAYSCALE_1BPP) {
-      var srcLength = src.byteLength;
-      var dest32 = new Uint32Array(dest.buffer, 0, dest.byteLength >> 2);
-      var dest32DataLength = dest32.length;
-      var fullSrcDiff = width + 7 >> 3;
-      var white = 0xFFFFFFFF;
-      var black = IsLittleEndianCached.value ? 0xFF000000 : 0x000000FF;
-      for (i = 0; i < totalChunks; i++) {
-        thisChunkHeight = i < fullChunks ? FULL_CHUNK_HEIGHT : partialChunkHeight;
-        destPos = 0;
-        for (j = 0; j < thisChunkHeight; j++) {
-          var srcDiff = srcLength - srcPos;
-          var k = 0;
-          var kEnd = srcDiff > fullSrcDiff ? width : srcDiff * 8 - 7;
-          var kEndUnrolled = kEnd & ~7;
-          var mask = 0;
-          var srcByte = 0;
-          for (; k < kEndUnrolled; k += 8) {
-            srcByte = src[srcPos++];
-            dest32[destPos++] = srcByte & 128 ? white : black;
-            dest32[destPos++] = srcByte & 64 ? white : black;
-            dest32[destPos++] = srcByte & 32 ? white : black;
-            dest32[destPos++] = srcByte & 16 ? white : black;
-            dest32[destPos++] = srcByte & 8 ? white : black;
-            dest32[destPos++] = srcByte & 4 ? white : black;
-            dest32[destPos++] = srcByte & 2 ? white : black;
-            dest32[destPos++] = srcByte & 1 ? white : black;
-          }
-          for (; k < kEnd; k++) {
-            if (mask === 0) {
-              srcByte = src[srcPos++];
-              mask = 128;
-            }
-            dest32[destPos++] = srcByte & mask ? white : black;
-            mask >>= 1;
-          }
-        }
-        while (destPos < dest32DataLength) {
-          dest32[destPos++] = 0;
-        }
-        ctx.putImageData(chunkImgData, 0, i * FULL_CHUNK_HEIGHT);
-      }
-    } else if (imgData.kind === _util.ImageKind.RGBA_32BPP) {
-      j = 0;
-      elemsInThisChunk = width * FULL_CHUNK_HEIGHT * 4;
-      for (i = 0; i < fullChunks; i++) {
-        dest.set(src.subarray(srcPos, srcPos + elemsInThisChunk));
-        srcPos += elemsInThisChunk;
-        ctx.putImageData(chunkImgData, 0, j);
-        j += FULL_CHUNK_HEIGHT;
-      }
-      if (i < totalChunks) {
-        elemsInThisChunk = width * partialChunkHeight * 4;
-        dest.set(src.subarray(srcPos, srcPos + elemsInThisChunk));
-        ctx.putImageData(chunkImgData, 0, j);
-      }
-    } else if (imgData.kind === _util.ImageKind.RGB_24BPP) {
-      thisChunkHeight = FULL_CHUNK_HEIGHT;
-      elemsInThisChunk = width * thisChunkHeight;
-      for (i = 0; i < totalChunks; i++) {
-        if (i >= fullChunks) {
-          thisChunkHeight = partialChunkHeight;
-          elemsInThisChunk = width * thisChunkHeight;
-        }
-        destPos = 0;
-        for (j = elemsInThisChunk; j--;) {
-          dest[destPos++] = src[srcPos++];
-          dest[destPos++] = src[srcPos++];
-          dest[destPos++] = src[srcPos++];
-          dest[destPos++] = 255;
-        }
-        ctx.putImageData(chunkImgData, 0, i * FULL_CHUNK_HEIGHT);
-      }
-    } else {
-      (0, _util.error)('bad image kind: ' + imgData.kind);
-    }
-  }
-  function putBinaryImageMask(ctx, imgData) {
-    var height = imgData.height,
-        width = imgData.width;
-    var partialChunkHeight = height % FULL_CHUNK_HEIGHT;
-    var fullChunks = (height - partialChunkHeight) / FULL_CHUNK_HEIGHT;
-    var totalChunks = partialChunkHeight === 0 ? fullChunks : fullChunks + 1;
-    var chunkImgData = ctx.createImageData(width, FULL_CHUNK_HEIGHT);
-    var srcPos = 0;
-    var src = imgData.data;
-    var dest = chunkImgData.data;
-    for (var i = 0; i < totalChunks; i++) {
-      var thisChunkHeight = i < fullChunks ? FULL_CHUNK_HEIGHT : partialChunkHeight;
-      var destPos = 3;
-      for (var j = 0; j < thisChunkHeight; j++) {
-        var mask = 0;
-        for (var k = 0; k < width; k++) {
-          if (!mask) {
-            var elem = src[srcPos++];
-            mask = 128;
-          }
-          dest[destPos] = elem & mask ? 0 : 255;
-          destPos += 4;
-          mask >>= 1;
-        }
-      }
-      ctx.putImageData(chunkImgData, 0, i * FULL_CHUNK_HEIGHT);
-    }
-  }
-  function copyCtxState(sourceCtx, destCtx) {
-    var properties = ['strokeStyle', 'fillStyle', 'fillRule', 'globalAlpha', 'lineWidth', 'lineCap', 'lineJoin', 'miterLimit', 'globalCompositeOperation', 'font'];
-    for (var i = 0, ii = properties.length; i < ii; i++) {
-      var property = properties[i];
-      if (sourceCtx[property] !== undefined) {
-        destCtx[property] = sourceCtx[property];
-      }
-    }
-    if (sourceCtx.setLineDash !== undefined) {
-      destCtx.setLineDash(sourceCtx.getLineDash());
-      destCtx.lineDashOffset = sourceCtx.lineDashOffset;
-    }
-  }
-  function composeSMaskBackdrop(bytes, r0, g0, b0) {
-    var length = bytes.length;
-    for (var i = 3; i < length; i += 4) {
-      var alpha = bytes[i];
-      if (alpha === 0) {
-        bytes[i - 3] = r0;
-        bytes[i - 2] = g0;
-        bytes[i - 1] = b0;
-      } else if (alpha < 255) {
-        var alpha_ = 255 - alpha;
-        bytes[i - 3] = bytes[i - 3] * alpha + r0 * alpha_ >> 8;
-        bytes[i - 2] = bytes[i - 2] * alpha + g0 * alpha_ >> 8;
-        bytes[i - 1] = bytes[i - 1] * alpha + b0 * alpha_ >> 8;
-      }
-    }
-  }
-  function composeSMaskAlpha(maskData, layerData, transferMap) {
-    var length = maskData.length;
-    var scale = 1 / 255;
-    for (var i = 3; i < length; i += 4) {
-      var alpha = transferMap ? transferMap[maskData[i]] : maskData[i];
-      layerData[i] = layerData[i] * alpha * scale | 0;
-    }
-  }
-  function composeSMaskLuminosity(maskData, layerData, transferMap) {
-    var length = maskData.length;
-    for (var i = 3; i < length; i += 4) {
-      var y = maskData[i - 3] * 77 + maskData[i - 2] * 152 + maskData[i - 1] * 28;
-      layerData[i] = transferMap ? layerData[i] * transferMap[y >> 8] >> 8 : layerData[i] * y >> 16;
-    }
-  }
-  function genericComposeSMask(maskCtx, layerCtx, width, height, subtype, backdrop, transferMap) {
-    var hasBackdrop = !!backdrop;
-    var r0 = hasBackdrop ? backdrop[0] : 0;
-    var g0 = hasBackdrop ? backdrop[1] : 0;
-    var b0 = hasBackdrop ? backdrop[2] : 0;
-    var composeFn;
-    if (subtype === 'Luminosity') {
-      composeFn = composeSMaskLuminosity;
-    } else {
-      composeFn = composeSMaskAlpha;
-    }
-    var PIXELS_TO_PROCESS = 1048576;
-    var chunkSize = Math.min(height, Math.ceil(PIXELS_TO_PROCESS / width));
-    for (var row = 0; row < height; row += chunkSize) {
-      var chunkHeight = Math.min(chunkSize, height - row);
-      var maskData = maskCtx.getImageData(0, row, width, chunkHeight);
-      var layerData = layerCtx.getImageData(0, row, width, chunkHeight);
-      if (hasBackdrop) {
-        composeSMaskBackdrop(maskData.data, r0, g0, b0);
-      }
-      composeFn(maskData.data, layerData.data, transferMap);
-      maskCtx.putImageData(layerData, 0, row);
-    }
-  }
-  function composeSMask(ctx, smask, layerCtx) {
-    var mask = smask.canvas;
-    var maskCtx = smask.context;
-    ctx.setTransform(smask.scaleX, 0, 0, smask.scaleY, smask.offsetX, smask.offsetY);
-    var backdrop = smask.backdrop || null;
-    if (!smask.transferMap && _webgl.WebGLUtils.isEnabled) {
-      var composed = _webgl.WebGLUtils.composeSMask(layerCtx.canvas, mask, {
-        subtype: smask.subtype,
-        backdrop: backdrop
-      });
-      ctx.setTransform(1, 0, 0, 1, 0, 0);
-      ctx.drawImage(composed, smask.offsetX, smask.offsetY);
-      return;
-    }
-    genericComposeSMask(maskCtx, layerCtx, mask.width, mask.height, smask.subtype, backdrop, smask.transferMap);
-    ctx.drawImage(mask, 0, 0);
-  }
-  var LINE_CAP_STYLES = ['butt', 'round', 'square'];
-  var LINE_JOIN_STYLES = ['miter', 'round', 'bevel'];
-  var NORMAL_CLIP = {};
-  var EO_CLIP = {};
-  CanvasGraphics.prototype = {
-    beginDrawing: function beginDrawing(_ref) {
-      var transform = _ref.transform,
-          viewport = _ref.viewport,
-          transparency = _ref.transparency,
-          _ref$background = _ref.background,
-          background = _ref$background === undefined ? null : _ref$background;
-
-      var width = this.ctx.canvas.width;
-      var height = this.ctx.canvas.height;
-      this.ctx.save();
-      this.ctx.fillStyle = background || 'rgb(255, 255, 255)';
-      this.ctx.fillRect(0, 0, width, height);
-      this.ctx.restore();
-      if (transparency) {
-        var transparentCanvas = this.cachedCanvases.getCanvas('transparent', width, height, true);
-        this.compositeCtx = this.ctx;
-        this.transparentCanvas = transparentCanvas.canvas;
-        this.ctx = transparentCanvas.context;
-        this.ctx.save();
-        this.ctx.transform.apply(this.ctx, this.compositeCtx.mozCurrentTransform);
-      }
-      this.ctx.save();
-      if (transform) {
-        this.ctx.transform.apply(this.ctx, transform);
-      }
-      this.ctx.transform.apply(this.ctx, viewport.transform);
-      this.baseTransform = this.ctx.mozCurrentTransform.slice();
-      if (this.imageLayer) {
-        this.imageLayer.beginLayout();
-      }
-    },
-
-    executeOperatorList: function CanvasGraphics_executeOperatorList(operatorList, executionStartIdx, continueCallback, stepper) {
-      var argsArray = operatorList.argsArray;
-      var fnArray = operatorList.fnArray;
-      var i = executionStartIdx || 0;
-      var argsArrayLen = argsArray.length;
-      if (argsArrayLen === i) {
-        return i;
-      }
-      var chunkOperations = argsArrayLen - i > EXECUTION_STEPS && typeof continueCallback === 'function';
-      var endTime = chunkOperations ? Date.now() + EXECUTION_TIME : 0;
-      var steps = 0;
-      var commonObjs = this.commonObjs;
-      var objs = this.objs;
-      var fnId;
-      while (true) {
-        if (stepper !== undefined && i === stepper.nextBreakPoint) {
-          stepper.breakIt(i, continueCallback);
-          return i;
-        }
-        fnId = fnArray[i];
-        if (fnId !== _util.OPS.dependency) {
-          this[fnId].apply(this, argsArray[i]);
-        } else {
-          var deps = argsArray[i];
-          for (var n = 0, nn = deps.length; n < nn; n++) {
-            var depObjId = deps[n];
-            var common = depObjId[0] === 'g' && depObjId[1] === '_';
-            var objsPool = common ? commonObjs : objs;
-            if (!objsPool.isResolved(depObjId)) {
-              objsPool.get(depObjId, continueCallback);
-              return i;
-            }
-          }
-        }
-        i++;
-        if (i === argsArrayLen) {
-          return i;
-        }
-        if (chunkOperations && ++steps > EXECUTION_STEPS) {
-          if (Date.now() > endTime) {
-            continueCallback();
-            return i;
-          }
-          steps = 0;
-        }
-      }
-    },
-    endDrawing: function CanvasGraphics_endDrawing() {
-      if (this.current.activeSMask !== null) {
-        this.endSMaskGroup();
-      }
-      this.ctx.restore();
-      if (this.transparentCanvas) {
-        this.ctx = this.compositeCtx;
-        this.ctx.save();
-        this.ctx.setTransform(1, 0, 0, 1, 0, 0);
-        this.ctx.drawImage(this.transparentCanvas, 0, 0);
-        this.ctx.restore();
-        this.transparentCanvas = null;
-      }
-      this.cachedCanvases.clear();
-      _webgl.WebGLUtils.clear();
-      if (this.imageLayer) {
-        this.imageLayer.endLayout();
-      }
-    },
-    setLineWidth: function CanvasGraphics_setLineWidth(width) {
-      this.current.lineWidth = width;
-      this.ctx.lineWidth = width;
-    },
-    setLineCap: function CanvasGraphics_setLineCap(style) {
-      this.ctx.lineCap = LINE_CAP_STYLES[style];
-    },
-    setLineJoin: function CanvasGraphics_setLineJoin(style) {
-      this.ctx.lineJoin = LINE_JOIN_STYLES[style];
-    },
-    setMiterLimit: function CanvasGraphics_setMiterLimit(limit) {
-      this.ctx.miterLimit = limit;
-    },
-    setDash: function CanvasGraphics_setDash(dashArray, dashPhase) {
-      var ctx = this.ctx;
-      if (ctx.setLineDash !== undefined) {
-        ctx.setLineDash(dashArray);
-        ctx.lineDashOffset = dashPhase;
-      }
-    },
-    setRenderingIntent: function CanvasGraphics_setRenderingIntent(intent) {},
-    setFlatness: function CanvasGraphics_setFlatness(flatness) {},
-    setGState: function CanvasGraphics_setGState(states) {
-      for (var i = 0, ii = states.length; i < ii; i++) {
-        var state = states[i];
-        var key = state[0];
-        var value = state[1];
-        switch (key) {
-          case 'LW':
-            this.setLineWidth(value);
-            break;
-          case 'LC':
-            this.setLineCap(value);
-            break;
-          case 'LJ':
-            this.setLineJoin(value);
-            break;
-          case 'ML':
-            this.setMiterLimit(value);
-            break;
-          case 'D':
-            this.setDash(value[0], value[1]);
-            break;
-          case 'RI':
-            this.setRenderingIntent(value);
-            break;
-          case 'FL':
-            this.setFlatness(value);
-            break;
-          case 'Font':
-            this.setFont(value[0], value[1]);
-            break;
-          case 'CA':
-            this.current.strokeAlpha = state[1];
-            break;
-          case 'ca':
-            this.current.fillAlpha = state[1];
-            this.ctx.globalAlpha = state[1];
-            break;
-          case 'BM':
-            this.ctx.globalCompositeOperation = value;
-            break;
-          case 'SMask':
-            if (this.current.activeSMask) {
-              if (this.stateStack.length > 0 && this.stateStack[this.stateStack.length - 1].activeSMask === this.current.activeSMask) {
-                this.suspendSMaskGroup();
-              } else {
-                this.endSMaskGroup();
-              }
-            }
-            this.current.activeSMask = value ? this.tempSMask : null;
-            if (this.current.activeSMask) {
-              this.beginSMaskGroup();
-            }
-            this.tempSMask = null;
-            break;
-        }
-      }
-    },
-    beginSMaskGroup: function CanvasGraphics_beginSMaskGroup() {
-      var activeSMask = this.current.activeSMask;
-      var drawnWidth = activeSMask.canvas.width;
-      var drawnHeight = activeSMask.canvas.height;
-      var cacheId = 'smaskGroupAt' + this.groupLevel;
-      var scratchCanvas = this.cachedCanvases.getCanvas(cacheId, drawnWidth, drawnHeight, true);
-      var currentCtx = this.ctx;
-      var currentTransform = currentCtx.mozCurrentTransform;
-      this.ctx.save();
-      var groupCtx = scratchCanvas.context;
-      groupCtx.scale(1 / activeSMask.scaleX, 1 / activeSMask.scaleY);
-      groupCtx.translate(-activeSMask.offsetX, -activeSMask.offsetY);
-      groupCtx.transform.apply(groupCtx, currentTransform);
-      activeSMask.startTransformInverse = groupCtx.mozCurrentTransformInverse;
-      copyCtxState(currentCtx, groupCtx);
-      this.ctx = groupCtx;
-      this.setGState([['BM', 'source-over'], ['ca', 1], ['CA', 1]]);
-      this.groupStack.push(currentCtx);
-      this.groupLevel++;
-    },
-    suspendSMaskGroup: function CanvasGraphics_endSMaskGroup() {
-      var groupCtx = this.ctx;
-      this.groupLevel--;
-      this.ctx = this.groupStack.pop();
-      composeSMask(this.ctx, this.current.activeSMask, groupCtx);
-      this.ctx.restore();
-      this.ctx.save();
-      copyCtxState(groupCtx, this.ctx);
-      this.current.resumeSMaskCtx = groupCtx;
-      var deltaTransform = _util.Util.transform(this.current.activeSMask.startTransformInverse, groupCtx.mozCurrentTransform);
-      this.ctx.transform.apply(this.ctx, deltaTransform);
-      groupCtx.save();
-      groupCtx.setTransform(1, 0, 0, 1, 0, 0);
-      groupCtx.clearRect(0, 0, groupCtx.canvas.width, groupCtx.canvas.height);
-      groupCtx.restore();
-    },
-    resumeSMaskGroup: function CanvasGraphics_endSMaskGroup() {
-      var groupCtx = this.current.resumeSMaskCtx;
-      var currentCtx = this.ctx;
-      this.ctx = groupCtx;
-      this.groupStack.push(currentCtx);
-      this.groupLevel++;
-    },
-    endSMaskGroup: function CanvasGraphics_endSMaskGroup() {
-      var groupCtx = this.ctx;
-      this.groupLevel--;
-      this.ctx = this.groupStack.pop();
-      composeSMask(this.ctx, this.current.activeSMask, groupCtx);
-      this.ctx.restore();
-      copyCtxState(groupCtx, this.ctx);
-      var deltaTransform = _util.Util.transform(this.current.activeSMask.startTransformInverse, groupCtx.mozCurrentTransform);
-      this.ctx.transform.apply(this.ctx, deltaTransform);
-    },
-    save: function CanvasGraphics_save() {
-      this.ctx.save();
-      var old = this.current;
-      this.stateStack.push(old);
-      this.current = old.clone();
-      this.current.resumeSMaskCtx = null;
-    },
-    restore: function CanvasGraphics_restore() {
-      if (this.current.resumeSMaskCtx) {
-        this.resumeSMaskGroup();
-      }
-      if (this.current.activeSMask !== null && (this.stateStack.length === 0 || this.stateStack[this.stateStack.length - 1].activeSMask !== this.current.activeSMask)) {
-        this.endSMaskGroup();
-      }
-      if (this.stateStack.length !== 0) {
-        this.current = this.stateStack.pop();
-        this.ctx.restore();
-        this.pendingClip = null;
-        this.cachedGetSinglePixelWidth = null;
-      }
-    },
-    transform: function CanvasGraphics_transform(a, b, c, d, e, f) {
-      this.ctx.transform(a, b, c, d, e, f);
-      this.cachedGetSinglePixelWidth = null;
-    },
-    constructPath: function CanvasGraphics_constructPath(ops, args) {
-      var ctx = this.ctx;
-      var current = this.current;
-      var x = current.x,
-          y = current.y;
-      for (var i = 0, j = 0, ii = ops.length; i < ii; i++) {
-        switch (ops[i] | 0) {
-          case _util.OPS.rectangle:
-            x = args[j++];
-            y = args[j++];
-            var width = args[j++];
-            var height = args[j++];
-            if (width === 0) {
-              width = this.getSinglePixelWidth();
-            }
-            if (height === 0) {
-              height = this.getSinglePixelWidth();
-            }
-            var xw = x + width;
-            var yh = y + height;
-            this.ctx.moveTo(x, y);
-            this.ctx.lineTo(xw, y);
-            this.ctx.lineTo(xw, yh);
-            this.ctx.lineTo(x, yh);
-            this.ctx.lineTo(x, y);
-            this.ctx.closePath();
-            break;
-          case _util.OPS.moveTo:
-            x = args[j++];
-            y = args[j++];
-            ctx.moveTo(x, y);
-            break;
-          case _util.OPS.lineTo:
-            x = args[j++];
-            y = args[j++];
-            ctx.lineTo(x, y);
-            break;
-          case _util.OPS.curveTo:
-            x = args[j + 4];
-            y = args[j + 5];
-            ctx.bezierCurveTo(args[j], args[j + 1], args[j + 2], args[j + 3], x, y);
-            j += 6;
-            break;
-          case _util.OPS.curveTo2:
-            ctx.bezierCurveTo(x, y, args[j], args[j + 1], args[j + 2], args[j + 3]);
-            x = args[j + 2];
-            y = args[j + 3];
-            j += 4;
-            break;
-          case _util.OPS.curveTo3:
-            x = args[j + 2];
-            y = args[j + 3];
-            ctx.bezierCurveTo(args[j], args[j + 1], x, y, x, y);
-            j += 4;
-            break;
-          case _util.OPS.closePath:
-            ctx.closePath();
-            break;
-        }
-      }
-      current.setCurrentPoint(x, y);
-    },
-    closePath: function CanvasGraphics_closePath() {
-      this.ctx.closePath();
-    },
-    stroke: function CanvasGraphics_stroke(consumePath) {
-      consumePath = typeof consumePath !== 'undefined' ? consumePath : true;
-      var ctx = this.ctx;
-      var strokeColor = this.current.strokeColor;
-      ctx.lineWidth = Math.max(this.getSinglePixelWidth() * MIN_WIDTH_FACTOR, this.current.lineWidth);
-      ctx.globalAlpha = this.current.strokeAlpha;
-      if (strokeColor && strokeColor.hasOwnProperty('type') && strokeColor.type === 'Pattern') {
-        ctx.save();
-        ctx.strokeStyle = strokeColor.getPattern(ctx, this);
-        ctx.stroke();
-        ctx.restore();
-      } else {
-        ctx.stroke();
-      }
-      if (consumePath) {
-        this.consumePath();
-      }
-      ctx.globalAlpha = this.current.fillAlpha;
-    },
-    closeStroke: function CanvasGraphics_closeStroke() {
-      this.closePath();
-      this.stroke();
-    },
-    fill: function CanvasGraphics_fill(consumePath) {
-      consumePath = typeof consumePath !== 'undefined' ? consumePath : true;
-      var ctx = this.ctx;
-      var fillColor = this.current.fillColor;
-      var isPatternFill = this.current.patternFill;
-      var needRestore = false;
-      if (isPatternFill) {
-        ctx.save();
-        if (this.baseTransform) {
-          ctx.setTransform.apply(ctx, this.baseTransform);
-        }
-        ctx.fillStyle = fillColor.getPattern(ctx, this);
-        needRestore = true;
-      }
-      if (this.pendingEOFill) {
-        ctx.fill('evenodd');
-        this.pendingEOFill = false;
-      } else {
-        ctx.fill();
-      }
-      if (needRestore) {
-        ctx.restore();
-      }
-      if (consumePath) {
-        this.consumePath();
-      }
-    },
-    eoFill: function CanvasGraphics_eoFill() {
-      this.pendingEOFill = true;
-      this.fill();
-    },
-    fillStroke: function CanvasGraphics_fillStroke() {
-      this.fill(false);
-      this.stroke(false);
-      this.consumePath();
-    },
-    eoFillStroke: function CanvasGraphics_eoFillStroke() {
-      this.pendingEOFill = true;
-      this.fillStroke();
-    },
-    closeFillStroke: function CanvasGraphics_closeFillStroke() {
-      this.closePath();
-      this.fillStroke();
-    },
-    closeEOFillStroke: function CanvasGraphics_closeEOFillStroke() {
-      this.pendingEOFill = true;
-      this.closePath();
-      this.fillStroke();
-    },
-    endPath: function CanvasGraphics_endPath() {
-      this.consumePath();
-    },
-    clip: function CanvasGraphics_clip() {
-      this.pendingClip = NORMAL_CLIP;
-    },
-    eoClip: function CanvasGraphics_eoClip() {
-      this.pendingClip = EO_CLIP;
-    },
-    beginText: function CanvasGraphics_beginText() {
-      this.current.textMatrix = _util.IDENTITY_MATRIX;
-      this.current.textMatrixScale = 1;
-      this.current.x = this.current.lineX = 0;
-      this.current.y = this.current.lineY = 0;
-    },
-    endText: function CanvasGraphics_endText() {
-      var paths = this.pendingTextPaths;
-      var ctx = this.ctx;
-      if (paths === undefined) {
-        ctx.beginPath();
-        return;
-      }
-      ctx.save();
-      ctx.beginPath();
-      for (var i = 0; i < paths.length; i++) {
-        var path = paths[i];
-        ctx.setTransform.apply(ctx, path.transform);
-        ctx.translate(path.x, path.y);
-        path.addToPath(ctx, path.fontSize);
-      }
-      ctx.restore();
-      ctx.clip();
-      ctx.beginPath();
-      delete this.pendingTextPaths;
-    },
-    setCharSpacing: function CanvasGraphics_setCharSpacing(spacing) {
-      this.current.charSpacing = spacing;
-    },
-    setWordSpacing: function CanvasGraphics_setWordSpacing(spacing) {
-      this.current.wordSpacing = spacing;
-    },
-    setHScale: function CanvasGraphics_setHScale(scale) {
-      this.current.textHScale = scale / 100;
-    },
-    setLeading: function CanvasGraphics_setLeading(leading) {
-      this.current.leading = -leading;
-    },
-    setFont: function CanvasGraphics_setFont(fontRefName, size) {
-      var fontObj = this.commonObjs.get(fontRefName);
-      var current = this.current;
-      if (!fontObj) {
-        (0, _util.error)('Can\'t find font for ' + fontRefName);
-      }
-      current.fontMatrix = fontObj.fontMatrix ? fontObj.fontMatrix : _util.FONT_IDENTITY_MATRIX;
-      if (current.fontMatrix[0] === 0 || current.fontMatrix[3] === 0) {
-        (0, _util.warn)('Invalid font matrix for font ' + fontRefName);
-      }
-      if (size < 0) {
-        size = -size;
-        current.fontDirection = -1;
-      } else {
-        current.fontDirection = 1;
-      }
-      this.current.font = fontObj;
-      this.current.fontSize = size;
-      if (fontObj.isType3Font) {
-        return;
-      }
-      var name = fontObj.loadedName || 'sans-serif';
-      var bold = fontObj.black ? '900' : fontObj.bold ? 'bold' : 'normal';
-      var italic = fontObj.italic ? 'italic' : 'normal';
-      var typeface = '"' + name + '", ' + fontObj.fallbackName;
-      var browserFontSize = size < MIN_FONT_SIZE ? MIN_FONT_SIZE : size > MAX_FONT_SIZE ? MAX_FONT_SIZE : size;
-      this.current.fontSizeScale = size / browserFontSize;
-      var rule = italic + ' ' + bold + ' ' + browserFontSize + 'px ' + typeface;
-      this.ctx.font = rule;
-    },
-    setTextRenderingMode: function CanvasGraphics_setTextRenderingMode(mode) {
-      this.current.textRenderingMode = mode;
-    },
-    setTextRise: function CanvasGraphics_setTextRise(rise) {
-      this.current.textRise = rise;
-    },
-    moveText: function CanvasGraphics_moveText(x, y) {
-      this.current.x = this.current.lineX += x;
-      this.current.y = this.current.lineY += y;
-    },
-    setLeadingMoveText: function CanvasGraphics_setLeadingMoveText(x, y) {
-      this.setLeading(-y);
-      this.moveText(x, y);
-    },
-    setTextMatrix: function CanvasGraphics_setTextMatrix(a, b, c, d, e, f) {
-      this.current.textMatrix = [a, b, c, d, e, f];
-      this.current.textMatrixScale = Math.sqrt(a * a + b * b);
-      this.current.x = this.current.lineX = 0;
-      this.current.y = this.current.lineY = 0;
-    },
-    nextLine: function CanvasGraphics_nextLine() {
-      this.moveText(0, this.current.leading);
-    },
-    paintChar: function CanvasGraphics_paintChar(character, x, y) {
-      var ctx = this.ctx;
-      var current = this.current;
-      var font = current.font;
-      var textRenderingMode = current.textRenderingMode;
-      var fontSize = current.fontSize / current.fontSizeScale;
-      var fillStrokeMode = textRenderingMode & _util.TextRenderingMode.FILL_STROKE_MASK;
-      var isAddToPathSet = !!(textRenderingMode & _util.TextRenderingMode.ADD_TO_PATH_FLAG);
-      var addToPath;
-      if (font.disableFontFace || isAddToPathSet) {
-        addToPath = font.getPathGenerator(this.commonObjs, character);
-      }
-      if (font.disableFontFace) {
-        ctx.save();
-        ctx.translate(x, y);
-        ctx.beginPath();
-        addToPath(ctx, fontSize);
-        if (fillStrokeMode === _util.TextRenderingMode.FILL || fillStrokeMode === _util.TextRenderingMode.FILL_STROKE) {
-          ctx.fill();
-        }
-        if (fillStrokeMode === _util.TextRenderingMode.STROKE || fillStrokeMode === _util.TextRenderingMode.FILL_STROKE) {
-          ctx.stroke();
-        }
-        ctx.restore();
-      } else {
-        if (fillStrokeMode === _util.TextRenderingMode.FILL || fillStrokeMode === _util.TextRenderingMode.FILL_STROKE) {
-          ctx.fillText(character, x, y);
-        }
-        if (fillStrokeMode === _util.TextRenderingMode.STROKE || fillStrokeMode === _util.TextRenderingMode.FILL_STROKE) {
-          ctx.strokeText(character, x, y);
-        }
-      }
-      if (isAddToPathSet) {
-        var paths = this.pendingTextPaths || (this.pendingTextPaths = []);
-        paths.push({
-          transform: ctx.mozCurrentTransform,
-          x: x,
-          y: y,
-          fontSize: fontSize,
-          addToPath: addToPath
-        });
-      }
-    },
-    get isFontSubpixelAAEnabled() {
-      var ctx = this.canvasFactory.create(10, 10).context;
-      ctx.scale(1.5, 1);
-      ctx.fillText('I', 0, 10);
-      var data = ctx.getImageData(0, 0, 10, 10).data;
-      var enabled = false;
-      for (var i = 3; i < data.length; i += 4) {
-        if (data[i] > 0 && data[i] < 255) {
-          enabled = true;
-          break;
-        }
-      }
-      return (0, _util.shadow)(this, 'isFontSubpixelAAEnabled', enabled);
-    },
-    showText: function CanvasGraphics_showText(glyphs) {
-      var current = this.current;
-      var font = current.font;
-      if (font.isType3Font) {
-        return this.showType3Text(glyphs);
-      }
-      var fontSize = current.fontSize;
-      if (fontSize === 0) {
-        return;
-      }
-      var ctx = this.ctx;
-      var fontSizeScale = current.fontSizeScale;
-      var charSpacing = current.charSpacing;
-      var wordSpacing = current.wordSpacing;
-      var fontDirection = current.fontDirection;
-      var textHScale = current.textHScale * fontDirection;
-      var glyphsLength = glyphs.length;
-      var vertical = font.vertical;
-      var spacingDir = vertical ? 1 : -1;
-      var defaultVMetrics = font.defaultVMetrics;
-      var widthAdvanceScale = fontSize * current.fontMatrix[0];
-      var simpleFillText = current.textRenderingMode === _util.TextRenderingMode.FILL && !font.disableFontFace;
-      ctx.save();
-      ctx.transform.apply(ctx, current.textMatrix);
-      ctx.translate(current.x, current.y + current.textRise);
-      if (current.patternFill) {
-        ctx.fillStyle = current.fillColor.getPattern(ctx, this);
-      }
-      if (fontDirection > 0) {
-        ctx.scale(textHScale, -1);
-      } else {
-        ctx.scale(textHScale, 1);
-      }
-      var lineWidth = current.lineWidth;
-      var scale = current.textMatrixScale;
-      if (scale === 0 || lineWidth === 0) {
-        var fillStrokeMode = current.textRenderingMode & _util.TextRenderingMode.FILL_STROKE_MASK;
-        if (fillStrokeMode === _util.TextRenderingMode.STROKE || fillStrokeMode === _util.TextRenderingMode.FILL_STROKE) {
-          this.cachedGetSinglePixelWidth = null;
-          lineWidth = this.getSinglePixelWidth() * MIN_WIDTH_FACTOR;
-        }
-      } else {
-        lineWidth /= scale;
-      }
-      if (fontSizeScale !== 1.0) {
-        ctx.scale(fontSizeScale, fontSizeScale);
-        lineWidth /= fontSizeScale;
-      }
-      ctx.lineWidth = lineWidth;
-      var x = 0,
-          i;
-      for (i = 0; i < glyphsLength; ++i) {
-        var glyph = glyphs[i];
-        if ((0, _util.isNum)(glyph)) {
-          x += spacingDir * glyph * fontSize / 1000;
-          continue;
-        }
-        var restoreNeeded = false;
-        var spacing = (glyph.isSpace ? wordSpacing : 0) + charSpacing;
-        var character = glyph.fontChar;
-        var accent = glyph.accent;
-        var scaledX, scaledY, scaledAccentX, scaledAccentY;
-        var width = glyph.width;
-        if (vertical) {
-          var vmetric, vx, vy;
-          vmetric = glyph.vmetric || defaultVMetrics;
-          vx = glyph.vmetric ? vmetric[1] : width * 0.5;
-          vx = -vx * widthAdvanceScale;
-          vy = vmetric[2] * widthAdvanceScale;
-          width = vmetric ? -vmetric[0] : width;
-          scaledX = vx / fontSizeScale;
-          scaledY = (x + vy) / fontSizeScale;
-        } else {
-          scaledX = x / fontSizeScale;
-          scaledY = 0;
-        }
-        if (font.remeasure && width > 0) {
-          var measuredWidth = ctx.measureText(character).width * 1000 / fontSize * fontSizeScale;
-          if (width < measuredWidth && this.isFontSubpixelAAEnabled) {
-            var characterScaleX = width / measuredWidth;
-            restoreNeeded = true;
-            ctx.save();
-            ctx.scale(characterScaleX, 1);
-            scaledX /= characterScaleX;
-          } else if (width !== measuredWidth) {
-            scaledX += (width - measuredWidth) / 2000 * fontSize / fontSizeScale;
-          }
-        }
-        if (glyph.isInFont || font.missingFile) {
-          if (simpleFillText && !accent) {
-            ctx.fillText(character, scaledX, scaledY);
-          } else {
-            this.paintChar(character, scaledX, scaledY);
-            if (accent) {
-              scaledAccentX = scaledX + accent.offset.x / fontSizeScale;
-              scaledAccentY = scaledY - accent.offset.y / fontSizeScale;
-              this.paintChar(accent.fontChar, scaledAccentX, scaledAccentY);
-            }
-          }
-        }
-        var charWidth = width * widthAdvanceScale + spacing * fontDirection;
-        x += charWidth;
-        if (restoreNeeded) {
-          ctx.restore();
-        }
-      }
-      if (vertical) {
-        current.y -= x * textHScale;
-      } else {
-        current.x += x * textHScale;
-      }
-      ctx.restore();
-    },
-    showType3Text: function CanvasGraphics_showType3Text(glyphs) {
-      var ctx = this.ctx;
-      var current = this.current;
-      var font = current.font;
-      var fontSize = current.fontSize;
-      var fontDirection = current.fontDirection;
-      var spacingDir = font.vertical ? 1 : -1;
-      var charSpacing = current.charSpacing;
-      var wordSpacing = current.wordSpacing;
-      var textHScale = current.textHScale * fontDirection;
-      var fontMatrix = current.fontMatrix || _util.FONT_IDENTITY_MATRIX;
-      var glyphsLength = glyphs.length;
-      var isTextInvisible = current.textRenderingMode === _util.TextRenderingMode.INVISIBLE;
-      var i, glyph, width, spacingLength;
-      if (isTextInvisible || fontSize === 0) {
-        return;
-      }
-      this.cachedGetSinglePixelWidth = null;
-      ctx.save();
-      ctx.transform.apply(ctx, current.textMatrix);
-      ctx.translate(current.x, current.y);
-      ctx.scale(textHScale, fontDirection);
-      for (i = 0; i < glyphsLength; ++i) {
-        glyph = glyphs[i];
-        if ((0, _util.isNum)(glyph)) {
-          spacingLength = spacingDir * glyph * fontSize / 1000;
-          this.ctx.translate(spacingLength, 0);
-          current.x += spacingLength * textHScale;
-          continue;
-        }
-        var spacing = (glyph.isSpace ? wordSpacing : 0) + charSpacing;
-        var operatorList = font.charProcOperatorList[glyph.operatorListId];
-        if (!operatorList) {
-          (0, _util.warn)('Type3 character "' + glyph.operatorListId + '" is not available.');
-          continue;
-        }
-        this.processingType3 = glyph;
-        this.save();
-        ctx.scale(fontSize, fontSize);
-        ctx.transform.apply(ctx, fontMatrix);
-        this.executeOperatorList(operatorList);
-        this.restore();
-        var transformed = _util.Util.applyTransform([glyph.width, 0], fontMatrix);
-        width = transformed[0] * fontSize + spacing;
-        ctx.translate(width, 0);
-        current.x += width * textHScale;
-      }
-      ctx.restore();
-      this.processingType3 = null;
-    },
-    setCharWidth: function CanvasGraphics_setCharWidth(xWidth, yWidth) {},
-    setCharWidthAndBounds: function CanvasGraphics_setCharWidthAndBounds(xWidth, yWidth, llx, lly, urx, ury) {
-      this.ctx.rect(llx, lly, urx - llx, ury - lly);
-      this.clip();
-      this.endPath();
-    },
-    getColorN_Pattern: function CanvasGraphics_getColorN_Pattern(IR) {
-      var _this = this;
-
-      var pattern;
-      if (IR[0] === 'TilingPattern') {
-        var color = IR[1];
-        var baseTransform = this.baseTransform || this.ctx.mozCurrentTransform.slice();
-        var canvasGraphicsFactory = {
-          createCanvasGraphics: function createCanvasGraphics(ctx) {
-            return new CanvasGraphics(ctx, _this.commonObjs, _this.objs, _this.canvasFactory);
-          }
-        };
-        pattern = new _pattern_helper.TilingPattern(IR, color, this.ctx, canvasGraphicsFactory, baseTransform);
-      } else {
-        pattern = (0, _pattern_helper.getShadingPatternFromIR)(IR);
-      }
-      return pattern;
-    },
-    setStrokeColorN: function CanvasGraphics_setStrokeColorN() {
-      this.current.strokeColor = this.getColorN_Pattern(arguments);
-    },
-    setFillColorN: function CanvasGraphics_setFillColorN() {
-      this.current.fillColor = this.getColorN_Pattern(arguments);
-      this.current.patternFill = true;
-    },
-    setStrokeRGBColor: function CanvasGraphics_setStrokeRGBColor(r, g, b) {
-      var color = _util.Util.makeCssRgb(r, g, b);
-      this.ctx.strokeStyle = color;
-      this.current.strokeColor = color;
-    },
-    setFillRGBColor: function CanvasGraphics_setFillRGBColor(r, g, b) {
-      var color = _util.Util.makeCssRgb(r, g, b);
-      this.ctx.fillStyle = color;
-      this.current.fillColor = color;
-      this.current.patternFill = false;
-    },
-    shadingFill: function CanvasGraphics_shadingFill(patternIR) {
-      var ctx = this.ctx;
-      this.save();
-      var pattern = (0, _pattern_helper.getShadingPatternFromIR)(patternIR);
-      ctx.fillStyle = pattern.getPattern(ctx, this, true);
-      var inv = ctx.mozCurrentTransformInverse;
-      if (inv) {
-        var canvas = ctx.canvas;
-        var width = canvas.width;
-        var height = canvas.height;
-        var bl = _util.Util.applyTransform([0, 0], inv);
-        var br = _util.Util.applyTransform([0, height], inv);
-        var ul = _util.Util.applyTransform([width, 0], inv);
-        var ur = _util.Util.applyTransform([width, height], inv);
-        var x0 = Math.min(bl[0], br[0], ul[0], ur[0]);
-        var y0 = Math.min(bl[1], br[1], ul[1], ur[1]);
-        var x1 = Math.max(bl[0], br[0], ul[0], ur[0]);
-        var y1 = Math.max(bl[1], br[1], ul[1], ur[1]);
-        this.ctx.fillRect(x0, y0, x1 - x0, y1 - y0);
-      } else {
-        this.ctx.fillRect(-1e10, -1e10, 2e10, 2e10);
-      }
-      this.restore();
-    },
-    beginInlineImage: function CanvasGraphics_beginInlineImage() {
-      (0, _util.error)('Should not call beginInlineImage');
-    },
-    beginImageData: function CanvasGraphics_beginImageData() {
-      (0, _util.error)('Should not call beginImageData');
-    },
-    paintFormXObjectBegin: function CanvasGraphics_paintFormXObjectBegin(matrix, bbox) {
-      this.save();
-      this.baseTransformStack.push(this.baseTransform);
-      if ((0, _util.isArray)(matrix) && matrix.length === 6) {
-        this.transform.apply(this, matrix);
-      }
-      this.baseTransform = this.ctx.mozCurrentTransform;
-      if ((0, _util.isArray)(bbox) && bbox.length === 4) {
-        var width = bbox[2] - bbox[0];
-        var height = bbox[3] - bbox[1];
-        this.ctx.rect(bbox[0], bbox[1], width, height);
-        this.clip();
-        this.endPath();
-      }
-    },
-    paintFormXObjectEnd: function CanvasGraphics_paintFormXObjectEnd() {
-      this.restore();
-      this.baseTransform = this.baseTransformStack.pop();
-    },
-    beginGroup: function CanvasGraphics_beginGroup(group) {
-      this.save();
-      var currentCtx = this.ctx;
-      if (!group.isolated) {
-        (0, _util.info)('TODO: Support non-isolated groups.');
-      }
-      if (group.knockout) {
-        (0, _util.warn)('Knockout groups not supported.');
-      }
-      var currentTransform = currentCtx.mozCurrentTransform;
-      if (group.matrix) {
-        currentCtx.transform.apply(currentCtx, group.matrix);
-      }
-      (0, _util.assert)(group.bbox, 'Bounding box is required.');
-      var bounds = _util.Util.getAxialAlignedBoundingBox(group.bbox, currentCtx.mozCurrentTransform);
-      var canvasBounds = [0, 0, currentCtx.canvas.width, currentCtx.canvas.height];
-      bounds = _util.Util.intersect(bounds, canvasBounds) || [0, 0, 0, 0];
-      var offsetX = Math.floor(bounds[0]);
-      var offsetY = Math.floor(bounds[1]);
-      var drawnWidth = Math.max(Math.ceil(bounds[2]) - offsetX, 1);
-      var drawnHeight = Math.max(Math.ceil(bounds[3]) - offsetY, 1);
-      var scaleX = 1,
-          scaleY = 1;
-      if (drawnWidth > MAX_GROUP_SIZE) {
-        scaleX = drawnWidth / MAX_GROUP_SIZE;
-        drawnWidth = MAX_GROUP_SIZE;
-      }
-      if (drawnHeight > MAX_GROUP_SIZE) {
-        scaleY = drawnHeight / MAX_GROUP_SIZE;
-        drawnHeight = MAX_GROUP_SIZE;
-      }
-      var cacheId = 'groupAt' + this.groupLevel;
-      if (group.smask) {
-        cacheId += '_smask_' + this.smaskCounter++ % 2;
-      }
-      var scratchCanvas = this.cachedCanvases.getCanvas(cacheId, drawnWidth, drawnHeight, true);
-      var groupCtx = scratchCanvas.context;
-      groupCtx.scale(1 / scaleX, 1 / scaleY);
-      groupCtx.translate(-offsetX, -offsetY);
-      groupCtx.transform.apply(groupCtx, currentTransform);
-      if (group.smask) {
-        this.smaskStack.push({
-          canvas: scratchCanvas.canvas,
-          context: groupCtx,
-          offsetX: offsetX,
-          offsetY: offsetY,
-          scaleX: scaleX,
-          scaleY: scaleY,
-          subtype: group.smask.subtype,
-          backdrop: group.smask.backdrop,
-          transferMap: group.smask.transferMap || null,
-          startTransformInverse: null
-        });
-      } else {
-        currentCtx.setTransform(1, 0, 0, 1, 0, 0);
-        currentCtx.translate(offsetX, offsetY);
-        currentCtx.scale(scaleX, scaleY);
-      }
-      copyCtxState(currentCtx, groupCtx);
-      this.ctx = groupCtx;
-      this.setGState([['BM', 'source-over'], ['ca', 1], ['CA', 1]]);
-      this.groupStack.push(currentCtx);
-      this.groupLevel++;
-      this.current.activeSMask = null;
-    },
-    endGroup: function CanvasGraphics_endGroup(group) {
-      this.groupLevel--;
-      var groupCtx = this.ctx;
-      this.ctx = this.groupStack.pop();
-      if (this.ctx.imageSmoothingEnabled !== undefined) {
-        this.ctx.imageSmoothingEnabled = false;
-      } else {
-        this.ctx.mozImageSmoothingEnabled = false;
-      }
-      if (group.smask) {
-        this.tempSMask = this.smaskStack.pop();
-      } else {
-        this.ctx.drawImage(groupCtx.canvas, 0, 0);
-      }
-      this.restore();
-    },
-    beginAnnotations: function CanvasGraphics_beginAnnotations() {
-      this.save();
-      this.current = new CanvasExtraState();
-      if (this.baseTransform) {
-        this.ctx.setTransform.apply(this.ctx, this.baseTransform);
-      }
-    },
-    endAnnotations: function CanvasGraphics_endAnnotations() {
-      this.restore();
-    },
-    beginAnnotation: function CanvasGraphics_beginAnnotation(rect, transform, matrix) {
-      this.save();
-      if ((0, _util.isArray)(rect) && rect.length === 4) {
-        var width = rect[2] - rect[0];
-        var height = rect[3] - rect[1];
-        this.ctx.rect(rect[0], rect[1], width, height);
-        this.clip();
-        this.endPath();
-      }
-      this.transform.apply(this, transform);
-      this.transform.apply(this, matrix);
-    },
-    endAnnotation: function CanvasGraphics_endAnnotation() {
-      this.restore();
-    },
-    paintJpegXObject: function CanvasGraphics_paintJpegXObject(objId, w, h) {
-      var domImage = this.objs.get(objId);
-      if (!domImage) {
-        (0, _util.warn)('Dependent image isn\'t ready yet');
-        return;
-      }
-      this.save();
-      var ctx = this.ctx;
-      ctx.scale(1 / w, -1 / h);
-      ctx.drawImage(domImage, 0, 0, domImage.width, domImage.height, 0, -h, w, h);
-      if (this.imageLayer) {
-        var currentTransform = ctx.mozCurrentTransformInverse;
-        var position = this.getCanvasPosition(0, 0);
-        this.imageLayer.appendImage({
-          objId: objId,
-          left: position[0],
-          top: position[1],
-          width: w / currentTransform[0],
-          height: h / currentTransform[3]
-        });
-      }
-      this.restore();
-    },
-    paintImageMaskXObject: function CanvasGraphics_paintImageMaskXObject(img) {
-      var ctx = this.ctx;
-      var width = img.width,
-          height = img.height;
-      var fillColor = this.current.fillColor;
-      var isPatternFill = this.current.patternFill;
-      var glyph = this.processingType3;
-      if (COMPILE_TYPE3_GLYPHS && glyph && glyph.compiled === undefined) {
-        if (width <= MAX_SIZE_TO_COMPILE && height <= MAX_SIZE_TO_COMPILE) {
-          glyph.compiled = compileType3Glyph({
-            data: img.data,
-            width: width,
-            height: height
-          });
-        } else {
-          glyph.compiled = null;
-        }
-      }
-      if (glyph && glyph.compiled) {
-        glyph.compiled(ctx);
-        return;
-      }
-      var maskCanvas = this.cachedCanvases.getCanvas('maskCanvas', width, height);
-      var maskCtx = maskCanvas.context;
-      maskCtx.save();
-      putBinaryImageMask(maskCtx, img);
-      maskCtx.globalCompositeOperation = 'source-in';
-      maskCtx.fillStyle = isPatternFill ? fillColor.getPattern(maskCtx, this) : fillColor;
-      maskCtx.fillRect(0, 0, width, height);
-      maskCtx.restore();
-      this.paintInlineImageXObject(maskCanvas.canvas);
-    },
-    paintImageMaskXObjectRepeat: function CanvasGraphics_paintImageMaskXObjectRepeat(imgData, scaleX, scaleY, positions) {
-      var width = imgData.width;
-      var height = imgData.height;
-      var fillColor = this.current.fillColor;
-      var isPatternFill = this.current.patternFill;
-      var maskCanvas = this.cachedCanvases.getCanvas('maskCanvas', width, height);
-      var maskCtx = maskCanvas.context;
-      maskCtx.save();
-      putBinaryImageMask(maskCtx, imgData);
-      maskCtx.globalCompositeOperation = 'source-in';
-      maskCtx.fillStyle = isPatternFill ? fillColor.getPattern(maskCtx, this) : fillColor;
-      maskCtx.fillRect(0, 0, width, height);
-      maskCtx.restore();
-      var ctx = this.ctx;
-      for (var i = 0, ii = positions.length; i < ii; i += 2) {
-        ctx.save();
-        ctx.transform(scaleX, 0, 0, scaleY, positions[i], positions[i + 1]);
-        ctx.scale(1, -1);
-        ctx.drawImage(maskCanvas.canvas, 0, 0, width, height, 0, -1, 1, 1);
-        ctx.restore();
-      }
-    },
-    paintImageMaskXObjectGroup: function CanvasGraphics_paintImageMaskXObjectGroup(images) {
-      var ctx = this.ctx;
-      var fillColor = this.current.fillColor;
-      var isPatternFill = this.current.patternFill;
-      for (var i = 0, ii = images.length; i < ii; i++) {
-        var image = images[i];
-        var width = image.width,
-            height = image.height;
-        var maskCanvas = this.cachedCanvases.getCanvas('maskCanvas', width, height);
-        var maskCtx = maskCanvas.context;
-        maskCtx.save();
-        putBinaryImageMask(maskCtx, image);
-        maskCtx.globalCompositeOperation = 'source-in';
-        maskCtx.fillStyle = isPatternFill ? fillColor.getPattern(maskCtx, this) : fillColor;
-        maskCtx.fillRect(0, 0, width, height);
-        maskCtx.restore();
-        ctx.save();
-        ctx.transform.apply(ctx, image.transform);
-        ctx.scale(1, -1);
-        ctx.drawImage(maskCanvas.canvas, 0, 0, width, height, 0, -1, 1, 1);
-        ctx.restore();
-      }
-    },
-    paintImageXObject: function CanvasGraphics_paintImageXObject(objId) {
-      var imgData = this.objs.get(objId);
-      if (!imgData) {
-        (0, _util.warn)('Dependent image isn\'t ready yet');
-        return;
-      }
-      this.paintInlineImageXObject(imgData);
-    },
-    paintImageXObjectRepeat: function CanvasGraphics_paintImageXObjectRepeat(objId, scaleX, scaleY, positions) {
-      var imgData = this.objs.get(objId);
-      if (!imgData) {
-        (0, _util.warn)('Dependent image isn\'t ready yet');
-        return;
-      }
-      var width = imgData.width;
-      var height = imgData.height;
-      var map = [];
-      for (var i = 0, ii = positions.length; i < ii; i += 2) {
-        map.push({
-          transform: [scaleX, 0, 0, scaleY, positions[i], positions[i + 1]],
-          x: 0,
-          y: 0,
-          w: width,
-          h: height
-        });
-      }
-      this.paintInlineImageXObjectGroup(imgData, map);
-    },
-    paintInlineImageXObject: function CanvasGraphics_paintInlineImageXObject(imgData) {
-      var width = imgData.width;
-      var height = imgData.height;
-      var ctx = this.ctx;
-      this.save();
-      ctx.scale(1 / width, -1 / height);
-      var currentTransform = ctx.mozCurrentTransformInverse;
-      var a = currentTransform[0],
-          b = currentTransform[1];
-      var widthScale = Math.max(Math.sqrt(a * a + b * b), 1);
-      var c = currentTransform[2],
-          d = currentTransform[3];
-      var heightScale = Math.max(Math.sqrt(c * c + d * d), 1);
-      var imgToPaint, tmpCanvas;
-      if (imgData instanceof HTMLElement || !imgData.data) {
-        imgToPaint = imgData;
-      } else {
-        tmpCanvas = this.cachedCanvases.getCanvas('inlineImage', width, height);
-        var tmpCtx = tmpCanvas.context;
-        putBinaryImageData(tmpCtx, imgData);
-        imgToPaint = tmpCanvas.canvas;
-      }
-      var paintWidth = width,
-          paintHeight = height;
-      var tmpCanvasId = 'prescale1';
-      while (widthScale > 2 && paintWidth > 1 || heightScale > 2 && paintHeight > 1) {
-        var newWidth = paintWidth,
-            newHeight = paintHeight;
-        if (widthScale > 2 && paintWidth > 1) {
-          newWidth = Math.ceil(paintWidth / 2);
-          widthScale /= paintWidth / newWidth;
-        }
-        if (heightScale > 2 && paintHeight > 1) {
-          newHeight = Math.ceil(paintHeight / 2);
-          heightScale /= paintHeight / newHeight;
-        }
-        tmpCanvas = this.cachedCanvases.getCanvas(tmpCanvasId, newWidth, newHeight);
-        tmpCtx = tmpCanvas.context;
-        tmpCtx.clearRect(0, 0, newWidth, newHeight);
-        tmpCtx.drawImage(imgToPaint, 0, 0, paintWidth, paintHeight, 0, 0, newWidth, newHeight);
-        imgToPaint = tmpCanvas.canvas;
-        paintWidth = newWidth;
-        paintHeight = newHeight;
-        tmpCanvasId = tmpCanvasId === 'prescale1' ? 'prescale2' : 'prescale1';
-      }
-      ctx.drawImage(imgToPaint, 0, 0, paintWidth, paintHeight, 0, -height, width, height);
-      if (this.imageLayer) {
-        var position = this.getCanvasPosition(0, -height);
-        this.imageLayer.appendImage({
-          imgData: imgData,
-          left: position[0],
-          top: position[1],
-          width: width / currentTransform[0],
-          height: height / currentTransform[3]
-        });
-      }
-      this.restore();
-    },
-    paintInlineImageXObjectGroup: function CanvasGraphics_paintInlineImageXObjectGroup(imgData, map) {
-      var ctx = this.ctx;
-      var w = imgData.width;
-      var h = imgData.height;
-      var tmpCanvas = this.cachedCanvases.getCanvas('inlineImage', w, h);
-      var tmpCtx = tmpCanvas.context;
-      putBinaryImageData(tmpCtx, imgData);
-      for (var i = 0, ii = map.length; i < ii; i++) {
-        var entry = map[i];
-        ctx.save();
-        ctx.transform.apply(ctx, entry.transform);
-        ctx.scale(1, -1);
-        ctx.drawImage(tmpCanvas.canvas, entry.x, entry.y, entry.w, entry.h, 0, -1, 1, 1);
-        if (this.imageLayer) {
-          var position = this.getCanvasPosition(entry.x, entry.y);
-          this.imageLayer.appendImage({
-            imgData: imgData,
-            left: position[0],
-            top: position[1],
-            width: w,
-            height: h
-          });
-        }
-        ctx.restore();
-      }
-    },
-    paintSolidColorImageMask: function CanvasGraphics_paintSolidColorImageMask() {
-      this.ctx.fillRect(0, 0, 1, 1);
-    },
-    paintXObject: function CanvasGraphics_paintXObject() {
-      (0, _util.warn)('Unsupported \'paintXObject\' command.');
-    },
-    markPoint: function CanvasGraphics_markPoint(tag) {},
-    markPointProps: function CanvasGraphics_markPointProps(tag, properties) {},
-    beginMarkedContent: function CanvasGraphics_beginMarkedContent(tag) {},
-    beginMarkedContentProps: function CanvasGraphics_beginMarkedContentProps(tag, properties) {},
-    endMarkedContent: function CanvasGraphics_endMarkedContent() {},
-    beginCompat: function CanvasGraphics_beginCompat() {},
-    endCompat: function CanvasGraphics_endCompat() {},
-    consumePath: function CanvasGraphics_consumePath() {
-      var ctx = this.ctx;
-      if (this.pendingClip) {
-        if (this.pendingClip === EO_CLIP) {
-          ctx.clip('evenodd');
-        } else {
-          ctx.clip();
-        }
-        this.pendingClip = null;
-      }
-      ctx.beginPath();
-    },
-    getSinglePixelWidth: function CanvasGraphics_getSinglePixelWidth(scale) {
-      if (this.cachedGetSinglePixelWidth === null) {
-        this.ctx.save();
-        var inverse = this.ctx.mozCurrentTransformInverse;
-        this.ctx.restore();
-        this.cachedGetSinglePixelWidth = Math.sqrt(Math.max(inverse[0] * inverse[0] + inverse[1] * inverse[1], inverse[2] * inverse[2] + inverse[3] * inverse[3]));
-      }
-      return this.cachedGetSinglePixelWidth;
-    },
-    getCanvasPosition: function CanvasGraphics_getCanvasPosition(x, y) {
-      var transform = this.ctx.mozCurrentTransform;
-      return [transform[0] * x + transform[2] * y + transform[4], transform[1] * x + transform[3] * y + transform[5]];
-    }
-  };
-  for (var op in _util.OPS) {
-    CanvasGraphics.prototype[_util.OPS[op]] = CanvasGraphics.prototype[op];
-  }
-  return CanvasGraphics;
-}();
-exports.CanvasGraphics = CanvasGraphics;
-
-/***/ }),
-
-/***/ 151:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* Copyright 2017 Mozilla Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.TilingPattern = exports.getShadingPatternFromIR = undefined;
-
-var _util = __webpack_require__(8);
-
-var _webgl = __webpack_require__(54);
-
-var ShadingIRs = {};
-ShadingIRs.RadialAxial = {
-  fromIR: function RadialAxial_fromIR(raw) {
-    var type = raw[1];
-    var colorStops = raw[2];
-    var p0 = raw[3];
-    var p1 = raw[4];
-    var r0 = raw[5];
-    var r1 = raw[6];
-    return {
-      type: 'Pattern',
-      getPattern: function RadialAxial_getPattern(ctx) {
-        var grad;
-        if (type === 'axial') {
-          grad = ctx.createLinearGradient(p0[0], p0[1], p1[0], p1[1]);
-        } else if (type === 'radial') {
-          grad = ctx.createRadialGradient(p0[0], p0[1], r0, p1[0], p1[1], r1);
-        }
-        for (var i = 0, ii = colorStops.length; i < ii; ++i) {
-          var c = colorStops[i];
-          grad.addColorStop(c[0], c[1]);
-        }
-        return grad;
-      }
-    };
-  }
-};
-var createMeshCanvas = function createMeshCanvasClosure() {
-  function drawTriangle(data, context, p1, p2, p3, c1, c2, c3) {
-    var coords = context.coords,
-        colors = context.colors;
-    var bytes = data.data,
-        rowSize = data.width * 4;
-    var tmp;
-    if (coords[p1 + 1] > coords[p2 + 1]) {
-      tmp = p1;
-      p1 = p2;
-      p2 = tmp;
-      tmp = c1;
-      c1 = c2;
-      c2 = tmp;
-    }
-    if (coords[p2 + 1] > coords[p3 + 1]) {
-      tmp = p2;
-      p2 = p3;
-      p3 = tmp;
-      tmp = c2;
-      c2 = c3;
-      c3 = tmp;
-    }
-    if (coords[p1 + 1] > coords[p2 + 1]) {
-      tmp = p1;
-      p1 = p2;
-      p2 = tmp;
-      tmp = c1;
-      c1 = c2;
-      c2 = tmp;
-    }
-    var x1 = (coords[p1] + context.offsetX) * context.scaleX;
-    var y1 = (coords[p1 + 1] + context.offsetY) * context.scaleY;
-    var x2 = (coords[p2] + context.offsetX) * context.scaleX;
-    var y2 = (coords[p2 + 1] + context.offsetY) * context.scaleY;
-    var x3 = (coords[p3] + context.offsetX) * context.scaleX;
-    var y3 = (coords[p3 + 1] + context.offsetY) * context.scaleY;
-    if (y1 >= y3) {
-      return;
-    }
-    var c1r = colors[c1],
-        c1g = colors[c1 + 1],
-        c1b = colors[c1 + 2];
-    var c2r = colors[c2],
-        c2g = colors[c2 + 1],
-        c2b = colors[c2 + 2];
-    var c3r = colors[c3],
-        c3g = colors[c3 + 1],
-        c3b = colors[c3 + 2];
-    var minY = Math.round(y1),
-        maxY = Math.round(y3);
-    var xa, car, cag, cab;
-    var xb, cbr, cbg, cbb;
-    var k;
-    for (var y = minY; y <= maxY; y++) {
-      if (y < y2) {
-        k = y < y1 ? 0 : y1 === y2 ? 1 : (y1 - y) / (y1 - y2);
-        xa = x1 - (x1 - x2) * k;
-        car = c1r - (c1r - c2r) * k;
-        cag = c1g - (c1g - c2g) * k;
-        cab = c1b - (c1b - c2b) * k;
-      } else {
-        k = y > y3 ? 1 : y2 === y3 ? 0 : (y2 - y) / (y2 - y3);
-        xa = x2 - (x2 - x3) * k;
-        car = c2r - (c2r - c3r) * k;
-        cag = c2g - (c2g - c3g) * k;
-        cab = c2b - (c2b - c3b) * k;
-      }
-      k = y < y1 ? 0 : y > y3 ? 1 : (y1 - y) / (y1 - y3);
-      xb = x1 - (x1 - x3) * k;
-      cbr = c1r - (c1r - c3r) * k;
-      cbg = c1g - (c1g - c3g) * k;
-      cbb = c1b - (c1b - c3b) * k;
-      var x1_ = Math.round(Math.min(xa, xb));
-      var x2_ = Math.round(Math.max(xa, xb));
-      var j = rowSize * y + x1_ * 4;
-      for (var x = x1_; x <= x2_; x++) {
-        k = (xa - x) / (xa - xb);
-        k = k < 0 ? 0 : k > 1 ? 1 : k;
-        bytes[j++] = car - (car - cbr) * k | 0;
-        bytes[j++] = cag - (cag - cbg) * k | 0;
-        bytes[j++] = cab - (cab - cbb) * k | 0;
-        bytes[j++] = 255;
-      }
-    }
-  }
-  function drawFigure(data, figure, context) {
-    var ps = figure.coords;
-    var cs = figure.colors;
-    var i, ii;
-    switch (figure.type) {
-      case 'lattice':
-        var verticesPerRow = figure.verticesPerRow;
-        var rows = Math.floor(ps.length / verticesPerRow) - 1;
-        var cols = verticesPerRow - 1;
-        for (i = 0; i < rows; i++) {
-          var q = i * verticesPerRow;
-          for (var j = 0; j < cols; j++, q++) {
-            drawTriangle(data, context, ps[q], ps[q + 1], ps[q + verticesPerRow], cs[q], cs[q + 1], cs[q + verticesPerRow]);
-            drawTriangle(data, context, ps[q + verticesPerRow + 1], ps[q + 1], ps[q + verticesPerRow], cs[q + verticesPerRow + 1], cs[q + 1], cs[q + verticesPerRow]);
-          }
-        }
-        break;
-      case 'triangles':
-        for (i = 0, ii = ps.length; i < ii; i += 3) {
-          drawTriangle(data, context, ps[i], ps[i + 1], ps[i + 2], cs[i], cs[i + 1], cs[i + 2]);
-        }
-        break;
-      default:
-        (0, _util.error)('illigal figure');
-        break;
-    }
-  }
-  function createMeshCanvas(bounds, combinesScale, coords, colors, figures, backgroundColor, cachedCanvases) {
-    var EXPECTED_SCALE = 1.1;
-    var MAX_PATTERN_SIZE = 3000;
-    var BORDER_SIZE = 2;
-    var offsetX = Math.floor(bounds[0]);
-    var offsetY = Math.floor(bounds[1]);
-    var boundsWidth = Math.ceil(bounds[2]) - offsetX;
-    var boundsHeight = Math.ceil(bounds[3]) - offsetY;
-    var width = Math.min(Math.ceil(Math.abs(boundsWidth * combinesScale[0] * EXPECTED_SCALE)), MAX_PATTERN_SIZE);
-    var height = Math.min(Math.ceil(Math.abs(boundsHeight * combinesScale[1] * EXPECTED_SCALE)), MAX_PATTERN_SIZE);
-    var scaleX = boundsWidth / width;
-    var scaleY = boundsHeight / height;
-    var context = {
-      coords: coords,
-      colors: colors,
-      offsetX: -offsetX,
-      offsetY: -offsetY,
-      scaleX: 1 / scaleX,
-      scaleY: 1 / scaleY
-    };
-    var paddedWidth = width + BORDER_SIZE * 2;
-    var paddedHeight = height + BORDER_SIZE * 2;
-    var canvas, tmpCanvas, i, ii;
-    if (_webgl.WebGLUtils.isEnabled) {
-      canvas = _webgl.WebGLUtils.drawFigures(width, height, backgroundColor, figures, context);
-      tmpCanvas = cachedCanvases.getCanvas('mesh', paddedWidth, paddedHeight, false);
-      tmpCanvas.context.drawImage(canvas, BORDER_SIZE, BORDER_SIZE);
-      canvas = tmpCanvas.canvas;
-    } else {
-      tmpCanvas = cachedCanvases.getCanvas('mesh', paddedWidth, paddedHeight, false);
-      var tmpCtx = tmpCanvas.context;
-      var data = tmpCtx.createImageData(width, height);
-      if (backgroundColor) {
-        var bytes = data.data;
-        for (i = 0, ii = bytes.length; i < ii; i += 4) {
-          bytes[i] = backgroundColor[0];
-          bytes[i + 1] = backgroundColor[1];
-          bytes[i + 2] = backgroundColor[2];
-          bytes[i + 3] = 255;
-        }
-      }
-      for (i = 0; i < figures.length; i++) {
-        drawFigure(data, figures[i], context);
-      }
-      tmpCtx.putImageData(data, BORDER_SIZE, BORDER_SIZE);
-      canvas = tmpCanvas.canvas;
-    }
-    return {
-      canvas: canvas,
-      offsetX: offsetX - BORDER_SIZE * scaleX,
-      offsetY: offsetY - BORDER_SIZE * scaleY,
-      scaleX: scaleX,
-      scaleY: scaleY
-    };
-  }
-  return createMeshCanvas;
-}();
-ShadingIRs.Mesh = {
-  fromIR: function Mesh_fromIR(raw) {
-    var coords = raw[2];
-    var colors = raw[3];
-    var figures = raw[4];
-    var bounds = raw[5];
-    var matrix = raw[6];
-    var background = raw[8];
-    return {
-      type: 'Pattern',
-      getPattern: function Mesh_getPattern(ctx, owner, shadingFill) {
-        var scale;
-        if (shadingFill) {
-          scale = _util.Util.singularValueDecompose2dScale(ctx.mozCurrentTransform);
-        } else {
-          scale = _util.Util.singularValueDecompose2dScale(owner.baseTransform);
-          if (matrix) {
-            var matrixScale = _util.Util.singularValueDecompose2dScale(matrix);
-            scale = [scale[0] * matrixScale[0], scale[1] * matrixScale[1]];
-          }
-        }
-        var temporaryPatternCanvas = createMeshCanvas(bounds, scale, coords, colors, figures, shadingFill ? null : background, owner.cachedCanvases);
-        if (!shadingFill) {
-          ctx.setTransform.apply(ctx, owner.baseTransform);
-          if (matrix) {
-            ctx.transform.apply(ctx, matrix);
-          }
-        }
-        ctx.translate(temporaryPatternCanvas.offsetX, temporaryPatternCanvas.offsetY);
-        ctx.scale(temporaryPatternCanvas.scaleX, temporaryPatternCanvas.scaleY);
-        return ctx.createPattern(temporaryPatternCanvas.canvas, 'no-repeat');
-      }
-    };
-  }
-};
-ShadingIRs.Dummy = {
-  fromIR: function Dummy_fromIR() {
-    return {
-      type: 'Pattern',
-      getPattern: function Dummy_fromIR_getPattern() {
-        return 'hotpink';
-      }
-    };
-  }
-};
-function getShadingPatternFromIR(raw) {
-  var shadingIR = ShadingIRs[raw[0]];
-  if (!shadingIR) {
-    (0, _util.error)('Unknown IR type: ' + raw[0]);
-  }
-  return shadingIR.fromIR(raw);
-}
-var TilingPattern = function TilingPatternClosure() {
-  var PaintType = {
-    COLORED: 1,
-    UNCOLORED: 2
-  };
-  var MAX_PATTERN_SIZE = 3000;
-  function TilingPattern(IR, color, ctx, canvasGraphicsFactory, baseTransform) {
-    this.operatorList = IR[2];
-    this.matrix = IR[3] || [1, 0, 0, 1, 0, 0];
-    this.bbox = _util.Util.normalizeRect(IR[4]);
-    this.xstep = IR[5];
-    this.ystep = IR[6];
-    this.paintType = IR[7];
-    this.tilingType = IR[8];
-    this.color = color;
-    this.canvasGraphicsFactory = canvasGraphicsFactory;
-    this.baseTransform = baseTransform;
-    this.type = 'Pattern';
-    this.ctx = ctx;
-  }
-  TilingPattern.prototype = {
-    createPatternCanvas: function TilinPattern_createPatternCanvas(owner) {
-      var operatorList = this.operatorList;
-      var bbox = this.bbox;
-      var xstep = this.xstep;
-      var ystep = this.ystep;
-      var paintType = this.paintType;
-      var tilingType = this.tilingType;
-      var color = this.color;
-      var canvasGraphicsFactory = this.canvasGraphicsFactory;
-      (0, _util.info)('TilingType: ' + tilingType);
-      var x0 = bbox[0],
-          y0 = bbox[1],
-          x1 = bbox[2],
-          y1 = bbox[3];
-      var topLeft = [x0, y0];
-      var botRight = [x0 + xstep, y0 + ystep];
-      var width = botRight[0] - topLeft[0];
-      var height = botRight[1] - topLeft[1];
-      var matrixScale = _util.Util.singularValueDecompose2dScale(this.matrix);
-      var curMatrixScale = _util.Util.singularValueDecompose2dScale(this.baseTransform);
-      var combinedScale = [matrixScale[0] * curMatrixScale[0], matrixScale[1] * curMatrixScale[1]];
-      width = Math.min(Math.ceil(Math.abs(width * combinedScale[0])), MAX_PATTERN_SIZE);
-      height = Math.min(Math.ceil(Math.abs(height * combinedScale[1])), MAX_PATTERN_SIZE);
-      var tmpCanvas = owner.cachedCanvases.getCanvas('pattern', width, height, true);
-      var tmpCtx = tmpCanvas.context;
-      var graphics = canvasGraphicsFactory.createCanvasGraphics(tmpCtx);
-      graphics.groupLevel = owner.groupLevel;
-      this.setFillAndStrokeStyleToContext(tmpCtx, paintType, color);
-      this.setScale(width, height, xstep, ystep);
-      this.transformToScale(graphics);
-      var tmpTranslate = [1, 0, 0, 1, -topLeft[0], -topLeft[1]];
-      graphics.transform.apply(graphics, tmpTranslate);
-      this.clipBbox(graphics, bbox, x0, y0, x1, y1);
-      graphics.executeOperatorList(operatorList);
-      return tmpCanvas.canvas;
-    },
-    setScale: function TilingPattern_setScale(width, height, xstep, ystep) {
-      this.scale = [width / xstep, height / ystep];
-    },
-    transformToScale: function TilingPattern_transformToScale(graphics) {
-      var scale = this.scale;
-      var tmpScale = [scale[0], 0, 0, scale[1], 0, 0];
-      graphics.transform.apply(graphics, tmpScale);
-    },
-    scaleToContext: function TilingPattern_scaleToContext() {
-      var scale = this.scale;
-      this.ctx.scale(1 / scale[0], 1 / scale[1]);
-    },
-    clipBbox: function clipBbox(graphics, bbox, x0, y0, x1, y1) {
-      if ((0, _util.isArray)(bbox) && bbox.length === 4) {
-        var bboxWidth = x1 - x0;
-        var bboxHeight = y1 - y0;
-        graphics.ctx.rect(x0, y0, bboxWidth, bboxHeight);
-        graphics.clip();
-        graphics.endPath();
-      }
-    },
-    setFillAndStrokeStyleToContext: function setFillAndStrokeStyleToContext(context, paintType, color) {
-      switch (paintType) {
-        case PaintType.COLORED:
-          var ctx = this.ctx;
-          context.fillStyle = ctx.fillStyle;
-          context.strokeStyle = ctx.strokeStyle;
-          break;
-        case PaintType.UNCOLORED:
-          var cssColor = _util.Util.makeCssRgb(color[0], color[1], color[2]);
-          context.fillStyle = cssColor;
-          context.strokeStyle = cssColor;
-          break;
-        default:
-          (0, _util.error)('Unsupported paint type: ' + paintType);
-      }
-    },
-    getPattern: function TilingPattern_getPattern(ctx, owner) {
-      var temporaryPatternCanvas = this.createPatternCanvas(owner);
-      ctx = this.ctx;
-      ctx.setTransform.apply(ctx, this.baseTransform);
-      ctx.transform.apply(ctx, this.matrix);
-      this.scaleToContext();
-      return ctx.createPattern(temporaryPatternCanvas, 'repeat');
-    }
-  };
-  return TilingPattern;
-}();
-exports.getShadingPatternFromIR = getShadingPatternFromIR;
-exports.TilingPattern = TilingPattern;
-
-/***/ }),
-
-/***/ 152:
-/***/ (function(module, exports) {
-
-module.exports = function(obj){
-var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-with(obj||{}){
-__p+='<div class="mContainer">\n\n    <div class="findbar hidden doorHanger" id="findbar">\n        <div id="findbarInputContainer">\n            <input id="findInput" class="toolbarField" title="Find" placeholder="Find in document…" tabindex="91" data-l10n-id="find_input">\n            <div class="splitToolbarButton">\n                <button id="findPrevious" class="toolbarButton findPrevious" title="Find the previous occurrence of the phrase" tabindex="92" data-l10n-id="find_previous">\n                    <span data-l10n-id="find_previous_label">Previous</span>\n                </button>\n                <div class="splitToolbarButtonSeparator"></div>\n                <button id="findNext" class="toolbarButton findNext" title="Find the next occurrence of the phrase" tabindex="93" data-l10n-id="find_next">\n                    <span data-l10n-id="find_next_label">Next</span>\n                </button>\n            </div>\n        </div>\n\n        <div id="findbarOptionsContainer">\n            <input type="checkbox" id="findHighlightAll" class="toolbarField" tabindex="94">\n            <label for="findHighlightAll" class="toolbarLabel" data-l10n-id="find_highlight">Highlight all</label>\n            <input type="checkbox" id="findMatchCase" class="toolbarField" tabindex="95">\n            <label for="findMatchCase" class="toolbarLabel" data-l10n-id="find_match_case_label">Match case</label>\n            <span id="findResultsCount" class="toolbarLabel hidden"></span>\n        </div>\n\n        <div id="findbarMessageContainer">\n            <span id="findMsg" class="toolbarLabel"></span>\n        </div>\n    </div>  <!-- findbar -->\n\n\n    <div class="toolbar">\n        <div id="toolbarContainer">\n            <div id="toolbarViewer">\n                <div id="toolbarViewerLeft">\n                    <button id="viewFind" class="toolbarButton" title="Find in Document" tabindex="12" data-l10n-id="findbar">\n                        <span data-l10n-id="findbar_label">Find</span>\n                    </button>\n                    <button id="presentationMode" class="toolbarButton presentationMode hiddenLargeView" title="Switch to Presentation Mode" tabindex="31" data-l10n-id="presentation_mode">\n                        <span data-l10n-id="presentation_mode_label">Presentation Mode</span>\n                    </button>\n                </div>\n                <div id="toolbarViewerMiddle">\n                    <div class="splitToolbarButton">\n                        <button id="zoomOut" class="toolbarButton zoomOut" title="Zoom Out" tabindex="21" data-l10n-id="zoom_out">\n                            <span data-l10n-id="zoom_out_label">Zoom Out</span>\n                        </button>\n                        <div class="splitToolbarButtonSeparator"></div>\n                        <button id="zoomIn" class="toolbarButton zoomIn" title="Zoom In" tabindex="22" data-l10n-id="zoom_in">\n                            <span data-l10n-id="zoom_in_label">Zoom In</span>\n                        </button>\n                        <div class="splitToolbarButtonSeparator"></div>\n                    </div>\n                    <button id="reset" class="toolbarButton reset" title="Reset" tabindex="23" data-l10n-id="reset">\n                        <span data-l10n-id="reset_label">Reset</span>\n                    </button>\n                </div>\n            </div>\n        </div>\n    </div>\n    <div id="viewerContainer" tabindex="0">\n        <div id="viewer" class="pdfViewer"></div>\n    </div>\n</div>\n';
-}
-return __p;
-};
-
-/***/ }),
-
-/***/ 18:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11370,7 +1169,7 @@ exports.DOMCMapReaderFactory = exports.DOMCanvasFactory = exports.DEFAULT_LINK_R
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _util = __webpack_require__(8);
+var _util = __webpack_require__(0);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -11637,8 +1436,8 @@ exports.DOMCanvasFactory = DOMCanvasFactory;
 exports.DOMCMapReaderFactory = DOMCMapReaderFactory;
 
 /***/ }),
-
-/***/ 50:
+/* 6 */,
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process) {/* Copyright 2017 Mozilla Foundation
@@ -13819,7 +3618,7 @@ if (typeof __pdfjsdev_webpack__ === 'undefined') {
   fakeWorkerFilesLoader = useRequireEnsure ? function (callback) {
     new Promise(function(resolve) { resolve(); }).then((function () {
       var worker;
-      worker = __webpack_require__(52);
+      worker = __webpack_require__(9);
       callback(worker.WorkerMessageHandler);
     }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
   } : dynamicLoaderSupported ? function (callback) {
@@ -21193,11 +10992,10 @@ if (typeof PDFJS === 'undefined' || !PDFJS.compatibilityChecked) {
 /******/ ]);
 });
 //# sourceMappingURL=pdf.js.map
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(51)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ }),
-
-/***/ 51:
+/* 8 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -21387,15 +11185,13 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-
-/***/ 52:
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "759590a6a8b9029db1946753e9bb9603.js";
 
 /***/ }),
-
-/***/ 53:
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21424,15 +11220,15 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _util = __webpack_require__(8);
+var _util = __webpack_require__(0);
 
-var _dom_utils = __webpack_require__(18);
+var _dom_utils = __webpack_require__(5);
 
-var _font_loader = __webpack_require__(149);
+var _font_loader = __webpack_require__(40);
 
-var _canvas = __webpack_require__(150);
+var _canvas = __webpack_require__(41);
 
-var _metadata = __webpack_require__(55);
+var _metadata = __webpack_require__(12);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -21460,7 +11256,7 @@ if (typeof __pdfjsdev_webpack__ === 'undefined') {
   fakeWorkerFilesLoader = useRequireEnsure ? function (callback) {
     __webpack_require__.e/* require.ensure */(0).then((function () {
       var worker;
-      worker = __webpack_require__(154);
+      worker = __webpack_require__(45);
       callback(worker.WorkerMessageHandler);
     }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
   } : dynamicLoaderSupported ? function (callback) {
@@ -22833,8 +12629,7 @@ exports.version = version;
 exports.build = build;
 
 /***/ }),
-
-/***/ 54:
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22859,9 +12654,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.WebGLUtils = undefined;
 
-var _dom_utils = __webpack_require__(18);
+var _dom_utils = __webpack_require__(5);
 
-var _util = __webpack_require__(8);
+var _util = __webpack_require__(0);
 
 var WebGLUtils = function WebGLUtilsClosure() {
   function loadShader(gl, code, shaderType) {
@@ -23215,8 +13010,7 @@ var WebGLUtils = function WebGLUtilsClosure() {
 exports.WebGLUtils = WebGLUtils;
 
 /***/ }),
-
-/***/ 55:
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23241,7 +13035,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Metadata = undefined;
 
-var _util = __webpack_require__(8);
+var _util = __webpack_require__(0);
 
 function fixMetadata(meta) {
   return meta.replace(/>\\376\\377([^<]+)/g, function (all, codes) {
@@ -23314,8 +13108,7 @@ Metadata.prototype = {
 exports.Metadata = Metadata;
 
 /***/ }),
-
-/***/ 56:
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23340,9 +13133,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.AnnotationLayer = undefined;
 
-var _dom_utils = __webpack_require__(18);
+var _dom_utils = __webpack_require__(5);
 
-var _util = __webpack_require__(8);
+var _util = __webpack_require__(0);
 
 function AnnotationElementFactory() {}
 AnnotationElementFactory.prototype = {
@@ -23983,8 +13776,7 @@ var AnnotationLayer = function AnnotationLayerClosure() {
 exports.AnnotationLayer = AnnotationLayer;
 
 /***/ }),
-
-/***/ 57:
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24009,9 +13801,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.renderTextLayer = undefined;
 
-var _util = __webpack_require__(8);
+var _util = __webpack_require__(0);
 
-var _dom_utils = __webpack_require__(18);
+var _dom_utils = __webpack_require__(5);
 
 var renderTextLayer = function renderTextLayerClosure() {
   var MAX_TEXT_DIVS_TO_RENDER = 100000;
@@ -24487,8 +14279,7 @@ var renderTextLayer = function renderTextLayerClosure() {
 exports.renderTextLayer = renderTextLayer;
 
 /***/ }),
-
-/***/ 58:
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24513,7 +14304,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.SVGGraphics = undefined;
 
-var _util = __webpack_require__(8);
+var _util = __webpack_require__(0);
 
 var SVGGraphics = function SVGGraphics() {
   throw new Error('Not implemented: SVGGraphics');
@@ -25471,12 +15262,6684 @@ var SVGGraphics = function SVGGraphics() {
 exports.SVGGraphics = SVGGraphics;
 
 /***/ }),
+/* 16 */,
+/* 17 */,
+/* 18 */,
+/* 19 */,
+/* 20 */,
+/* 21 */,
+/* 22 */,
+/* 23 */,
+/* 24 */,
+/* 25 */,
+/* 26 */,
+/* 27 */,
+/* 28 */,
+/* 29 */,
+/* 30 */,
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
 
-/***/ 8:
+/// <reference path="../../../../embed/embed.d.ts" />
+/**
+ * FlexPaper Player for Embed Document
+ */
+//require('html5shiv');
+__webpack_require__(32);
+__webpack_require__(33); // should be loaded first
+__webpack_require__(7);
+// Webpack returns a string to the url because we configured the url-loader.
+window.PDFJS.workerSrc = __webpack_require__(9);
+var pdfview = __webpack_require__(34);
+var ui_utils = __webpack_require__(35);
+var service_1 = __webpack_require__(4);
+var playerTemplate = __webpack_require__(43);
+var FindStates = {
+    FIND_FOUND: 0,
+    FIND_NOTFOUND: 1,
+    FIND_WRAPPED: 2,
+    FIND_PENDING: 3
+};
+var DocumentPlayer = function () {
+    function DocumentPlayer() {
+        var SCALE_DELTA = 1.5;
+        var MIN_SCALE = 0.25;
+        var MAX_SCALE = 2.5;
+        var opened = false;
+        var isFullScreen = false;
+        this.configService = new service_1.default();
+        var docContainers = document.getElementsByClassName('document-player');
+        this.$documentContainer = docContainers[0];
+        this.$documentContainer.insertAdjacentHTML('afterbegin', playerTemplate(this.configService.get('resource')));
+        var pdf = this.configService.get('resource.url');
+        //let pdf = '/assets/helloworld.pdf';
+        var viewerElement = document.getElementById('viewer');
+        var container = document.getElementById('viewerContainer');
+        var zoomIn = document.getElementById('zoomIn');
+        var zoomOut = document.getElementById('zoomOut');
+        var reset = document.getElementById('reset');
+        var toggleFindButton = document.getElementById('viewFind');
+        var bar = document.getElementById('findbar');
+        var findField = document.getElementById('findInput');
+        var findNextButton = document.getElementById('findNext');
+        var findPreviousButton = document.getElementById('findPrevious');
+        var caseSensitive = document.getElementById('findMatchCase');
+        var highlightAll = document.getElementById('findHighlightAll');
+        var findResultsCount = document.getElementById('findResultsCount');
+        var findMessage = document.getElementById('findMsg');
+        var presentationModeButton = document.getElementById('presentationMode');
+        var pdfViewer = new window.PDFJS.PDFViewer({
+            container: container
+        });
+        //set localization
+        ui_utils.mozL10n.ready(onLocalized);
+        var pdfFindController = new window.PDFJS.PDFFindController({
+            pdfViewer: pdfViewer
+        });
+        pdfFindController.onUpdateResultsCount = function (matchCount) {
+            updateResultsCount(matchCount);
+        };
+        pdfFindController.onUpdateState = function (state, previous, matchCount) {
+            updateUIState(state, previous, matchCount);
+        };
+        pdfViewer.setFindController(pdfFindController);
+        /* HANDLERS FUNCTIONS */
+        zoomIn.addEventListener("click", function () {
+            var newScale = pdfViewer.currentScale;
+            newScale = (newScale * SCALE_DELTA).toFixed(2);
+            if (newScale > MAX_SCALE) {
+                pdfViewer.currentScale = MAX_SCALE;
+            } else {
+                pdfViewer.currentScale = newScale;
+            }
+            updateZoomButton(newScale);
+        });
+        zoomOut.addEventListener("click", function () {
+            var newScale = pdfViewer.currentScale;
+            newScale = (newScale / SCALE_DELTA).toFixed(2);
+            if (newScale < MIN_SCALE) {
+                pdfViewer.currentScale = MIN_SCALE;
+            } else {
+                pdfViewer.currentScale = newScale;
+            }
+            updateZoomButton(newScale);
+        });
+        reset.addEventListener("click", function () {
+            pdfViewer.currentScaleValue = "page-width";
+            var newScale = pdfViewer.currentScale;
+            updateZoomButton(newScale);
+        });
+        toggleFindButton.addEventListener('click', function () {
+            toggle();
+        });
+        findField.addEventListener('input', function () {
+            if (findField.value.length > 2) {
+                dispatchEvent('', false);
+            }
+        });
+        findNextButton.addEventListener('click', function () {
+            dispatchEvent('again', false);
+        });
+        findPreviousButton.addEventListener('click', function () {
+            dispatchEvent('again', true);
+        });
+        highlightAll.addEventListener('click', function () {
+            dispatchEvent('highlightallchange', false);
+        });
+        caseSensitive.addEventListener('click', function () {
+            dispatchEvent('casesensitivitychange', false);
+        });
+        presentationModeButton.addEventListener('click', function () {
+            toggleFullScreen();
+        });
+        document.addEventListener('webkitfullscreenchange', exitHandler, false);
+        document.addEventListener('mozfullscreenchange', exitHandler, false);
+        document.addEventListener('fullscreenchange', exitHandler, false);
+        document.addEventListener('MSFullscreenChange', exitHandler, false);
+        function onLocalized() {
+            ui_utils.mozL10n.setLanguage(document.documentElement.lang);
+        }
+        function exitHandler() {
+            var document = window.document;
+            var fullscreen = document.webkitIsFullScreen || document.mozFullScreen || document.msFullscreenElement;
+            if (fullscreen) {
+                pdfViewer.currentScaleValue = "auto";
+            } else {
+                pdfViewer.currentScaleValue = "page-width";
+            }
+        }
+        function toggleFullScreen() {
+            var elem = viewerElement;
+            var document = window.document;
+            if (!isFullScreen) {
+                if (elem.requestFullscreen) {
+                    elem.requestFullscreen();
+                } else if (elem.mozRequestFullScreen) {
+                    elem.mozRequestFullScreen();
+                } else if (elem.webkitRequestFullscreen) {
+                    elem.webkitRequestFullscreen();
+                } else if (elem.msRequestFullscreen) {
+                    elem.msRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.cancelFullScreen) {
+                    document.cancelFullScreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.webkitCancelFullScreen) {
+                    document.webkitCancelFullScreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            }
+        }
+        function dispatchEvent(type, findPrev) {
+            pdfFindController.executeCommand('find' + type, {
+                query: findField.value,
+                phraseSearch: true,
+                caseSensitive: caseSensitive.checked,
+                highlightAll: highlightAll.checked,
+                findPrevious: findPrev
+            });
+        }
+        function updateZoomButton(scale) {
+            if (scale >= MAX_SCALE) {
+                zoomIn.setAttribute("disabled", "disabled");
+            } else {
+                zoomIn.removeAttribute("disabled");
+            }
+            if (scale <= MIN_SCALE) {
+                zoomOut.setAttribute("disabled", "disabled");
+            } else {
+                zoomOut.removeAttribute("disabled");
+            }
+        }
+        function open() {
+            if (!opened) {
+                opened = true;
+                toggleFindButton.classList.add('toggled');
+                bar.classList.remove('hidden');
+            }
+            if ((sessionStorage.getItem('search') != null || sessionStorage.getItem('search') !== '') && (parent.document.body.getElementsByClassName('documentTips')[0].parentElement.parentElement.getAttribute('class').indexOf('preview_col_cont') > 0 || parent.document.body.getElementsByClassName('popover-content').length > 0)) {
+                findField.value = JSON.parse(sessionStorage.getItem('search'));
+                dispatchEvent('', false);
+            }
+            findField.select();
+            findField.focus();
+            _adjustWidth();
+        }
+        function close() {
+            if (!opened) {
+                return;
+            }
+            opened = false;
+            toggleFindButton.classList.remove('toggled');
+            bar.classList.add('hidden');
+            pdfFindController.active = false;
+        }
+        function toggle() {
+            if (opened) {
+                close();
+            } else {
+                open();
+            }
+        }
+        function _adjustWidth() {
+            if (!opened) {
+                return;
+            }
+            // The find bar has an absolute position and thus the browser extends
+            // its width to the maximum possible width once the find bar does not fit
+            // entirely within the window anymore (and its elements are automatically
+            // wrapped). Here we detect and fix that.
+            bar.classList.remove('wrapContainers');
+            var findbarHeight = bar.clientHeight;
+            var inputContainerHeight = bar.firstElementChild.clientHeight;
+            if (findbarHeight > inputContainerHeight) {
+                // The findbar is taller than the input container, which means that
+                // the browser wrapped some of the elements. For a consistent look,
+                // wrap all of them to adjust the width of the find bar.
+                bar.classList.add('wrapContainers');
+            }
+        }
+        function updateResultsCount(matchCount) {
+            if (!findResultsCount) {
+                return; // No UI control is provided.
+            }
+            // If there are no matches, hide the counter.
+            if (!matchCount) {
+                findResultsCount.classList.add('hidden');
+                return;
+            }
+            // Create and show the match counter.
+            findResultsCount.textContent = matchCount.toLocaleString();
+            findResultsCount.classList.remove('hidden');
+        }
+        function updateUIState(state, previous, matchCount) {
+            var notFound = false;
+            var findMsg = '';
+            var status = '';
+            switch (state) {
+                case FindStates.FIND_FOUND:
+                    break;
+                case FindStates.FIND_PENDING:
+                    status = 'pending';
+                    break;
+                case FindStates.FIND_NOTFOUND:
+                    findMsg = ui_utils.mozL10n.get('find_not_found', null, 'Phrase not found');
+                    notFound = true;
+                    break;
+                case FindStates.FIND_WRAPPED:
+                    if (previous) {
+                        findMsg = ui_utils.mozL10n.get('find_reached_top', null, 'Reached top of document, continued from bottom');
+                    } else {
+                        findMsg = ui_utils.mozL10n.get('find_reached_bottom', null, 'Reached end of document, continued from top');
+                    }
+                    break;
+            }
+            if (notFound) {
+                findField.classList.add('notFound');
+            } else {
+                findField.classList.remove('notFound');
+            }
+            findField.setAttribute('data-status', status);
+            findMessage.textContent = findMsg;
+            updateResultsCount(matchCount);
+            _adjustWidth();
+        }
+        container.addEventListener("pagesinit", function () {
+            pdfViewer.currentScaleValue = "page-width";
+        });
+        window.PDFJS.getDocument(pdf).then(function (document) {
+            console.log("render");
+            pdfViewer.setDocument(document);
+        });
+    }
+    return DocumentPlayer;
+}();
+exports.default = DocumentPlayer;
+window.embedPlugin = new DocumentPlayer();
+
+/***/ }),
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(global, process) {/* Copyright 2017 Mozilla Foundation
+/**
+ * Copyright (c) 2011-2013 Fabien Cazenave, Mozilla.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to
+ * deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+ * sell copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+ * IN THE SOFTWARE.
+ */
+
+/*jshint browser: true, devel: true, es5: true, globalstrict: true */
+
+
+document.webL10n = (function(window, document, undefined) {
+  var gL10nData = {};
+  var gTextData = '';
+  var gTextProp = 'textContent';
+  var gLanguage = '';
+  var gMacros = {};
+  var gReadyState = 'loading';
+
+
+  /**
+   * Synchronously loading l10n resources significantly minimizes flickering
+   * from displaying the app with non-localized strings and then updating the
+   * strings. Although this will block all script execution on this page, we
+   * expect that the l10n resources are available locally on flash-storage.
+   *
+   * As synchronous XHR is generally considered as a bad idea, we're still
+   * loading l10n resources asynchronously -- but we keep this in a setting,
+   * just in case... and applications using this library should hide their
+   * content until the `localized' event happens.
+   */
+
+  var gAsyncResourceLoading = true; // read-only
+
+
+  /**
+   * Debug helpers
+   *
+   *   gDEBUG == 0: don't display any console message
+   *   gDEBUG == 1: display only warnings, not logs
+   *   gDEBUG == 2: display all console messages
+   */
+
+  var gDEBUG = 1;
+
+  function consoleLog(message) {
+    if (gDEBUG >= 2) {
+      console.log('[l10n] ' + message);
+    }
+  }
+
+  function consoleWarn(message) {
+    if (gDEBUG) {
+      console.warn('[l10n] ' + message);
+    }
+  }
+
+
+  /**
+   * DOM helpers for the so-called "HTML API".
+   *
+   * These functions are written for modern browsers. For old versions of IE,
+   * they're overridden in the 'startup' section at the end of this file.
+   */
+
+  function getL10nResourceLinks() {
+    return document.querySelectorAll('link[type="application/l10n"]');
+  }
+
+  function getL10nDictionary() {
+    var script = document.querySelector('script[type="application/l10n"]');
+    // TODO: support multiple and external JSON dictionaries
+    return script ? JSON.parse(script.innerHTML) : null;
+  }
+
+  function getTranslatableChildren(element) {
+    return element ? element.querySelectorAll('*[data-l10n-id]') : [];
+  }
+
+  function getL10nAttributes(element) {
+    if (!element)
+      return {};
+
+    var l10nId = element.getAttribute('data-l10n-id');
+    var l10nArgs = element.getAttribute('data-l10n-args');
+    var args = {};
+    if (l10nArgs) {
+      try {
+        args = JSON.parse(l10nArgs);
+      } catch (e) {
+        consoleWarn('could not parse arguments for #' + l10nId);
+      }
+    }
+    return { id: l10nId, args: args };
+  }
+
+  function fireL10nReadyEvent(lang) {
+    var evtObject = document.createEvent('Event');
+    evtObject.initEvent('localized', true, false);
+    evtObject.language = lang;
+    document.dispatchEvent(evtObject);
+  }
+
+  function xhrLoadText(url, onSuccess, onFailure) {
+    onSuccess = onSuccess || function _onSuccess(data) {};
+    onFailure = onFailure || function _onFailure() {
+      consoleWarn(url + ' not found.');
+    };
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, gAsyncResourceLoading);
+    if (xhr.overrideMimeType) {
+      xhr.overrideMimeType('text/plain; charset=utf-8');
+    }
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState == 4) {
+        if (xhr.status == 200 || xhr.status === 0) {
+          onSuccess(xhr.responseText);
+        } else {
+          onFailure();
+        }
+      }
+    };
+    xhr.onerror = onFailure;
+    xhr.ontimeout = onFailure;
+
+    // in Firefox OS with the app:// protocol, trying to XHR a non-existing
+    // URL will raise an exception here -- hence this ugly try...catch.
+    try {
+      xhr.send(null);
+    } catch (e) {
+      onFailure();
+    }
+  }
+
+
+  /**
+   * l10n resource parser:
+   *  - reads (async XHR) the l10n resource matching `lang';
+   *  - imports linked resources (synchronously) when specified;
+   *  - parses the text data (fills `gL10nData' and `gTextData');
+   *  - triggers success/failure callbacks when done.
+   *
+   * @param {string} href
+   *    URL of the l10n resource to parse.
+   *
+   * @param {string} lang
+   *    locale (language) to parse. Must be a lowercase string.
+   *
+   * @param {Function} successCallback
+   *    triggered when the l10n resource has been successully parsed.
+   *
+   * @param {Function} failureCallback
+   *    triggered when the an error has occured.
+   *
+   * @return {void}
+   *    uses the following global variables: gL10nData, gTextData, gTextProp.
+   */
+
+  function parseResource(href, lang, successCallback, failureCallback) {
+    var baseURL = href.replace(/[^\/]*$/, '') || './';
+
+    // handle escaped characters (backslashes) in a string
+    function evalString(text) {
+      if (text.lastIndexOf('\\') < 0)
+        return text;
+      return text.replace(/\\\\/g, '\\')
+                 .replace(/\\n/g, '\n')
+                 .replace(/\\r/g, '\r')
+                 .replace(/\\t/g, '\t')
+                 .replace(/\\b/g, '\b')
+                 .replace(/\\f/g, '\f')
+                 .replace(/\\{/g, '{')
+                 .replace(/\\}/g, '}')
+                 .replace(/\\"/g, '"')
+                 .replace(/\\'/g, "'");
+    }
+
+    // parse *.properties text data into an l10n dictionary
+    // If gAsyncResourceLoading is false, then the callback will be called
+    // synchronously. Otherwise it is called asynchronously.
+    function parseProperties(text, parsedPropertiesCallback) {
+      var dictionary = {};
+
+      // token expressions
+      var reBlank = /^\s*|\s*$/;
+      var reComment = /^\s*#|^\s*$/;
+      var reSection = /^\s*\[(.*)\]\s*$/;
+      var reImport = /^\s*@import\s+url\((.*)\)\s*$/i;
+      var reSplit = /^([^=\s]*)\s*=\s*(.+)$/; // TODO: escape EOLs with '\'
+
+      // parse the *.properties file into an associative array
+      function parseRawLines(rawText, extendedSyntax, parsedRawLinesCallback) {
+        var entries = rawText.replace(reBlank, '').split(/[\r\n]+/);
+        var currentLang = '*';
+        var genericLang = lang.split('-', 1)[0];
+        var skipLang = false;
+        var match = '';
+
+        function nextEntry() {
+          // Use infinite loop instead of recursion to avoid reaching the
+          // maximum recursion limit for content with many lines.
+          while (true) {
+            if (!entries.length) {
+              parsedRawLinesCallback();
+              return;
+            }
+            var line = entries.shift();
+
+            // comment or blank line?
+            if (reComment.test(line))
+              continue;
+
+            // the extended syntax supports [lang] sections and @import rules
+            if (extendedSyntax) {
+              match = reSection.exec(line);
+              if (match) { // section start?
+                // RFC 4646, section 4.4, "All comparisons MUST be performed
+                // in a case-insensitive manner."
+
+                currentLang = match[1].toLowerCase();
+                skipLang = (currentLang !== '*') &&
+                    (currentLang !== lang) && (currentLang !== genericLang);
+                continue;
+              } else if (skipLang) {
+                continue;
+              }
+              match = reImport.exec(line);
+              if (match) { // @import rule?
+                loadImport(baseURL + match[1], nextEntry);
+                return;
+              }
+            }
+
+            // key-value pair
+            var tmp = line.match(reSplit);
+            if (tmp && tmp.length == 3) {
+              dictionary[tmp[1]] = evalString(tmp[2]);
+            }
+          }
+        }
+        nextEntry();
+      }
+
+      // import another *.properties file
+      function loadImport(url, callback) {
+        xhrLoadText(url, function(content) {
+          parseRawLines(content, false, callback); // don't allow recursive imports
+        }, null);
+      }
+
+      // fill the dictionary
+      parseRawLines(text, true, function() {
+        parsedPropertiesCallback(dictionary);
+      });
+    }
+
+    // load and parse l10n data (warning: global variables are used here)
+    xhrLoadText(href, function(response) {
+      gTextData += response; // mostly for debug
+
+      // parse *.properties text data into an l10n dictionary
+      parseProperties(response, function(data) {
+
+        // find attribute descriptions, if any
+        for (var key in data) {
+          var id, prop, index = key.lastIndexOf('.');
+          if (index > 0) { // an attribute has been specified
+            id = key.substring(0, index);
+            prop = key.substr(index + 1);
+          } else { // no attribute: assuming text content by default
+            id = key;
+            prop = gTextProp;
+          }
+          if (!gL10nData[id]) {
+            gL10nData[id] = {};
+          }
+          gL10nData[id][prop] = data[key];
+        }
+
+        // trigger callback
+        if (successCallback) {
+          successCallback();
+        }
+      });
+    }, failureCallback);
+  }
+
+  // load and parse all resources for the specified locale
+  function loadLocale(lang, callback) {
+    // RFC 4646, section 2.1 states that language tags have to be treated as
+    // case-insensitive. Convert to lowercase for case-insensitive comparisons.
+    if (lang) {
+      lang = lang.toLowerCase();
+    }
+
+    callback = callback || function _callback() {};
+
+    clear();
+    gLanguage = lang;
+
+    // check all <link type="application/l10n" href="..." /> nodes
+    // and load the resource files
+    var langLinks = getL10nResourceLinks();
+    var langCount = langLinks.length;
+    if (langCount === 0) {
+      // we might have a pre-compiled dictionary instead
+      var dict = getL10nDictionary();
+      if (dict && dict.locales && dict.default_locale) {
+        consoleLog('using the embedded JSON directory, early way out');
+        gL10nData = dict.locales[lang];
+        if (!gL10nData) {
+          var defaultLocale = dict.default_locale.toLowerCase();
+          for (var anyCaseLang in dict.locales) {
+            anyCaseLang = anyCaseLang.toLowerCase();
+            if (anyCaseLang === lang) {
+              gL10nData = dict.locales[lang];
+              break;
+            } else if (anyCaseLang === defaultLocale) {
+              gL10nData = dict.locales[defaultLocale];
+            }
+          }
+        }
+        callback();
+      } else {
+        consoleLog('no resource to load, early way out');
+      }
+      // early way out
+      fireL10nReadyEvent(lang);
+      gReadyState = 'complete';
+      return;
+    }
+
+    // start the callback when all resources are loaded
+    var onResourceLoaded = null;
+    var gResourceCount = 0;
+    onResourceLoaded = function() {
+      gResourceCount++;
+      if (gResourceCount >= langCount) {
+        callback();
+        fireL10nReadyEvent(lang);
+        gReadyState = 'complete';
+      }
+    };
+
+    // load all resource files
+    function L10nResourceLink(link) {
+      var href = link.href;
+      // Note: If |gAsyncResourceLoading| is false, then the following callbacks
+      // are synchronously called.
+      this.load = function(lang, callback) {
+        parseResource(href, lang, callback, function() {
+          consoleWarn(href + ' not found.');
+          // lang not found, used default resource instead
+          consoleWarn('"' + lang + '" resource not found');
+          gLanguage = '';
+          // Resource not loaded, but we still need to call the callback.
+          callback();
+        });
+      };
+    }
+
+    for (var i = 0; i < langCount; i++) {
+      var resource = new L10nResourceLink(langLinks[i]);
+      resource.load(lang, onResourceLoaded);
+    }
+  }
+
+  // clear all l10n data
+  function clear() {
+    gL10nData = {};
+    gTextData = '';
+    gLanguage = '';
+    // TODO: clear all non predefined macros.
+    // There's no such macro /yet/ but we're planning to have some...
+  }
+
+
+  /**
+   * Get rules for plural forms (shared with JetPack), see:
+   * http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html
+   * https://github.com/mozilla/addon-sdk/blob/master/python-lib/plural-rules-generator.p
+   *
+   * @param {string} lang
+   *    locale (language) used.
+   *
+   * @return {Function}
+   *    returns a function that gives the plural form name for a given integer:
+   *       var fun = getPluralRules('en');
+   *       fun(1)    -> 'one'
+   *       fun(0)    -> 'other'
+   *       fun(1000) -> 'other'.
+   */
+
+  function getPluralRules(lang) {
+    var locales2rules = {
+      'af': 3,
+      'ak': 4,
+      'am': 4,
+      'ar': 1,
+      'asa': 3,
+      'az': 0,
+      'be': 11,
+      'bem': 3,
+      'bez': 3,
+      'bg': 3,
+      'bh': 4,
+      'bm': 0,
+      'bn': 3,
+      'bo': 0,
+      'br': 20,
+      'brx': 3,
+      'bs': 11,
+      'ca': 3,
+      'cgg': 3,
+      'chr': 3,
+      'cs': 12,
+      'cy': 17,
+      'da': 3,
+      'de': 3,
+      'dv': 3,
+      'dz': 0,
+      'ee': 3,
+      'el': 3,
+      'en': 3,
+      'eo': 3,
+      'es': 3,
+      'et': 3,
+      'eu': 3,
+      'fa': 0,
+      'ff': 5,
+      'fi': 3,
+      'fil': 4,
+      'fo': 3,
+      'fr': 5,
+      'fur': 3,
+      'fy': 3,
+      'ga': 8,
+      'gd': 24,
+      'gl': 3,
+      'gsw': 3,
+      'gu': 3,
+      'guw': 4,
+      'gv': 23,
+      'ha': 3,
+      'haw': 3,
+      'he': 2,
+      'hi': 4,
+      'hr': 11,
+      'hu': 0,
+      'id': 0,
+      'ig': 0,
+      'ii': 0,
+      'is': 3,
+      'it': 3,
+      'iu': 7,
+      'ja': 0,
+      'jmc': 3,
+      'jv': 0,
+      'ka': 0,
+      'kab': 5,
+      'kaj': 3,
+      'kcg': 3,
+      'kde': 0,
+      'kea': 0,
+      'kk': 3,
+      'kl': 3,
+      'km': 0,
+      'kn': 0,
+      'ko': 0,
+      'ksb': 3,
+      'ksh': 21,
+      'ku': 3,
+      'kw': 7,
+      'lag': 18,
+      'lb': 3,
+      'lg': 3,
+      'ln': 4,
+      'lo': 0,
+      'lt': 10,
+      'lv': 6,
+      'mas': 3,
+      'mg': 4,
+      'mk': 16,
+      'ml': 3,
+      'mn': 3,
+      'mo': 9,
+      'mr': 3,
+      'ms': 0,
+      'mt': 15,
+      'my': 0,
+      'nah': 3,
+      'naq': 7,
+      'nb': 3,
+      'nd': 3,
+      'ne': 3,
+      'nl': 3,
+      'nn': 3,
+      'no': 3,
+      'nr': 3,
+      'nso': 4,
+      'ny': 3,
+      'nyn': 3,
+      'om': 3,
+      'or': 3,
+      'pa': 3,
+      'pap': 3,
+      'pl': 13,
+      'ps': 3,
+      'pt': 3,
+      'rm': 3,
+      'ro': 9,
+      'rof': 3,
+      'ru': 11,
+      'rwk': 3,
+      'sah': 0,
+      'saq': 3,
+      'se': 7,
+      'seh': 3,
+      'ses': 0,
+      'sg': 0,
+      'sh': 11,
+      'shi': 19,
+      'sk': 12,
+      'sl': 14,
+      'sma': 7,
+      'smi': 7,
+      'smj': 7,
+      'smn': 7,
+      'sms': 7,
+      'sn': 3,
+      'so': 3,
+      'sq': 3,
+      'sr': 11,
+      'ss': 3,
+      'ssy': 3,
+      'st': 3,
+      'sv': 3,
+      'sw': 3,
+      'syr': 3,
+      'ta': 3,
+      'te': 3,
+      'teo': 3,
+      'th': 0,
+      'ti': 4,
+      'tig': 3,
+      'tk': 3,
+      'tl': 4,
+      'tn': 3,
+      'to': 0,
+      'tr': 0,
+      'ts': 3,
+      'tzm': 22,
+      'uk': 11,
+      'ur': 3,
+      've': 3,
+      'vi': 0,
+      'vun': 3,
+      'wa': 4,
+      'wae': 3,
+      'wo': 0,
+      'xh': 3,
+      'xog': 3,
+      'yo': 0,
+      'zh': 0,
+      'zu': 3
+    };
+
+    // utility functions for plural rules methods
+    function isIn(n, list) {
+      return list.indexOf(n) !== -1;
+    }
+    function isBetween(n, start, end) {
+      return start <= n && n <= end;
+    }
+
+    // list of all plural rules methods:
+    // map an integer to the plural form name to use
+    var pluralRules = {
+      '0': function(n) {
+        return 'other';
+      },
+      '1': function(n) {
+        if ((isBetween((n % 100), 3, 10)))
+          return 'few';
+        if (n === 0)
+          return 'zero';
+        if ((isBetween((n % 100), 11, 99)))
+          return 'many';
+        if (n == 2)
+          return 'two';
+        if (n == 1)
+          return 'one';
+        return 'other';
+      },
+      '2': function(n) {
+        if (n !== 0 && (n % 10) === 0)
+          return 'many';
+        if (n == 2)
+          return 'two';
+        if (n == 1)
+          return 'one';
+        return 'other';
+      },
+      '3': function(n) {
+        if (n == 1)
+          return 'one';
+        return 'other';
+      },
+      '4': function(n) {
+        if ((isBetween(n, 0, 1)))
+          return 'one';
+        return 'other';
+      },
+      '5': function(n) {
+        if ((isBetween(n, 0, 2)) && n != 2)
+          return 'one';
+        return 'other';
+      },
+      '6': function(n) {
+        if (n === 0)
+          return 'zero';
+        if ((n % 10) == 1 && (n % 100) != 11)
+          return 'one';
+        return 'other';
+      },
+      '7': function(n) {
+        if (n == 2)
+          return 'two';
+        if (n == 1)
+          return 'one';
+        return 'other';
+      },
+      '8': function(n) {
+        if ((isBetween(n, 3, 6)))
+          return 'few';
+        if ((isBetween(n, 7, 10)))
+          return 'many';
+        if (n == 2)
+          return 'two';
+        if (n == 1)
+          return 'one';
+        return 'other';
+      },
+      '9': function(n) {
+        if (n === 0 || n != 1 && (isBetween((n % 100), 1, 19)))
+          return 'few';
+        if (n == 1)
+          return 'one';
+        return 'other';
+      },
+      '10': function(n) {
+        if ((isBetween((n % 10), 2, 9)) && !(isBetween((n % 100), 11, 19)))
+          return 'few';
+        if ((n % 10) == 1 && !(isBetween((n % 100), 11, 19)))
+          return 'one';
+        return 'other';
+      },
+      '11': function(n) {
+        if ((isBetween((n % 10), 2, 4)) && !(isBetween((n % 100), 12, 14)))
+          return 'few';
+        if ((n % 10) === 0 ||
+            (isBetween((n % 10), 5, 9)) ||
+            (isBetween((n % 100), 11, 14)))
+          return 'many';
+        if ((n % 10) == 1 && (n % 100) != 11)
+          return 'one';
+        return 'other';
+      },
+      '12': function(n) {
+        if ((isBetween(n, 2, 4)))
+          return 'few';
+        if (n == 1)
+          return 'one';
+        return 'other';
+      },
+      '13': function(n) {
+        if ((isBetween((n % 10), 2, 4)) && !(isBetween((n % 100), 12, 14)))
+          return 'few';
+        if (n != 1 && (isBetween((n % 10), 0, 1)) ||
+            (isBetween((n % 10), 5, 9)) ||
+            (isBetween((n % 100), 12, 14)))
+          return 'many';
+        if (n == 1)
+          return 'one';
+        return 'other';
+      },
+      '14': function(n) {
+        if ((isBetween((n % 100), 3, 4)))
+          return 'few';
+        if ((n % 100) == 2)
+          return 'two';
+        if ((n % 100) == 1)
+          return 'one';
+        return 'other';
+      },
+      '15': function(n) {
+        if (n === 0 || (isBetween((n % 100), 2, 10)))
+          return 'few';
+        if ((isBetween((n % 100), 11, 19)))
+          return 'many';
+        if (n == 1)
+          return 'one';
+        return 'other';
+      },
+      '16': function(n) {
+        if ((n % 10) == 1 && n != 11)
+          return 'one';
+        return 'other';
+      },
+      '17': function(n) {
+        if (n == 3)
+          return 'few';
+        if (n === 0)
+          return 'zero';
+        if (n == 6)
+          return 'many';
+        if (n == 2)
+          return 'two';
+        if (n == 1)
+          return 'one';
+        return 'other';
+      },
+      '18': function(n) {
+        if (n === 0)
+          return 'zero';
+        if ((isBetween(n, 0, 2)) && n !== 0 && n != 2)
+          return 'one';
+        return 'other';
+      },
+      '19': function(n) {
+        if ((isBetween(n, 2, 10)))
+          return 'few';
+        if ((isBetween(n, 0, 1)))
+          return 'one';
+        return 'other';
+      },
+      '20': function(n) {
+        if ((isBetween((n % 10), 3, 4) || ((n % 10) == 9)) && !(
+            isBetween((n % 100), 10, 19) ||
+            isBetween((n % 100), 70, 79) ||
+            isBetween((n % 100), 90, 99)
+            ))
+          return 'few';
+        if ((n % 1000000) === 0 && n !== 0)
+          return 'many';
+        if ((n % 10) == 2 && !isIn((n % 100), [12, 72, 92]))
+          return 'two';
+        if ((n % 10) == 1 && !isIn((n % 100), [11, 71, 91]))
+          return 'one';
+        return 'other';
+      },
+      '21': function(n) {
+        if (n === 0)
+          return 'zero';
+        if (n == 1)
+          return 'one';
+        return 'other';
+      },
+      '22': function(n) {
+        if ((isBetween(n, 0, 1)) || (isBetween(n, 11, 99)))
+          return 'one';
+        return 'other';
+      },
+      '23': function(n) {
+        if ((isBetween((n % 10), 1, 2)) || (n % 20) === 0)
+          return 'one';
+        return 'other';
+      },
+      '24': function(n) {
+        if ((isBetween(n, 3, 10) || isBetween(n, 13, 19)))
+          return 'few';
+        if (isIn(n, [2, 12]))
+          return 'two';
+        if (isIn(n, [1, 11]))
+          return 'one';
+        return 'other';
+      }
+    };
+
+    // return a function that gives the plural form name for a given integer
+    var index = locales2rules[lang.replace(/-.*$/, '')];
+    if (!(index in pluralRules)) {
+      consoleWarn('plural form unknown for [' + lang + ']');
+      return function() { return 'other'; };
+    }
+    return pluralRules[index];
+  }
+
+  // pre-defined 'plural' macro
+  gMacros.plural = function(str, param, key, prop) {
+    var n = parseFloat(param);
+    if (isNaN(n))
+      return str;
+
+    // TODO: support other properties (l20n still doesn't...)
+    if (prop != gTextProp)
+      return str;
+
+    // initialize _pluralRules
+    if (!gMacros._pluralRules) {
+      gMacros._pluralRules = getPluralRules(gLanguage);
+    }
+    var index = '[' + gMacros._pluralRules(n) + ']';
+
+    // try to find a [zero|one|two] key if it's defined
+    if (n === 0 && (key + '[zero]') in gL10nData) {
+      str = gL10nData[key + '[zero]'][prop];
+    } else if (n == 1 && (key + '[one]') in gL10nData) {
+      str = gL10nData[key + '[one]'][prop];
+    } else if (n == 2 && (key + '[two]') in gL10nData) {
+      str = gL10nData[key + '[two]'][prop];
+    } else if ((key + index) in gL10nData) {
+      str = gL10nData[key + index][prop];
+    } else if ((key + '[other]') in gL10nData) {
+      str = gL10nData[key + '[other]'][prop];
+    }
+
+    return str;
+  };
+
+
+  /**
+   * l10n dictionary functions
+   */
+
+  // fetch an l10n object, warn if not found, apply `args' if possible
+  function getL10nData(key, args, fallback) {
+    var data = gL10nData[key];
+    if (!data) {
+      consoleWarn('#' + key + ' is undefined.');
+      if (!fallback) {
+        return null;
+      }
+      data = fallback;
+    }
+
+    /** This is where l10n expressions should be processed.
+      * The plan is to support C-style expressions from the l20n project;
+      * until then, only two kinds of simple expressions are supported:
+      *   {[ index ]} and {{ arguments }}.
+      */
+    var rv = {};
+    for (var prop in data) {
+      var str = data[prop];
+      str = substIndexes(str, args, key, prop);
+      str = substArguments(str, args, key);
+      rv[prop] = str;
+    }
+    return rv;
+  }
+
+  // replace {[macros]} with their values
+  function substIndexes(str, args, key, prop) {
+    var reIndex = /\{\[\s*([a-zA-Z]+)\(([a-zA-Z]+)\)\s*\]\}/;
+    var reMatch = reIndex.exec(str);
+    if (!reMatch || !reMatch.length)
+      return str;
+
+    // an index/macro has been found
+    // Note: at the moment, only one parameter is supported
+    var macroName = reMatch[1];
+    var paramName = reMatch[2];
+    var param;
+    if (args && paramName in args) {
+      param = args[paramName];
+    } else if (paramName in gL10nData) {
+      param = gL10nData[paramName];
+    }
+
+    // there's no macro parser yet: it has to be defined in gMacros
+    if (macroName in gMacros) {
+      var macro = gMacros[macroName];
+      str = macro(str, param, key, prop);
+    }
+    return str;
+  }
+
+  // replace {{arguments}} with their values
+  function substArguments(str, args, key) {
+    var reArgs = /\{\{\s*(.+?)\s*\}\}/g;
+    return str.replace(reArgs, function(matched_text, arg) {
+      if (args && arg in args) {
+        return args[arg];
+      }
+      if (arg in gL10nData) {
+        return gL10nData[arg];
+      }
+      consoleLog('argument {{' + arg + '}} for #' + key + ' is undefined.');
+      return matched_text;
+    });
+  }
+
+  // translate an HTML element
+  function translateElement(element) {
+    var l10n = getL10nAttributes(element);
+    if (!l10n.id)
+      return;
+
+    // get the related l10n object
+    var data = getL10nData(l10n.id, l10n.args);
+    if (!data) {
+      consoleWarn('#' + l10n.id + ' is undefined.');
+      return;
+    }
+
+    // translate element (TODO: security checks?)
+    if (data[gTextProp]) { // XXX
+      if (getChildElementCount(element) === 0) {
+        element[gTextProp] = data[gTextProp];
+      } else {
+        // this element has element children: replace the content of the first
+        // (non-empty) child textNode and clear other child textNodes
+        var children = element.childNodes;
+        var found = false;
+        for (var i = 0, l = children.length; i < l; i++) {
+          if (children[i].nodeType === 3 && /\S/.test(children[i].nodeValue)) {
+            if (found) {
+              children[i].nodeValue = '';
+            } else {
+              children[i].nodeValue = data[gTextProp];
+              found = true;
+            }
+          }
+        }
+        // if no (non-empty) textNode is found, insert a textNode before the
+        // first element child.
+        if (!found) {
+          var textNode = document.createTextNode(data[gTextProp]);
+          element.insertBefore(textNode, element.firstChild);
+        }
+      }
+      delete data[gTextProp];
+    }
+
+    for (var k in data) {
+      element[k] = data[k];
+    }
+  }
+
+  // webkit browsers don't currently support 'children' on SVG elements...
+  function getChildElementCount(element) {
+    if (element.children) {
+      return element.children.length;
+    }
+    if (typeof element.childElementCount !== 'undefined') {
+      return element.childElementCount;
+    }
+    var count = 0;
+    for (var i = 0; i < element.childNodes.length; i++) {
+      count += element.nodeType === 1 ? 1 : 0;
+    }
+    return count;
+  }
+
+  // translate an HTML subtree
+  function translateFragment(element) {
+    element = element || document.documentElement;
+
+    // check all translatable children (= w/ a `data-l10n-id' attribute)
+    var children = getTranslatableChildren(element);
+    var elementCount = children.length;
+    for (var i = 0; i < elementCount; i++) {
+      translateElement(children[i]);
+    }
+
+    // translate element itself if necessary
+    translateElement(element);
+  }
+
+
+  /**
+   * Startup & Public API
+   *
+   * Warning: this part of the code contains browser-specific chunks --
+   * that's where obsolete browsers, namely IE8 and earlier, are handled.
+   *
+   * Unlike the rest of the lib, this section is not shared with FirefoxOS/Gaia.
+   */
+
+  // load the default locale on startup
+  function l10nStartup() {
+    gReadyState = 'interactive';
+
+    // most browsers expose the UI language as `navigator.language'
+    // but IE uses `navigator.userLanguage' instead
+    var userLocale = navigator.language || navigator.userLanguage;
+    consoleLog('loading [' + userLocale + '] resources, ' +
+        (gAsyncResourceLoading ? 'asynchronously.' : 'synchronously.'));
+
+    // load the default locale and translate the document if required
+    if (document.documentElement.lang === userLocale) {
+      loadLocale(userLocale);
+    } else {
+      loadLocale(userLocale, translateFragment);
+    }
+  }
+
+  // browser-specific startup
+  if (document.addEventListener) { // modern browsers and IE9+
+    if (document.readyState === 'loading') {
+      // the document is not fully loaded yet: wait for DOMContentLoaded.
+      document.addEventListener('DOMContentLoaded', l10nStartup);
+    } else {
+      // l10n.js is being loaded with <script defer> or <script async>,
+      // the DOM is ready for parsing.
+      window.setTimeout(l10nStartup);
+    }
+  } else if (window.attachEvent) { // IE8 and before (= oldIE)
+    // TODO: check if jQuery is loaded (CSS selector + JSON + events)
+
+    // dummy `console.log' and `console.warn' functions
+    if (!window.console) {
+      consoleLog = function(message) {}; // just ignore console.log calls
+      consoleWarn = function(message) {
+        if (gDEBUG) {
+          alert('[l10n] ' + message); // vintage debugging, baby!
+        }
+      };
+    }
+
+    // XMLHttpRequest for IE6
+    if (!window.XMLHttpRequest) {
+      xhrLoadText = function(url, onSuccess, onFailure) {
+        onSuccess = onSuccess || function _onSuccess(data) {};
+        onFailure = onFailure || function _onFailure() {
+          consoleWarn(url + ' not found.');
+        };
+        var xhr = new ActiveXObject('Microsoft.XMLHTTP');
+        xhr.open('GET', url, gAsyncResourceLoading);
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+              onSuccess(xhr.responseText);
+            } else {
+              onFailure();
+            }
+          }
+        };
+        xhr.send(null);
+      };
+    }
+
+    // worst hack ever for IE6 and IE7
+    if (!window.JSON) {
+      getL10nAttributes = function(element) {
+        if (!element)
+          return {};
+        var l10nId = element.getAttribute('data-l10n-id'),
+            l10nArgs = element.getAttribute('data-l10n-args'),
+            args = {};
+        if (l10nArgs) try {
+          args = eval(l10nArgs); // XXX yeah, I know...
+        } catch (e) {
+          consoleWarn('could not parse arguments for #' + l10nId);
+        }
+        return { id: l10nId, args: args };
+      };
+    }
+
+    // override `getTranslatableChildren' and `getL10nResourceLinks'
+    if (!document.querySelectorAll) {
+      getTranslatableChildren = function(element) {
+        if (!element)
+          return [];
+        var nodes = element.getElementsByTagName('*'),
+            l10nElements = [],
+            n = nodes.length;
+        for (var i = 0; i < n; i++) {
+          if (nodes[i].getAttribute('data-l10n-id'))
+            l10nElements.push(nodes[i]);
+        }
+        return l10nElements;
+      };
+      getL10nResourceLinks = function() {
+        var links = document.getElementsByTagName('link'),
+            l10nLinks = [],
+            n = links.length;
+        for (var i = 0; i < n; i++) {
+          if (links[i].type == 'application/l10n')
+            l10nLinks.push(links[i]);
+        }
+        return l10nLinks;
+      };
+    }
+
+    // override `getL10nDictionary'
+    if (!window.JSON || !document.querySelectorAll) {
+      getL10nDictionary = function() {
+        var scripts = document.getElementsByName('script');
+        for (var i = 0; i < scripts.length; i++) {
+          if (scripts[i].type == 'application/l10n') {
+            return eval(scripts[i].innerHTML);
+          }
+        }
+        return null;
+      };
+    }
+
+    // fire non-standard `localized' DOM events
+    if (document.createEventObject && !document.createEvent) {
+      fireL10nReadyEvent = function(lang) {
+        // hack to simulate a custom event in IE:
+        // to catch this event, add an event handler to `onpropertychange'
+        document.documentElement.localized = 1;
+      };
+    }
+
+    // startup for IE<9
+    window.attachEvent('onload', function() {
+      gTextProp = document.textContent === null ? 'textContent' : 'innerText';
+      l10nStartup();
+    });
+  }
+
+  // cross-browser API (sorry, oldIE doesn't support getters & setters)
+  return {
+    // get a localized string
+    get: function(key, args, fallbackString) {
+      var index = key.lastIndexOf('.');
+      var prop = gTextProp;
+      if (index > 0) { // An attribute has been specified
+        prop = key.substr(index + 1);
+        key = key.substring(0, index);
+      }
+      var fallback;
+      if (fallbackString) {
+        fallback = {};
+        fallback[prop] = fallbackString;
+      }
+      var data = getL10nData(key, args, fallback);
+      if (data && prop in data) {
+        return data[prop];
+      }
+      return '{{' + key + '}}';
+    },
+
+    // debug
+    getData: function() { return gL10nData; },
+    getText: function() { return gTextData; },
+
+    // get|set the document language
+    getLanguage: function() { return gLanguage; },
+    setLanguage: function(lang, callback) {
+      loadLocale(lang, function() {
+        if (callback)
+          callback();
+        translateFragment();
+      });
+    },
+
+    // get the direction (ltr|rtl) of the current language
+    getDirection: function() {
+      // http://www.w3.org/International/questions/qa-scripts
+      // Arabic, Hebrew, Farsi, Pashto, Urdu
+      var rtlList = ['ar', 'he', 'fa', 'ps', 'ur'];
+      return (rtlList.indexOf(gLanguage) >= 0) ? 'rtl' : 'ltr';
+    },
+
+    // translate an element or document fragment
+    translate: translateFragment,
+
+    // this can be used to prevent race conditions
+    getReadyState: function() { return gReadyState; },
+    ready: function(callback) {
+      if (!callback) {
+        return;
+      } else if (gReadyState == 'complete' || gReadyState == 'interactive') {
+        window.setTimeout(function() {
+          callback();
+        });
+      } else if (document.addEventListener) {
+        document.addEventListener('localized', function once() {
+          document.removeEventListener('localized', once);
+          callback();
+        });
+      } else if (document.attachEvent) {
+        document.documentElement.attachEvent('onpropertychange', function once(e) {
+          if (e.propertyName === 'localized') {
+            document.documentElement.detachEvent('onpropertychange', once);
+            callback();
+          }
+        });
+      }
+    }
+  };
+}) (window, document);
+
+// gettext-like shortcut for document.webL10n.get
+if (window._ === undefined) {
+  var _ = document.webL10n.get;
+}
+
+
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* Copyright 2017 Mozilla Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(true)
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define("pdfjs-dist/web/compatibility", [], factory);
+	else if(typeof exports === 'object')
+		exports["pdfjs-dist/web/compatibility"] = factory();
+	else
+		root["pdfjs-dist/web/compatibility"] = factory();
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// identity function for calling harmony imports with the correct context
+/******/ 	__webpack_require__.i = function(value) { return value; };
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+if (typeof PDFJS === 'undefined' || !PDFJS.compatibilityChecked) {
+  var globalScope = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : undefined;
+  var userAgent = typeof navigator !== 'undefined' && navigator.userAgent || '';
+  var isAndroid = /Android/.test(userAgent);
+  var isAndroidPre3 = /Android\s[0-2][^\d]/.test(userAgent);
+  var isAndroidPre5 = /Android\s[0-4][^\d]/.test(userAgent);
+  var isChrome = userAgent.indexOf('Chrom') >= 0;
+  var isChromeWithRangeBug = /Chrome\/(39|40)\./.test(userAgent);
+  var isIOSChrome = userAgent.indexOf('CriOS') >= 0;
+  var isIE = userAgent.indexOf('Trident') >= 0;
+  var isIOS = /\b(iPad|iPhone|iPod)(?=;)/.test(userAgent);
+  var isOpera = userAgent.indexOf('Opera') >= 0;
+  var isSafari = /Safari\//.test(userAgent) && !/(Chrome\/|Android\s)/.test(userAgent);
+  var hasDOM = (typeof window === 'undefined' ? 'undefined' : _typeof(window)) === 'object' && (typeof document === 'undefined' ? 'undefined' : _typeof(document)) === 'object';
+  if (typeof PDFJS === 'undefined') {
+    globalScope.PDFJS = {};
+  }
+  PDFJS.compatibilityChecked = true;
+  (function checkTypedArrayCompatibility() {
+    if (typeof Uint8Array !== 'undefined') {
+      if (typeof Uint8Array.prototype.subarray === 'undefined') {
+        Uint8Array.prototype.subarray = function subarray(start, end) {
+          return new Uint8Array(this.slice(start, end));
+        };
+        Float32Array.prototype.subarray = function subarray(start, end) {
+          return new Float32Array(this.slice(start, end));
+        };
+      }
+      if (typeof Float64Array === 'undefined') {
+        globalScope.Float64Array = Float32Array;
+      }
+      return;
+    }
+    function subarray(start, end) {
+      return new TypedArray(this.slice(start, end));
+    }
+    function setArrayOffset(array, offset) {
+      if (arguments.length < 2) {
+        offset = 0;
+      }
+      for (var i = 0, n = array.length; i < n; ++i, ++offset) {
+        this[offset] = array[i] & 0xFF;
+      }
+    }
+    function Uint32ArrayView(buffer, length) {
+      this.buffer = buffer;
+      this.byteLength = buffer.length;
+      this.length = length;
+      ensureUint32ArrayViewProps(this.length);
+    }
+    Uint32ArrayView.prototype = Object.create(null);
+    var uint32ArrayViewSetters = 0;
+    function createUint32ArrayProp(index) {
+      return {
+        get: function get() {
+          var buffer = this.buffer,
+              offset = index << 2;
+          return (buffer[offset] | buffer[offset + 1] << 8 | buffer[offset + 2] << 16 | buffer[offset + 3] << 24) >>> 0;
+        },
+        set: function set(value) {
+          var buffer = this.buffer,
+              offset = index << 2;
+          buffer[offset] = value & 255;
+          buffer[offset + 1] = value >> 8 & 255;
+          buffer[offset + 2] = value >> 16 & 255;
+          buffer[offset + 3] = value >>> 24 & 255;
+        }
+      };
+    }
+    function ensureUint32ArrayViewProps(length) {
+      while (uint32ArrayViewSetters < length) {
+        Object.defineProperty(Uint32ArrayView.prototype, uint32ArrayViewSetters, createUint32ArrayProp(uint32ArrayViewSetters));
+        uint32ArrayViewSetters++;
+      }
+    }
+    function TypedArray(arg1) {
+      var result, i, n;
+      if (typeof arg1 === 'number') {
+        result = [];
+        for (i = 0; i < arg1; ++i) {
+          result[i] = 0;
+        }
+      } else if ('slice' in arg1) {
+        result = arg1.slice(0);
+      } else {
+        result = [];
+        for (i = 0, n = arg1.length; i < n; ++i) {
+          result[i] = arg1[i];
+        }
+      }
+      result.subarray = subarray;
+      result.buffer = result;
+      result.byteLength = result.length;
+      result.set = setArrayOffset;
+      if ((typeof arg1 === 'undefined' ? 'undefined' : _typeof(arg1)) === 'object' && arg1.buffer) {
+        result.buffer = arg1.buffer;
+      }
+      return result;
+    }
+    globalScope.Uint8Array = TypedArray;
+    globalScope.Int8Array = TypedArray;
+    globalScope.Int32Array = TypedArray;
+    globalScope.Uint16Array = TypedArray;
+    globalScope.Float32Array = TypedArray;
+    globalScope.Float64Array = TypedArray;
+    globalScope.Uint32Array = function () {
+      if (arguments.length === 3) {
+        if (arguments[1] !== 0) {
+          throw new Error('offset !== 0 is not supported');
+        }
+        return new Uint32ArrayView(arguments[0], arguments[2]);
+      }
+      return TypedArray.apply(this, arguments);
+    };
+  })();
+  (function canvasPixelArrayBuffer() {
+    if (!hasDOM || !window.CanvasPixelArray) {
+      return;
+    }
+    var cpaProto = window.CanvasPixelArray.prototype;
+    if ('buffer' in cpaProto) {
+      return;
+    }
+    Object.defineProperty(cpaProto, 'buffer', {
+      get: function get() {
+        return this;
+      },
+
+      enumerable: false,
+      configurable: true
+    });
+    Object.defineProperty(cpaProto, 'byteLength', {
+      get: function get() {
+        return this.length;
+      },
+
+      enumerable: false,
+      configurable: true
+    });
+  })();
+  (function normalizeURLObject() {
+    if (!globalScope.URL) {
+      globalScope.URL = globalScope.webkitURL;
+    }
+  })();
+  (function checkObjectDefinePropertyCompatibility() {
+    if (typeof Object.defineProperty !== 'undefined') {
+      var definePropertyPossible = true;
+      try {
+        if (hasDOM) {
+          Object.defineProperty(new Image(), 'id', { value: 'test' });
+        }
+        var Test = function Test() {};
+        Test.prototype = {
+          get id() {}
+        };
+        Object.defineProperty(new Test(), 'id', {
+          value: '',
+          configurable: true,
+          enumerable: true,
+          writable: false
+        });
+      } catch (e) {
+        definePropertyPossible = false;
+      }
+      if (definePropertyPossible) {
+        return;
+      }
+    }
+    Object.defineProperty = function objectDefineProperty(obj, name, def) {
+      delete obj[name];
+      if ('get' in def) {
+        obj.__defineGetter__(name, def['get']);
+      }
+      if ('set' in def) {
+        obj.__defineSetter__(name, def['set']);
+      }
+      if ('value' in def) {
+        obj.__defineSetter__(name, function objectDefinePropertySetter(value) {
+          this.__defineGetter__(name, function objectDefinePropertyGetter() {
+            return value;
+          });
+          return value;
+        });
+        obj[name] = def.value;
+      }
+    };
+  })();
+  (function checkXMLHttpRequestResponseCompatibility() {
+    if (typeof XMLHttpRequest === 'undefined') {
+      return;
+    }
+    var xhrPrototype = XMLHttpRequest.prototype;
+    var xhr = new XMLHttpRequest();
+    if (!('overrideMimeType' in xhr)) {
+      Object.defineProperty(xhrPrototype, 'overrideMimeType', {
+        value: function xmlHttpRequestOverrideMimeType(mimeType) {}
+      });
+    }
+    if ('responseType' in xhr) {
+      return;
+    }
+    Object.defineProperty(xhrPrototype, 'responseType', {
+      get: function xmlHttpRequestGetResponseType() {
+        return this._responseType || 'text';
+      },
+      set: function xmlHttpRequestSetResponseType(value) {
+        if (value === 'text' || value === 'arraybuffer') {
+          this._responseType = value;
+          if (value === 'arraybuffer' && typeof this.overrideMimeType === 'function') {
+            this.overrideMimeType('text/plain; charset=x-user-defined');
+          }
+        }
+      }
+    });
+    if (typeof VBArray !== 'undefined') {
+      Object.defineProperty(xhrPrototype, 'response', {
+        get: function xmlHttpRequestResponseGet() {
+          if (this.responseType === 'arraybuffer') {
+            return new Uint8Array(new VBArray(this.responseBody).toArray());
+          }
+          return this.responseText;
+        }
+      });
+      return;
+    }
+    Object.defineProperty(xhrPrototype, 'response', {
+      get: function xmlHttpRequestResponseGet() {
+        if (this.responseType !== 'arraybuffer') {
+          return this.responseText;
+        }
+        var text = this.responseText;
+        var i,
+            n = text.length;
+        var result = new Uint8Array(n);
+        for (i = 0; i < n; ++i) {
+          result[i] = text.charCodeAt(i) & 0xFF;
+        }
+        return result.buffer;
+      }
+    });
+  })();
+  (function checkWindowBtoaCompatibility() {
+    if ('btoa' in globalScope) {
+      return;
+    }
+    var digits = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+    globalScope.btoa = function (chars) {
+      var buffer = '';
+      var i, n;
+      for (i = 0, n = chars.length; i < n; i += 3) {
+        var b1 = chars.charCodeAt(i) & 0xFF;
+        var b2 = chars.charCodeAt(i + 1) & 0xFF;
+        var b3 = chars.charCodeAt(i + 2) & 0xFF;
+        var d1 = b1 >> 2,
+            d2 = (b1 & 3) << 4 | b2 >> 4;
+        var d3 = i + 1 < n ? (b2 & 0xF) << 2 | b3 >> 6 : 64;
+        var d4 = i + 2 < n ? b3 & 0x3F : 64;
+        buffer += digits.charAt(d1) + digits.charAt(d2) + digits.charAt(d3) + digits.charAt(d4);
+      }
+      return buffer;
+    };
+  })();
+  (function checkWindowAtobCompatibility() {
+    if ('atob' in globalScope) {
+      return;
+    }
+    var digits = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+    globalScope.atob = function (input) {
+      input = input.replace(/=+$/, '');
+      if (input.length % 4 === 1) {
+        throw new Error('bad atob input');
+      }
+      for (var bc = 0, bs, buffer, idx = 0, output = ''; buffer = input.charAt(idx++); ~buffer && (bs = bc % 4 ? bs * 64 + buffer : buffer, bc++ % 4) ? output += String.fromCharCode(255 & bs >> (-2 * bc & 6)) : 0) {
+        buffer = digits.indexOf(buffer);
+      }
+      return output;
+    };
+  })();
+  (function checkFunctionPrototypeBindCompatibility() {
+    if (typeof Function.prototype.bind !== 'undefined') {
+      return;
+    }
+    Function.prototype.bind = function functionPrototypeBind(obj) {
+      var fn = this,
+          headArgs = Array.prototype.slice.call(arguments, 1);
+      var bound = function functionPrototypeBindBound() {
+        var args = headArgs.concat(Array.prototype.slice.call(arguments));
+        return fn.apply(obj, args);
+      };
+      return bound;
+    };
+  })();
+  (function checkDatasetProperty() {
+    if (!hasDOM) {
+      return;
+    }
+    var div = document.createElement('div');
+    if ('dataset' in div) {
+      return;
+    }
+    Object.defineProperty(HTMLElement.prototype, 'dataset', {
+      get: function get() {
+        if (this._dataset) {
+          return this._dataset;
+        }
+        var dataset = {};
+        for (var j = 0, jj = this.attributes.length; j < jj; j++) {
+          var attribute = this.attributes[j];
+          if (attribute.name.substring(0, 5) !== 'data-') {
+            continue;
+          }
+          var key = attribute.name.substring(5).replace(/\-([a-z])/g, function (all, ch) {
+            return ch.toUpperCase();
+          });
+          dataset[key] = attribute.value;
+        }
+        Object.defineProperty(this, '_dataset', {
+          value: dataset,
+          writable: false,
+          enumerable: false
+        });
+        return dataset;
+      },
+
+      enumerable: true
+    });
+  })();
+  (function checkClassListProperty() {
+    function changeList(element, itemName, add, remove) {
+      var s = element.className || '';
+      var list = s.split(/\s+/g);
+      if (list[0] === '') {
+        list.shift();
+      }
+      var index = list.indexOf(itemName);
+      if (index < 0 && add) {
+        list.push(itemName);
+      }
+      if (index >= 0 && remove) {
+        list.splice(index, 1);
+      }
+      element.className = list.join(' ');
+      return index >= 0;
+    }
+    if (!hasDOM) {
+      return;
+    }
+    var div = document.createElement('div');
+    if ('classList' in div) {
+      return;
+    }
+    var classListPrototype = {
+      add: function add(name) {
+        changeList(this.element, name, true, false);
+      },
+      contains: function contains(name) {
+        return changeList(this.element, name, false, false);
+      },
+      remove: function remove(name) {
+        changeList(this.element, name, false, true);
+      },
+      toggle: function toggle(name) {
+        changeList(this.element, name, true, true);
+      }
+    };
+    Object.defineProperty(HTMLElement.prototype, 'classList', {
+      get: function get() {
+        if (this._classList) {
+          return this._classList;
+        }
+        var classList = Object.create(classListPrototype, {
+          element: {
+            value: this,
+            writable: false,
+            enumerable: true
+          }
+        });
+        Object.defineProperty(this, '_classList', {
+          value: classList,
+          writable: false,
+          enumerable: false
+        });
+        return classList;
+      },
+
+      enumerable: true
+    });
+  })();
+  (function checkWorkerConsoleCompatibility() {
+    if (typeof importScripts === 'undefined' || 'console' in globalScope) {
+      return;
+    }
+    var consoleTimer = {};
+    var workerConsole = {
+      log: function log() {
+        var args = Array.prototype.slice.call(arguments);
+        globalScope.postMessage({
+          targetName: 'main',
+          action: 'console_log',
+          data: args
+        });
+      },
+      error: function error() {
+        var args = Array.prototype.slice.call(arguments);
+        globalScope.postMessage({
+          targetName: 'main',
+          action: 'console_error',
+          data: args
+        });
+      },
+      time: function time(name) {
+        consoleTimer[name] = Date.now();
+      },
+      timeEnd: function timeEnd(name) {
+        var time = consoleTimer[name];
+        if (!time) {
+          throw new Error('Unknown timer name ' + name);
+        }
+        this.log('Timer:', name, Date.now() - time);
+      }
+    };
+    globalScope.console = workerConsole;
+  })();
+  (function checkConsoleCompatibility() {
+    if (!hasDOM) {
+      return;
+    }
+    if (!('console' in window)) {
+      window.console = {
+        log: function log() {},
+        error: function error() {},
+        warn: function warn() {}
+      };
+      return;
+    }
+    if (!('bind' in console.log)) {
+      console.log = function (fn) {
+        return function (msg) {
+          return fn(msg);
+        };
+      }(console.log);
+      console.error = function (fn) {
+        return function (msg) {
+          return fn(msg);
+        };
+      }(console.error);
+      console.warn = function (fn) {
+        return function (msg) {
+          return fn(msg);
+        };
+      }(console.warn);
+      return;
+    }
+  })();
+  (function checkOnClickCompatibility() {
+    function ignoreIfTargetDisabled(event) {
+      if (isDisabled(event.target)) {
+        event.stopPropagation();
+      }
+    }
+    function isDisabled(node) {
+      return node.disabled || node.parentNode && isDisabled(node.parentNode);
+    }
+    if (isOpera) {
+      document.addEventListener('click', ignoreIfTargetDisabled, true);
+    }
+  })();
+  (function checkOnBlobSupport() {
+    if (isIE || isIOSChrome) {
+      PDFJS.disableCreateObjectURL = true;
+    }
+  })();
+  (function checkNavigatorLanguage() {
+    if (typeof navigator === 'undefined') {
+      return;
+    }
+    if ('language' in navigator) {
+      return;
+    }
+    PDFJS.locale = navigator.userLanguage || 'en-US';
+  })();
+  (function checkRangeRequests() {
+    if (isSafari || isAndroidPre3 || isChromeWithRangeBug || isIOS) {
+      PDFJS.disableRange = true;
+      PDFJS.disableStream = true;
+    }
+  })();
+  (function checkHistoryManipulation() {
+    if (!hasDOM) {
+      return;
+    }
+    if (!history.pushState || isAndroidPre3) {
+      PDFJS.disableHistory = true;
+    }
+  })();
+  (function checkSetPresenceInImageData() {
+    if (!hasDOM) {
+      return;
+    }
+    if (window.CanvasPixelArray) {
+      if (typeof window.CanvasPixelArray.prototype.set !== 'function') {
+        window.CanvasPixelArray.prototype.set = function (arr) {
+          for (var i = 0, ii = this.length; i < ii; i++) {
+            this[i] = arr[i];
+          }
+        };
+      }
+    } else {
+      var polyfill = false,
+          versionMatch;
+      if (isChrome) {
+        versionMatch = userAgent.match(/Chrom(e|ium)\/([0-9]+)\./);
+        polyfill = versionMatch && parseInt(versionMatch[2]) < 21;
+      } else if (isAndroid) {
+        polyfill = isAndroidPre5;
+      } else if (isSafari) {
+        versionMatch = userAgent.match(/Version\/([0-9]+)\.([0-9]+)\.([0-9]+) Safari\//);
+        polyfill = versionMatch && parseInt(versionMatch[1]) < 6;
+      }
+      if (polyfill) {
+        var contextPrototype = window.CanvasRenderingContext2D.prototype;
+        var createImageData = contextPrototype.createImageData;
+        contextPrototype.createImageData = function (w, h) {
+          var imageData = createImageData.call(this, w, h);
+          imageData.data.set = function (arr) {
+            for (var i = 0, ii = this.length; i < ii; i++) {
+              this[i] = arr[i];
+            }
+          };
+          return imageData;
+        };
+        contextPrototype = null;
+      }
+    }
+  })();
+  (function checkRequestAnimationFrame() {
+    function installFakeAnimationFrameFunctions() {
+      window.requestAnimationFrame = function (callback) {
+        return window.setTimeout(callback, 20);
+      };
+      window.cancelAnimationFrame = function (timeoutID) {
+        window.clearTimeout(timeoutID);
+      };
+    }
+    if (!hasDOM) {
+      return;
+    }
+    if (isIOS) {
+      installFakeAnimationFrameFunctions();
+      return;
+    }
+    if ('requestAnimationFrame' in window) {
+      return;
+    }
+    window.requestAnimationFrame = window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+    if (window.requestAnimationFrame) {
+      return;
+    }
+    installFakeAnimationFrameFunctions();
+  })();
+  (function checkCanvasSizeLimitation() {
+    if (isIOS || isAndroid) {
+      PDFJS.maxCanvasPixels = 5242880;
+    }
+  })();
+  (function checkFullscreenSupport() {
+    if (!hasDOM) {
+      return;
+    }
+    if (isIE && window.parent !== window) {
+      PDFJS.disableFullscreen = true;
+    }
+  })();
+  (function checkCurrentScript() {
+    if (!hasDOM) {
+      return;
+    }
+    if ('currentScript' in document) {
+      return;
+    }
+    Object.defineProperty(document, 'currentScript', {
+      get: function get() {
+        var scripts = document.getElementsByTagName('script');
+        return scripts[scripts.length - 1];
+      },
+
+      enumerable: true,
+      configurable: true
+    });
+  })();
+  (function checkInputTypeNumberAssign() {
+    if (!hasDOM) {
+      return;
+    }
+    var el = document.createElement('input');
+    try {
+      el.type = 'number';
+    } catch (ex) {
+      var inputProto = el.constructor.prototype;
+      var typeProperty = Object.getOwnPropertyDescriptor(inputProto, 'type');
+      Object.defineProperty(inputProto, 'type', {
+        get: function get() {
+          return typeProperty.get.call(this);
+        },
+        set: function set(value) {
+          typeProperty.set.call(this, value === 'number' ? 'text' : value);
+        },
+
+        enumerable: true,
+        configurable: true
+      });
+    }
+  })();
+  (function checkDocumentReadyState() {
+    if (!hasDOM) {
+      return;
+    }
+    if (!document.attachEvent) {
+      return;
+    }
+    var documentProto = document.constructor.prototype;
+    var readyStateProto = Object.getOwnPropertyDescriptor(documentProto, 'readyState');
+    Object.defineProperty(documentProto, 'readyState', {
+      get: function get() {
+        var value = readyStateProto.get.call(this);
+        return value === 'interactive' ? 'loading' : value;
+      },
+      set: function set(value) {
+        readyStateProto.set.call(this, value);
+      },
+
+      enumerable: true,
+      configurable: true
+    });
+  })();
+  (function checkChildNodeRemove() {
+    if (!hasDOM) {
+      return;
+    }
+    if (typeof Element.prototype.remove !== 'undefined') {
+      return;
+    }
+    Element.prototype.remove = function () {
+      if (this.parentNode) {
+        this.parentNode.removeChild(this);
+      }
+    };
+  })();
+  (function checkPromise() {
+    if (globalScope.Promise) {
+      if (typeof globalScope.Promise.all !== 'function') {
+        globalScope.Promise.all = function (iterable) {
+          var count = 0,
+              results = [],
+              resolve,
+              reject;
+          var promise = new globalScope.Promise(function (resolve_, reject_) {
+            resolve = resolve_;
+            reject = reject_;
+          });
+          iterable.forEach(function (p, i) {
+            count++;
+            p.then(function (result) {
+              results[i] = result;
+              count--;
+              if (count === 0) {
+                resolve(results);
+              }
+            }, reject);
+          });
+          if (count === 0) {
+            resolve(results);
+          }
+          return promise;
+        };
+      }
+      if (typeof globalScope.Promise.resolve !== 'function') {
+        globalScope.Promise.resolve = function (value) {
+          return new globalScope.Promise(function (resolve) {
+            resolve(value);
+          });
+        };
+      }
+      if (typeof globalScope.Promise.reject !== 'function') {
+        globalScope.Promise.reject = function (reason) {
+          return new globalScope.Promise(function (resolve, reject) {
+            reject(reason);
+          });
+        };
+      }
+      if (typeof globalScope.Promise.prototype.catch !== 'function') {
+        globalScope.Promise.prototype.catch = function (onReject) {
+          return globalScope.Promise.prototype.then(undefined, onReject);
+        };
+      }
+      return;
+    }
+    var STATUS_PENDING = 0;
+    var STATUS_RESOLVED = 1;
+    var STATUS_REJECTED = 2;
+    var REJECTION_TIMEOUT = 500;
+    var HandlerManager = {
+      handlers: [],
+      running: false,
+      unhandledRejections: [],
+      pendingRejectionCheck: false,
+      scheduleHandlers: function scheduleHandlers(promise) {
+        if (promise._status === STATUS_PENDING) {
+          return;
+        }
+        this.handlers = this.handlers.concat(promise._handlers);
+        promise._handlers = [];
+        if (this.running) {
+          return;
+        }
+        this.running = true;
+        setTimeout(this.runHandlers.bind(this), 0);
+      },
+      runHandlers: function runHandlers() {
+        var RUN_TIMEOUT = 1;
+        var timeoutAt = Date.now() + RUN_TIMEOUT;
+        while (this.handlers.length > 0) {
+          var handler = this.handlers.shift();
+          var nextStatus = handler.thisPromise._status;
+          var nextValue = handler.thisPromise._value;
+          try {
+            if (nextStatus === STATUS_RESOLVED) {
+              if (typeof handler.onResolve === 'function') {
+                nextValue = handler.onResolve(nextValue);
+              }
+            } else if (typeof handler.onReject === 'function') {
+              nextValue = handler.onReject(nextValue);
+              nextStatus = STATUS_RESOLVED;
+              if (handler.thisPromise._unhandledRejection) {
+                this.removeUnhandeledRejection(handler.thisPromise);
+              }
+            }
+          } catch (ex) {
+            nextStatus = STATUS_REJECTED;
+            nextValue = ex;
+          }
+          handler.nextPromise._updateStatus(nextStatus, nextValue);
+          if (Date.now() >= timeoutAt) {
+            break;
+          }
+        }
+        if (this.handlers.length > 0) {
+          setTimeout(this.runHandlers.bind(this), 0);
+          return;
+        }
+        this.running = false;
+      },
+      addUnhandledRejection: function addUnhandledRejection(promise) {
+        this.unhandledRejections.push({
+          promise: promise,
+          time: Date.now()
+        });
+        this.scheduleRejectionCheck();
+      },
+      removeUnhandeledRejection: function removeUnhandeledRejection(promise) {
+        promise._unhandledRejection = false;
+        for (var i = 0; i < this.unhandledRejections.length; i++) {
+          if (this.unhandledRejections[i].promise === promise) {
+            this.unhandledRejections.splice(i);
+            i--;
+          }
+        }
+      },
+      scheduleRejectionCheck: function scheduleRejectionCheck() {
+        var _this = this;
+
+        if (this.pendingRejectionCheck) {
+          return;
+        }
+        this.pendingRejectionCheck = true;
+        setTimeout(function () {
+          _this.pendingRejectionCheck = false;
+          var now = Date.now();
+          for (var i = 0; i < _this.unhandledRejections.length; i++) {
+            if (now - _this.unhandledRejections[i].time > REJECTION_TIMEOUT) {
+              var unhandled = _this.unhandledRejections[i].promise._value;
+              var msg = 'Unhandled rejection: ' + unhandled;
+              if (unhandled.stack) {
+                msg += '\n' + unhandled.stack;
+              }
+              try {
+                throw new Error(msg);
+              } catch (_) {
+                console.warn(msg);
+              }
+              _this.unhandledRejections.splice(i);
+              i--;
+            }
+          }
+          if (_this.unhandledRejections.length) {
+            _this.scheduleRejectionCheck();
+          }
+        }, REJECTION_TIMEOUT);
+      }
+    };
+    var Promise = function Promise(resolver) {
+      this._status = STATUS_PENDING;
+      this._handlers = [];
+      try {
+        resolver.call(this, this._resolve.bind(this), this._reject.bind(this));
+      } catch (e) {
+        this._reject(e);
+      }
+    };
+    Promise.all = function Promise_all(promises) {
+      var resolveAll, rejectAll;
+      var deferred = new Promise(function (resolve, reject) {
+        resolveAll = resolve;
+        rejectAll = reject;
+      });
+      var unresolved = promises.length;
+      var results = [];
+      if (unresolved === 0) {
+        resolveAll(results);
+        return deferred;
+      }
+      function reject(reason) {
+        if (deferred._status === STATUS_REJECTED) {
+          return;
+        }
+        results = [];
+        rejectAll(reason);
+      }
+      for (var i = 0, ii = promises.length; i < ii; ++i) {
+        var promise = promises[i];
+        var resolve = function (i) {
+          return function (value) {
+            if (deferred._status === STATUS_REJECTED) {
+              return;
+            }
+            results[i] = value;
+            unresolved--;
+            if (unresolved === 0) {
+              resolveAll(results);
+            }
+          };
+        }(i);
+        if (Promise.isPromise(promise)) {
+          promise.then(resolve, reject);
+        } else {
+          resolve(promise);
+        }
+      }
+      return deferred;
+    };
+    Promise.isPromise = function Promise_isPromise(value) {
+      return value && typeof value.then === 'function';
+    };
+    Promise.resolve = function Promise_resolve(value) {
+      return new Promise(function (resolve) {
+        resolve(value);
+      });
+    };
+    Promise.reject = function Promise_reject(reason) {
+      return new Promise(function (resolve, reject) {
+        reject(reason);
+      });
+    };
+    Promise.prototype = {
+      _status: null,
+      _value: null,
+      _handlers: null,
+      _unhandledRejection: null,
+      _updateStatus: function Promise__updateStatus(status, value) {
+        if (this._status === STATUS_RESOLVED || this._status === STATUS_REJECTED) {
+          return;
+        }
+        if (status === STATUS_RESOLVED && Promise.isPromise(value)) {
+          value.then(this._updateStatus.bind(this, STATUS_RESOLVED), this._updateStatus.bind(this, STATUS_REJECTED));
+          return;
+        }
+        this._status = status;
+        this._value = value;
+        if (status === STATUS_REJECTED && this._handlers.length === 0) {
+          this._unhandledRejection = true;
+          HandlerManager.addUnhandledRejection(this);
+        }
+        HandlerManager.scheduleHandlers(this);
+      },
+      _resolve: function Promise_resolve(value) {
+        this._updateStatus(STATUS_RESOLVED, value);
+      },
+      _reject: function Promise_reject(reason) {
+        this._updateStatus(STATUS_REJECTED, reason);
+      },
+      then: function Promise_then(onResolve, onReject) {
+        var nextPromise = new Promise(function (resolve, reject) {
+          this.resolve = resolve;
+          this.reject = reject;
+        });
+        this._handlers.push({
+          thisPromise: this,
+          onResolve: onResolve,
+          onReject: onReject,
+          nextPromise: nextPromise
+        });
+        HandlerManager.scheduleHandlers(this);
+        return nextPromise;
+      },
+      catch: function Promise_catch(onReject) {
+        return this.then(undefined, onReject);
+      }
+    };
+    globalScope.Promise = Promise;
+  })();
+  (function checkWeakMap() {
+    if (globalScope.WeakMap) {
+      return;
+    }
+    var id = 0;
+    function WeakMap() {
+      this.id = '$weakmap' + id++;
+    }
+    WeakMap.prototype = {
+      has: function has(obj) {
+        return !!Object.getOwnPropertyDescriptor(obj, this.id);
+      },
+      get: function get(obj, defaultValue) {
+        return this.has(obj) ? obj[this.id] : defaultValue;
+      },
+      set: function set(obj, value) {
+        Object.defineProperty(obj, this.id, {
+          value: value,
+          enumerable: false,
+          configurable: true
+        });
+      },
+      delete: function _delete(obj) {
+        delete obj[this.id];
+      }
+    };
+    globalScope.WeakMap = WeakMap;
+  })();
+  (function checkURLConstructor() {
+    var hasWorkingUrl = false;
+    try {
+      if (typeof URL === 'function' && _typeof(URL.prototype) === 'object' && 'origin' in URL.prototype) {
+        var u = new URL('b', 'http://a');
+        u.pathname = 'c%20d';
+        hasWorkingUrl = u.href === 'http://a/c%20d';
+      }
+    } catch (e) {}
+    if (hasWorkingUrl) {
+      return;
+    }
+    var relative = Object.create(null);
+    relative['ftp'] = 21;
+    relative['file'] = 0;
+    relative['gopher'] = 70;
+    relative['http'] = 80;
+    relative['https'] = 443;
+    relative['ws'] = 80;
+    relative['wss'] = 443;
+    var relativePathDotMapping = Object.create(null);
+    relativePathDotMapping['%2e'] = '.';
+    relativePathDotMapping['.%2e'] = '..';
+    relativePathDotMapping['%2e.'] = '..';
+    relativePathDotMapping['%2e%2e'] = '..';
+    function isRelativeScheme(scheme) {
+      return relative[scheme] !== undefined;
+    }
+    function invalid() {
+      clear.call(this);
+      this._isInvalid = true;
+    }
+    function IDNAToASCII(h) {
+      if (h === '') {
+        invalid.call(this);
+      }
+      return h.toLowerCase();
+    }
+    function percentEscape(c) {
+      var unicode = c.charCodeAt(0);
+      if (unicode > 0x20 && unicode < 0x7F && [0x22, 0x23, 0x3C, 0x3E, 0x3F, 0x60].indexOf(unicode) === -1) {
+        return c;
+      }
+      return encodeURIComponent(c);
+    }
+    function percentEscapeQuery(c) {
+      var unicode = c.charCodeAt(0);
+      if (unicode > 0x20 && unicode < 0x7F && [0x22, 0x23, 0x3C, 0x3E, 0x60].indexOf(unicode) === -1) {
+        return c;
+      }
+      return encodeURIComponent(c);
+    }
+    var EOF,
+        ALPHA = /[a-zA-Z]/,
+        ALPHANUMERIC = /[a-zA-Z0-9\+\-\.]/;
+    function parse(input, stateOverride, base) {
+      function err(message) {
+        errors.push(message);
+      }
+      var state = stateOverride || 'scheme start',
+          cursor = 0,
+          buffer = '',
+          seenAt = false,
+          seenBracket = false,
+          errors = [];
+      loop: while ((input[cursor - 1] !== EOF || cursor === 0) && !this._isInvalid) {
+        var c = input[cursor];
+        switch (state) {
+          case 'scheme start':
+            if (c && ALPHA.test(c)) {
+              buffer += c.toLowerCase();
+              state = 'scheme';
+            } else if (!stateOverride) {
+              buffer = '';
+              state = 'no scheme';
+              continue;
+            } else {
+              err('Invalid scheme.');
+              break loop;
+            }
+            break;
+          case 'scheme':
+            if (c && ALPHANUMERIC.test(c)) {
+              buffer += c.toLowerCase();
+            } else if (c === ':') {
+              this._scheme = buffer;
+              buffer = '';
+              if (stateOverride) {
+                break loop;
+              }
+              if (isRelativeScheme(this._scheme)) {
+                this._isRelative = true;
+              }
+              if (this._scheme === 'file') {
+                state = 'relative';
+              } else if (this._isRelative && base && base._scheme === this._scheme) {
+                state = 'relative or authority';
+              } else if (this._isRelative) {
+                state = 'authority first slash';
+              } else {
+                state = 'scheme data';
+              }
+            } else if (!stateOverride) {
+              buffer = '';
+              cursor = 0;
+              state = 'no scheme';
+              continue;
+            } else if (c === EOF) {
+              break loop;
+            } else {
+              err('Code point not allowed in scheme: ' + c);
+              break loop;
+            }
+            break;
+          case 'scheme data':
+            if (c === '?') {
+              this._query = '?';
+              state = 'query';
+            } else if (c === '#') {
+              this._fragment = '#';
+              state = 'fragment';
+            } else {
+              if (c !== EOF && c !== '\t' && c !== '\n' && c !== '\r') {
+                this._schemeData += percentEscape(c);
+              }
+            }
+            break;
+          case 'no scheme':
+            if (!base || !isRelativeScheme(base._scheme)) {
+              err('Missing scheme.');
+              invalid.call(this);
+            } else {
+              state = 'relative';
+              continue;
+            }
+            break;
+          case 'relative or authority':
+            if (c === '/' && input[cursor + 1] === '/') {
+              state = 'authority ignore slashes';
+            } else {
+              err('Expected /, got: ' + c);
+              state = 'relative';
+              continue;
+            }
+            break;
+          case 'relative':
+            this._isRelative = true;
+            if (this._scheme !== 'file') {
+              this._scheme = base._scheme;
+            }
+            if (c === EOF) {
+              this._host = base._host;
+              this._port = base._port;
+              this._path = base._path.slice();
+              this._query = base._query;
+              this._username = base._username;
+              this._password = base._password;
+              break loop;
+            } else if (c === '/' || c === '\\') {
+              if (c === '\\') {
+                err('\\ is an invalid code point.');
+              }
+              state = 'relative slash';
+            } else if (c === '?') {
+              this._host = base._host;
+              this._port = base._port;
+              this._path = base._path.slice();
+              this._query = '?';
+              this._username = base._username;
+              this._password = base._password;
+              state = 'query';
+            } else if (c === '#') {
+              this._host = base._host;
+              this._port = base._port;
+              this._path = base._path.slice();
+              this._query = base._query;
+              this._fragment = '#';
+              this._username = base._username;
+              this._password = base._password;
+              state = 'fragment';
+            } else {
+              var nextC = input[cursor + 1];
+              var nextNextC = input[cursor + 2];
+              if (this._scheme !== 'file' || !ALPHA.test(c) || nextC !== ':' && nextC !== '|' || nextNextC !== EOF && nextNextC !== '/' && nextNextC !== '\\' && nextNextC !== '?' && nextNextC !== '#') {
+                this._host = base._host;
+                this._port = base._port;
+                this._username = base._username;
+                this._password = base._password;
+                this._path = base._path.slice();
+                this._path.pop();
+              }
+              state = 'relative path';
+              continue;
+            }
+            break;
+          case 'relative slash':
+            if (c === '/' || c === '\\') {
+              if (c === '\\') {
+                err('\\ is an invalid code point.');
+              }
+              if (this._scheme === 'file') {
+                state = 'file host';
+              } else {
+                state = 'authority ignore slashes';
+              }
+            } else {
+              if (this._scheme !== 'file') {
+                this._host = base._host;
+                this._port = base._port;
+                this._username = base._username;
+                this._password = base._password;
+              }
+              state = 'relative path';
+              continue;
+            }
+            break;
+          case 'authority first slash':
+            if (c === '/') {
+              state = 'authority second slash';
+            } else {
+              err('Expected \'/\', got: ' + c);
+              state = 'authority ignore slashes';
+              continue;
+            }
+            break;
+          case 'authority second slash':
+            state = 'authority ignore slashes';
+            if (c !== '/') {
+              err('Expected \'/\', got: ' + c);
+              continue;
+            }
+            break;
+          case 'authority ignore slashes':
+            if (c !== '/' && c !== '\\') {
+              state = 'authority';
+              continue;
+            } else {
+              err('Expected authority, got: ' + c);
+            }
+            break;
+          case 'authority':
+            if (c === '@') {
+              if (seenAt) {
+                err('@ already seen.');
+                buffer += '%40';
+              }
+              seenAt = true;
+              for (var i = 0; i < buffer.length; i++) {
+                var cp = buffer[i];
+                if (cp === '\t' || cp === '\n' || cp === '\r') {
+                  err('Invalid whitespace in authority.');
+                  continue;
+                }
+                if (cp === ':' && this._password === null) {
+                  this._password = '';
+                  continue;
+                }
+                var tempC = percentEscape(cp);
+                if (this._password !== null) {
+                  this._password += tempC;
+                } else {
+                  this._username += tempC;
+                }
+              }
+              buffer = '';
+            } else if (c === EOF || c === '/' || c === '\\' || c === '?' || c === '#') {
+              cursor -= buffer.length;
+              buffer = '';
+              state = 'host';
+              continue;
+            } else {
+              buffer += c;
+            }
+            break;
+          case 'file host':
+            if (c === EOF || c === '/' || c === '\\' || c === '?' || c === '#') {
+              if (buffer.length === 2 && ALPHA.test(buffer[0]) && (buffer[1] === ':' || buffer[1] === '|')) {
+                state = 'relative path';
+              } else if (buffer.length === 0) {
+                state = 'relative path start';
+              } else {
+                this._host = IDNAToASCII.call(this, buffer);
+                buffer = '';
+                state = 'relative path start';
+              }
+              continue;
+            } else if (c === '\t' || c === '\n' || c === '\r') {
+              err('Invalid whitespace in file host.');
+            } else {
+              buffer += c;
+            }
+            break;
+          case 'host':
+          case 'hostname':
+            if (c === ':' && !seenBracket) {
+              this._host = IDNAToASCII.call(this, buffer);
+              buffer = '';
+              state = 'port';
+              if (stateOverride === 'hostname') {
+                break loop;
+              }
+            } else if (c === EOF || c === '/' || c === '\\' || c === '?' || c === '#') {
+              this._host = IDNAToASCII.call(this, buffer);
+              buffer = '';
+              state = 'relative path start';
+              if (stateOverride) {
+                break loop;
+              }
+              continue;
+            } else if (c !== '\t' && c !== '\n' && c !== '\r') {
+              if (c === '[') {
+                seenBracket = true;
+              } else if (c === ']') {
+                seenBracket = false;
+              }
+              buffer += c;
+            } else {
+              err('Invalid code point in host/hostname: ' + c);
+            }
+            break;
+          case 'port':
+            if (/[0-9]/.test(c)) {
+              buffer += c;
+            } else if (c === EOF || c === '/' || c === '\\' || c === '?' || c === '#' || stateOverride) {
+              if (buffer !== '') {
+                var temp = parseInt(buffer, 10);
+                if (temp !== relative[this._scheme]) {
+                  this._port = temp + '';
+                }
+                buffer = '';
+              }
+              if (stateOverride) {
+                break loop;
+              }
+              state = 'relative path start';
+              continue;
+            } else if (c === '\t' || c === '\n' || c === '\r') {
+              err('Invalid code point in port: ' + c);
+            } else {
+              invalid.call(this);
+            }
+            break;
+          case 'relative path start':
+            if (c === '\\') {
+              err('\'\\\' not allowed in path.');
+            }
+            state = 'relative path';
+            if (c !== '/' && c !== '\\') {
+              continue;
+            }
+            break;
+          case 'relative path':
+            if (c === EOF || c === '/' || c === '\\' || !stateOverride && (c === '?' || c === '#')) {
+              if (c === '\\') {
+                err('\\ not allowed in relative path.');
+              }
+              var tmp;
+              if (tmp = relativePathDotMapping[buffer.toLowerCase()]) {
+                buffer = tmp;
+              }
+              if (buffer === '..') {
+                this._path.pop();
+                if (c !== '/' && c !== '\\') {
+                  this._path.push('');
+                }
+              } else if (buffer === '.' && c !== '/' && c !== '\\') {
+                this._path.push('');
+              } else if (buffer !== '.') {
+                if (this._scheme === 'file' && this._path.length === 0 && buffer.length === 2 && ALPHA.test(buffer[0]) && buffer[1] === '|') {
+                  buffer = buffer[0] + ':';
+                }
+                this._path.push(buffer);
+              }
+              buffer = '';
+              if (c === '?') {
+                this._query = '?';
+                state = 'query';
+              } else if (c === '#') {
+                this._fragment = '#';
+                state = 'fragment';
+              }
+            } else if (c !== '\t' && c !== '\n' && c !== '\r') {
+              buffer += percentEscape(c);
+            }
+            break;
+          case 'query':
+            if (!stateOverride && c === '#') {
+              this._fragment = '#';
+              state = 'fragment';
+            } else if (c !== EOF && c !== '\t' && c !== '\n' && c !== '\r') {
+              this._query += percentEscapeQuery(c);
+            }
+            break;
+          case 'fragment':
+            if (c !== EOF && c !== '\t' && c !== '\n' && c !== '\r') {
+              this._fragment += c;
+            }
+            break;
+        }
+        cursor++;
+      }
+    }
+    function clear() {
+      this._scheme = '';
+      this._schemeData = '';
+      this._username = '';
+      this._password = null;
+      this._host = '';
+      this._port = '';
+      this._path = [];
+      this._query = '';
+      this._fragment = '';
+      this._isInvalid = false;
+      this._isRelative = false;
+    }
+    function JURL(url, base) {
+      if (base !== undefined && !(base instanceof JURL)) {
+        base = new JURL(String(base));
+      }
+      this._url = url;
+      clear.call(this);
+      var input = url.replace(/^[ \t\r\n\f]+|[ \t\r\n\f]+$/g, '');
+      parse.call(this, input, null, base);
+    }
+    JURL.prototype = {
+      toString: function toString() {
+        return this.href;
+      },
+
+      get href() {
+        if (this._isInvalid) {
+          return this._url;
+        }
+        var authority = '';
+        if (this._username !== '' || this._password !== null) {
+          authority = this._username + (this._password !== null ? ':' + this._password : '') + '@';
+        }
+        return this.protocol + (this._isRelative ? '//' + authority + this.host : '') + this.pathname + this._query + this._fragment;
+      },
+      set href(href) {
+        clear.call(this);
+        parse.call(this, href);
+      },
+      get protocol() {
+        return this._scheme + ':';
+      },
+      set protocol(protocol) {
+        if (this._isInvalid) {
+          return;
+        }
+        parse.call(this, protocol + ':', 'scheme start');
+      },
+      get host() {
+        return this._isInvalid ? '' : this._port ? this._host + ':' + this._port : this._host;
+      },
+      set host(host) {
+        if (this._isInvalid || !this._isRelative) {
+          return;
+        }
+        parse.call(this, host, 'host');
+      },
+      get hostname() {
+        return this._host;
+      },
+      set hostname(hostname) {
+        if (this._isInvalid || !this._isRelative) {
+          return;
+        }
+        parse.call(this, hostname, 'hostname');
+      },
+      get port() {
+        return this._port;
+      },
+      set port(port) {
+        if (this._isInvalid || !this._isRelative) {
+          return;
+        }
+        parse.call(this, port, 'port');
+      },
+      get pathname() {
+        return this._isInvalid ? '' : this._isRelative ? '/' + this._path.join('/') : this._schemeData;
+      },
+      set pathname(pathname) {
+        if (this._isInvalid || !this._isRelative) {
+          return;
+        }
+        this._path = [];
+        parse.call(this, pathname, 'relative path start');
+      },
+      get search() {
+        return this._isInvalid || !this._query || this._query === '?' ? '' : this._query;
+      },
+      set search(search) {
+        if (this._isInvalid || !this._isRelative) {
+          return;
+        }
+        this._query = '?';
+        if (search[0] === '?') {
+          search = search.slice(1);
+        }
+        parse.call(this, search, 'query');
+      },
+      get hash() {
+        return this._isInvalid || !this._fragment || this._fragment === '#' ? '' : this._fragment;
+      },
+      set hash(hash) {
+        if (this._isInvalid) {
+          return;
+        }
+        this._fragment = '#';
+        if (hash[0] === '#') {
+          hash = hash.slice(1);
+        }
+        parse.call(this, hash, 'fragment');
+      },
+      get origin() {
+        var host;
+        if (this._isInvalid || !this._scheme) {
+          return '';
+        }
+        switch (this._scheme) {
+          case 'data':
+          case 'file':
+          case 'javascript':
+          case 'mailto':
+            return 'null';
+        }
+        host = this.host;
+        if (!host) {
+          return '';
+        }
+        return this._scheme + '://' + host;
+      }
+    };
+    var OriginalURL = globalScope.URL;
+    if (OriginalURL) {
+      JURL.createObjectURL = function (blob) {
+        return OriginalURL.createObjectURL.apply(OriginalURL, arguments);
+      };
+      JURL.revokeObjectURL = function (url) {
+        OriginalURL.revokeObjectURL(url);
+      };
+    }
+    globalScope.URL = JURL;
+  })();
+}
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var g;
+g = function () {
+  return this;
+}();
+try {
+  g = g || Function("return this")() || (1, eval)("this");
+} catch (e) {
+  if ((typeof window === "undefined" ? "undefined" : _typeof(window)) === "object") g = window;
+}
+module.exports = g;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+__webpack_require__(0);
+
+/***/ })
+/******/ ]);
+});
+//# sourceMappingURL=compatibility.js.map
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* Copyright 2017 Mozilla Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(true)
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define("pdfjs-dist/web/pdf_viewer", [], factory);
+	else if(typeof exports === 'object')
+		exports["pdfjs-dist/web/pdf_viewer"] = factory();
+	else
+		root["pdfjs-dist/web/pdf_viewer"] = root.pdfjsDistWebPdfViewer = factory();
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __w_pdfjs_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __w_pdfjs_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__w_pdfjs_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__w_pdfjs_require__.c = installedModules;
+/******/
+/******/ 	// identity function for calling harmony imports with the correct context
+/******/ 	__w_pdfjs_require__.i = function(value) { return value; };
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__w_pdfjs_require__.d = function(exports, name, getter) {
+/******/ 		if(!__w_pdfjs_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__w_pdfjs_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__w_pdfjs_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__w_pdfjs_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__w_pdfjs_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __w_pdfjs_require__(__w_pdfjs_require__.s = 12);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __w_pdfjs_require__) {
+
+"use strict";
+
+
+{
+  var pdfjsLib;
+  if (typeof __pdfjsdev_webpack__ === 'undefined') {
+    if (typeof window !== 'undefined' && window['pdfjs-dist/build/pdf']) {
+      pdfjsLib = window['pdfjs-dist/build/pdf'];
+    } else if (true) {
+      pdfjsLib = __webpack_require__(7);
+    } else {
+      throw new Error('Neither `require` nor `window` found');
+    }
+  }
+  module.exports = pdfjsLib;
+}
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __w_pdfjs_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.localized = exports.animationStarted = exports.normalizeWheelEventDelta = exports.binarySearchFirstItem = exports.watchScroll = exports.scrollIntoView = exports.getOutputScale = exports.approximateFraction = exports.roundToDivide = exports.getVisibleElements = exports.parseQueryString = exports.noContextMenuHandler = exports.getPDFFileNameFromURL = exports.ProgressBar = exports.EventBus = exports.mozL10n = exports.RendererType = exports.cloneObj = exports.VERTICAL_PADDING = exports.SCROLLBAR_PADDING = exports.MAX_AUTO_SCALE = exports.UNKNOWN_SCALE = exports.MAX_SCALE = exports.MIN_SCALE = exports.DEFAULT_SCALE = exports.DEFAULT_SCALE_VALUE = exports.CSS_UNITS = undefined;
+
+var _pdfjs = __w_pdfjs_require__(0);
+
+var CSS_UNITS = 96.0 / 72.0;
+var DEFAULT_SCALE_VALUE = 'auto';
+var DEFAULT_SCALE = 1.0;
+var MIN_SCALE = 0.25;
+var MAX_SCALE = 10.0;
+var UNKNOWN_SCALE = 0;
+var MAX_AUTO_SCALE = 1.25;
+var SCROLLBAR_PADDING = 40;
+var VERTICAL_PADDING = 5;
+var RendererType = {
+  CANVAS: 'canvas',
+  SVG: 'svg'
+};
+var mozL10n = typeof document !== 'undefined' ? document.mozL10n || document.webL10n : undefined;
+_pdfjs.PDFJS.disableFullscreen = _pdfjs.PDFJS.disableFullscreen === undefined ? false : _pdfjs.PDFJS.disableFullscreen;
+_pdfjs.PDFJS.useOnlyCssZoom = _pdfjs.PDFJS.useOnlyCssZoom === undefined ? false : _pdfjs.PDFJS.useOnlyCssZoom;
+_pdfjs.PDFJS.maxCanvasPixels = _pdfjs.PDFJS.maxCanvasPixels === undefined ? 16777216 : _pdfjs.PDFJS.maxCanvasPixels;
+_pdfjs.PDFJS.disableHistory = _pdfjs.PDFJS.disableHistory === undefined ? false : _pdfjs.PDFJS.disableHistory;
+_pdfjs.PDFJS.disableTextLayer = _pdfjs.PDFJS.disableTextLayer === undefined ? false : _pdfjs.PDFJS.disableTextLayer;
+_pdfjs.PDFJS.ignoreCurrentPositionOnZoom = _pdfjs.PDFJS.ignoreCurrentPositionOnZoom === undefined ? false : _pdfjs.PDFJS.ignoreCurrentPositionOnZoom;
+{
+  _pdfjs.PDFJS.locale = _pdfjs.PDFJS.locale === undefined && typeof navigator !== 'undefined' ? navigator.language : _pdfjs.PDFJS.locale;
+}
+function getOutputScale(ctx) {
+  var devicePixelRatio = window.devicePixelRatio || 1;
+  var backingStoreRatio = ctx.webkitBackingStorePixelRatio || ctx.mozBackingStorePixelRatio || ctx.msBackingStorePixelRatio || ctx.oBackingStorePixelRatio || ctx.backingStorePixelRatio || 1;
+  var pixelRatio = devicePixelRatio / backingStoreRatio;
+  return {
+    sx: pixelRatio,
+    sy: pixelRatio,
+    scaled: pixelRatio !== 1
+  };
+}
+function scrollIntoView(element, spot, skipOverflowHiddenElements) {
+  var parent = element.offsetParent;
+  if (!parent) {
+    console.error('offsetParent is not set -- cannot scroll');
+    return;
+  }
+  var checkOverflow = skipOverflowHiddenElements || false;
+  var offsetY = element.offsetTop + element.clientTop;
+  var offsetX = element.offsetLeft + element.clientLeft;
+  while (parent.clientHeight === parent.scrollHeight || checkOverflow && getComputedStyle(parent).overflow === 'hidden') {
+    if (parent.dataset._scaleY) {
+      offsetY /= parent.dataset._scaleY;
+      offsetX /= parent.dataset._scaleX;
+    }
+    offsetY += parent.offsetTop;
+    offsetX += parent.offsetLeft;
+    parent = parent.offsetParent;
+    if (!parent) {
+      return;
+    }
+  }
+  if (spot) {
+    if (spot.top !== undefined) {
+      offsetY += spot.top;
+    }
+    if (spot.left !== undefined) {
+      offsetX += spot.left;
+      parent.scrollLeft = offsetX;
+    }
+  }
+  parent.scrollTop = offsetY;
+}
+function watchScroll(viewAreaElement, callback) {
+  var debounceScroll = function debounceScroll(evt) {
+    if (rAF) {
+      return;
+    }
+    rAF = window.requestAnimationFrame(function viewAreaElementScrolled() {
+      rAF = null;
+      var currentY = viewAreaElement.scrollTop;
+      var lastY = state.lastY;
+      if (currentY !== lastY) {
+        state.down = currentY > lastY;
+      }
+      state.lastY = currentY;
+      callback(state);
+    });
+  };
+  var state = {
+    down: true,
+    lastY: viewAreaElement.scrollTop,
+    _eventHandler: debounceScroll
+  };
+  var rAF = null;
+  viewAreaElement.addEventListener('scroll', debounceScroll, true);
+  return state;
+}
+function parseQueryString(query) {
+  var parts = query.split('&');
+  var params = {};
+  for (var i = 0, ii = parts.length; i < ii; ++i) {
+    var param = parts[i].split('=');
+    var key = param[0].toLowerCase();
+    var value = param.length > 1 ? param[1] : null;
+    params[decodeURIComponent(key)] = decodeURIComponent(value);
+  }
+  return params;
+}
+function binarySearchFirstItem(items, condition) {
+  var minIndex = 0;
+  var maxIndex = items.length - 1;
+  if (items.length === 0 || !condition(items[maxIndex])) {
+    return items.length;
+  }
+  if (condition(items[minIndex])) {
+    return minIndex;
+  }
+  while (minIndex < maxIndex) {
+    var currentIndex = minIndex + maxIndex >> 1;
+    var currentItem = items[currentIndex];
+    if (condition(currentItem)) {
+      maxIndex = currentIndex;
+    } else {
+      minIndex = currentIndex + 1;
+    }
+  }
+  return minIndex;
+}
+function approximateFraction(x) {
+  if (Math.floor(x) === x) {
+    return [x, 1];
+  }
+  var xinv = 1 / x;
+  var limit = 8;
+  if (xinv > limit) {
+    return [1, limit];
+  } else if (Math.floor(xinv) === xinv) {
+    return [1, xinv];
+  }
+  var x_ = x > 1 ? xinv : x;
+  var a = 0,
+      b = 1,
+      c = 1,
+      d = 1;
+  while (true) {
+    var p = a + c,
+        q = b + d;
+    if (q > limit) {
+      break;
+    }
+    if (x_ <= p / q) {
+      c = p;
+      d = q;
+    } else {
+      a = p;
+      b = q;
+    }
+  }
+  var result;
+  if (x_ - a / b < c / d - x_) {
+    result = x_ === x ? [a, b] : [b, a];
+  } else {
+    result = x_ === x ? [c, d] : [d, c];
+  }
+  return result;
+}
+function roundToDivide(x, div) {
+  var r = x % div;
+  return r === 0 ? x : Math.round(x - r + div);
+}
+function getVisibleElements(scrollEl, views, sortByVisibility) {
+  var top = scrollEl.scrollTop,
+      bottom = top + scrollEl.clientHeight;
+  var left = scrollEl.scrollLeft,
+      right = left + scrollEl.clientWidth;
+  function isElementBottomBelowViewTop(view) {
+    var element = view.div;
+    var elementBottom = element.offsetTop + element.clientTop + element.clientHeight;
+    return elementBottom > top;
+  }
+  var visible = [],
+      view,
+      element;
+  var currentHeight, viewHeight, hiddenHeight, percentHeight;
+  var currentWidth, viewWidth;
+  var firstVisibleElementInd = views.length === 0 ? 0 : binarySearchFirstItem(views, isElementBottomBelowViewTop);
+  for (var i = firstVisibleElementInd, ii = views.length; i < ii; i++) {
+    view = views[i];
+    element = view.div;
+    currentHeight = element.offsetTop + element.clientTop;
+    viewHeight = element.clientHeight;
+    if (currentHeight > bottom) {
+      break;
+    }
+    currentWidth = element.offsetLeft + element.clientLeft;
+    viewWidth = element.clientWidth;
+    if (currentWidth + viewWidth < left || currentWidth > right) {
+      continue;
+    }
+    hiddenHeight = Math.max(0, top - currentHeight) + Math.max(0, currentHeight + viewHeight - bottom);
+    percentHeight = (viewHeight - hiddenHeight) * 100 / viewHeight | 0;
+    visible.push({
+      id: view.id,
+      x: currentWidth,
+      y: currentHeight,
+      view: view,
+      percent: percentHeight
+    });
+  }
+  var first = visible[0];
+  var last = visible[visible.length - 1];
+  if (sortByVisibility) {
+    visible.sort(function (a, b) {
+      var pc = a.percent - b.percent;
+      if (Math.abs(pc) > 0.001) {
+        return -pc;
+      }
+      return a.id - b.id;
+    });
+  }
+  return {
+    first: first,
+    last: last,
+    views: visible
+  };
+}
+function noContextMenuHandler(e) {
+  e.preventDefault();
+}
+function isDataSchema(url) {
+  var i = 0,
+      ii = url.length;
+  while (i < ii && url[i].trim() === '') {
+    i++;
+  }
+  return url.substr(i, 5).toLowerCase() === 'data:';
+}
+function getPDFFileNameFromURL(url) {
+  var defaultFilename = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'document.pdf';
+
+  if (isDataSchema(url)) {
+    console.warn('getPDFFileNameFromURL: ' + 'ignoring "data:" URL for performance reasons.');
+    return defaultFilename;
+  }
+  var reURI = /^(?:(?:[^:]+:)?\/\/[^\/]+)?([^?#]*)(\?[^#]*)?(#.*)?$/;
+  var reFilename = /[^\/?#=]+\.pdf\b(?!.*\.pdf\b)/i;
+  var splitURI = reURI.exec(url);
+  var suggestedFilename = reFilename.exec(splitURI[1]) || reFilename.exec(splitURI[2]) || reFilename.exec(splitURI[3]);
+  if (suggestedFilename) {
+    suggestedFilename = suggestedFilename[0];
+    if (suggestedFilename.indexOf('%') !== -1) {
+      try {
+        suggestedFilename = reFilename.exec(decodeURIComponent(suggestedFilename))[0];
+      } catch (e) {}
+    }
+  }
+  return suggestedFilename || defaultFilename;
+}
+function normalizeWheelEventDelta(evt) {
+  var delta = Math.sqrt(evt.deltaX * evt.deltaX + evt.deltaY * evt.deltaY);
+  var angle = Math.atan2(evt.deltaY, evt.deltaX);
+  if (-0.25 * Math.PI < angle && angle < 0.75 * Math.PI) {
+    delta = -delta;
+  }
+  var MOUSE_DOM_DELTA_PIXEL_MODE = 0;
+  var MOUSE_DOM_DELTA_LINE_MODE = 1;
+  var MOUSE_PIXELS_PER_LINE = 30;
+  var MOUSE_LINES_PER_PAGE = 30;
+  if (evt.deltaMode === MOUSE_DOM_DELTA_PIXEL_MODE) {
+    delta /= MOUSE_PIXELS_PER_LINE * MOUSE_LINES_PER_PAGE;
+  } else if (evt.deltaMode === MOUSE_DOM_DELTA_LINE_MODE) {
+    delta /= MOUSE_LINES_PER_PAGE;
+  }
+  return delta;
+}
+function cloneObj(obj) {
+  var result = {};
+  for (var i in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, i)) {
+      result[i] = obj[i];
+    }
+  }
+  return result;
+}
+var animationStarted = new Promise(function (resolve) {
+  window.requestAnimationFrame(resolve);
+});
+var localized = new Promise(function (resolve, reject) {
+  if (!mozL10n) {
+    resolve();
+    return;
+  }
+  if (mozL10n.getReadyState() !== 'loading') {
+    resolve();
+    return;
+  }
+  window.addEventListener('localized', function localized(evt) {
+    resolve();
+  });
+});
+var EventBus = function EventBusClosure() {
+  function EventBus() {
+    this._listeners = Object.create(null);
+  }
+  EventBus.prototype = {
+    on: function EventBus_on(eventName, listener) {
+      var eventListeners = this._listeners[eventName];
+      if (!eventListeners) {
+        eventListeners = [];
+        this._listeners[eventName] = eventListeners;
+      }
+      eventListeners.push(listener);
+    },
+    off: function EventBus_on(eventName, listener) {
+      var eventListeners = this._listeners[eventName];
+      var i;
+      if (!eventListeners || (i = eventListeners.indexOf(listener)) < 0) {
+        return;
+      }
+      eventListeners.splice(i, 1);
+    },
+    dispatch: function EventBus_dispath(eventName) {
+      var eventListeners = this._listeners[eventName];
+      if (!eventListeners || eventListeners.length === 0) {
+        return;
+      }
+      var args = Array.prototype.slice.call(arguments, 1);
+      eventListeners.slice(0).forEach(function (listener) {
+        listener.apply(null, args);
+      });
+    }
+  };
+  return EventBus;
+}();
+var ProgressBar = function ProgressBarClosure() {
+  function clamp(v, min, max) {
+    return Math.min(Math.max(v, min), max);
+  }
+  function ProgressBar(id, opts) {
+    this.visible = true;
+    this.div = document.querySelector(id + ' .progress');
+    this.bar = this.div.parentNode;
+    this.height = opts.height || 100;
+    this.width = opts.width || 100;
+    this.units = opts.units || '%';
+    this.div.style.height = this.height + this.units;
+    this.percent = 0;
+  }
+  ProgressBar.prototype = {
+    updateBar: function ProgressBar_updateBar() {
+      if (this._indeterminate) {
+        this.div.classList.add('indeterminate');
+        this.div.style.width = this.width + this.units;
+        return;
+      }
+      this.div.classList.remove('indeterminate');
+      var progressSize = this.width * this._percent / 100;
+      this.div.style.width = progressSize + this.units;
+    },
+    get percent() {
+      return this._percent;
+    },
+    set percent(val) {
+      this._indeterminate = isNaN(val);
+      this._percent = clamp(val, 0, 100);
+      this.updateBar();
+    },
+    setWidth: function ProgressBar_setWidth(viewer) {
+      if (viewer) {
+        var container = viewer.parentNode;
+        var scrollbarWidth = container.offsetWidth - viewer.offsetWidth;
+        if (scrollbarWidth > 0) {
+          this.bar.setAttribute('style', 'width: calc(100% - ' + scrollbarWidth + 'px);');
+        }
+      }
+    },
+    hide: function ProgressBar_hide() {
+      if (!this.visible) {
+        return;
+      }
+      this.visible = false;
+      this.bar.classList.add('hidden');
+      document.body.classList.remove('loadingInProgress');
+    },
+    show: function ProgressBar_show() {
+      if (this.visible) {
+        return;
+      }
+      this.visible = true;
+      document.body.classList.add('loadingInProgress');
+      this.bar.classList.remove('hidden');
+    }
+  };
+  return ProgressBar;
+}();
+exports.CSS_UNITS = CSS_UNITS;
+exports.DEFAULT_SCALE_VALUE = DEFAULT_SCALE_VALUE;
+exports.DEFAULT_SCALE = DEFAULT_SCALE;
+exports.MIN_SCALE = MIN_SCALE;
+exports.MAX_SCALE = MAX_SCALE;
+exports.UNKNOWN_SCALE = UNKNOWN_SCALE;
+exports.MAX_AUTO_SCALE = MAX_AUTO_SCALE;
+exports.SCROLLBAR_PADDING = SCROLLBAR_PADDING;
+exports.VERTICAL_PADDING = VERTICAL_PADDING;
+exports.cloneObj = cloneObj;
+exports.RendererType = RendererType;
+exports.mozL10n = mozL10n;
+exports.EventBus = EventBus;
+exports.ProgressBar = ProgressBar;
+exports.getPDFFileNameFromURL = getPDFFileNameFromURL;
+exports.noContextMenuHandler = noContextMenuHandler;
+exports.parseQueryString = parseQueryString;
+exports.getVisibleElements = getVisibleElements;
+exports.roundToDivide = roundToDivide;
+exports.approximateFraction = approximateFraction;
+exports.getOutputScale = getOutputScale;
+exports.scrollIntoView = scrollIntoView;
+exports.watchScroll = watchScroll;
+exports.binarySearchFirstItem = binarySearchFirstItem;
+exports.normalizeWheelEventDelta = normalizeWheelEventDelta;
+exports.animationStarted = animationStarted;
+exports.localized = localized;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __w_pdfjs_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getGlobalEventBus = exports.attachDOMEventsToEventBus = undefined;
+
+var _ui_utils = __w_pdfjs_require__(1);
+
+function attachDOMEventsToEventBus(eventBus) {
+  eventBus.on('documentload', function () {
+    var event = document.createEvent('CustomEvent');
+    event.initCustomEvent('documentload', true, true, {});
+    window.dispatchEvent(event);
+  });
+  eventBus.on('pagerendered', function (e) {
+    var event = document.createEvent('CustomEvent');
+    event.initCustomEvent('pagerendered', true, true, {
+      pageNumber: e.pageNumber,
+      cssTransform: e.cssTransform
+    });
+    e.source.div.dispatchEvent(event);
+  });
+  eventBus.on('textlayerrendered', function (e) {
+    var event = document.createEvent('CustomEvent');
+    event.initCustomEvent('textlayerrendered', true, true, { pageNumber: e.pageNumber });
+    e.source.textLayerDiv.dispatchEvent(event);
+  });
+  eventBus.on('pagechange', function (e) {
+    var event = document.createEvent('UIEvents');
+    event.initUIEvent('pagechange', true, true, window, 0);
+    event.pageNumber = e.pageNumber;
+    e.source.container.dispatchEvent(event);
+  });
+  eventBus.on('pagesinit', function (e) {
+    var event = document.createEvent('CustomEvent');
+    event.initCustomEvent('pagesinit', true, true, null);
+    e.source.container.dispatchEvent(event);
+  });
+  eventBus.on('pagesloaded', function (e) {
+    var event = document.createEvent('CustomEvent');
+    event.initCustomEvent('pagesloaded', true, true, { pagesCount: e.pagesCount });
+    e.source.container.dispatchEvent(event);
+  });
+  eventBus.on('scalechange', function (e) {
+    var event = document.createEvent('UIEvents');
+    event.initUIEvent('scalechange', true, true, window, 0);
+    event.scale = e.scale;
+    event.presetValue = e.presetValue;
+    e.source.container.dispatchEvent(event);
+  });
+  eventBus.on('updateviewarea', function (e) {
+    var event = document.createEvent('UIEvents');
+    event.initUIEvent('updateviewarea', true, true, window, 0);
+    event.location = e.location;
+    e.source.container.dispatchEvent(event);
+  });
+  eventBus.on('find', function (e) {
+    if (e.source === window) {
+      return;
+    }
+    var event = document.createEvent('CustomEvent');
+    event.initCustomEvent('find' + e.type, true, true, {
+      query: e.query,
+      phraseSearch: e.phraseSearch,
+      caseSensitive: e.caseSensitive,
+      highlightAll: e.highlightAll,
+      findPrevious: e.findPrevious
+    });
+    window.dispatchEvent(event);
+  });
+  eventBus.on('attachmentsloaded', function (e) {
+    var event = document.createEvent('CustomEvent');
+    event.initCustomEvent('attachmentsloaded', true, true, { attachmentsCount: e.attachmentsCount });
+    e.source.container.dispatchEvent(event);
+  });
+  eventBus.on('sidebarviewchanged', function (e) {
+    var event = document.createEvent('CustomEvent');
+    event.initCustomEvent('sidebarviewchanged', true, true, { view: e.view });
+    e.source.outerContainer.dispatchEvent(event);
+  });
+  eventBus.on('pagemode', function (e) {
+    var event = document.createEvent('CustomEvent');
+    event.initCustomEvent('pagemode', true, true, { mode: e.mode });
+    e.source.pdfViewer.container.dispatchEvent(event);
+  });
+  eventBus.on('namedaction', function (e) {
+    var event = document.createEvent('CustomEvent');
+    event.initCustomEvent('namedaction', true, true, { action: e.action });
+    e.source.pdfViewer.container.dispatchEvent(event);
+  });
+  eventBus.on('presentationmodechanged', function (e) {
+    var event = document.createEvent('CustomEvent');
+    event.initCustomEvent('presentationmodechanged', true, true, {
+      active: e.active,
+      switchInProgress: e.switchInProgress
+    });
+    window.dispatchEvent(event);
+  });
+  eventBus.on('outlineloaded', function (e) {
+    var event = document.createEvent('CustomEvent');
+    event.initCustomEvent('outlineloaded', true, true, { outlineCount: e.outlineCount });
+    e.source.container.dispatchEvent(event);
+  });
+}
+var globalEventBus = null;
+function getGlobalEventBus() {
+  if (globalEventBus) {
+    return globalEventBus;
+  }
+  globalEventBus = new _ui_utils.EventBus();
+  attachDOMEventsToEventBus(globalEventBus);
+  return globalEventBus;
+}
+exports.attachDOMEventsToEventBus = attachDOMEventsToEventBus;
+exports.getGlobalEventBus = getGlobalEventBus;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __w_pdfjs_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.SimpleLinkService = exports.PDFLinkService = undefined;
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _dom_events = __w_pdfjs_require__(2);
+
+var _ui_utils = __w_pdfjs_require__(1);
+
+var PageNumberRegExp = /^\d+$/;
+function isPageNumber(str) {
+  return PageNumberRegExp.test(str);
+}
+var PDFLinkService = function PDFLinkServiceClosure() {
+  function PDFLinkService(options) {
+    options = options || {};
+    this.eventBus = options.eventBus || (0, _dom_events.getGlobalEventBus)();
+    this.baseUrl = null;
+    this.pdfDocument = null;
+    this.pdfViewer = null;
+    this.pdfHistory = null;
+    this._pagesRefCache = null;
+  }
+  PDFLinkService.prototype = {
+    setDocument: function PDFLinkService_setDocument(pdfDocument, baseUrl) {
+      this.baseUrl = baseUrl;
+      this.pdfDocument = pdfDocument;
+      this._pagesRefCache = Object.create(null);
+    },
+    setViewer: function PDFLinkService_setViewer(pdfViewer) {
+      this.pdfViewer = pdfViewer;
+    },
+    setHistory: function PDFLinkService_setHistory(pdfHistory) {
+      this.pdfHistory = pdfHistory;
+    },
+    get pagesCount() {
+      return this.pdfDocument ? this.pdfDocument.numPages : 0;
+    },
+    get page() {
+      return this.pdfViewer.currentPageNumber;
+    },
+    set page(value) {
+      this.pdfViewer.currentPageNumber = value;
+    },
+    navigateTo: function PDFLinkService_navigateTo(dest) {
+      var destString = '';
+      var self = this;
+      var goToDestination = function goToDestination(destRef) {
+        var pageNumber;
+        if (destRef instanceof Object) {
+          pageNumber = self._cachedPageNumber(destRef);
+        } else if ((destRef | 0) === destRef) {
+          pageNumber = destRef + 1;
+        } else {
+          console.error('PDFLinkService_navigateTo: "' + destRef + '" is not a valid destination reference.');
+          return;
+        }
+        if (pageNumber) {
+          if (pageNumber < 1 || pageNumber > self.pagesCount) {
+            console.error('PDFLinkService_navigateTo: "' + pageNumber + '" is a non-existent page number.');
+            return;
+          }
+          self.pdfViewer.scrollPageIntoView({
+            pageNumber: pageNumber,
+            destArray: dest
+          });
+          if (self.pdfHistory) {
+            self.pdfHistory.push({
+              dest: dest,
+              hash: destString,
+              page: pageNumber
+            });
+          }
+        } else {
+          self.pdfDocument.getPageIndex(destRef).then(function (pageIndex) {
+            self.cachePageRef(pageIndex + 1, destRef);
+            goToDestination(destRef);
+          }).catch(function () {
+            console.error('PDFLinkService_navigateTo: "' + destRef + '" is not a valid page reference.');
+          });
+        }
+      };
+      var destinationPromise;
+      if (typeof dest === 'string') {
+        destString = dest;
+        destinationPromise = this.pdfDocument.getDestination(dest);
+      } else {
+        destinationPromise = Promise.resolve(dest);
+      }
+      destinationPromise.then(function (destination) {
+        dest = destination;
+        if (!(destination instanceof Array)) {
+          console.error('PDFLinkService_navigateTo: "' + destination + '" is not a valid destination array.');
+          return;
+        }
+        goToDestination(destination[0]);
+      });
+    },
+    getDestinationHash: function PDFLinkService_getDestinationHash(dest) {
+      if (typeof dest === 'string') {
+        return this.getAnchorUrl('#' + (isPageNumber(dest) ? 'nameddest=' : '') + escape(dest));
+      }
+      if (dest instanceof Array) {
+        var str = JSON.stringify(dest);
+        return this.getAnchorUrl('#' + escape(str));
+      }
+      return this.getAnchorUrl('');
+    },
+    getAnchorUrl: function PDFLinkService_getAnchorUrl(anchor) {
+      return (this.baseUrl || '') + anchor;
+    },
+    setHash: function PDFLinkService_setHash(hash) {
+      var pageNumber, dest;
+      if (hash.indexOf('=') >= 0) {
+        var params = (0, _ui_utils.parseQueryString)(hash);
+        if ('search' in params) {
+          this.eventBus.dispatch('findfromurlhash', {
+            source: this,
+            query: params['search'].replace(/"/g, ''),
+            phraseSearch: params['phrase'] === 'true'
+          });
+        }
+        if ('nameddest' in params) {
+          if (this.pdfHistory) {
+            this.pdfHistory.updateNextHashParam(params.nameddest);
+          }
+          this.navigateTo(params.nameddest);
+          return;
+        }
+        if ('page' in params) {
+          pageNumber = params.page | 0 || 1;
+        }
+        if ('zoom' in params) {
+          var zoomArgs = params.zoom.split(',');
+          var zoomArg = zoomArgs[0];
+          var zoomArgNumber = parseFloat(zoomArg);
+          if (zoomArg.indexOf('Fit') === -1) {
+            dest = [null, { name: 'XYZ' }, zoomArgs.length > 1 ? zoomArgs[1] | 0 : null, zoomArgs.length > 2 ? zoomArgs[2] | 0 : null, zoomArgNumber ? zoomArgNumber / 100 : zoomArg];
+          } else {
+            if (zoomArg === 'Fit' || zoomArg === 'FitB') {
+              dest = [null, { name: zoomArg }];
+            } else if (zoomArg === 'FitH' || zoomArg === 'FitBH' || zoomArg === 'FitV' || zoomArg === 'FitBV') {
+              dest = [null, { name: zoomArg }, zoomArgs.length > 1 ? zoomArgs[1] | 0 : null];
+            } else if (zoomArg === 'FitR') {
+              if (zoomArgs.length !== 5) {
+                console.error('PDFLinkService_setHash: ' + 'Not enough parameters for \'FitR\'.');
+              } else {
+                dest = [null, { name: zoomArg }, zoomArgs[1] | 0, zoomArgs[2] | 0, zoomArgs[3] | 0, zoomArgs[4] | 0];
+              }
+            } else {
+              console.error('PDFLinkService_setHash: \'' + zoomArg + '\' is not a valid zoom value.');
+            }
+          }
+        }
+        if (dest) {
+          this.pdfViewer.scrollPageIntoView({
+            pageNumber: pageNumber || this.page,
+            destArray: dest,
+            allowNegativeOffset: true
+          });
+        } else if (pageNumber) {
+          this.page = pageNumber;
+        }
+        if ('pagemode' in params) {
+          this.eventBus.dispatch('pagemode', {
+            source: this,
+            mode: params.pagemode
+          });
+        }
+      } else {
+        if (isPageNumber(hash) && hash <= this.pagesCount) {
+          console.warn('PDFLinkService_setHash: specifying a page number ' + 'directly after the hash symbol (#) is deprecated, ' + 'please use the "#page=' + hash + '" form instead.');
+          this.page = hash | 0;
+        }
+        dest = unescape(hash);
+        try {
+          dest = JSON.parse(dest);
+          if (!(dest instanceof Array)) {
+            dest = dest.toString();
+          }
+        } catch (ex) {}
+        if (typeof dest === 'string' || isValidExplicitDestination(dest)) {
+          if (this.pdfHistory) {
+            this.pdfHistory.updateNextHashParam(dest);
+          }
+          this.navigateTo(dest);
+          return;
+        }
+        console.error('PDFLinkService_setHash: \'' + unescape(hash) + '\' is not a valid destination.');
+      }
+    },
+    executeNamedAction: function PDFLinkService_executeNamedAction(action) {
+      switch (action) {
+        case 'GoBack':
+          if (this.pdfHistory) {
+            this.pdfHistory.back();
+          }
+          break;
+        case 'GoForward':
+          if (this.pdfHistory) {
+            this.pdfHistory.forward();
+          }
+          break;
+        case 'NextPage':
+          if (this.page < this.pagesCount) {
+            this.page++;
+          }
+          break;
+        case 'PrevPage':
+          if (this.page > 1) {
+            this.page--;
+          }
+          break;
+        case 'LastPage':
+          this.page = this.pagesCount;
+          break;
+        case 'FirstPage':
+          this.page = 1;
+          break;
+        default:
+          break;
+      }
+      this.eventBus.dispatch('namedaction', {
+        source: this,
+        action: action
+      });
+    },
+    onFileAttachmentAnnotation: function onFileAttachmentAnnotation() {
+      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+      this.eventBus.dispatch('fileattachmentannotation', {
+        source: this,
+        id: params.id,
+        filename: params.filename,
+        content: params.content
+      });
+    },
+
+    cachePageRef: function PDFLinkService_cachePageRef(pageNum, pageRef) {
+      var refStr = pageRef.num + ' ' + pageRef.gen + ' R';
+      this._pagesRefCache[refStr] = pageNum;
+    },
+    _cachedPageNumber: function PDFLinkService_cachedPageNumber(pageRef) {
+      var refStr = pageRef.num + ' ' + pageRef.gen + ' R';
+      return this._pagesRefCache && this._pagesRefCache[refStr] || null;
+    }
+  };
+  function isValidExplicitDestination(dest) {
+    if (!(dest instanceof Array)) {
+      return false;
+    }
+    var destLength = dest.length,
+        allowNull = true;
+    if (destLength < 2) {
+      return false;
+    }
+    var page = dest[0];
+    if (!((typeof page === 'undefined' ? 'undefined' : _typeof(page)) === 'object' && typeof page.num === 'number' && (page.num | 0) === page.num && typeof page.gen === 'number' && (page.gen | 0) === page.gen) && !(typeof page === 'number' && (page | 0) === page && page >= 0)) {
+      return false;
+    }
+    var zoom = dest[1];
+    if (!((typeof zoom === 'undefined' ? 'undefined' : _typeof(zoom)) === 'object' && typeof zoom.name === 'string')) {
+      return false;
+    }
+    switch (zoom.name) {
+      case 'XYZ':
+        if (destLength !== 5) {
+          return false;
+        }
+        break;
+      case 'Fit':
+      case 'FitB':
+        return destLength === 2;
+      case 'FitH':
+      case 'FitBH':
+      case 'FitV':
+      case 'FitBV':
+        if (destLength !== 3) {
+          return false;
+        }
+        break;
+      case 'FitR':
+        if (destLength !== 6) {
+          return false;
+        }
+        allowNull = false;
+        break;
+      default:
+        return false;
+    }
+    for (var i = 2; i < destLength; i++) {
+      var param = dest[i];
+      if (!(typeof param === 'number' || allowNull && param === null)) {
+        return false;
+      }
+    }
+    return true;
+  }
+  return PDFLinkService;
+}();
+var SimpleLinkService = function SimpleLinkServiceClosure() {
+  function SimpleLinkService() {}
+  SimpleLinkService.prototype = {
+    get page() {
+      return 0;
+    },
+    set page(value) {},
+    navigateTo: function navigateTo(dest) {},
+    getDestinationHash: function getDestinationHash(dest) {
+      return '#';
+    },
+    getAnchorUrl: function getAnchorUrl(hash) {
+      return '#';
+    },
+    setHash: function setHash(hash) {},
+    executeNamedAction: function executeNamedAction(action) {},
+    onFileAttachmentAnnotation: function onFileAttachmentAnnotation(params) {},
+    cachePageRef: function cachePageRef(pageNum, pageRef) {}
+  };
+  return SimpleLinkService;
+}();
+exports.PDFLinkService = PDFLinkService;
+exports.SimpleLinkService = SimpleLinkService;
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __w_pdfjs_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.DefaultAnnotationLayerFactory = exports.AnnotationLayerBuilder = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _pdfjs = __w_pdfjs_require__(0);
+
+var _ui_utils = __w_pdfjs_require__(1);
+
+var _pdf_link_service = __w_pdfjs_require__(3);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var AnnotationLayerBuilder = function () {
+  function AnnotationLayerBuilder(options) {
+    _classCallCheck(this, AnnotationLayerBuilder);
+
+    this.pageDiv = options.pageDiv;
+    this.pdfPage = options.pdfPage;
+    this.renderInteractiveForms = options.renderInteractiveForms;
+    this.linkService = options.linkService;
+    this.downloadManager = options.downloadManager;
+    this.div = null;
+  }
+
+  _createClass(AnnotationLayerBuilder, [{
+    key: 'render',
+    value: function render(viewport) {
+      var _this = this;
+
+      var intent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'display';
+
+      this.pdfPage.getAnnotations({ intent: intent }).then(function (annotations) {
+        var parameters = {
+          viewport: viewport.clone({ dontFlip: true }),
+          div: _this.div,
+          annotations: annotations,
+          page: _this.pdfPage,
+          renderInteractiveForms: _this.renderInteractiveForms,
+          linkService: _this.linkService,
+          downloadManager: _this.downloadManager
+        };
+        if (_this.div) {
+          _pdfjs.AnnotationLayer.update(parameters);
+        } else {
+          if (annotations.length === 0) {
+            return;
+          }
+          _this.div = document.createElement('div');
+          _this.div.className = 'annotationLayer';
+          _this.pageDiv.appendChild(_this.div);
+          parameters.div = _this.div;
+          _pdfjs.AnnotationLayer.render(parameters);
+          if (typeof _ui_utils.mozL10n !== 'undefined') {
+            _ui_utils.mozL10n.translate(_this.div);
+          }
+        }
+      });
+    }
+  }, {
+    key: 'hide',
+    value: function hide() {
+      if (!this.div) {
+        return;
+      }
+      this.div.setAttribute('hidden', 'true');
+    }
+  }]);
+
+  return AnnotationLayerBuilder;
+}();
+
+var DefaultAnnotationLayerFactory = function () {
+  function DefaultAnnotationLayerFactory() {
+    _classCallCheck(this, DefaultAnnotationLayerFactory);
+  }
+
+  _createClass(DefaultAnnotationLayerFactory, [{
+    key: 'createAnnotationLayerBuilder',
+    value: function createAnnotationLayerBuilder(pageDiv, pdfPage) {
+      var renderInteractiveForms = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+      return new AnnotationLayerBuilder({
+        pageDiv: pageDiv,
+        pdfPage: pdfPage,
+        renderInteractiveForms: renderInteractiveForms,
+        linkService: new _pdf_link_service.SimpleLinkService()
+      });
+    }
+  }]);
+
+  return DefaultAnnotationLayerFactory;
+}();
+
+exports.AnnotationLayerBuilder = AnnotationLayerBuilder;
+exports.DefaultAnnotationLayerFactory = DefaultAnnotationLayerFactory;
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __w_pdfjs_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.PDFPageView = undefined;
+
+var _ui_utils = __w_pdfjs_require__(1);
+
+var _pdfjs = __w_pdfjs_require__(0);
+
+var _dom_events = __w_pdfjs_require__(2);
+
+var _pdf_rendering_queue = __w_pdfjs_require__(7);
+
+var TEXT_LAYER_RENDER_DELAY = 200;
+var PDFPageView = function PDFPageViewClosure() {
+  function PDFPageView(options) {
+    var container = options.container;
+    var id = options.id;
+    var scale = options.scale;
+    var defaultViewport = options.defaultViewport;
+    var renderingQueue = options.renderingQueue;
+    var textLayerFactory = options.textLayerFactory;
+    var annotationLayerFactory = options.annotationLayerFactory;
+    var enhanceTextSelection = options.enhanceTextSelection || false;
+    var renderInteractiveForms = options.renderInteractiveForms || false;
+    this.id = id;
+    this.renderingId = 'page' + id;
+    this.pageLabel = null;
+    this.rotation = 0;
+    this.scale = scale || _ui_utils.DEFAULT_SCALE;
+    this.viewport = defaultViewport;
+    this.pdfPageRotate = defaultViewport.rotation;
+    this.hasRestrictedScaling = false;
+    this.enhanceTextSelection = enhanceTextSelection;
+    this.renderInteractiveForms = renderInteractiveForms;
+    this.eventBus = options.eventBus || (0, _dom_events.getGlobalEventBus)();
+    this.renderingQueue = renderingQueue;
+    this.textLayerFactory = textLayerFactory;
+    this.annotationLayerFactory = annotationLayerFactory;
+    this.renderer = options.renderer || _ui_utils.RendererType.CANVAS;
+    this.paintTask = null;
+    this.paintedViewportMap = new WeakMap();
+    this.renderingState = _pdf_rendering_queue.RenderingStates.INITIAL;
+    this.resume = null;
+    this.error = null;
+    this.onBeforeDraw = null;
+    this.onAfterDraw = null;
+    this.textLayer = null;
+    this.zoomLayer = null;
+    this.annotationLayer = null;
+    var div = document.createElement('div');
+    div.className = 'page';
+    div.style.width = Math.floor(this.viewport.width) + 'px';
+    div.style.height = Math.floor(this.viewport.height) + 'px';
+    div.setAttribute('data-page-number', this.id);
+    this.div = div;
+    container.appendChild(div);
+  }
+  PDFPageView.prototype = {
+    setPdfPage: function PDFPageView_setPdfPage(pdfPage) {
+      this.pdfPage = pdfPage;
+      this.pdfPageRotate = pdfPage.rotate;
+      var totalRotation = (this.rotation + this.pdfPageRotate) % 360;
+      this.viewport = pdfPage.getViewport(this.scale * _ui_utils.CSS_UNITS, totalRotation);
+      this.stats = pdfPage.stats;
+      this.reset();
+    },
+    destroy: function PDFPageView_destroy() {
+      this.reset();
+      if (this.pdfPage) {
+        this.pdfPage.cleanup();
+      }
+    },
+    _resetZoomLayer: function _resetZoomLayer() {
+      var removeFromDOM = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
+      if (!this.zoomLayer) {
+        return;
+      }
+      var zoomLayerCanvas = this.zoomLayer.firstChild;
+      this.paintedViewportMap.delete(zoomLayerCanvas);
+      zoomLayerCanvas.width = 0;
+      zoomLayerCanvas.height = 0;
+      if (removeFromDOM) {
+        this.zoomLayer.remove();
+      }
+      this.zoomLayer = null;
+    },
+
+    reset: function PDFPageView_reset(keepZoomLayer, keepAnnotations) {
+      this.cancelRendering();
+      var div = this.div;
+      div.style.width = Math.floor(this.viewport.width) + 'px';
+      div.style.height = Math.floor(this.viewport.height) + 'px';
+      var childNodes = div.childNodes;
+      var currentZoomLayerNode = keepZoomLayer && this.zoomLayer || null;
+      var currentAnnotationNode = keepAnnotations && this.annotationLayer && this.annotationLayer.div || null;
+      for (var i = childNodes.length - 1; i >= 0; i--) {
+        var node = childNodes[i];
+        if (currentZoomLayerNode === node || currentAnnotationNode === node) {
+          continue;
+        }
+        div.removeChild(node);
+      }
+      div.removeAttribute('data-loaded');
+      if (currentAnnotationNode) {
+        this.annotationLayer.hide();
+      } else {
+        this.annotationLayer = null;
+      }
+      if (!currentZoomLayerNode) {
+        if (this.canvas) {
+          this.paintedViewportMap.delete(this.canvas);
+          this.canvas.width = 0;
+          this.canvas.height = 0;
+          delete this.canvas;
+        }
+        this._resetZoomLayer();
+      }
+      if (this.svg) {
+        this.paintedViewportMap.delete(this.svg);
+        delete this.svg;
+      }
+      this.loadingIconDiv = document.createElement('div');
+      this.loadingIconDiv.className = 'loadingIcon';
+      div.appendChild(this.loadingIconDiv);
+    },
+    update: function PDFPageView_update(scale, rotation) {
+      this.scale = scale || this.scale;
+      if (typeof rotation !== 'undefined') {
+        this.rotation = rotation;
+      }
+      var totalRotation = (this.rotation + this.pdfPageRotate) % 360;
+      this.viewport = this.viewport.clone({
+        scale: this.scale * _ui_utils.CSS_UNITS,
+        rotation: totalRotation
+      });
+      if (this.svg) {
+        this.cssTransform(this.svg, true);
+        this.eventBus.dispatch('pagerendered', {
+          source: this,
+          pageNumber: this.id,
+          cssTransform: true
+        });
+        return;
+      }
+      var isScalingRestricted = false;
+      if (this.canvas && _pdfjs.PDFJS.maxCanvasPixels > 0) {
+        var outputScale = this.outputScale;
+        if ((Math.floor(this.viewport.width) * outputScale.sx | 0) * (Math.floor(this.viewport.height) * outputScale.sy | 0) > _pdfjs.PDFJS.maxCanvasPixels) {
+          isScalingRestricted = true;
+        }
+      }
+      if (this.canvas) {
+        if (_pdfjs.PDFJS.useOnlyCssZoom || this.hasRestrictedScaling && isScalingRestricted) {
+          this.cssTransform(this.canvas, true);
+          this.eventBus.dispatch('pagerendered', {
+            source: this,
+            pageNumber: this.id,
+            cssTransform: true
+          });
+          return;
+        }
+        if (!this.zoomLayer) {
+          this.zoomLayer = this.canvas.parentNode;
+          this.zoomLayer.style.position = 'absolute';
+        }
+      }
+      if (this.zoomLayer) {
+        this.cssTransform(this.zoomLayer.firstChild);
+      }
+      this.reset(true, true);
+    },
+    cancelRendering: function PDFPageView_cancelRendering() {
+      if (this.paintTask) {
+        this.paintTask.cancel();
+        this.paintTask = null;
+      }
+      this.renderingState = _pdf_rendering_queue.RenderingStates.INITIAL;
+      this.resume = null;
+      if (this.textLayer) {
+        this.textLayer.cancel();
+        this.textLayer = null;
+      }
+    },
+    updatePosition: function PDFPageView_updatePosition() {
+      if (this.textLayer) {
+        this.textLayer.render(TEXT_LAYER_RENDER_DELAY);
+      }
+    },
+    cssTransform: function PDFPageView_transform(target, redrawAnnotations) {
+      var width = this.viewport.width;
+      var height = this.viewport.height;
+      var div = this.div;
+      target.style.width = target.parentNode.style.width = div.style.width = Math.floor(width) + 'px';
+      target.style.height = target.parentNode.style.height = div.style.height = Math.floor(height) + 'px';
+      var relativeRotation = this.viewport.rotation - this.paintedViewportMap.get(target).rotation;
+      var absRotation = Math.abs(relativeRotation);
+      var scaleX = 1,
+          scaleY = 1;
+      if (absRotation === 90 || absRotation === 270) {
+        scaleX = height / width;
+        scaleY = width / height;
+      }
+      var cssTransform = 'rotate(' + relativeRotation + 'deg) ' + 'scale(' + scaleX + ',' + scaleY + ')';
+      _pdfjs.CustomStyle.setProp('transform', target, cssTransform);
+      if (this.textLayer) {
+        var textLayerViewport = this.textLayer.viewport;
+        var textRelativeRotation = this.viewport.rotation - textLayerViewport.rotation;
+        var textAbsRotation = Math.abs(textRelativeRotation);
+        var scale = width / textLayerViewport.width;
+        if (textAbsRotation === 90 || textAbsRotation === 270) {
+          scale = width / textLayerViewport.height;
+        }
+        var textLayerDiv = this.textLayer.textLayerDiv;
+        var transX, transY;
+        switch (textAbsRotation) {
+          case 0:
+            transX = transY = 0;
+            break;
+          case 90:
+            transX = 0;
+            transY = '-' + textLayerDiv.style.height;
+            break;
+          case 180:
+            transX = '-' + textLayerDiv.style.width;
+            transY = '-' + textLayerDiv.style.height;
+            break;
+          case 270:
+            transX = '-' + textLayerDiv.style.width;
+            transY = 0;
+            break;
+          default:
+            console.error('Bad rotation value.');
+            break;
+        }
+        _pdfjs.CustomStyle.setProp('transform', textLayerDiv, 'rotate(' + textAbsRotation + 'deg) ' + 'scale(' + scale + ', ' + scale + ') ' + 'translate(' + transX + ', ' + transY + ')');
+        _pdfjs.CustomStyle.setProp('transformOrigin', textLayerDiv, '0% 0%');
+      }
+      if (redrawAnnotations && this.annotationLayer) {
+        this.annotationLayer.render(this.viewport, 'display');
+      }
+    },
+    get width() {
+      return this.viewport.width;
+    },
+    get height() {
+      return this.viewport.height;
+    },
+    getPagePoint: function PDFPageView_getPagePoint(x, y) {
+      return this.viewport.convertToPdfPoint(x, y);
+    },
+    draw: function draw() {
+      var _this = this;
+
+      if (this.renderingState !== _pdf_rendering_queue.RenderingStates.INITIAL) {
+        console.error('Must be in new state before drawing');
+        this.reset();
+      }
+      this.renderingState = _pdf_rendering_queue.RenderingStates.RUNNING;
+      var pdfPage = this.pdfPage;
+      var div = this.div;
+      var canvasWrapper = document.createElement('div');
+      canvasWrapper.style.width = div.style.width;
+      canvasWrapper.style.height = div.style.height;
+      canvasWrapper.classList.add('canvasWrapper');
+      if (this.annotationLayer && this.annotationLayer.div) {
+        div.insertBefore(canvasWrapper, this.annotationLayer.div);
+      } else {
+        div.appendChild(canvasWrapper);
+      }
+      var textLayer = null;
+      if (this.textLayerFactory) {
+        var textLayerDiv = document.createElement('div');
+        textLayerDiv.className = 'textLayer';
+        textLayerDiv.style.width = canvasWrapper.style.width;
+        textLayerDiv.style.height = canvasWrapper.style.height;
+        if (this.annotationLayer && this.annotationLayer.div) {
+          div.insertBefore(textLayerDiv, this.annotationLayer.div);
+        } else {
+          div.appendChild(textLayerDiv);
+        }
+        textLayer = this.textLayerFactory.createTextLayerBuilder(textLayerDiv, this.id - 1, this.viewport, this.enhanceTextSelection);
+      }
+      this.textLayer = textLayer;
+      var renderContinueCallback = null;
+      if (this.renderingQueue) {
+        renderContinueCallback = function renderContinueCallback(cont) {
+          if (!_this.renderingQueue.isHighestPriority(_this)) {
+            _this.renderingState = _pdf_rendering_queue.RenderingStates.PAUSED;
+            _this.resume = function () {
+              _this.renderingState = _pdf_rendering_queue.RenderingStates.RUNNING;
+              cont();
+            };
+            return;
+          }
+          cont();
+        };
+      }
+      var finishPaintTask = function finishPaintTask(error) {
+        if (paintTask === _this.paintTask) {
+          _this.paintTask = null;
+        }
+        if (error === 'cancelled' || error instanceof _pdfjs.RenderingCancelledException) {
+          _this.error = null;
+          return Promise.resolve(undefined);
+        }
+        _this.renderingState = _pdf_rendering_queue.RenderingStates.FINISHED;
+        if (_this.loadingIconDiv) {
+          div.removeChild(_this.loadingIconDiv);
+          delete _this.loadingIconDiv;
+        }
+        _this._resetZoomLayer(true);
+        _this.error = error;
+        _this.stats = pdfPage.stats;
+        if (_this.onAfterDraw) {
+          _this.onAfterDraw();
+        }
+        _this.eventBus.dispatch('pagerendered', {
+          source: _this,
+          pageNumber: _this.id,
+          cssTransform: false
+        });
+        if (error) {
+          return Promise.reject(error);
+        }
+        return Promise.resolve(undefined);
+      };
+      var paintTask = this.renderer === _ui_utils.RendererType.SVG ? this.paintOnSvg(canvasWrapper) : this.paintOnCanvas(canvasWrapper);
+      paintTask.onRenderContinue = renderContinueCallback;
+      this.paintTask = paintTask;
+      var resultPromise = paintTask.promise.then(function () {
+        return finishPaintTask(null).then(function () {
+          if (textLayer) {
+            pdfPage.getTextContent({ normalizeWhitespace: true }).then(function textContentResolved(textContent) {
+              textLayer.setTextContent(textContent);
+              textLayer.render(TEXT_LAYER_RENDER_DELAY);
+            });
+          }
+        });
+      }, function (reason) {
+        return finishPaintTask(reason);
+      });
+      if (this.annotationLayerFactory) {
+        if (!this.annotationLayer) {
+          this.annotationLayer = this.annotationLayerFactory.createAnnotationLayerBuilder(div, pdfPage, this.renderInteractiveForms);
+        }
+        this.annotationLayer.render(this.viewport, 'display');
+      }
+      div.setAttribute('data-loaded', true);
+      if (this.onBeforeDraw) {
+        this.onBeforeDraw();
+      }
+      return resultPromise;
+    },
+    paintOnCanvas: function paintOnCanvas(canvasWrapper) {
+      var renderCapability = (0, _pdfjs.createPromiseCapability)();
+      var result = {
+        promise: renderCapability.promise,
+        onRenderContinue: function onRenderContinue(cont) {
+          cont();
+        },
+        cancel: function cancel() {
+          renderTask.cancel();
+        }
+      };
+      var viewport = this.viewport;
+      var canvas = document.createElement('canvas');
+      canvas.id = 'page' + this.id;
+      canvas.setAttribute('hidden', 'hidden');
+      var isCanvasHidden = true;
+      var showCanvas = function showCanvas() {
+        if (isCanvasHidden) {
+          canvas.removeAttribute('hidden');
+          isCanvasHidden = false;
+        }
+      };
+      canvasWrapper.appendChild(canvas);
+      this.canvas = canvas;
+      canvas.mozOpaque = true;
+      var ctx = canvas.getContext('2d', { alpha: false });
+      var outputScale = (0, _ui_utils.getOutputScale)(ctx);
+      this.outputScale = outputScale;
+      if (_pdfjs.PDFJS.useOnlyCssZoom) {
+        var actualSizeViewport = viewport.clone({ scale: _ui_utils.CSS_UNITS });
+        outputScale.sx *= actualSizeViewport.width / viewport.width;
+        outputScale.sy *= actualSizeViewport.height / viewport.height;
+        outputScale.scaled = true;
+      }
+      if (_pdfjs.PDFJS.maxCanvasPixels > 0) {
+        var pixelsInViewport = viewport.width * viewport.height;
+        var maxScale = Math.sqrt(_pdfjs.PDFJS.maxCanvasPixels / pixelsInViewport);
+        if (outputScale.sx > maxScale || outputScale.sy > maxScale) {
+          outputScale.sx = maxScale;
+          outputScale.sy = maxScale;
+          outputScale.scaled = true;
+          this.hasRestrictedScaling = true;
+        } else {
+          this.hasRestrictedScaling = false;
+        }
+      }
+      var sfx = (0, _ui_utils.approximateFraction)(outputScale.sx);
+      var sfy = (0, _ui_utils.approximateFraction)(outputScale.sy);
+      canvas.width = (0, _ui_utils.roundToDivide)(viewport.width * outputScale.sx, sfx[0]);
+      canvas.height = (0, _ui_utils.roundToDivide)(viewport.height * outputScale.sy, sfy[0]);
+      canvas.style.width = (0, _ui_utils.roundToDivide)(viewport.width, sfx[1]) + 'px';
+      canvas.style.height = (0, _ui_utils.roundToDivide)(viewport.height, sfy[1]) + 'px';
+      this.paintedViewportMap.set(canvas, viewport);
+      var transform = !outputScale.scaled ? null : [outputScale.sx, 0, 0, outputScale.sy, 0, 0];
+      var renderContext = {
+        canvasContext: ctx,
+        transform: transform,
+        viewport: this.viewport,
+        renderInteractiveForms: this.renderInteractiveForms
+      };
+      var renderTask = this.pdfPage.render(renderContext);
+      renderTask.onContinue = function (cont) {
+        showCanvas();
+        if (result.onRenderContinue) {
+          result.onRenderContinue(cont);
+        } else {
+          cont();
+        }
+      };
+      renderTask.promise.then(function () {
+        showCanvas();
+        renderCapability.resolve(undefined);
+      }, function (error) {
+        showCanvas();
+        renderCapability.reject(error);
+      });
+      return result;
+    },
+    paintOnSvg: function paintOnSvg(wrapper) {
+      var _this2 = this;
+
+      var cancelled = false;
+      var ensureNotCancelled = function ensureNotCancelled() {
+        if (cancelled) {
+          if (_pdfjs.PDFJS.pdfjsNext) {
+            throw new _pdfjs.RenderingCancelledException('Rendering cancelled, page ' + _this2.id, 'svg');
+          } else {
+            throw 'cancelled';
+          }
+        }
+      };
+      var pdfPage = this.pdfPage;
+      var actualSizeViewport = this.viewport.clone({ scale: _ui_utils.CSS_UNITS });
+      var promise = pdfPage.getOperatorList().then(function (opList) {
+        ensureNotCancelled();
+        var svgGfx = new _pdfjs.SVGGraphics(pdfPage.commonObjs, pdfPage.objs);
+        return svgGfx.getSVG(opList, actualSizeViewport).then(function (svg) {
+          ensureNotCancelled();
+          _this2.svg = svg;
+          _this2.paintedViewportMap.set(svg, actualSizeViewport);
+          svg.style.width = wrapper.style.width;
+          svg.style.height = wrapper.style.height;
+          _this2.renderingState = _pdf_rendering_queue.RenderingStates.FINISHED;
+          wrapper.appendChild(svg);
+        });
+      });
+      return {
+        promise: promise,
+        onRenderContinue: function onRenderContinue(cont) {
+          cont();
+        },
+        cancel: function cancel() {
+          cancelled = true;
+        }
+      };
+    },
+
+    setPageLabel: function PDFView_setPageLabel(label) {
+      this.pageLabel = typeof label === 'string' ? label : null;
+      if (this.pageLabel !== null) {
+        this.div.setAttribute('data-page-label', this.pageLabel);
+      } else {
+        this.div.removeAttribute('data-page-label');
+      }
+    }
+  };
+  return PDFPageView;
+}();
+exports.PDFPageView = PDFPageView;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __w_pdfjs_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.DefaultTextLayerFactory = exports.TextLayerBuilder = undefined;
+
+var _dom_events = __w_pdfjs_require__(2);
+
+var _pdfjs = __w_pdfjs_require__(0);
+
+var EXPAND_DIVS_TIMEOUT = 300;
+var TextLayerBuilder = function TextLayerBuilderClosure() {
+  function TextLayerBuilder(options) {
+    this.textLayerDiv = options.textLayerDiv;
+    this.eventBus = options.eventBus || (0, _dom_events.getGlobalEventBus)();
+    this.textContent = null;
+    this.renderingDone = false;
+    this.pageIdx = options.pageIndex;
+    this.pageNumber = this.pageIdx + 1;
+    this.matches = [];
+    this.viewport = options.viewport;
+    this.textDivs = [];
+    this.findController = options.findController || null;
+    this.textLayerRenderTask = null;
+    this.enhanceTextSelection = options.enhanceTextSelection;
+    this._bindMouse();
+  }
+  TextLayerBuilder.prototype = {
+    _finishRendering: function TextLayerBuilder_finishRendering() {
+      this.renderingDone = true;
+      if (!this.enhanceTextSelection) {
+        var endOfContent = document.createElement('div');
+        endOfContent.className = 'endOfContent';
+        this.textLayerDiv.appendChild(endOfContent);
+      }
+      this.eventBus.dispatch('textlayerrendered', {
+        source: this,
+        pageNumber: this.pageNumber,
+        numTextDivs: this.textDivs.length
+      });
+    },
+    render: function TextLayerBuilder_render(timeout) {
+      var _this = this;
+
+      if (!this.textContent || this.renderingDone) {
+        return;
+      }
+      this.cancel();
+      this.textDivs = [];
+      var textLayerFrag = document.createDocumentFragment();
+      this.textLayerRenderTask = (0, _pdfjs.renderTextLayer)({
+        textContent: this.textContent,
+        container: textLayerFrag,
+        viewport: this.viewport,
+        textDivs: this.textDivs,
+        timeout: timeout,
+        enhanceTextSelection: this.enhanceTextSelection
+      });
+      this.textLayerRenderTask.promise.then(function () {
+        _this.textLayerDiv.appendChild(textLayerFrag);
+        _this._finishRendering();
+        _this.updateMatches();
+      }, function (reason) {});
+    },
+    cancel: function TextLayerBuilder_cancel() {
+      if (this.textLayerRenderTask) {
+        this.textLayerRenderTask.cancel();
+        this.textLayerRenderTask = null;
+      }
+    },
+    setTextContent: function TextLayerBuilder_setTextContent(textContent) {
+      this.cancel();
+      this.textContent = textContent;
+    },
+    convertMatches: function TextLayerBuilder_convertMatches(matches, matchesLength) {
+      var i = 0;
+      var iIndex = 0;
+      var bidiTexts = this.textContent.items;
+      var end = bidiTexts.length - 1;
+      var queryLen = this.findController === null ? 0 : this.findController.state.query.length;
+      var ret = [];
+      if (!matches) {
+        return ret;
+      }
+      for (var m = 0, len = matches.length; m < len; m++) {
+        var matchIdx = matches[m];
+        while (i !== end && matchIdx >= iIndex + bidiTexts[i].str.length) {
+          iIndex += bidiTexts[i].str.length;
+          i++;
+        }
+        if (i === bidiTexts.length) {
+          console.error('Could not find a matching mapping');
+        }
+        var match = {
+          begin: {
+            divIdx: i,
+            offset: matchIdx - iIndex
+          }
+        };
+        if (matchesLength) {
+          matchIdx += matchesLength[m];
+        } else {
+          matchIdx += queryLen;
+        }
+        while (i !== end && matchIdx > iIndex + bidiTexts[i].str.length) {
+          iIndex += bidiTexts[i].str.length;
+          i++;
+        }
+        match.end = {
+          divIdx: i,
+          offset: matchIdx - iIndex
+        };
+        ret.push(match);
+      }
+      return ret;
+    },
+    renderMatches: function TextLayerBuilder_renderMatches(matches) {
+      if (matches.length === 0) {
+        return;
+      }
+      var bidiTexts = this.textContent.items;
+      var textDivs = this.textDivs;
+      var prevEnd = null;
+      var pageIdx = this.pageIdx;
+      var isSelectedPage = this.findController === null ? false : pageIdx === this.findController.selected.pageIdx;
+      var selectedMatchIdx = this.findController === null ? -1 : this.findController.selected.matchIdx;
+      var highlightAll = this.findController === null ? false : this.findController.state.highlightAll;
+      var infinity = {
+        divIdx: -1,
+        offset: undefined
+      };
+      function beginText(begin, className) {
+        var divIdx = begin.divIdx;
+        textDivs[divIdx].textContent = '';
+        appendTextToDiv(divIdx, 0, begin.offset, className);
+      }
+      function appendTextToDiv(divIdx, fromOffset, toOffset, className) {
+        var div = textDivs[divIdx];
+        var content = bidiTexts[divIdx].str.substring(fromOffset, toOffset);
+        var node = document.createTextNode(content);
+        if (className) {
+          var span = document.createElement('span');
+          span.className = className;
+          span.appendChild(node);
+          div.appendChild(span);
+          return;
+        }
+        div.appendChild(node);
+      }
+      var i0 = selectedMatchIdx,
+          i1 = i0 + 1;
+      if (highlightAll) {
+        i0 = 0;
+        i1 = matches.length;
+      } else if (!isSelectedPage) {
+        return;
+      }
+      for (var i = i0; i < i1; i++) {
+        var match = matches[i];
+        var begin = match.begin;
+        var end = match.end;
+        var isSelected = isSelectedPage && i === selectedMatchIdx;
+        var highlightSuffix = isSelected ? ' selected' : '';
+        if (this.findController) {
+          this.findController.updateMatchPosition(pageIdx, i, textDivs, begin.divIdx);
+        }
+        if (!prevEnd || begin.divIdx !== prevEnd.divIdx) {
+          if (prevEnd !== null) {
+            appendTextToDiv(prevEnd.divIdx, prevEnd.offset, infinity.offset);
+          }
+          beginText(begin);
+        } else {
+          appendTextToDiv(prevEnd.divIdx, prevEnd.offset, begin.offset);
+        }
+        if (begin.divIdx === end.divIdx) {
+          appendTextToDiv(begin.divIdx, begin.offset, end.offset, 'highlight' + highlightSuffix);
+        } else {
+          appendTextToDiv(begin.divIdx, begin.offset, infinity.offset, 'highlight begin' + highlightSuffix);
+          for (var n0 = begin.divIdx + 1, n1 = end.divIdx; n0 < n1; n0++) {
+            textDivs[n0].className = 'highlight middle' + highlightSuffix;
+          }
+          beginText(end, 'highlight end' + highlightSuffix);
+        }
+        prevEnd = end;
+      }
+      if (prevEnd) {
+        appendTextToDiv(prevEnd.divIdx, prevEnd.offset, infinity.offset);
+      }
+    },
+    updateMatches: function TextLayerBuilder_updateMatches() {
+      if (!this.renderingDone) {
+        return;
+      }
+      var matches = this.matches;
+      var textDivs = this.textDivs;
+      var bidiTexts = this.textContent.items;
+      var clearedUntilDivIdx = -1;
+      for (var i = 0, len = matches.length; i < len; i++) {
+        var match = matches[i];
+        var begin = Math.max(clearedUntilDivIdx, match.begin.divIdx);
+        for (var n = begin, end = match.end.divIdx; n <= end; n++) {
+          var div = textDivs[n];
+          div.textContent = bidiTexts[n].str;
+          div.className = '';
+        }
+        clearedUntilDivIdx = match.end.divIdx + 1;
+      }
+      if (this.findController === null || !this.findController.active) {
+        return;
+      }
+      var pageMatches, pageMatchesLength;
+      if (this.findController !== null) {
+        pageMatches = this.findController.pageMatches[this.pageIdx] || null;
+        pageMatchesLength = this.findController.pageMatchesLength ? this.findController.pageMatchesLength[this.pageIdx] || null : null;
+      }
+      this.matches = this.convertMatches(pageMatches, pageMatchesLength);
+      this.renderMatches(this.matches);
+    },
+    _bindMouse: function TextLayerBuilder_bindMouse() {
+      var div = this.textLayerDiv;
+      var self = this;
+      var expandDivsTimer = null;
+      div.addEventListener('mousedown', function (e) {
+        if (self.enhanceTextSelection && self.textLayerRenderTask) {
+          self.textLayerRenderTask.expandTextDivs(true);
+          if (expandDivsTimer) {
+            clearTimeout(expandDivsTimer);
+            expandDivsTimer = null;
+          }
+          return;
+        }
+        var end = div.querySelector('.endOfContent');
+        if (!end) {
+          return;
+        }
+        var adjustTop = e.target !== div;
+        adjustTop = adjustTop && window.getComputedStyle(end).getPropertyValue('-moz-user-select') !== 'none';
+        if (adjustTop) {
+          var divBounds = div.getBoundingClientRect();
+          var r = Math.max(0, (e.pageY - divBounds.top) / divBounds.height);
+          end.style.top = (r * 100).toFixed(2) + '%';
+        }
+        end.classList.add('active');
+      });
+      div.addEventListener('mouseup', function (e) {
+        if (self.enhanceTextSelection && self.textLayerRenderTask) {
+          expandDivsTimer = setTimeout(function () {
+            if (self.textLayerRenderTask) {
+              self.textLayerRenderTask.expandTextDivs(false);
+            }
+            expandDivsTimer = null;
+          }, EXPAND_DIVS_TIMEOUT);
+          return;
+        }
+        var end = div.querySelector('.endOfContent');
+        if (!end) {
+          return;
+        }
+        end.style.top = '';
+        end.classList.remove('active');
+      });
+    }
+  };
+  return TextLayerBuilder;
+}();
+function DefaultTextLayerFactory() {}
+DefaultTextLayerFactory.prototype = {
+  createTextLayerBuilder: function createTextLayerBuilder(textLayerDiv, pageIndex, viewport) {
+    var enhanceTextSelection = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+
+    return new TextLayerBuilder({
+      textLayerDiv: textLayerDiv,
+      pageIndex: pageIndex,
+      viewport: viewport,
+      enhanceTextSelection: enhanceTextSelection
+    });
+  }
+};
+exports.TextLayerBuilder = TextLayerBuilder;
+exports.DefaultTextLayerFactory = DefaultTextLayerFactory;
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __w_pdfjs_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var CLEANUP_TIMEOUT = 30000;
+var RenderingStates = {
+  INITIAL: 0,
+  RUNNING: 1,
+  PAUSED: 2,
+  FINISHED: 3
+};
+
+var PDFRenderingQueue = function () {
+  function PDFRenderingQueue() {
+    _classCallCheck(this, PDFRenderingQueue);
+
+    this.pdfViewer = null;
+    this.pdfThumbnailViewer = null;
+    this.onIdle = null;
+    this.highestPriorityPage = null;
+    this.idleTimeout = null;
+    this.printing = false;
+    this.isThumbnailViewEnabled = false;
+  }
+
+  _createClass(PDFRenderingQueue, [{
+    key: "setViewer",
+    value: function setViewer(pdfViewer) {
+      this.pdfViewer = pdfViewer;
+    }
+  }, {
+    key: "setThumbnailViewer",
+    value: function setThumbnailViewer(pdfThumbnailViewer) {
+      this.pdfThumbnailViewer = pdfThumbnailViewer;
+    }
+  }, {
+    key: "isHighestPriority",
+    value: function isHighestPriority(view) {
+      return this.highestPriorityPage === view.renderingId;
+    }
+  }, {
+    key: "renderHighestPriority",
+    value: function renderHighestPriority(currentlyVisiblePages) {
+      if (this.idleTimeout) {
+        clearTimeout(this.idleTimeout);
+        this.idleTimeout = null;
+      }
+      if (this.pdfViewer.forceRendering(currentlyVisiblePages)) {
+        return;
+      }
+      if (this.pdfThumbnailViewer && this.isThumbnailViewEnabled) {
+        if (this.pdfThumbnailViewer.forceRendering()) {
+          return;
+        }
+      }
+      if (this.printing) {
+        return;
+      }
+      if (this.onIdle) {
+        this.idleTimeout = setTimeout(this.onIdle.bind(this), CLEANUP_TIMEOUT);
+      }
+    }
+  }, {
+    key: "getHighestPriority",
+    value: function getHighestPriority(visible, views, scrolledDown) {
+      var visibleViews = visible.views;
+      var numVisible = visibleViews.length;
+      if (numVisible === 0) {
+        return false;
+      }
+      for (var i = 0; i < numVisible; ++i) {
+        var view = visibleViews[i].view;
+        if (!this.isViewFinished(view)) {
+          return view;
+        }
+      }
+      if (scrolledDown) {
+        var nextPageIndex = visible.last.id;
+        if (views[nextPageIndex] && !this.isViewFinished(views[nextPageIndex])) {
+          return views[nextPageIndex];
+        }
+      } else {
+        var previousPageIndex = visible.first.id - 2;
+        if (views[previousPageIndex] && !this.isViewFinished(views[previousPageIndex])) {
+          return views[previousPageIndex];
+        }
+      }
+      return null;
+    }
+  }, {
+    key: "isViewFinished",
+    value: function isViewFinished(view) {
+      return view.renderingState === RenderingStates.FINISHED;
+    }
+  }, {
+    key: "renderView",
+    value: function renderView(view) {
+      var _this = this;
+
+      switch (view.renderingState) {
+        case RenderingStates.FINISHED:
+          return false;
+        case RenderingStates.PAUSED:
+          this.highestPriorityPage = view.renderingId;
+          view.resume();
+          break;
+        case RenderingStates.RUNNING:
+          this.highestPriorityPage = view.renderingId;
+          break;
+        case RenderingStates.INITIAL:
+          this.highestPriorityPage = view.renderingId;
+          var continueRendering = function continueRendering() {
+            _this.renderHighestPriority();
+          };
+          view.draw().then(continueRendering, continueRendering);
+          break;
+      }
+      return true;
+    }
+  }]);
+
+  return PDFRenderingQueue;
+}();
+
+exports.RenderingStates = RenderingStates;
+exports.PDFRenderingQueue = PDFRenderingQueue;
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __w_pdfjs_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.DownloadManager = undefined;
+
+var _pdfjs = __w_pdfjs_require__(0);
+
+;
+function download(blobUrl, filename) {
+  var a = document.createElement('a');
+  if (a.click) {
+    a.href = blobUrl;
+    a.target = '_parent';
+    if ('download' in a) {
+      a.download = filename;
+    }
+    (document.body || document.documentElement).appendChild(a);
+    a.click();
+    a.parentNode.removeChild(a);
+  } else {
+    if (window.top === window && blobUrl.split('#')[0] === window.location.href.split('#')[0]) {
+      var padCharacter = blobUrl.indexOf('?') === -1 ? '?' : '&';
+      blobUrl = blobUrl.replace(/#|$/, padCharacter + '$&');
+    }
+    window.open(blobUrl, '_parent');
+  }
+}
+function DownloadManager() {}
+DownloadManager.prototype = {
+  downloadUrl: function DownloadManager_downloadUrl(url, filename) {
+    if (!(0, _pdfjs.createValidAbsoluteUrl)(url, 'http://example.com')) {
+      return;
+    }
+    download(url + '#pdfjs.action=download', filename);
+  },
+  downloadData: function DownloadManager_downloadData(data, filename, contentType) {
+    if (navigator.msSaveBlob) {
+      return navigator.msSaveBlob(new Blob([data], { type: contentType }), filename);
+    }
+    var blobUrl = (0, _pdfjs.createObjectURL)(data, contentType, _pdfjs.PDFJS.disableCreateObjectURL);
+    download(blobUrl, filename);
+  },
+  download: function DownloadManager_download(blob, url, filename) {
+    if (navigator.msSaveBlob) {
+      if (!navigator.msSaveBlob(blob, filename)) {
+        this.downloadUrl(url, filename);
+      }
+      return;
+    }
+    if (_pdfjs.PDFJS.disableCreateObjectURL) {
+      this.downloadUrl(url, filename);
+      return;
+    }
+    var blobUrl = URL.createObjectURL(blob);
+    download(blobUrl, filename);
+  }
+};
+exports.DownloadManager = DownloadManager;
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __w_pdfjs_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.PDFFindController = exports.FindStates = undefined;
+
+var _pdfjs = __w_pdfjs_require__(0);
+
+var _ui_utils = __w_pdfjs_require__(1);
+
+var FindStates = {
+  FIND_FOUND: 0,
+  FIND_NOTFOUND: 1,
+  FIND_WRAPPED: 2,
+  FIND_PENDING: 3
+};
+var FIND_SCROLL_OFFSET_TOP = -50;
+var FIND_SCROLL_OFFSET_LEFT = -400;
+var CHARACTERS_TO_NORMALIZE = {
+  '\u2018': '\'',
+  '\u2019': '\'',
+  '\u201A': '\'',
+  '\u201B': '\'',
+  '\u201C': '"',
+  '\u201D': '"',
+  '\u201E': '"',
+  '\u201F': '"',
+  '\xBC': '1/4',
+  '\xBD': '1/2',
+  '\xBE': '3/4'
+};
+var PDFFindController = function PDFFindControllerClosure() {
+  function PDFFindController(options) {
+    this.pdfViewer = options.pdfViewer || null;
+    this.onUpdateResultsCount = null;
+    this.onUpdateState = null;
+    this.reset();
+    var replace = Object.keys(CHARACTERS_TO_NORMALIZE).join('');
+    this.normalizationRegex = new RegExp('[' + replace + ']', 'g');
+  }
+  PDFFindController.prototype = {
+    reset: function PDFFindController_reset() {
+      var _this = this;
+
+      this.startedTextExtraction = false;
+      this.extractTextPromises = [];
+      this.pendingFindMatches = Object.create(null);
+      this.active = false;
+      this.pageContents = [];
+      this.pageMatches = [];
+      this.pageMatchesLength = null;
+      this.matchCount = 0;
+      this.selected = {
+        pageIdx: -1,
+        matchIdx: -1
+      };
+      this.offset = {
+        pageIdx: null,
+        matchIdx: null
+      };
+      this.pagesToSearch = null;
+      this.resumePageIdx = null;
+      this.state = null;
+      this.dirtyMatch = false;
+      this.findTimeout = null;
+      this._firstPagePromise = new Promise(function (resolve) {
+        _this.resolveFirstPage = resolve;
+      });
+    },
+    normalize: function PDFFindController_normalize(text) {
+      return text.replace(this.normalizationRegex, function (ch) {
+        return CHARACTERS_TO_NORMALIZE[ch];
+      });
+    },
+    _prepareMatches: function PDFFindController_prepareMatches(matchesWithLength, matches, matchesLength) {
+      function isSubTerm(matchesWithLength, currentIndex) {
+        var currentElem, prevElem, nextElem;
+        currentElem = matchesWithLength[currentIndex];
+        nextElem = matchesWithLength[currentIndex + 1];
+        if (currentIndex < matchesWithLength.length - 1 && currentElem.match === nextElem.match) {
+          currentElem.skipped = true;
+          return true;
+        }
+        for (var i = currentIndex - 1; i >= 0; i--) {
+          prevElem = matchesWithLength[i];
+          if (prevElem.skipped) {
+            continue;
+          }
+          if (prevElem.match + prevElem.matchLength < currentElem.match) {
+            break;
+          }
+          if (prevElem.match + prevElem.matchLength >= currentElem.match + currentElem.matchLength) {
+            currentElem.skipped = true;
+            return true;
+          }
+        }
+        return false;
+      }
+      var i, len;
+      matchesWithLength.sort(function (a, b) {
+        return a.match === b.match ? a.matchLength - b.matchLength : a.match - b.match;
+      });
+      for (i = 0, len = matchesWithLength.length; i < len; i++) {
+        if (isSubTerm(matchesWithLength, i)) {
+          continue;
+        }
+        matches.push(matchesWithLength[i].match);
+        matchesLength.push(matchesWithLength[i].matchLength);
+      }
+    },
+    calcFindPhraseMatch: function PDFFindController_calcFindPhraseMatch(query, pageIndex, pageContent) {
+      var matches = [];
+      var queryLen = query.length;
+      var matchIdx = -queryLen;
+      while (true) {
+        matchIdx = pageContent.indexOf(query, matchIdx + queryLen);
+        if (matchIdx === -1) {
+          break;
+        }
+        matches.push(matchIdx);
+      }
+      this.pageMatches[pageIndex] = matches;
+    },
+    calcFindWordMatch: function PDFFindController_calcFindWordMatch(query, pageIndex, pageContent) {
+      var matchesWithLength = [];
+      var queryArray = query.match(/\S+/g);
+      var subquery, subqueryLen, matchIdx;
+      for (var i = 0, len = queryArray.length; i < len; i++) {
+        subquery = queryArray[i];
+        subqueryLen = subquery.length;
+        matchIdx = -subqueryLen;
+        while (true) {
+          matchIdx = pageContent.indexOf(subquery, matchIdx + subqueryLen);
+          if (matchIdx === -1) {
+            break;
+          }
+          matchesWithLength.push({
+            match: matchIdx,
+            matchLength: subqueryLen,
+            skipped: false
+          });
+        }
+      }
+      if (!this.pageMatchesLength) {
+        this.pageMatchesLength = [];
+      }
+      this.pageMatchesLength[pageIndex] = [];
+      this.pageMatches[pageIndex] = [];
+      this._prepareMatches(matchesWithLength, this.pageMatches[pageIndex], this.pageMatchesLength[pageIndex]);
+    },
+    calcFindMatch: function PDFFindController_calcFindMatch(pageIndex) {
+      var pageContent = this.normalize(this.pageContents[pageIndex]);
+      var query = this.normalize(this.state.query);
+      var caseSensitive = this.state.caseSensitive;
+      var phraseSearch = this.state.phraseSearch;
+      var queryLen = query.length;
+      if (queryLen === 0) {
+        return;
+      }
+      if (!caseSensitive) {
+        pageContent = pageContent.toLowerCase();
+        query = query.toLowerCase();
+      }
+      if (phraseSearch) {
+        this.calcFindPhraseMatch(query, pageIndex, pageContent);
+      } else {
+        this.calcFindWordMatch(query, pageIndex, pageContent);
+      }
+      this.updatePage(pageIndex);
+      if (this.resumePageIdx === pageIndex) {
+        this.resumePageIdx = null;
+        this.nextPageMatch();
+      }
+      if (this.pageMatches[pageIndex].length > 0) {
+        this.matchCount += this.pageMatches[pageIndex].length;
+        this.updateUIResultsCount();
+      }
+    },
+    extractText: function extractText() {
+      var _this2 = this;
+
+      if (this.startedTextExtraction) {
+        return;
+      }
+      this.startedTextExtraction = true;
+      this.pageContents.length = 0;
+      var promise = Promise.resolve();
+
+      var _loop = function _loop(i, ii) {
+        var extractTextCapability = (0, _pdfjs.createPromiseCapability)();
+        _this2.extractTextPromises[i] = extractTextCapability.promise;
+        promise = promise.then(function () {
+          return _this2.pdfViewer.getPageTextContent(i).then(function (textContent) {
+            var textItems = textContent.items;
+            var strBuf = [];
+            for (var j = 0, jj = textItems.length; j < jj; j++) {
+              strBuf.push(textItems[j].str);
+            }
+            _this2.pageContents[i] = strBuf.join('');
+            extractTextCapability.resolve(i);
+          });
+        });
+      };
+
+      for (var i = 0, ii = this.pdfViewer.pagesCount; i < ii; i++) {
+        _loop(i, ii);
+      }
+    },
+
+    executeCommand: function PDFFindController_executeCommand(cmd, state) {
+      var _this3 = this;
+
+      if (this.state === null || cmd !== 'findagain') {
+        this.dirtyMatch = true;
+      }
+      this.state = state;
+      this.updateUIState(FindStates.FIND_PENDING);
+      this._firstPagePromise.then(function () {
+        _this3.extractText();
+        clearTimeout(_this3.findTimeout);
+        if (cmd === 'find') {
+          _this3.findTimeout = setTimeout(_this3.nextMatch.bind(_this3), 250);
+        } else {
+          _this3.nextMatch();
+        }
+      });
+    },
+    updatePage: function PDFFindController_updatePage(index) {
+      if (this.selected.pageIdx === index) {
+        this.pdfViewer.currentPageNumber = index + 1;
+      }
+      var page = this.pdfViewer.getPageView(index);
+      if (page.textLayer) {
+        page.textLayer.updateMatches();
+      }
+    },
+    nextMatch: function PDFFindController_nextMatch() {
+      var _this4 = this;
+
+      var previous = this.state.findPrevious;
+      var currentPageIndex = this.pdfViewer.currentPageNumber - 1;
+      var numPages = this.pdfViewer.pagesCount;
+      this.active = true;
+      if (this.dirtyMatch) {
+        this.dirtyMatch = false;
+        this.selected.pageIdx = this.selected.matchIdx = -1;
+        this.offset.pageIdx = currentPageIndex;
+        this.offset.matchIdx = null;
+        this.hadMatch = false;
+        this.resumePageIdx = null;
+        this.pageMatches = [];
+        this.matchCount = 0;
+        this.pageMatchesLength = null;
+        for (var i = 0; i < numPages; i++) {
+          this.updatePage(i);
+          if (!(i in this.pendingFindMatches)) {
+            this.pendingFindMatches[i] = true;
+            this.extractTextPromises[i].then(function (pageIdx) {
+              delete _this4.pendingFindMatches[pageIdx];
+              _this4.calcFindMatch(pageIdx);
+            });
+          }
+        }
+      }
+      if (this.state.query === '') {
+        this.updateUIState(FindStates.FIND_FOUND);
+        return;
+      }
+      if (this.resumePageIdx) {
+        return;
+      }
+      var offset = this.offset;
+      this.pagesToSearch = numPages;
+      if (offset.matchIdx !== null) {
+        var numPageMatches = this.pageMatches[offset.pageIdx].length;
+        if (!previous && offset.matchIdx + 1 < numPageMatches || previous && offset.matchIdx > 0) {
+          this.hadMatch = true;
+          offset.matchIdx = previous ? offset.matchIdx - 1 : offset.matchIdx + 1;
+          this.updateMatch(true);
+          return;
+        }
+        this.advanceOffsetPage(previous);
+      }
+      this.nextPageMatch();
+    },
+    matchesReady: function PDFFindController_matchesReady(matches) {
+      var offset = this.offset;
+      var numMatches = matches.length;
+      var previous = this.state.findPrevious;
+      if (numMatches) {
+        this.hadMatch = true;
+        offset.matchIdx = previous ? numMatches - 1 : 0;
+        this.updateMatch(true);
+        return true;
+      }
+      this.advanceOffsetPage(previous);
+      if (offset.wrapped) {
+        offset.matchIdx = null;
+        if (this.pagesToSearch < 0) {
+          this.updateMatch(false);
+          return true;
+        }
+      }
+      return false;
+    },
+    updateMatchPosition: function PDFFindController_updateMatchPosition(pageIndex, index, elements, beginIdx) {
+      if (this.selected.matchIdx === index && this.selected.pageIdx === pageIndex) {
+        var spot = {
+          top: FIND_SCROLL_OFFSET_TOP,
+          left: FIND_SCROLL_OFFSET_LEFT
+        };
+        (0, _ui_utils.scrollIntoView)(elements[beginIdx], spot, true);
+      }
+    },
+    nextPageMatch: function PDFFindController_nextPageMatch() {
+      if (this.resumePageIdx !== null) {
+        console.error('There can only be one pending page.');
+      }
+      do {
+        var pageIdx = this.offset.pageIdx;
+        var matches = this.pageMatches[pageIdx];
+        if (!matches) {
+          this.resumePageIdx = pageIdx;
+          break;
+        }
+      } while (!this.matchesReady(matches));
+    },
+    advanceOffsetPage: function PDFFindController_advanceOffsetPage(previous) {
+      var offset = this.offset;
+      var numPages = this.extractTextPromises.length;
+      offset.pageIdx = previous ? offset.pageIdx - 1 : offset.pageIdx + 1;
+      offset.matchIdx = null;
+      this.pagesToSearch--;
+      if (offset.pageIdx >= numPages || offset.pageIdx < 0) {
+        offset.pageIdx = previous ? numPages - 1 : 0;
+        offset.wrapped = true;
+      }
+    },
+    updateMatch: function PDFFindController_updateMatch(found) {
+      var state = FindStates.FIND_NOTFOUND;
+      var wrapped = this.offset.wrapped;
+      this.offset.wrapped = false;
+      if (found) {
+        var previousPage = this.selected.pageIdx;
+        this.selected.pageIdx = this.offset.pageIdx;
+        this.selected.matchIdx = this.offset.matchIdx;
+        state = wrapped ? FindStates.FIND_WRAPPED : FindStates.FIND_FOUND;
+        if (previousPage !== -1 && previousPage !== this.selected.pageIdx) {
+          this.updatePage(previousPage);
+        }
+      }
+      this.updateUIState(state, this.state.findPrevious);
+      if (this.selected.pageIdx !== -1) {
+        this.updatePage(this.selected.pageIdx);
+      }
+    },
+    updateUIResultsCount: function PDFFindController_updateUIResultsCount() {
+      if (this.onUpdateResultsCount) {
+        this.onUpdateResultsCount(this.matchCount);
+      }
+    },
+    updateUIState: function PDFFindController_updateUIState(state, previous) {
+      if (this.onUpdateState) {
+        this.onUpdateState(state, previous, this.matchCount);
+      }
+    }
+  };
+  return PDFFindController;
+}();
+exports.FindStates = FindStates;
+exports.PDFFindController = PDFFindController;
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __w_pdfjs_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.PDFHistory = undefined;
+
+var _dom_events = __w_pdfjs_require__(2);
+
+function PDFHistory(options) {
+  this.linkService = options.linkService;
+  this.eventBus = options.eventBus || (0, _dom_events.getGlobalEventBus)();
+  this.initialized = false;
+  this.initialDestination = null;
+  this.initialBookmark = null;
+}
+PDFHistory.prototype = {
+  initialize: function pdfHistoryInitialize(fingerprint) {
+    this.initialized = true;
+    this.reInitialized = false;
+    this.allowHashChange = true;
+    this.historyUnlocked = true;
+    this.isViewerInPresentationMode = false;
+    this.previousHash = window.location.hash.substring(1);
+    this.currentBookmark = '';
+    this.currentPage = 0;
+    this.updatePreviousBookmark = false;
+    this.previousBookmark = '';
+    this.previousPage = 0;
+    this.nextHashParam = '';
+    this.fingerprint = fingerprint;
+    this.currentUid = this.uid = 0;
+    this.current = {};
+    var state = window.history.state;
+    if (this._isStateObjectDefined(state)) {
+      if (state.target.dest) {
+        this.initialDestination = state.target.dest;
+      } else {
+        this.initialBookmark = state.target.hash;
+      }
+      this.currentUid = state.uid;
+      this.uid = state.uid + 1;
+      this.current = state.target;
+    } else {
+      if (state && state.fingerprint && this.fingerprint !== state.fingerprint) {
+        this.reInitialized = true;
+      }
+      this._pushOrReplaceState({ fingerprint: this.fingerprint }, true);
+    }
+    var self = this;
+    window.addEventListener('popstate', function pdfHistoryPopstate(evt) {
+      if (!self.historyUnlocked) {
+        return;
+      }
+      if (evt.state) {
+        self._goTo(evt.state);
+        return;
+      }
+      if (self.uid === 0) {
+        var previousParams = self.previousHash && self.currentBookmark && self.previousHash !== self.currentBookmark ? {
+          hash: self.currentBookmark,
+          page: self.currentPage
+        } : { page: 1 };
+        replacePreviousHistoryState(previousParams, function () {
+          updateHistoryWithCurrentHash();
+        });
+      } else {
+        updateHistoryWithCurrentHash();
+      }
+    });
+    function updateHistoryWithCurrentHash() {
+      self.previousHash = window.location.hash.slice(1);
+      self._pushToHistory({ hash: self.previousHash }, false, true);
+      self._updatePreviousBookmark();
+    }
+    function replacePreviousHistoryState(params, callback) {
+      self.historyUnlocked = false;
+      self.allowHashChange = false;
+      window.addEventListener('popstate', rewriteHistoryAfterBack);
+      history.back();
+      function rewriteHistoryAfterBack() {
+        window.removeEventListener('popstate', rewriteHistoryAfterBack);
+        window.addEventListener('popstate', rewriteHistoryAfterForward);
+        self._pushToHistory(params, false, true);
+        history.forward();
+      }
+      function rewriteHistoryAfterForward() {
+        window.removeEventListener('popstate', rewriteHistoryAfterForward);
+        self.allowHashChange = true;
+        self.historyUnlocked = true;
+        callback();
+      }
+    }
+    function pdfHistoryBeforeUnload() {
+      var previousParams = self._getPreviousParams(null, true);
+      if (previousParams) {
+        var replacePrevious = !self.current.dest && self.current.hash !== self.previousHash;
+        self._pushToHistory(previousParams, false, replacePrevious);
+        self._updatePreviousBookmark();
+      }
+      window.removeEventListener('beforeunload', pdfHistoryBeforeUnload);
+    }
+    window.addEventListener('beforeunload', pdfHistoryBeforeUnload);
+    window.addEventListener('pageshow', function pdfHistoryPageShow(evt) {
+      window.addEventListener('beforeunload', pdfHistoryBeforeUnload);
+    });
+    self.eventBus.on('presentationmodechanged', function (e) {
+      self.isViewerInPresentationMode = e.active;
+    });
+  },
+  clearHistoryState: function pdfHistory_clearHistoryState() {
+    this._pushOrReplaceState(null, true);
+  },
+  _isStateObjectDefined: function pdfHistory_isStateObjectDefined(state) {
+    return state && state.uid >= 0 && state.fingerprint && this.fingerprint === state.fingerprint && state.target && state.target.hash ? true : false;
+  },
+  _pushOrReplaceState: function pdfHistory_pushOrReplaceState(stateObj, replace) {
+    if (replace) {
+      window.history.replaceState(stateObj, '', document.URL);
+    } else {
+      window.history.pushState(stateObj, '', document.URL);
+    }
+  },
+  get isHashChangeUnlocked() {
+    if (!this.initialized) {
+      return true;
+    }
+    return this.allowHashChange;
+  },
+  _updatePreviousBookmark: function pdfHistory_updatePreviousBookmark() {
+    if (this.updatePreviousBookmark && this.currentBookmark && this.currentPage) {
+      this.previousBookmark = this.currentBookmark;
+      this.previousPage = this.currentPage;
+      this.updatePreviousBookmark = false;
+    }
+  },
+  updateCurrentBookmark: function pdfHistoryUpdateCurrentBookmark(bookmark, pageNum) {
+    if (this.initialized) {
+      this.currentBookmark = bookmark.substring(1);
+      this.currentPage = pageNum | 0;
+      this._updatePreviousBookmark();
+    }
+  },
+  updateNextHashParam: function pdfHistoryUpdateNextHashParam(param) {
+    if (this.initialized) {
+      this.nextHashParam = param;
+    }
+  },
+  push: function pdfHistoryPush(params, isInitialBookmark) {
+    if (!(this.initialized && this.historyUnlocked)) {
+      return;
+    }
+    if (params.dest && !params.hash) {
+      params.hash = this.current.hash && this.current.dest && this.current.dest === params.dest ? this.current.hash : this.linkService.getDestinationHash(params.dest).split('#')[1];
+    }
+    if (params.page) {
+      params.page |= 0;
+    }
+    if (isInitialBookmark) {
+      var target = window.history.state.target;
+      if (!target) {
+        this._pushToHistory(params, false);
+        this.previousHash = window.location.hash.substring(1);
+      }
+      this.updatePreviousBookmark = this.nextHashParam ? false : true;
+      if (target) {
+        this._updatePreviousBookmark();
+      }
+      return;
+    }
+    if (this.nextHashParam) {
+      if (this.nextHashParam === params.hash) {
+        this.nextHashParam = null;
+        this.updatePreviousBookmark = true;
+        return;
+      }
+      this.nextHashParam = null;
+    }
+    if (params.hash) {
+      if (this.current.hash) {
+        if (this.current.hash !== params.hash) {
+          this._pushToHistory(params, true);
+        } else {
+          if (!this.current.page && params.page) {
+            this._pushToHistory(params, false, true);
+          }
+          this.updatePreviousBookmark = true;
+        }
+      } else {
+        this._pushToHistory(params, true);
+      }
+    } else if (this.current.page && params.page && this.current.page !== params.page) {
+      this._pushToHistory(params, true);
+    }
+  },
+  _getPreviousParams: function pdfHistory_getPreviousParams(onlyCheckPage, beforeUnload) {
+    if (!(this.currentBookmark && this.currentPage)) {
+      return null;
+    } else if (this.updatePreviousBookmark) {
+      this.updatePreviousBookmark = false;
+    }
+    if (this.uid > 0 && !(this.previousBookmark && this.previousPage)) {
+      return null;
+    }
+    if (!this.current.dest && !onlyCheckPage || beforeUnload) {
+      if (this.previousBookmark === this.currentBookmark) {
+        return null;
+      }
+    } else if (this.current.page || onlyCheckPage) {
+      if (this.previousPage === this.currentPage) {
+        return null;
+      }
+    } else {
+      return null;
+    }
+    var params = {
+      hash: this.currentBookmark,
+      page: this.currentPage
+    };
+    if (this.isViewerInPresentationMode) {
+      params.hash = null;
+    }
+    return params;
+  },
+  _stateObj: function pdfHistory_stateObj(params) {
+    return {
+      fingerprint: this.fingerprint,
+      uid: this.uid,
+      target: params
+    };
+  },
+  _pushToHistory: function pdfHistory_pushToHistory(params, addPrevious, overwrite) {
+    if (!this.initialized) {
+      return;
+    }
+    if (!params.hash && params.page) {
+      params.hash = 'page=' + params.page;
+    }
+    if (addPrevious && !overwrite) {
+      var previousParams = this._getPreviousParams();
+      if (previousParams) {
+        var replacePrevious = !this.current.dest && this.current.hash !== this.previousHash;
+        this._pushToHistory(previousParams, false, replacePrevious);
+      }
+    }
+    this._pushOrReplaceState(this._stateObj(params), overwrite || this.uid === 0);
+    this.currentUid = this.uid++;
+    this.current = params;
+    this.updatePreviousBookmark = true;
+  },
+  _goTo: function pdfHistory_goTo(state) {
+    if (!(this.initialized && this.historyUnlocked && this._isStateObjectDefined(state))) {
+      return;
+    }
+    if (!this.reInitialized && state.uid < this.currentUid) {
+      var previousParams = this._getPreviousParams(true);
+      if (previousParams) {
+        this._pushToHistory(this.current, false);
+        this._pushToHistory(previousParams, false);
+        this.currentUid = state.uid;
+        window.history.back();
+        return;
+      }
+    }
+    this.historyUnlocked = false;
+    if (state.target.dest) {
+      this.linkService.navigateTo(state.target.dest);
+    } else {
+      this.linkService.setHash(state.target.hash);
+    }
+    this.currentUid = state.uid;
+    if (state.uid > this.uid) {
+      this.uid = state.uid;
+    }
+    this.current = state.target;
+    this.updatePreviousBookmark = true;
+    var currentHash = window.location.hash.substring(1);
+    if (this.previousHash !== currentHash) {
+      this.allowHashChange = false;
+    }
+    this.previousHash = currentHash;
+    this.historyUnlocked = true;
+  },
+  back: function pdfHistoryBack() {
+    this.go(-1);
+  },
+  forward: function pdfHistoryForward() {
+    this.go(1);
+  },
+  go: function pdfHistoryGo(direction) {
+    if (this.initialized && this.historyUnlocked) {
+      var state = window.history.state;
+      if (direction === -1 && state && state.uid > 0) {
+        window.history.back();
+      } else if (direction === 1 && state && state.uid < this.uid - 1) {
+        window.history.forward();
+      }
+    }
+  }
+};
+exports.PDFHistory = PDFHistory;
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __w_pdfjs_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.PDFViewer = exports.PresentationModeState = undefined;
+
+var _pdfjs = __w_pdfjs_require__(0);
+
+var _ui_utils = __w_pdfjs_require__(1);
+
+var _pdf_rendering_queue = __w_pdfjs_require__(7);
+
+var _annotation_layer_builder = __w_pdfjs_require__(4);
+
+var _dom_events = __w_pdfjs_require__(2);
+
+var _pdf_page_view = __w_pdfjs_require__(5);
+
+var _pdf_link_service = __w_pdfjs_require__(3);
+
+var _text_layer_builder = __w_pdfjs_require__(6);
+
+var PresentationModeState = {
+  UNKNOWN: 0,
+  NORMAL: 1,
+  CHANGING: 2,
+  FULLSCREEN: 3
+};
+var DEFAULT_CACHE_SIZE = 10;
+var PDFViewer = function pdfViewer() {
+  function PDFPageViewBuffer(size) {
+    var data = [];
+    this.push = function cachePush(view) {
+      var i = data.indexOf(view);
+      if (i >= 0) {
+        data.splice(i, 1);
+      }
+      data.push(view);
+      if (data.length > size) {
+        data.shift().destroy();
+      }
+    };
+    this.resize = function (newSize) {
+      size = newSize;
+      while (data.length > size) {
+        data.shift().destroy();
+      }
+    };
+  }
+  function isSameScale(oldScale, newScale) {
+    if (newScale === oldScale) {
+      return true;
+    }
+    if (Math.abs(newScale - oldScale) < 1e-15) {
+      return true;
+    }
+    return false;
+  }
+  function isPortraitOrientation(size) {
+    return size.width <= size.height;
+  }
+  function PDFViewer(options) {
+    this.container = options.container;
+    this.viewer = options.viewer || options.container.firstElementChild;
+    this.eventBus = options.eventBus || (0, _dom_events.getGlobalEventBus)();
+    this.linkService = options.linkService || new _pdf_link_service.SimpleLinkService();
+    this.downloadManager = options.downloadManager || null;
+    this.removePageBorders = options.removePageBorders || false;
+    this.enhanceTextSelection = options.enhanceTextSelection || false;
+    this.renderInteractiveForms = options.renderInteractiveForms || false;
+    this.enablePrintAutoRotate = options.enablePrintAutoRotate || false;
+    this.renderer = options.renderer || _ui_utils.RendererType.CANVAS;
+    this.defaultRenderingQueue = !options.renderingQueue;
+    if (this.defaultRenderingQueue) {
+      this.renderingQueue = new _pdf_rendering_queue.PDFRenderingQueue();
+      this.renderingQueue.setViewer(this);
+    } else {
+      this.renderingQueue = options.renderingQueue;
+    }
+    this.scroll = (0, _ui_utils.watchScroll)(this.container, this._scrollUpdate.bind(this));
+    this.presentationModeState = PresentationModeState.UNKNOWN;
+    this._resetView();
+    if (this.removePageBorders) {
+      this.viewer.classList.add('removePageBorders');
+    }
+  }
+  PDFViewer.prototype = {
+    get pagesCount() {
+      return this._pages.length;
+    },
+    getPageView: function getPageView(index) {
+      return this._pages[index];
+    },
+
+    get pageViewsReady() {
+      return this._pageViewsReady;
+    },
+    get currentPageNumber() {
+      return this._currentPageNumber;
+    },
+    set currentPageNumber(val) {
+      if ((val | 0) !== val) {
+        throw new Error('Invalid page number.');
+      }
+      if (!this.pdfDocument) {
+        this._currentPageNumber = val;
+        return;
+      }
+      this._setCurrentPageNumber(val, true);
+    },
+    _setCurrentPageNumber: function PDFViewer_setCurrentPageNumber(val, resetCurrentPageView) {
+      if (this._currentPageNumber === val) {
+        if (resetCurrentPageView) {
+          this._resetCurrentPageView();
+        }
+        return;
+      }
+      if (!(0 < val && val <= this.pagesCount)) {
+        console.error('PDFViewer_setCurrentPageNumber: "' + val + '" is out of bounds.');
+        return;
+      }
+      var arg = {
+        source: this,
+        pageNumber: val,
+        pageLabel: this._pageLabels && this._pageLabels[val - 1]
+      };
+      this._currentPageNumber = val;
+      this.eventBus.dispatch('pagechanging', arg);
+      this.eventBus.dispatch('pagechange', arg);
+      if (resetCurrentPageView) {
+        this._resetCurrentPageView();
+      }
+    },
+    get currentPageLabel() {
+      return this._pageLabels && this._pageLabels[this._currentPageNumber - 1];
+    },
+    set currentPageLabel(val) {
+      var pageNumber = val | 0;
+      if (this._pageLabels) {
+        var i = this._pageLabels.indexOf(val);
+        if (i >= 0) {
+          pageNumber = i + 1;
+        }
+      }
+      this.currentPageNumber = pageNumber;
+    },
+    get currentScale() {
+      return this._currentScale !== _ui_utils.UNKNOWN_SCALE ? this._currentScale : _ui_utils.DEFAULT_SCALE;
+    },
+    set currentScale(val) {
+      if (isNaN(val)) {
+        throw new Error('Invalid numeric scale');
+      }
+      if (!this.pdfDocument) {
+        this._currentScale = val;
+        this._currentScaleValue = val !== _ui_utils.UNKNOWN_SCALE ? val.toString() : null;
+        return;
+      }
+      this._setScale(val, false);
+    },
+    get currentScaleValue() {
+      return this._currentScaleValue;
+    },
+    set currentScaleValue(val) {
+      if (!this.pdfDocument) {
+        this._currentScale = isNaN(val) ? _ui_utils.UNKNOWN_SCALE : val;
+        this._currentScaleValue = val.toString();
+        return;
+      }
+      this._setScale(val, false);
+    },
+    get pagesRotation() {
+      return this._pagesRotation;
+    },
+    set pagesRotation(rotation) {
+      if (!(typeof rotation === 'number' && rotation % 90 === 0)) {
+        throw new Error('Invalid pages rotation angle.');
+      }
+      this._pagesRotation = rotation;
+      if (!this.pdfDocument) {
+        return;
+      }
+      for (var i = 0, l = this._pages.length; i < l; i++) {
+        var pageView = this._pages[i];
+        pageView.update(pageView.scale, rotation);
+      }
+      this._setScale(this._currentScaleValue, true);
+      if (this.defaultRenderingQueue) {
+        this.update();
+      }
+    },
+    setDocument: function setDocument(pdfDocument) {
+      var _this = this;
+
+      if (this.pdfDocument) {
+        this._cancelRendering();
+        this._resetView();
+      }
+      this.pdfDocument = pdfDocument;
+      if (!pdfDocument) {
+        return;
+      }
+      var pagesCount = pdfDocument.numPages;
+      var pagesCapability = (0, _pdfjs.createPromiseCapability)();
+      this.pagesPromise = pagesCapability.promise;
+      pagesCapability.promise.then(function () {
+        _this._pageViewsReady = true;
+        _this.eventBus.dispatch('pagesloaded', {
+          source: _this,
+          pagesCount: pagesCount
+        });
+      });
+      var isOnePageRenderedResolved = false;
+      var onePageRenderedCapability = (0, _pdfjs.createPromiseCapability)();
+      this.onePageRendered = onePageRenderedCapability.promise;
+      var bindOnAfterAndBeforeDraw = function bindOnAfterAndBeforeDraw(pageView) {
+        pageView.onBeforeDraw = function () {
+          _this._buffer.push(pageView);
+        };
+        pageView.onAfterDraw = function () {
+          if (!isOnePageRenderedResolved) {
+            isOnePageRenderedResolved = true;
+            onePageRenderedCapability.resolve();
+          }
+        };
+      };
+      var firstPagePromise = pdfDocument.getPage(1);
+      this.firstPagePromise = firstPagePromise;
+      return firstPagePromise.then(function (pdfPage) {
+        var scale = _this.currentScale;
+        var viewport = pdfPage.getViewport(scale * _ui_utils.CSS_UNITS);
+        for (var pageNum = 1; pageNum <= pagesCount; ++pageNum) {
+          var textLayerFactory = null;
+          if (!_pdfjs.PDFJS.disableTextLayer) {
+            textLayerFactory = _this;
+          }
+          var pageView = new _pdf_page_view.PDFPageView({
+            container: _this.viewer,
+            eventBus: _this.eventBus,
+            id: pageNum,
+            scale: scale,
+            defaultViewport: viewport.clone(),
+            renderingQueue: _this.renderingQueue,
+            textLayerFactory: textLayerFactory,
+            annotationLayerFactory: _this,
+            enhanceTextSelection: _this.enhanceTextSelection,
+            renderInteractiveForms: _this.renderInteractiveForms,
+            renderer: _this.renderer
+          });
+          bindOnAfterAndBeforeDraw(pageView);
+          _this._pages.push(pageView);
+        }
+        onePageRenderedCapability.promise.then(function () {
+          if (_pdfjs.PDFJS.disableAutoFetch) {
+            pagesCapability.resolve();
+            return;
+          }
+          var getPagesLeft = pagesCount;
+
+          var _loop = function _loop(_pageNum) {
+            pdfDocument.getPage(_pageNum).then(function (pdfPage) {
+              var pageView = _this._pages[_pageNum - 1];
+              if (!pageView.pdfPage) {
+                pageView.setPdfPage(pdfPage);
+              }
+              _this.linkService.cachePageRef(_pageNum, pdfPage.ref);
+              if (--getPagesLeft === 0) {
+                pagesCapability.resolve();
+              }
+            });
+          };
+
+          for (var _pageNum = 1; _pageNum <= pagesCount; ++_pageNum) {
+            _loop(_pageNum);
+          }
+        });
+        _this.eventBus.dispatch('pagesinit', { source: _this });
+        if (_this.defaultRenderingQueue) {
+          _this.update();
+        }
+        if (_this.findController) {
+          _this.findController.resolveFirstPage();
+        }
+      });
+    },
+
+    setPageLabels: function PDFViewer_setPageLabels(labels) {
+      if (!this.pdfDocument) {
+        return;
+      }
+      if (!labels) {
+        this._pageLabels = null;
+      } else if (!(labels instanceof Array && this.pdfDocument.numPages === labels.length)) {
+        this._pageLabels = null;
+        console.error('PDFViewer_setPageLabels: Invalid page labels.');
+      } else {
+        this._pageLabels = labels;
+      }
+      for (var i = 0, ii = this._pages.length; i < ii; i++) {
+        var pageView = this._pages[i];
+        var label = this._pageLabels && this._pageLabels[i];
+        pageView.setPageLabel(label);
+      }
+    },
+    _resetView: function _resetView() {
+      this._pages = [];
+      this._currentPageNumber = 1;
+      this._currentScale = _ui_utils.UNKNOWN_SCALE;
+      this._currentScaleValue = null;
+      this._pageLabels = null;
+      this._buffer = new PDFPageViewBuffer(DEFAULT_CACHE_SIZE);
+      this._location = null;
+      this._pagesRotation = 0;
+      this._pagesRequests = [];
+      this._pageViewsReady = false;
+      this.viewer.textContent = '';
+    },
+
+    _scrollUpdate: function PDFViewer_scrollUpdate() {
+      if (this.pagesCount === 0) {
+        return;
+      }
+      this.update();
+      for (var i = 0, ii = this._pages.length; i < ii; i++) {
+        this._pages[i].updatePosition();
+      }
+    },
+    _setScaleDispatchEvent: function pdfViewer_setScaleDispatchEvent(newScale, newValue, preset) {
+      var arg = {
+        source: this,
+        scale: newScale,
+        presetValue: preset ? newValue : undefined
+      };
+      this.eventBus.dispatch('scalechanging', arg);
+      this.eventBus.dispatch('scalechange', arg);
+    },
+    _setScaleUpdatePages: function pdfViewer_setScaleUpdatePages(newScale, newValue, noScroll, preset) {
+      this._currentScaleValue = newValue.toString();
+      if (isSameScale(this._currentScale, newScale)) {
+        if (preset) {
+          this._setScaleDispatchEvent(newScale, newValue, true);
+        }
+        return;
+      }
+      for (var i = 0, ii = this._pages.length; i < ii; i++) {
+        this._pages[i].update(newScale);
+      }
+      this._currentScale = newScale;
+      if (!noScroll) {
+        var page = this._currentPageNumber,
+            dest;
+        if (this._location && !_pdfjs.PDFJS.ignoreCurrentPositionOnZoom && !(this.isInPresentationMode || this.isChangingPresentationMode)) {
+          page = this._location.pageNumber;
+          dest = [null, { name: 'XYZ' }, this._location.left, this._location.top, null];
+        }
+        this.scrollPageIntoView({
+          pageNumber: page,
+          destArray: dest,
+          allowNegativeOffset: true
+        });
+      }
+      this._setScaleDispatchEvent(newScale, newValue, preset);
+      if (this.defaultRenderingQueue) {
+        this.update();
+      }
+    },
+    _setScale: function PDFViewer_setScale(value, noScroll) {
+      var scale = parseFloat(value);
+      if (scale > 0) {
+        this._setScaleUpdatePages(scale, value, noScroll, false);
+      } else {
+        var currentPage = this._pages[this._currentPageNumber - 1];
+        if (!currentPage) {
+          return;
+        }
+        var hPadding = this.isInPresentationMode || this.removePageBorders ? 0 : _ui_utils.SCROLLBAR_PADDING;
+        var vPadding = this.isInPresentationMode || this.removePageBorders ? 0 : _ui_utils.VERTICAL_PADDING;
+        var pageWidthScale = (this.container.clientWidth - hPadding) / currentPage.width * currentPage.scale;
+        var pageHeightScale = (this.container.clientHeight - vPadding) / currentPage.height * currentPage.scale;
+        switch (value) {
+          case 'page-actual':
+            scale = 1;
+            break;
+          case 'page-width':
+            scale = pageWidthScale;
+            break;
+          case 'page-height':
+            scale = pageHeightScale;
+            break;
+          case 'page-fit':
+            scale = Math.min(pageWidthScale, pageHeightScale);
+            break;
+          case 'auto':
+            var isLandscape = currentPage.width > currentPage.height;
+            var horizontalScale = isLandscape ? Math.min(pageHeightScale, pageWidthScale) : pageWidthScale;
+            scale = Math.min(_ui_utils.MAX_AUTO_SCALE, horizontalScale);
+            break;
+          default:
+            console.error('PDFViewer_setScale: "' + value + '" is an unknown zoom value.');
+            return;
+        }
+        this._setScaleUpdatePages(scale, value, noScroll, true);
+      }
+    },
+    _resetCurrentPageView: function _resetCurrentPageView() {
+      if (this.isInPresentationMode) {
+        this._setScale(this._currentScaleValue, true);
+      }
+      var pageView = this._pages[this._currentPageNumber - 1];
+      (0, _ui_utils.scrollIntoView)(pageView.div);
+    },
+
+    scrollPageIntoView: function PDFViewer_scrollPageIntoView(params) {
+      if (!this.pdfDocument) {
+        return;
+      }
+      if (arguments.length > 1 || typeof params === 'number') {
+        console.warn('Call of scrollPageIntoView() with obsolete signature.');
+        var paramObj = {};
+        if (typeof params === 'number') {
+          paramObj.pageNumber = params;
+        }
+        if (arguments[1] instanceof Array) {
+          paramObj.destArray = arguments[1];
+        }
+        params = paramObj;
+      }
+      var pageNumber = params.pageNumber || 0;
+      var dest = params.destArray || null;
+      var allowNegativeOffset = params.allowNegativeOffset || false;
+      if (this.isInPresentationMode || !dest) {
+        this._setCurrentPageNumber(pageNumber, true);
+        return;
+      }
+      var pageView = this._pages[pageNumber - 1];
+      if (!pageView) {
+        console.error('PDFViewer_scrollPageIntoView: ' + 'Invalid "pageNumber" parameter.');
+        return;
+      }
+      var x = 0,
+          y = 0;
+      var width = 0,
+          height = 0,
+          widthScale,
+          heightScale;
+      var changeOrientation = pageView.rotation % 180 === 0 ? false : true;
+      var pageWidth = (changeOrientation ? pageView.height : pageView.width) / pageView.scale / _ui_utils.CSS_UNITS;
+      var pageHeight = (changeOrientation ? pageView.width : pageView.height) / pageView.scale / _ui_utils.CSS_UNITS;
+      var scale = 0;
+      switch (dest[1].name) {
+        case 'XYZ':
+          x = dest[2];
+          y = dest[3];
+          scale = dest[4];
+          x = x !== null ? x : 0;
+          y = y !== null ? y : pageHeight;
+          break;
+        case 'Fit':
+        case 'FitB':
+          scale = 'page-fit';
+          break;
+        case 'FitH':
+        case 'FitBH':
+          y = dest[2];
+          scale = 'page-width';
+          if (y === null && this._location) {
+            x = this._location.left;
+            y = this._location.top;
+          }
+          break;
+        case 'FitV':
+        case 'FitBV':
+          x = dest[2];
+          width = pageWidth;
+          height = pageHeight;
+          scale = 'page-height';
+          break;
+        case 'FitR':
+          x = dest[2];
+          y = dest[3];
+          width = dest[4] - x;
+          height = dest[5] - y;
+          var hPadding = this.removePageBorders ? 0 : _ui_utils.SCROLLBAR_PADDING;
+          var vPadding = this.removePageBorders ? 0 : _ui_utils.VERTICAL_PADDING;
+          widthScale = (this.container.clientWidth - hPadding) / width / _ui_utils.CSS_UNITS;
+          heightScale = (this.container.clientHeight - vPadding) / height / _ui_utils.CSS_UNITS;
+          scale = Math.min(Math.abs(widthScale), Math.abs(heightScale));
+          break;
+        default:
+          console.error('PDFViewer_scrollPageIntoView: \'' + dest[1].name + '\' is not a valid destination type.');
+          return;
+      }
+      if (scale && scale !== this._currentScale) {
+        this.currentScaleValue = scale;
+      } else if (this._currentScale === _ui_utils.UNKNOWN_SCALE) {
+        this.currentScaleValue = _ui_utils.DEFAULT_SCALE_VALUE;
+      }
+      if (scale === 'page-fit' && !dest[4]) {
+        (0, _ui_utils.scrollIntoView)(pageView.div);
+        return;
+      }
+      var boundingRect = [pageView.viewport.convertToViewportPoint(x, y), pageView.viewport.convertToViewportPoint(x + width, y + height)];
+      var left = Math.min(boundingRect[0][0], boundingRect[1][0]);
+      var top = Math.min(boundingRect[0][1], boundingRect[1][1]);
+      if (!allowNegativeOffset) {
+        left = Math.max(left, 0);
+        top = Math.max(top, 0);
+      }
+      (0, _ui_utils.scrollIntoView)(pageView.div, {
+        left: left,
+        top: top
+      });
+    },
+    _updateLocation: function _updateLocation(firstPage) {
+      var currentScale = this._currentScale;
+      var currentScaleValue = this._currentScaleValue;
+      var normalizedScaleValue = parseFloat(currentScaleValue) === currentScale ? Math.round(currentScale * 10000) / 100 : currentScaleValue;
+      var pageNumber = firstPage.id;
+      var pdfOpenParams = '#page=' + pageNumber;
+      pdfOpenParams += '&zoom=' + normalizedScaleValue;
+      var currentPageView = this._pages[pageNumber - 1];
+      var container = this.container;
+      var topLeft = currentPageView.getPagePoint(container.scrollLeft - firstPage.x, container.scrollTop - firstPage.y);
+      var intLeft = Math.round(topLeft[0]);
+      var intTop = Math.round(topLeft[1]);
+      pdfOpenParams += ',' + intLeft + ',' + intTop;
+      this._location = {
+        pageNumber: pageNumber,
+        scale: normalizedScaleValue,
+        top: intTop,
+        left: intLeft,
+        pdfOpenParams: pdfOpenParams
+      };
+    },
+
+    update: function PDFViewer_update() {
+      var visible = this._getVisiblePages();
+      var visiblePages = visible.views;
+      if (visiblePages.length === 0) {
+        return;
+      }
+      var suggestedCacheSize = Math.max(DEFAULT_CACHE_SIZE, 2 * visiblePages.length + 1);
+      this._buffer.resize(suggestedCacheSize);
+      this.renderingQueue.renderHighestPriority(visible);
+      var currentId = this._currentPageNumber;
+      var firstPage = visible.first;
+      for (var i = 0, ii = visiblePages.length, stillFullyVisible = false; i < ii; ++i) {
+        var page = visiblePages[i];
+        if (page.percent < 100) {
+          break;
+        }
+        if (page.id === currentId) {
+          stillFullyVisible = true;
+          break;
+        }
+      }
+      if (!stillFullyVisible) {
+        currentId = visiblePages[0].id;
+      }
+      if (!this.isInPresentationMode) {
+        this._setCurrentPageNumber(currentId);
+      }
+      this._updateLocation(firstPage);
+      this.eventBus.dispatch('updateviewarea', {
+        source: this,
+        location: this._location
+      });
+    },
+    containsElement: function containsElement(element) {
+      return this.container.contains(element);
+    },
+    focus: function focus() {
+      this.container.focus();
+    },
+
+    get isInPresentationMode() {
+      return this.presentationModeState === PresentationModeState.FULLSCREEN;
+    },
+    get isChangingPresentationMode() {
+      return this.presentationModeState === PresentationModeState.CHANGING;
+    },
+    get isHorizontalScrollbarEnabled() {
+      return this.isInPresentationMode ? false : this.container.scrollWidth > this.container.clientWidth;
+    },
+    _getVisiblePages: function _getVisiblePages() {
+      if (!this.isInPresentationMode) {
+        return (0, _ui_utils.getVisibleElements)(this.container, this._pages, true);
+      }
+      var visible = [];
+      var currentPage = this._pages[this._currentPageNumber - 1];
+      visible.push({
+        id: currentPage.id,
+        view: currentPage
+      });
+      return {
+        first: currentPage,
+        last: currentPage,
+        views: visible
+      };
+    },
+    cleanup: function cleanup() {
+      for (var i = 0, ii = this._pages.length; i < ii; i++) {
+        if (this._pages[i] && this._pages[i].renderingState !== _pdf_rendering_queue.RenderingStates.FINISHED) {
+          this._pages[i].reset();
+        }
+      }
+    },
+
+    _cancelRendering: function PDFViewer_cancelRendering() {
+      for (var i = 0, ii = this._pages.length; i < ii; i++) {
+        if (this._pages[i]) {
+          this._pages[i].cancelRendering();
+        }
+      }
+    },
+    _ensurePdfPageLoaded: function _ensurePdfPageLoaded(pageView) {
+      var _this2 = this;
+
+      if (pageView.pdfPage) {
+        return Promise.resolve(pageView.pdfPage);
+      }
+      var pageNumber = pageView.id;
+      if (this._pagesRequests[pageNumber]) {
+        return this._pagesRequests[pageNumber];
+      }
+      var promise = this.pdfDocument.getPage(pageNumber).then(function (pdfPage) {
+        if (!pageView.pdfPage) {
+          pageView.setPdfPage(pdfPage);
+        }
+        _this2._pagesRequests[pageNumber] = null;
+        return pdfPage;
+      });
+      this._pagesRequests[pageNumber] = promise;
+      return promise;
+    },
+    forceRendering: function forceRendering(currentlyVisiblePages) {
+      var _this3 = this;
+
+      var visiblePages = currentlyVisiblePages || this._getVisiblePages();
+      var pageView = this.renderingQueue.getHighestPriority(visiblePages, this._pages, this.scroll.down);
+      if (pageView) {
+        this._ensurePdfPageLoaded(pageView).then(function () {
+          _this3.renderingQueue.renderView(pageView);
+        });
+        return true;
+      }
+      return false;
+    },
+    getPageTextContent: function getPageTextContent(pageIndex) {
+      return this.pdfDocument.getPage(pageIndex + 1).then(function (page) {
+        return page.getTextContent({ normalizeWhitespace: true });
+      });
+    },
+    createTextLayerBuilder: function createTextLayerBuilder(textLayerDiv, pageIndex, viewport) {
+      var enhanceTextSelection = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+
+      return new _text_layer_builder.TextLayerBuilder({
+        textLayerDiv: textLayerDiv,
+        eventBus: this.eventBus,
+        pageIndex: pageIndex,
+        viewport: viewport,
+        findController: this.isInPresentationMode ? null : this.findController,
+        enhanceTextSelection: this.isInPresentationMode ? false : enhanceTextSelection
+      });
+    },
+    createAnnotationLayerBuilder: function createAnnotationLayerBuilder(pageDiv, pdfPage) {
+      var renderInteractiveForms = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+      return new _annotation_layer_builder.AnnotationLayerBuilder({
+        pageDiv: pageDiv,
+        pdfPage: pdfPage,
+        renderInteractiveForms: renderInteractiveForms,
+        linkService: this.linkService,
+        downloadManager: this.downloadManager
+      });
+    },
+    setFindController: function setFindController(findController) {
+      this.findController = findController;
+    },
+    getPagesOverview: function getPagesOverview() {
+      var pagesOverview = this._pages.map(function (pageView) {
+        var viewport = pageView.pdfPage.getViewport(1);
+        return {
+          width: viewport.width,
+          height: viewport.height,
+          rotation: viewport.rotation
+        };
+      });
+      if (!this.enablePrintAutoRotate) {
+        return pagesOverview;
+      }
+      var isFirstPagePortrait = isPortraitOrientation(pagesOverview[0]);
+      return pagesOverview.map(function (size) {
+        if (isFirstPagePortrait === isPortraitOrientation(size)) {
+          return size;
+        }
+        return {
+          width: size.height,
+          height: size.width,
+          rotation: (size.rotation + 90) % 360
+        };
+      });
+    }
+  };
+  return PDFViewer;
+}();
+exports.PresentationModeState = PresentationModeState;
+exports.PDFViewer = PDFViewer;
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __w_pdfjs_require__) {
+
+"use strict";
+
+
+var pdfjsLib = __w_pdfjs_require__(0);
+var pdfjsWebPDFViewer = __w_pdfjs_require__(11);
+var pdfjsWebPDFPageView = __w_pdfjs_require__(5);
+var pdfjsWebPDFLinkService = __w_pdfjs_require__(3);
+var pdfjsWebTextLayerBuilder = __w_pdfjs_require__(6);
+var pdfjsWebAnnotationLayerBuilder = __w_pdfjs_require__(4);
+var pdfjsWebPDFHistory = __w_pdfjs_require__(10);
+var pdfjsWebPDFFindController = __w_pdfjs_require__(9);
+var pdfjsWebUIUtils = __w_pdfjs_require__(1);
+var pdfjsWebDownloadManager = __w_pdfjs_require__(8);
+var PDFJS = pdfjsLib.PDFJS;
+PDFJS.PDFViewer = pdfjsWebPDFViewer.PDFViewer;
+PDFJS.PDFPageView = pdfjsWebPDFPageView.PDFPageView;
+PDFJS.PDFLinkService = pdfjsWebPDFLinkService.PDFLinkService;
+PDFJS.TextLayerBuilder = pdfjsWebTextLayerBuilder.TextLayerBuilder;
+PDFJS.DefaultTextLayerFactory = pdfjsWebTextLayerBuilder.DefaultTextLayerFactory;
+PDFJS.AnnotationLayerBuilder = pdfjsWebAnnotationLayerBuilder.AnnotationLayerBuilder;
+PDFJS.DefaultAnnotationLayerFactory = pdfjsWebAnnotationLayerBuilder.DefaultAnnotationLayerFactory;
+PDFJS.PDFHistory = pdfjsWebPDFHistory.PDFHistory;
+PDFJS.PDFFindController = pdfjsWebPDFFindController.PDFFindController;
+PDFJS.EventBus = pdfjsWebUIUtils.EventBus;
+PDFJS.DownloadManager = pdfjsWebDownloadManager.DownloadManager;
+PDFJS.ProgressBar = pdfjsWebUIUtils.ProgressBar;
+exports.PDFJS = PDFJS;
+
+/***/ })
+/******/ ]);
+});
+//# sourceMappingURL=pdf_viewer.js.map
+
+/***/ }),
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* Copyright 2017 Mozilla Foundation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25495,1096 +21958,4626 @@ exports.SVGGraphics = SVGGraphics;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.warn = exports.utf8StringToString = exports.stringToUTF8String = exports.stringToPDFString = exports.stringToBytes = exports.string32 = exports.shadow = exports.setVerbosityLevel = exports.removeNullCharacters = exports.readUint32 = exports.readUint16 = exports.readInt8 = exports.log2 = exports.loadJpegStream = exports.isEvalSupported = exports.isLittleEndian = exports.createValidAbsoluteUrl = exports.isSameOrigin = exports.isNodeJS = exports.isSpace = exports.isString = exports.isNum = exports.isInt = exports.isEmptyObj = exports.isBool = exports.isArrayBuffer = exports.isArray = exports.info = exports.globalScope = exports.getVerbosityLevel = exports.getLookupTableFactory = exports.error = exports.deprecated = exports.createObjectURL = exports.createPromiseCapability = exports.createBlob = exports.bytesToString = exports.assert = exports.arraysToBytes = exports.arrayByteLength = exports.XRefParseException = exports.Util = exports.UnknownErrorException = exports.UnexpectedResponseException = exports.TextRenderingMode = exports.StreamType = exports.StatTimer = exports.PasswordResponses = exports.PasswordException = exports.PageViewport = exports.NotImplementedException = exports.NativeImageDecoding = exports.MissingPDFException = exports.MissingDataException = exports.MessageHandler = exports.InvalidPDFException = exports.CMapCompressionType = exports.ImageKind = exports.FontType = exports.AnnotationType = exports.AnnotationFlag = exports.AnnotationFieldFlag = exports.AnnotationBorderStyleType = exports.UNSUPPORTED_FEATURES = exports.VERBOSITY_LEVELS = exports.OPS = exports.IDENTITY_MATRIX = exports.FONT_IDENTITY_MATRIX = undefined;
+exports.localized = exports.animationStarted = exports.normalizeWheelEventDelta = exports.binarySearchFirstItem = exports.watchScroll = exports.scrollIntoView = exports.getOutputScale = exports.approximateFraction = exports.roundToDivide = exports.getVisibleElements = exports.parseQueryString = exports.noContextMenuHandler = exports.getPDFFileNameFromURL = exports.ProgressBar = exports.EventBus = exports.mozL10n = exports.RendererType = exports.cloneObj = exports.VERTICAL_PADDING = exports.SCROLLBAR_PADDING = exports.MAX_AUTO_SCALE = exports.UNKNOWN_SCALE = exports.MAX_SCALE = exports.MIN_SCALE = exports.DEFAULT_SCALE = exports.DEFAULT_SCALE_VALUE = exports.CSS_UNITS = undefined;
+
+var _pdfjs = __webpack_require__(36);
+
+var CSS_UNITS = 96.0 / 72.0;
+var DEFAULT_SCALE_VALUE = 'auto';
+var DEFAULT_SCALE = 1.0;
+var MIN_SCALE = 0.25;
+var MAX_SCALE = 10.0;
+var UNKNOWN_SCALE = 0;
+var MAX_AUTO_SCALE = 1.25;
+var SCROLLBAR_PADDING = 40;
+var VERTICAL_PADDING = 5;
+var RendererType = {
+  CANVAS: 'canvas',
+  SVG: 'svg'
+};
+var mozL10n = typeof document !== 'undefined' ? document.mozL10n || document.webL10n : undefined;
+_pdfjs.PDFJS.disableFullscreen = _pdfjs.PDFJS.disableFullscreen === undefined ? false : _pdfjs.PDFJS.disableFullscreen;
+_pdfjs.PDFJS.useOnlyCssZoom = _pdfjs.PDFJS.useOnlyCssZoom === undefined ? false : _pdfjs.PDFJS.useOnlyCssZoom;
+_pdfjs.PDFJS.maxCanvasPixels = _pdfjs.PDFJS.maxCanvasPixels === undefined ? 16777216 : _pdfjs.PDFJS.maxCanvasPixels;
+_pdfjs.PDFJS.disableHistory = _pdfjs.PDFJS.disableHistory === undefined ? false : _pdfjs.PDFJS.disableHistory;
+_pdfjs.PDFJS.disableTextLayer = _pdfjs.PDFJS.disableTextLayer === undefined ? false : _pdfjs.PDFJS.disableTextLayer;
+_pdfjs.PDFJS.ignoreCurrentPositionOnZoom = _pdfjs.PDFJS.ignoreCurrentPositionOnZoom === undefined ? false : _pdfjs.PDFJS.ignoreCurrentPositionOnZoom;
+{
+  _pdfjs.PDFJS.locale = _pdfjs.PDFJS.locale === undefined && typeof navigator !== 'undefined' ? navigator.language : _pdfjs.PDFJS.locale;
+}
+function getOutputScale(ctx) {
+  var devicePixelRatio = window.devicePixelRatio || 1;
+  var backingStoreRatio = ctx.webkitBackingStorePixelRatio || ctx.mozBackingStorePixelRatio || ctx.msBackingStorePixelRatio || ctx.oBackingStorePixelRatio || ctx.backingStorePixelRatio || 1;
+  var pixelRatio = devicePixelRatio / backingStoreRatio;
+  return {
+    sx: pixelRatio,
+    sy: pixelRatio,
+    scaled: pixelRatio !== 1
+  };
+}
+function scrollIntoView(element, spot, skipOverflowHiddenElements) {
+  var parent = element.offsetParent;
+  if (!parent) {
+    console.error('offsetParent is not set -- cannot scroll');
+    return;
+  }
+  var checkOverflow = skipOverflowHiddenElements || false;
+  var offsetY = element.offsetTop + element.clientTop;
+  var offsetX = element.offsetLeft + element.clientLeft;
+  while (parent.clientHeight === parent.scrollHeight || checkOverflow && getComputedStyle(parent).overflow === 'hidden') {
+    if (parent.dataset._scaleY) {
+      offsetY /= parent.dataset._scaleY;
+      offsetX /= parent.dataset._scaleX;
+    }
+    offsetY += parent.offsetTop;
+    offsetX += parent.offsetLeft;
+    parent = parent.offsetParent;
+    if (!parent) {
+      return;
+    }
+  }
+  if (spot) {
+    if (spot.top !== undefined) {
+      offsetY += spot.top;
+    }
+    if (spot.left !== undefined) {
+      offsetX += spot.left;
+      parent.scrollLeft = offsetX;
+    }
+  }
+  parent.scrollTop = offsetY;
+}
+function watchScroll(viewAreaElement, callback) {
+  var debounceScroll = function debounceScroll(evt) {
+    if (rAF) {
+      return;
+    }
+    rAF = window.requestAnimationFrame(function viewAreaElementScrolled() {
+      rAF = null;
+      var currentY = viewAreaElement.scrollTop;
+      var lastY = state.lastY;
+      if (currentY !== lastY) {
+        state.down = currentY > lastY;
+      }
+      state.lastY = currentY;
+      callback(state);
+    });
+  };
+  var state = {
+    down: true,
+    lastY: viewAreaElement.scrollTop,
+    _eventHandler: debounceScroll
+  };
+  var rAF = null;
+  viewAreaElement.addEventListener('scroll', debounceScroll, true);
+  return state;
+}
+function parseQueryString(query) {
+  var parts = query.split('&');
+  var params = {};
+  for (var i = 0, ii = parts.length; i < ii; ++i) {
+    var param = parts[i].split('=');
+    var key = param[0].toLowerCase();
+    var value = param.length > 1 ? param[1] : null;
+    params[decodeURIComponent(key)] = decodeURIComponent(value);
+  }
+  return params;
+}
+function binarySearchFirstItem(items, condition) {
+  var minIndex = 0;
+  var maxIndex = items.length - 1;
+  if (items.length === 0 || !condition(items[maxIndex])) {
+    return items.length;
+  }
+  if (condition(items[minIndex])) {
+    return minIndex;
+  }
+  while (minIndex < maxIndex) {
+    var currentIndex = minIndex + maxIndex >> 1;
+    var currentItem = items[currentIndex];
+    if (condition(currentItem)) {
+      maxIndex = currentIndex;
+    } else {
+      minIndex = currentIndex + 1;
+    }
+  }
+  return minIndex;
+}
+function approximateFraction(x) {
+  if (Math.floor(x) === x) {
+    return [x, 1];
+  }
+  var xinv = 1 / x;
+  var limit = 8;
+  if (xinv > limit) {
+    return [1, limit];
+  } else if (Math.floor(xinv) === xinv) {
+    return [1, xinv];
+  }
+  var x_ = x > 1 ? xinv : x;
+  var a = 0,
+      b = 1,
+      c = 1,
+      d = 1;
+  while (true) {
+    var p = a + c,
+        q = b + d;
+    if (q > limit) {
+      break;
+    }
+    if (x_ <= p / q) {
+      c = p;
+      d = q;
+    } else {
+      a = p;
+      b = q;
+    }
+  }
+  var result;
+  if (x_ - a / b < c / d - x_) {
+    result = x_ === x ? [a, b] : [b, a];
+  } else {
+    result = x_ === x ? [c, d] : [d, c];
+  }
+  return result;
+}
+function roundToDivide(x, div) {
+  var r = x % div;
+  return r === 0 ? x : Math.round(x - r + div);
+}
+function getVisibleElements(scrollEl, views, sortByVisibility) {
+  var top = scrollEl.scrollTop,
+      bottom = top + scrollEl.clientHeight;
+  var left = scrollEl.scrollLeft,
+      right = left + scrollEl.clientWidth;
+  function isElementBottomBelowViewTop(view) {
+    var element = view.div;
+    var elementBottom = element.offsetTop + element.clientTop + element.clientHeight;
+    return elementBottom > top;
+  }
+  var visible = [],
+      view,
+      element;
+  var currentHeight, viewHeight, hiddenHeight, percentHeight;
+  var currentWidth, viewWidth;
+  var firstVisibleElementInd = views.length === 0 ? 0 : binarySearchFirstItem(views, isElementBottomBelowViewTop);
+  for (var i = firstVisibleElementInd, ii = views.length; i < ii; i++) {
+    view = views[i];
+    element = view.div;
+    currentHeight = element.offsetTop + element.clientTop;
+    viewHeight = element.clientHeight;
+    if (currentHeight > bottom) {
+      break;
+    }
+    currentWidth = element.offsetLeft + element.clientLeft;
+    viewWidth = element.clientWidth;
+    if (currentWidth + viewWidth < left || currentWidth > right) {
+      continue;
+    }
+    hiddenHeight = Math.max(0, top - currentHeight) + Math.max(0, currentHeight + viewHeight - bottom);
+    percentHeight = (viewHeight - hiddenHeight) * 100 / viewHeight | 0;
+    visible.push({
+      id: view.id,
+      x: currentWidth,
+      y: currentHeight,
+      view: view,
+      percent: percentHeight
+    });
+  }
+  var first = visible[0];
+  var last = visible[visible.length - 1];
+  if (sortByVisibility) {
+    visible.sort(function (a, b) {
+      var pc = a.percent - b.percent;
+      if (Math.abs(pc) > 0.001) {
+        return -pc;
+      }
+      return a.id - b.id;
+    });
+  }
+  return {
+    first: first,
+    last: last,
+    views: visible
+  };
+}
+function noContextMenuHandler(e) {
+  e.preventDefault();
+}
+function isDataSchema(url) {
+  var i = 0,
+      ii = url.length;
+  while (i < ii && url[i].trim() === '') {
+    i++;
+  }
+  return url.substr(i, 5).toLowerCase() === 'data:';
+}
+function getPDFFileNameFromURL(url) {
+  var defaultFilename = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'document.pdf';
+
+  if (isDataSchema(url)) {
+    console.warn('getPDFFileNameFromURL: ' + 'ignoring "data:" URL for performance reasons.');
+    return defaultFilename;
+  }
+  var reURI = /^(?:(?:[^:]+:)?\/\/[^\/]+)?([^?#]*)(\?[^#]*)?(#.*)?$/;
+  var reFilename = /[^\/?#=]+\.pdf\b(?!.*\.pdf\b)/i;
+  var splitURI = reURI.exec(url);
+  var suggestedFilename = reFilename.exec(splitURI[1]) || reFilename.exec(splitURI[2]) || reFilename.exec(splitURI[3]);
+  if (suggestedFilename) {
+    suggestedFilename = suggestedFilename[0];
+    if (suggestedFilename.indexOf('%') !== -1) {
+      try {
+        suggestedFilename = reFilename.exec(decodeURIComponent(suggestedFilename))[0];
+      } catch (e) {}
+    }
+  }
+  return suggestedFilename || defaultFilename;
+}
+function normalizeWheelEventDelta(evt) {
+  var delta = Math.sqrt(evt.deltaX * evt.deltaX + evt.deltaY * evt.deltaY);
+  var angle = Math.atan2(evt.deltaY, evt.deltaX);
+  if (-0.25 * Math.PI < angle && angle < 0.75 * Math.PI) {
+    delta = -delta;
+  }
+  var MOUSE_DOM_DELTA_PIXEL_MODE = 0;
+  var MOUSE_DOM_DELTA_LINE_MODE = 1;
+  var MOUSE_PIXELS_PER_LINE = 30;
+  var MOUSE_LINES_PER_PAGE = 30;
+  if (evt.deltaMode === MOUSE_DOM_DELTA_PIXEL_MODE) {
+    delta /= MOUSE_PIXELS_PER_LINE * MOUSE_LINES_PER_PAGE;
+  } else if (evt.deltaMode === MOUSE_DOM_DELTA_LINE_MODE) {
+    delta /= MOUSE_LINES_PER_PAGE;
+  }
+  return delta;
+}
+function cloneObj(obj) {
+  var result = {};
+  for (var i in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, i)) {
+      result[i] = obj[i];
+    }
+  }
+  return result;
+}
+var animationStarted = new Promise(function (resolve) {
+  window.requestAnimationFrame(resolve);
+});
+var localized = new Promise(function (resolve, reject) {
+  if (!mozL10n) {
+    resolve();
+    return;
+  }
+  if (mozL10n.getReadyState() !== 'loading') {
+    resolve();
+    return;
+  }
+  window.addEventListener('localized', function localized(evt) {
+    resolve();
+  });
+});
+var EventBus = function EventBusClosure() {
+  function EventBus() {
+    this._listeners = Object.create(null);
+  }
+  EventBus.prototype = {
+    on: function EventBus_on(eventName, listener) {
+      var eventListeners = this._listeners[eventName];
+      if (!eventListeners) {
+        eventListeners = [];
+        this._listeners[eventName] = eventListeners;
+      }
+      eventListeners.push(listener);
+    },
+    off: function EventBus_on(eventName, listener) {
+      var eventListeners = this._listeners[eventName];
+      var i;
+      if (!eventListeners || (i = eventListeners.indexOf(listener)) < 0) {
+        return;
+      }
+      eventListeners.splice(i, 1);
+    },
+    dispatch: function EventBus_dispath(eventName) {
+      var eventListeners = this._listeners[eventName];
+      if (!eventListeners || eventListeners.length === 0) {
+        return;
+      }
+      var args = Array.prototype.slice.call(arguments, 1);
+      eventListeners.slice(0).forEach(function (listener) {
+        listener.apply(null, args);
+      });
+    }
+  };
+  return EventBus;
+}();
+var ProgressBar = function ProgressBarClosure() {
+  function clamp(v, min, max) {
+    return Math.min(Math.max(v, min), max);
+  }
+  function ProgressBar(id, opts) {
+    this.visible = true;
+    this.div = document.querySelector(id + ' .progress');
+    this.bar = this.div.parentNode;
+    this.height = opts.height || 100;
+    this.width = opts.width || 100;
+    this.units = opts.units || '%';
+    this.div.style.height = this.height + this.units;
+    this.percent = 0;
+  }
+  ProgressBar.prototype = {
+    updateBar: function ProgressBar_updateBar() {
+      if (this._indeterminate) {
+        this.div.classList.add('indeterminate');
+        this.div.style.width = this.width + this.units;
+        return;
+      }
+      this.div.classList.remove('indeterminate');
+      var progressSize = this.width * this._percent / 100;
+      this.div.style.width = progressSize + this.units;
+    },
+    get percent() {
+      return this._percent;
+    },
+    set percent(val) {
+      this._indeterminate = isNaN(val);
+      this._percent = clamp(val, 0, 100);
+      this.updateBar();
+    },
+    setWidth: function ProgressBar_setWidth(viewer) {
+      if (viewer) {
+        var container = viewer.parentNode;
+        var scrollbarWidth = container.offsetWidth - viewer.offsetWidth;
+        if (scrollbarWidth > 0) {
+          this.bar.setAttribute('style', 'width: calc(100% - ' + scrollbarWidth + 'px);');
+        }
+      }
+    },
+    hide: function ProgressBar_hide() {
+      if (!this.visible) {
+        return;
+      }
+      this.visible = false;
+      this.bar.classList.add('hidden');
+      document.body.classList.remove('loadingInProgress');
+    },
+    show: function ProgressBar_show() {
+      if (this.visible) {
+        return;
+      }
+      this.visible = true;
+      document.body.classList.add('loadingInProgress');
+      this.bar.classList.remove('hidden');
+    }
+  };
+  return ProgressBar;
+}();
+exports.CSS_UNITS = CSS_UNITS;
+exports.DEFAULT_SCALE_VALUE = DEFAULT_SCALE_VALUE;
+exports.DEFAULT_SCALE = DEFAULT_SCALE;
+exports.MIN_SCALE = MIN_SCALE;
+exports.MAX_SCALE = MAX_SCALE;
+exports.UNKNOWN_SCALE = UNKNOWN_SCALE;
+exports.MAX_AUTO_SCALE = MAX_AUTO_SCALE;
+exports.SCROLLBAR_PADDING = SCROLLBAR_PADDING;
+exports.VERTICAL_PADDING = VERTICAL_PADDING;
+exports.cloneObj = cloneObj;
+exports.RendererType = RendererType;
+exports.mozL10n = mozL10n;
+exports.EventBus = EventBus;
+exports.ProgressBar = ProgressBar;
+exports.getPDFFileNameFromURL = getPDFFileNameFromURL;
+exports.noContextMenuHandler = noContextMenuHandler;
+exports.parseQueryString = parseQueryString;
+exports.getVisibleElements = getVisibleElements;
+exports.roundToDivide = roundToDivide;
+exports.approximateFraction = approximateFraction;
+exports.getOutputScale = getOutputScale;
+exports.scrollIntoView = scrollIntoView;
+exports.watchScroll = watchScroll;
+exports.binarySearchFirstItem = binarySearchFirstItem;
+exports.normalizeWheelEventDelta = normalizeWheelEventDelta;
+exports.animationStarted = animationStarted;
+exports.localized = localized;
+
+/***/ }),
+/* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* Copyright 2017 Mozilla Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+{
+  var pdfjsLib;
+  if (typeof __pdfjsdev_webpack__ === 'undefined') {
+    if (typeof window !== 'undefined' && window['pdfjs-dist/build/pdf']) {
+      pdfjsLib = window['pdfjs-dist/build/pdf'];
+    } else if (true) {
+      pdfjsLib = __webpack_require__(37);
+    } else {
+      throw new Error('Neither `require` nor `window` found');
+    }
+  }
+  module.exports = pdfjsLib;
+}
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* Copyright 2017 Mozilla Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+var pdfjsVersion = '1.8.366';
+var pdfjsBuild = '32bb0e8c';
+var pdfjsSharedUtil = __webpack_require__(0);
+var pdfjsDisplayGlobal = __webpack_require__(39);
+var pdfjsDisplayAPI = __webpack_require__(10);
+var pdfjsDisplayTextLayer = __webpack_require__(14);
+var pdfjsDisplayAnnotationLayer = __webpack_require__(13);
+var pdfjsDisplayDOMUtils = __webpack_require__(5);
+var pdfjsDisplaySVG = __webpack_require__(15);
+exports.PDFJS = pdfjsDisplayGlobal.PDFJS;
+exports.build = pdfjsDisplayAPI.build;
+exports.version = pdfjsDisplayAPI.version;
+exports.getDocument = pdfjsDisplayAPI.getDocument;
+exports.LoopbackPort = pdfjsDisplayAPI.LoopbackPort;
+exports.PDFDataRangeTransport = pdfjsDisplayAPI.PDFDataRangeTransport;
+exports.PDFWorker = pdfjsDisplayAPI.PDFWorker;
+exports.renderTextLayer = pdfjsDisplayTextLayer.renderTextLayer;
+exports.AnnotationLayer = pdfjsDisplayAnnotationLayer.AnnotationLayer;
+exports.CustomStyle = pdfjsDisplayDOMUtils.CustomStyle;
+exports.createPromiseCapability = pdfjsSharedUtil.createPromiseCapability;
+exports.PasswordResponses = pdfjsSharedUtil.PasswordResponses;
+exports.InvalidPDFException = pdfjsSharedUtil.InvalidPDFException;
+exports.MissingPDFException = pdfjsSharedUtil.MissingPDFException;
+exports.SVGGraphics = pdfjsDisplaySVG.SVGGraphics;
+exports.NativeImageDecoding = pdfjsSharedUtil.NativeImageDecoding;
+exports.UnexpectedResponseException = pdfjsSharedUtil.UnexpectedResponseException;
+exports.OPS = pdfjsSharedUtil.OPS;
+exports.UNSUPPORTED_FEATURES = pdfjsSharedUtil.UNSUPPORTED_FEATURES;
+exports.isValidUrl = pdfjsDisplayDOMUtils.isValidUrl;
+exports.createValidAbsoluteUrl = pdfjsSharedUtil.createValidAbsoluteUrl;
+exports.createObjectURL = pdfjsSharedUtil.createObjectURL;
+exports.removeNullCharacters = pdfjsSharedUtil.removeNullCharacters;
+exports.shadow = pdfjsSharedUtil.shadow;
+exports.createBlob = pdfjsSharedUtil.createBlob;
+exports.RenderingCancelledException = pdfjsDisplayDOMUtils.RenderingCancelledException;
+exports.getFilenameFromUrl = pdfjsDisplayDOMUtils.getFilenameFromUrl;
+exports.addLinkAttributes = pdfjsDisplayDOMUtils.addLinkAttributes;
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {/* Copyright 2017 Mozilla Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-__webpack_require__(147);
-
-var globalScope = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : undefined;
-var FONT_IDENTITY_MATRIX = [0.001, 0, 0, 0.001, 0, 0];
-var NativeImageDecoding = {
-  NONE: 'none',
-  DECODE: 'decode',
-  DISPLAY: 'display'
-};
-var TextRenderingMode = {
-  FILL: 0,
-  STROKE: 1,
-  FILL_STROKE: 2,
-  INVISIBLE: 3,
-  FILL_ADD_TO_PATH: 4,
-  STROKE_ADD_TO_PATH: 5,
-  FILL_STROKE_ADD_TO_PATH: 6,
-  ADD_TO_PATH: 7,
-  FILL_STROKE_MASK: 3,
-  ADD_TO_PATH_FLAG: 4
-};
-var ImageKind = {
-  GRAYSCALE_1BPP: 1,
-  RGB_24BPP: 2,
-  RGBA_32BPP: 3
-};
-var AnnotationType = {
-  TEXT: 1,
-  LINK: 2,
-  FREETEXT: 3,
-  LINE: 4,
-  SQUARE: 5,
-  CIRCLE: 6,
-  POLYGON: 7,
-  POLYLINE: 8,
-  HIGHLIGHT: 9,
-  UNDERLINE: 10,
-  SQUIGGLY: 11,
-  STRIKEOUT: 12,
-  STAMP: 13,
-  CARET: 14,
-  INK: 15,
-  POPUP: 16,
-  FILEATTACHMENT: 17,
-  SOUND: 18,
-  MOVIE: 19,
-  WIDGET: 20,
-  SCREEN: 21,
-  PRINTERMARK: 22,
-  TRAPNET: 23,
-  WATERMARK: 24,
-  THREED: 25,
-  REDACT: 26
-};
-var AnnotationFlag = {
-  INVISIBLE: 0x01,
-  HIDDEN: 0x02,
-  PRINT: 0x04,
-  NOZOOM: 0x08,
-  NOROTATE: 0x10,
-  NOVIEW: 0x20,
-  READONLY: 0x40,
-  LOCKED: 0x80,
-  TOGGLENOVIEW: 0x100,
-  LOCKEDCONTENTS: 0x200
-};
-var AnnotationFieldFlag = {
-  READONLY: 0x0000001,
-  REQUIRED: 0x0000002,
-  NOEXPORT: 0x0000004,
-  MULTILINE: 0x0001000,
-  PASSWORD: 0x0002000,
-  NOTOGGLETOOFF: 0x0004000,
-  RADIO: 0x0008000,
-  PUSHBUTTON: 0x0010000,
-  COMBO: 0x0020000,
-  EDIT: 0x0040000,
-  SORT: 0x0080000,
-  FILESELECT: 0x0100000,
-  MULTISELECT: 0x0200000,
-  DONOTSPELLCHECK: 0x0400000,
-  DONOTSCROLL: 0x0800000,
-  COMB: 0x1000000,
-  RICHTEXT: 0x2000000,
-  RADIOSINUNISON: 0x2000000,
-  COMMITONSELCHANGE: 0x4000000
-};
-var AnnotationBorderStyleType = {
-  SOLID: 1,
-  DASHED: 2,
-  BEVELED: 3,
-  INSET: 4,
-  UNDERLINE: 5
-};
-var StreamType = {
-  UNKNOWN: 0,
-  FLATE: 1,
-  LZW: 2,
-  DCT: 3,
-  JPX: 4,
-  JBIG: 5,
-  A85: 6,
-  AHX: 7,
-  CCF: 8,
-  RL: 9
-};
-var FontType = {
-  UNKNOWN: 0,
-  TYPE1: 1,
-  TYPE1C: 2,
-  CIDFONTTYPE0: 3,
-  CIDFONTTYPE0C: 4,
-  TRUETYPE: 5,
-  CIDFONTTYPE2: 6,
-  TYPE3: 7,
-  OPENTYPE: 8,
-  TYPE0: 9,
-  MMTYPE1: 10
-};
-var VERBOSITY_LEVELS = {
-  errors: 0,
-  warnings: 1,
-  infos: 5
-};
-var CMapCompressionType = {
-  NONE: 0,
-  BINARY: 1,
-  STREAM: 2
-};
-var OPS = {
-  dependency: 1,
-  setLineWidth: 2,
-  setLineCap: 3,
-  setLineJoin: 4,
-  setMiterLimit: 5,
-  setDash: 6,
-  setRenderingIntent: 7,
-  setFlatness: 8,
-  setGState: 9,
-  save: 10,
-  restore: 11,
-  transform: 12,
-  moveTo: 13,
-  lineTo: 14,
-  curveTo: 15,
-  curveTo2: 16,
-  curveTo3: 17,
-  closePath: 18,
-  rectangle: 19,
-  stroke: 20,
-  closeStroke: 21,
-  fill: 22,
-  eoFill: 23,
-  fillStroke: 24,
-  eoFillStroke: 25,
-  closeFillStroke: 26,
-  closeEOFillStroke: 27,
-  endPath: 28,
-  clip: 29,
-  eoClip: 30,
-  beginText: 31,
-  endText: 32,
-  setCharSpacing: 33,
-  setWordSpacing: 34,
-  setHScale: 35,
-  setLeading: 36,
-  setFont: 37,
-  setTextRenderingMode: 38,
-  setTextRise: 39,
-  moveText: 40,
-  setLeadingMoveText: 41,
-  setTextMatrix: 42,
-  nextLine: 43,
-  showText: 44,
-  showSpacedText: 45,
-  nextLineShowText: 46,
-  nextLineSetSpacingShowText: 47,
-  setCharWidth: 48,
-  setCharWidthAndBounds: 49,
-  setStrokeColorSpace: 50,
-  setFillColorSpace: 51,
-  setStrokeColor: 52,
-  setStrokeColorN: 53,
-  setFillColor: 54,
-  setFillColorN: 55,
-  setStrokeGray: 56,
-  setFillGray: 57,
-  setStrokeRGBColor: 58,
-  setFillRGBColor: 59,
-  setStrokeCMYKColor: 60,
-  setFillCMYKColor: 61,
-  shadingFill: 62,
-  beginInlineImage: 63,
-  beginImageData: 64,
-  endInlineImage: 65,
-  paintXObject: 66,
-  markPoint: 67,
-  markPointProps: 68,
-  beginMarkedContent: 69,
-  beginMarkedContentProps: 70,
-  endMarkedContent: 71,
-  beginCompat: 72,
-  endCompat: 73,
-  paintFormXObjectBegin: 74,
-  paintFormXObjectEnd: 75,
-  beginGroup: 76,
-  endGroup: 77,
-  beginAnnotations: 78,
-  endAnnotations: 79,
-  beginAnnotation: 80,
-  endAnnotation: 81,
-  paintJpegXObject: 82,
-  paintImageMaskXObject: 83,
-  paintImageMaskXObjectGroup: 84,
-  paintImageXObject: 85,
-  paintInlineImageXObject: 86,
-  paintInlineImageXObjectGroup: 87,
-  paintImageXObjectRepeat: 88,
-  paintImageMaskXObjectRepeat: 89,
-  paintSolidColorImageMask: 90,
-  constructPath: 91
-};
-var verbosity = VERBOSITY_LEVELS.warnings;
-function setVerbosityLevel(level) {
-  verbosity = level;
-}
-function getVerbosityLevel() {
-  return verbosity;
-}
-function info(msg) {
-  if (verbosity >= VERBOSITY_LEVELS.infos) {
-    console.log('Info: ' + msg);
+if (typeof PDFJS === 'undefined' || !PDFJS.compatibilityChecked) {
+  var globalScope = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : undefined;
+  var userAgent = typeof navigator !== 'undefined' && navigator.userAgent || '';
+  var isAndroid = /Android/.test(userAgent);
+  var isAndroidPre3 = /Android\s[0-2][^\d]/.test(userAgent);
+  var isAndroidPre5 = /Android\s[0-4][^\d]/.test(userAgent);
+  var isChrome = userAgent.indexOf('Chrom') >= 0;
+  var isChromeWithRangeBug = /Chrome\/(39|40)\./.test(userAgent);
+  var isIOSChrome = userAgent.indexOf('CriOS') >= 0;
+  var isIE = userAgent.indexOf('Trident') >= 0;
+  var isIOS = /\b(iPad|iPhone|iPod)(?=;)/.test(userAgent);
+  var isOpera = userAgent.indexOf('Opera') >= 0;
+  var isSafari = /Safari\//.test(userAgent) && !/(Chrome\/|Android\s)/.test(userAgent);
+  var hasDOM = (typeof window === 'undefined' ? 'undefined' : _typeof(window)) === 'object' && (typeof document === 'undefined' ? 'undefined' : _typeof(document)) === 'object';
+  if (typeof PDFJS === 'undefined') {
+    globalScope.PDFJS = {};
   }
-}
-function warn(msg) {
-  if (verbosity >= VERBOSITY_LEVELS.warnings) {
-    console.log('Warning: ' + msg);
-  }
-}
-function deprecated(details) {
-  console.log('Deprecated API usage: ' + details);
-}
-function error(msg) {
-  if (verbosity >= VERBOSITY_LEVELS.errors) {
-    console.log('Error: ' + msg);
-    console.log(backtrace());
-  }
-  throw new Error(msg);
-}
-function backtrace() {
-  try {
-    throw new Error();
-  } catch (e) {
-    return e.stack ? e.stack.split('\n').slice(2).join('\n') : '';
-  }
-}
-function assert(cond, msg) {
-  if (!cond) {
-    error(msg);
-  }
-}
-var UNSUPPORTED_FEATURES = {
-  unknown: 'unknown',
-  forms: 'forms',
-  javaScript: 'javaScript',
-  smask: 'smask',
-  shadingPattern: 'shadingPattern',
-  font: 'font'
-};
-function isSameOrigin(baseUrl, otherUrl) {
-  try {
-    var base = new URL(baseUrl);
-    if (!base.origin || base.origin === 'null') {
-      return false;
-    }
-  } catch (e) {
-    return false;
-  }
-  var other = new URL(otherUrl, base);
-  return base.origin === other.origin;
-}
-function isValidProtocol(url) {
-  if (!url) {
-    return false;
-  }
-  switch (url.protocol) {
-    case 'http:':
-    case 'https:':
-    case 'ftp:':
-    case 'mailto:':
-    case 'tel:':
-      return true;
-    default:
-      return false;
-  }
-}
-function createValidAbsoluteUrl(url, baseUrl) {
-  if (!url) {
-    return null;
-  }
-  try {
-    var absoluteUrl = baseUrl ? new URL(url, baseUrl) : new URL(url);
-    if (isValidProtocol(absoluteUrl)) {
-      return absoluteUrl;
-    }
-  } catch (ex) {}
-  return null;
-}
-function shadow(obj, prop, value) {
-  Object.defineProperty(obj, prop, {
-    value: value,
-    enumerable: true,
-    configurable: true,
-    writable: false
-  });
-  return value;
-}
-function getLookupTableFactory(initializer) {
-  var lookup;
-  return function () {
-    if (initializer) {
-      lookup = Object.create(null);
-      initializer(lookup);
-      initializer = null;
-    }
-    return lookup;
-  };
-}
-var PasswordResponses = {
-  NEED_PASSWORD: 1,
-  INCORRECT_PASSWORD: 2
-};
-var PasswordException = function PasswordExceptionClosure() {
-  function PasswordException(msg, code) {
-    this.name = 'PasswordException';
-    this.message = msg;
-    this.code = code;
-  }
-  PasswordException.prototype = new Error();
-  PasswordException.constructor = PasswordException;
-  return PasswordException;
-}();
-var UnknownErrorException = function UnknownErrorExceptionClosure() {
-  function UnknownErrorException(msg, details) {
-    this.name = 'UnknownErrorException';
-    this.message = msg;
-    this.details = details;
-  }
-  UnknownErrorException.prototype = new Error();
-  UnknownErrorException.constructor = UnknownErrorException;
-  return UnknownErrorException;
-}();
-var InvalidPDFException = function InvalidPDFExceptionClosure() {
-  function InvalidPDFException(msg) {
-    this.name = 'InvalidPDFException';
-    this.message = msg;
-  }
-  InvalidPDFException.prototype = new Error();
-  InvalidPDFException.constructor = InvalidPDFException;
-  return InvalidPDFException;
-}();
-var MissingPDFException = function MissingPDFExceptionClosure() {
-  function MissingPDFException(msg) {
-    this.name = 'MissingPDFException';
-    this.message = msg;
-  }
-  MissingPDFException.prototype = new Error();
-  MissingPDFException.constructor = MissingPDFException;
-  return MissingPDFException;
-}();
-var UnexpectedResponseException = function UnexpectedResponseExceptionClosure() {
-  function UnexpectedResponseException(msg, status) {
-    this.name = 'UnexpectedResponseException';
-    this.message = msg;
-    this.status = status;
-  }
-  UnexpectedResponseException.prototype = new Error();
-  UnexpectedResponseException.constructor = UnexpectedResponseException;
-  return UnexpectedResponseException;
-}();
-var NotImplementedException = function NotImplementedExceptionClosure() {
-  function NotImplementedException(msg) {
-    this.message = msg;
-  }
-  NotImplementedException.prototype = new Error();
-  NotImplementedException.prototype.name = 'NotImplementedException';
-  NotImplementedException.constructor = NotImplementedException;
-  return NotImplementedException;
-}();
-var MissingDataException = function MissingDataExceptionClosure() {
-  function MissingDataException(begin, end) {
-    this.begin = begin;
-    this.end = end;
-    this.message = 'Missing data [' + begin + ', ' + end + ')';
-  }
-  MissingDataException.prototype = new Error();
-  MissingDataException.prototype.name = 'MissingDataException';
-  MissingDataException.constructor = MissingDataException;
-  return MissingDataException;
-}();
-var XRefParseException = function XRefParseExceptionClosure() {
-  function XRefParseException(msg) {
-    this.message = msg;
-  }
-  XRefParseException.prototype = new Error();
-  XRefParseException.prototype.name = 'XRefParseException';
-  XRefParseException.constructor = XRefParseException;
-  return XRefParseException;
-}();
-var NullCharactersRegExp = /\x00/g;
-function removeNullCharacters(str) {
-  if (typeof str !== 'string') {
-    warn('The argument for removeNullCharacters must be a string.');
-    return str;
-  }
-  return str.replace(NullCharactersRegExp, '');
-}
-function bytesToString(bytes) {
-  assert(bytes !== null && (typeof bytes === 'undefined' ? 'undefined' : _typeof(bytes)) === 'object' && bytes.length !== undefined, 'Invalid argument for bytesToString');
-  var length = bytes.length;
-  var MAX_ARGUMENT_COUNT = 8192;
-  if (length < MAX_ARGUMENT_COUNT) {
-    return String.fromCharCode.apply(null, bytes);
-  }
-  var strBuf = [];
-  for (var i = 0; i < length; i += MAX_ARGUMENT_COUNT) {
-    var chunkEnd = Math.min(i + MAX_ARGUMENT_COUNT, length);
-    var chunk = bytes.subarray(i, chunkEnd);
-    strBuf.push(String.fromCharCode.apply(null, chunk));
-  }
-  return strBuf.join('');
-}
-function stringToBytes(str) {
-  assert(typeof str === 'string', 'Invalid argument for stringToBytes');
-  var length = str.length;
-  var bytes = new Uint8Array(length);
-  for (var i = 0; i < length; ++i) {
-    bytes[i] = str.charCodeAt(i) & 0xFF;
-  }
-  return bytes;
-}
-function arrayByteLength(arr) {
-  if (arr.length !== undefined) {
-    return arr.length;
-  }
-  assert(arr.byteLength !== undefined);
-  return arr.byteLength;
-}
-function arraysToBytes(arr) {
-  if (arr.length === 1 && arr[0] instanceof Uint8Array) {
-    return arr[0];
-  }
-  var resultLength = 0;
-  var i,
-      ii = arr.length;
-  var item, itemLength;
-  for (i = 0; i < ii; i++) {
-    item = arr[i];
-    itemLength = arrayByteLength(item);
-    resultLength += itemLength;
-  }
-  var pos = 0;
-  var data = new Uint8Array(resultLength);
-  for (i = 0; i < ii; i++) {
-    item = arr[i];
-    if (!(item instanceof Uint8Array)) {
-      if (typeof item === 'string') {
-        item = stringToBytes(item);
-      } else {
-        item = new Uint8Array(item);
+  PDFJS.compatibilityChecked = true;
+  (function checkTypedArrayCompatibility() {
+    if (typeof Uint8Array !== 'undefined') {
+      if (typeof Uint8Array.prototype.subarray === 'undefined') {
+        Uint8Array.prototype.subarray = function subarray(start, end) {
+          return new Uint8Array(this.slice(start, end));
+        };
+        Float32Array.prototype.subarray = function subarray(start, end) {
+          return new Float32Array(this.slice(start, end));
+        };
       }
-    }
-    itemLength = item.byteLength;
-    data.set(item, pos);
-    pos += itemLength;
-  }
-  return data;
-}
-function string32(value) {
-  return String.fromCharCode(value >> 24 & 0xff, value >> 16 & 0xff, value >> 8 & 0xff, value & 0xff);
-}
-function log2(x) {
-  var n = 1,
-      i = 0;
-  while (x > n) {
-    n <<= 1;
-    i++;
-  }
-  return i;
-}
-function readInt8(data, start) {
-  return data[start] << 24 >> 24;
-}
-function readUint16(data, offset) {
-  return data[offset] << 8 | data[offset + 1];
-}
-function readUint32(data, offset) {
-  return (data[offset] << 24 | data[offset + 1] << 16 | data[offset + 2] << 8 | data[offset + 3]) >>> 0;
-}
-function isLittleEndian() {
-  var buffer8 = new Uint8Array(4);
-  buffer8[0] = 1;
-  var view32 = new Uint32Array(buffer8.buffer, 0, 1);
-  return view32[0] === 1;
-}
-function isEvalSupported() {
-  try {
-    new Function('');
-    return true;
-  } catch (e) {
-    return false;
-  }
-}
-var IDENTITY_MATRIX = [1, 0, 0, 1, 0, 0];
-var Util = function UtilClosure() {
-  function Util() {}
-  var rgbBuf = ['rgb(', 0, ',', 0, ',', 0, ')'];
-  Util.makeCssRgb = function Util_makeCssRgb(r, g, b) {
-    rgbBuf[1] = r;
-    rgbBuf[3] = g;
-    rgbBuf[5] = b;
-    return rgbBuf.join('');
-  };
-  Util.transform = function Util_transform(m1, m2) {
-    return [m1[0] * m2[0] + m1[2] * m2[1], m1[1] * m2[0] + m1[3] * m2[1], m1[0] * m2[2] + m1[2] * m2[3], m1[1] * m2[2] + m1[3] * m2[3], m1[0] * m2[4] + m1[2] * m2[5] + m1[4], m1[1] * m2[4] + m1[3] * m2[5] + m1[5]];
-  };
-  Util.applyTransform = function Util_applyTransform(p, m) {
-    var xt = p[0] * m[0] + p[1] * m[2] + m[4];
-    var yt = p[0] * m[1] + p[1] * m[3] + m[5];
-    return [xt, yt];
-  };
-  Util.applyInverseTransform = function Util_applyInverseTransform(p, m) {
-    var d = m[0] * m[3] - m[1] * m[2];
-    var xt = (p[0] * m[3] - p[1] * m[2] + m[2] * m[5] - m[4] * m[3]) / d;
-    var yt = (-p[0] * m[1] + p[1] * m[0] + m[4] * m[1] - m[5] * m[0]) / d;
-    return [xt, yt];
-  };
-  Util.getAxialAlignedBoundingBox = function Util_getAxialAlignedBoundingBox(r, m) {
-    var p1 = Util.applyTransform(r, m);
-    var p2 = Util.applyTransform(r.slice(2, 4), m);
-    var p3 = Util.applyTransform([r[0], r[3]], m);
-    var p4 = Util.applyTransform([r[2], r[1]], m);
-    return [Math.min(p1[0], p2[0], p3[0], p4[0]), Math.min(p1[1], p2[1], p3[1], p4[1]), Math.max(p1[0], p2[0], p3[0], p4[0]), Math.max(p1[1], p2[1], p3[1], p4[1])];
-  };
-  Util.inverseTransform = function Util_inverseTransform(m) {
-    var d = m[0] * m[3] - m[1] * m[2];
-    return [m[3] / d, -m[1] / d, -m[2] / d, m[0] / d, (m[2] * m[5] - m[4] * m[3]) / d, (m[4] * m[1] - m[5] * m[0]) / d];
-  };
-  Util.apply3dTransform = function Util_apply3dTransform(m, v) {
-    return [m[0] * v[0] + m[1] * v[1] + m[2] * v[2], m[3] * v[0] + m[4] * v[1] + m[5] * v[2], m[6] * v[0] + m[7] * v[1] + m[8] * v[2]];
-  };
-  Util.singularValueDecompose2dScale = function Util_singularValueDecompose2dScale(m) {
-    var transpose = [m[0], m[2], m[1], m[3]];
-    var a = m[0] * transpose[0] + m[1] * transpose[2];
-    var b = m[0] * transpose[1] + m[1] * transpose[3];
-    var c = m[2] * transpose[0] + m[3] * transpose[2];
-    var d = m[2] * transpose[1] + m[3] * transpose[3];
-    var first = (a + d) / 2;
-    var second = Math.sqrt((a + d) * (a + d) - 4 * (a * d - c * b)) / 2;
-    var sx = first + second || 1;
-    var sy = first - second || 1;
-    return [Math.sqrt(sx), Math.sqrt(sy)];
-  };
-  Util.normalizeRect = function Util_normalizeRect(rect) {
-    var r = rect.slice(0);
-    if (rect[0] > rect[2]) {
-      r[0] = rect[2];
-      r[2] = rect[0];
-    }
-    if (rect[1] > rect[3]) {
-      r[1] = rect[3];
-      r[3] = rect[1];
-    }
-    return r;
-  };
-  Util.intersect = function Util_intersect(rect1, rect2) {
-    function compare(a, b) {
-      return a - b;
-    }
-    var orderedX = [rect1[0], rect1[2], rect2[0], rect2[2]].sort(compare),
-        orderedY = [rect1[1], rect1[3], rect2[1], rect2[3]].sort(compare),
-        result = [];
-    rect1 = Util.normalizeRect(rect1);
-    rect2 = Util.normalizeRect(rect2);
-    if (orderedX[0] === rect1[0] && orderedX[1] === rect2[0] || orderedX[0] === rect2[0] && orderedX[1] === rect1[0]) {
-      result[0] = orderedX[1];
-      result[2] = orderedX[2];
-    } else {
-      return false;
-    }
-    if (orderedY[0] === rect1[1] && orderedY[1] === rect2[1] || orderedY[0] === rect2[1] && orderedY[1] === rect1[1]) {
-      result[1] = orderedY[1];
-      result[3] = orderedY[2];
-    } else {
-      return false;
-    }
-    return result;
-  };
-  Util.sign = function Util_sign(num) {
-    return num < 0 ? -1 : 1;
-  };
-  var ROMAN_NUMBER_MAP = ['', 'C', 'CC', 'CCC', 'CD', 'D', 'DC', 'DCC', 'DCCC', 'CM', '', 'X', 'XX', 'XXX', 'XL', 'L', 'LX', 'LXX', 'LXXX', 'XC', '', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX'];
-  Util.toRoman = function Util_toRoman(number, lowerCase) {
-    assert(isInt(number) && number > 0, 'The number should be a positive integer.');
-    var pos,
-        romanBuf = [];
-    while (number >= 1000) {
-      number -= 1000;
-      romanBuf.push('M');
-    }
-    pos = number / 100 | 0;
-    number %= 100;
-    romanBuf.push(ROMAN_NUMBER_MAP[pos]);
-    pos = number / 10 | 0;
-    number %= 10;
-    romanBuf.push(ROMAN_NUMBER_MAP[10 + pos]);
-    romanBuf.push(ROMAN_NUMBER_MAP[20 + number]);
-    var romanStr = romanBuf.join('');
-    return lowerCase ? romanStr.toLowerCase() : romanStr;
-  };
-  Util.appendToArray = function Util_appendToArray(arr1, arr2) {
-    Array.prototype.push.apply(arr1, arr2);
-  };
-  Util.prependToArray = function Util_prependToArray(arr1, arr2) {
-    Array.prototype.unshift.apply(arr1, arr2);
-  };
-  Util.extendObj = function extendObj(obj1, obj2) {
-    for (var key in obj2) {
-      obj1[key] = obj2[key];
-    }
-  };
-  Util.getInheritableProperty = function Util_getInheritableProperty(dict, name, getArray) {
-    while (dict && !dict.has(name)) {
-      dict = dict.get('Parent');
-    }
-    if (!dict) {
-      return null;
-    }
-    return getArray ? dict.getArray(name) : dict.get(name);
-  };
-  Util.inherit = function Util_inherit(sub, base, prototype) {
-    sub.prototype = Object.create(base.prototype);
-    sub.prototype.constructor = sub;
-    for (var prop in prototype) {
-      sub.prototype[prop] = prototype[prop];
-    }
-  };
-  Util.loadScript = function Util_loadScript(src, callback) {
-    var script = document.createElement('script');
-    var loaded = false;
-    script.setAttribute('src', src);
-    if (callback) {
-      script.onload = function () {
-        if (!loaded) {
-          callback();
-        }
-        loaded = true;
-      };
-    }
-    document.getElementsByTagName('head')[0].appendChild(script);
-  };
-  return Util;
-}();
-var PageViewport = function PageViewportClosure() {
-  function PageViewport(viewBox, scale, rotation, offsetX, offsetY, dontFlip) {
-    this.viewBox = viewBox;
-    this.scale = scale;
-    this.rotation = rotation;
-    this.offsetX = offsetX;
-    this.offsetY = offsetY;
-    var centerX = (viewBox[2] + viewBox[0]) / 2;
-    var centerY = (viewBox[3] + viewBox[1]) / 2;
-    var rotateA, rotateB, rotateC, rotateD;
-    rotation = rotation % 360;
-    rotation = rotation < 0 ? rotation + 360 : rotation;
-    switch (rotation) {
-      case 180:
-        rotateA = -1;
-        rotateB = 0;
-        rotateC = 0;
-        rotateD = 1;
-        break;
-      case 90:
-        rotateA = 0;
-        rotateB = 1;
-        rotateC = 1;
-        rotateD = 0;
-        break;
-      case 270:
-        rotateA = 0;
-        rotateB = -1;
-        rotateC = -1;
-        rotateD = 0;
-        break;
-      default:
-        rotateA = 1;
-        rotateB = 0;
-        rotateC = 0;
-        rotateD = -1;
-        break;
-    }
-    if (dontFlip) {
-      rotateC = -rotateC;
-      rotateD = -rotateD;
-    }
-    var offsetCanvasX, offsetCanvasY;
-    var width, height;
-    if (rotateA === 0) {
-      offsetCanvasX = Math.abs(centerY - viewBox[1]) * scale + offsetX;
-      offsetCanvasY = Math.abs(centerX - viewBox[0]) * scale + offsetY;
-      width = Math.abs(viewBox[3] - viewBox[1]) * scale;
-      height = Math.abs(viewBox[2] - viewBox[0]) * scale;
-    } else {
-      offsetCanvasX = Math.abs(centerX - viewBox[0]) * scale + offsetX;
-      offsetCanvasY = Math.abs(centerY - viewBox[1]) * scale + offsetY;
-      width = Math.abs(viewBox[2] - viewBox[0]) * scale;
-      height = Math.abs(viewBox[3] - viewBox[1]) * scale;
-    }
-    this.transform = [rotateA * scale, rotateB * scale, rotateC * scale, rotateD * scale, offsetCanvasX - rotateA * scale * centerX - rotateC * scale * centerY, offsetCanvasY - rotateB * scale * centerX - rotateD * scale * centerY];
-    this.width = width;
-    this.height = height;
-    this.fontScale = scale;
-  }
-  PageViewport.prototype = {
-    clone: function PageViewPort_clone(args) {
-      args = args || {};
-      var scale = 'scale' in args ? args.scale : this.scale;
-      var rotation = 'rotation' in args ? args.rotation : this.rotation;
-      return new PageViewport(this.viewBox.slice(), scale, rotation, this.offsetX, this.offsetY, args.dontFlip);
-    },
-    convertToViewportPoint: function PageViewport_convertToViewportPoint(x, y) {
-      return Util.applyTransform([x, y], this.transform);
-    },
-    convertToViewportRectangle: function PageViewport_convertToViewportRectangle(rect) {
-      var tl = Util.applyTransform([rect[0], rect[1]], this.transform);
-      var br = Util.applyTransform([rect[2], rect[3]], this.transform);
-      return [tl[0], tl[1], br[0], br[1]];
-    },
-    convertToPdfPoint: function PageViewport_convertToPdfPoint(x, y) {
-      return Util.applyInverseTransform([x, y], this.transform);
-    }
-  };
-  return PageViewport;
-}();
-var PDFStringTranslateTable = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x2D8, 0x2C7, 0x2C6, 0x2D9, 0x2DD, 0x2DB, 0x2DA, 0x2DC, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x2022, 0x2020, 0x2021, 0x2026, 0x2014, 0x2013, 0x192, 0x2044, 0x2039, 0x203A, 0x2212, 0x2030, 0x201E, 0x201C, 0x201D, 0x2018, 0x2019, 0x201A, 0x2122, 0xFB01, 0xFB02, 0x141, 0x152, 0x160, 0x178, 0x17D, 0x131, 0x142, 0x153, 0x161, 0x17E, 0, 0x20AC];
-function stringToPDFString(str) {
-  var i,
-      n = str.length,
-      strBuf = [];
-  if (str[0] === '\xFE' && str[1] === '\xFF') {
-    for (i = 2; i < n; i += 2) {
-      strBuf.push(String.fromCharCode(str.charCodeAt(i) << 8 | str.charCodeAt(i + 1)));
-    }
-  } else {
-    for (i = 0; i < n; ++i) {
-      var code = PDFStringTranslateTable[str.charCodeAt(i)];
-      strBuf.push(code ? String.fromCharCode(code) : str.charAt(i));
-    }
-  }
-  return strBuf.join('');
-}
-function stringToUTF8String(str) {
-  return decodeURIComponent(escape(str));
-}
-function utf8StringToString(str) {
-  return unescape(encodeURIComponent(str));
-}
-function isEmptyObj(obj) {
-  for (var key in obj) {
-    return false;
-  }
-  return true;
-}
-function isBool(v) {
-  return typeof v === 'boolean';
-}
-function isInt(v) {
-  return typeof v === 'number' && (v | 0) === v;
-}
-function isNum(v) {
-  return typeof v === 'number';
-}
-function isString(v) {
-  return typeof v === 'string';
-}
-function isArray(v) {
-  return v instanceof Array;
-}
-function isArrayBuffer(v) {
-  return (typeof v === 'undefined' ? 'undefined' : _typeof(v)) === 'object' && v !== null && v.byteLength !== undefined;
-}
-function isSpace(ch) {
-  return ch === 0x20 || ch === 0x09 || ch === 0x0D || ch === 0x0A;
-}
-function isNodeJS() {
-  if (typeof __pdfjsdev_webpack__ === 'undefined') {
-    return (typeof process === 'undefined' ? 'undefined' : _typeof(process)) === 'object' && process + '' === '[object process]';
-  }
-  return false;
-}
-function createPromiseCapability() {
-  var capability = {};
-  capability.promise = new Promise(function (resolve, reject) {
-    capability.resolve = resolve;
-    capability.reject = reject;
-  });
-  return capability;
-}
-var StatTimer = function StatTimerClosure() {
-  function rpad(str, pad, length) {
-    while (str.length < length) {
-      str += pad;
-    }
-    return str;
-  }
-  function StatTimer() {
-    this.started = Object.create(null);
-    this.times = [];
-    this.enabled = true;
-  }
-  StatTimer.prototype = {
-    time: function StatTimer_time(name) {
-      if (!this.enabled) {
-        return;
+      if (typeof Float64Array === 'undefined') {
+        globalScope.Float64Array = Float32Array;
       }
-      if (name in this.started) {
-        warn('Timer is already running for ' + name);
-      }
-      this.started[name] = Date.now();
-    },
-    timeEnd: function StatTimer_timeEnd(name) {
-      if (!this.enabled) {
-        return;
-      }
-      if (!(name in this.started)) {
-        warn('Timer has not been started for ' + name);
-      }
-      this.times.push({
-        'name': name,
-        'start': this.started[name],
-        'end': Date.now()
-      });
-      delete this.started[name];
-    },
-    toString: function StatTimer_toString() {
-      var i, ii;
-      var times = this.times;
-      var out = '';
-      var longest = 0;
-      for (i = 0, ii = times.length; i < ii; ++i) {
-        var name = times[i]['name'];
-        if (name.length > longest) {
-          longest = name.length;
-        }
-      }
-      for (i = 0, ii = times.length; i < ii; ++i) {
-        var span = times[i];
-        var duration = span.end - span.start;
-        out += rpad(span['name'], ' ', longest) + ' ' + duration + 'ms\n';
-      }
-      return out;
-    }
-  };
-  return StatTimer;
-}();
-var createBlob = function createBlob(data, contentType) {
-  if (typeof Blob !== 'undefined') {
-    return new Blob([data], { type: contentType });
-  }
-  throw new Error('The "Blob" constructor is not supported.');
-};
-var createObjectURL = function createObjectURLClosure() {
-  var digits = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-  return function createObjectURL(data, contentType) {
-    var forceDataSchema = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-
-    if (!forceDataSchema && URL.createObjectURL) {
-      var blob = createBlob(data, contentType);
-      return URL.createObjectURL(blob);
-    }
-    var buffer = 'data:' + contentType + ';base64,';
-    for (var i = 0, ii = data.length; i < ii; i += 3) {
-      var b1 = data[i] & 0xFF;
-      var b2 = data[i + 1] & 0xFF;
-      var b3 = data[i + 2] & 0xFF;
-      var d1 = b1 >> 2,
-          d2 = (b1 & 3) << 4 | b2 >> 4;
-      var d3 = i + 1 < ii ? (b2 & 0xF) << 2 | b3 >> 6 : 64;
-      var d4 = i + 2 < ii ? b3 & 0x3F : 64;
-      buffer += digits[d1] + digits[d2] + digits[d3] + digits[d4];
-    }
-    return buffer;
-  };
-}();
-function MessageHandler(sourceName, targetName, comObj) {
-  var _this = this;
-
-  this.sourceName = sourceName;
-  this.targetName = targetName;
-  this.comObj = comObj;
-  this.callbackIndex = 1;
-  this.postMessageTransfers = true;
-  var callbacksCapabilities = this.callbacksCapabilities = Object.create(null);
-  var ah = this.actionHandler = Object.create(null);
-  this._onComObjOnMessage = function (event) {
-    var data = event.data;
-    if (data.targetName !== _this.sourceName) {
       return;
     }
-    if (data.isReply) {
-      var callbackId = data.callbackId;
-      if (data.callbackId in callbacksCapabilities) {
-        var callback = callbacksCapabilities[callbackId];
-        delete callbacksCapabilities[callbackId];
-        if ('error' in data) {
-          callback.reject(data.error);
-        } else {
-          callback.resolve(data.data);
+    function subarray(start, end) {
+      return new TypedArray(this.slice(start, end));
+    }
+    function setArrayOffset(array, offset) {
+      if (arguments.length < 2) {
+        offset = 0;
+      }
+      for (var i = 0, n = array.length; i < n; ++i, ++offset) {
+        this[offset] = array[i] & 0xFF;
+      }
+    }
+    function Uint32ArrayView(buffer, length) {
+      this.buffer = buffer;
+      this.byteLength = buffer.length;
+      this.length = length;
+      ensureUint32ArrayViewProps(this.length);
+    }
+    Uint32ArrayView.prototype = Object.create(null);
+    var uint32ArrayViewSetters = 0;
+    function createUint32ArrayProp(index) {
+      return {
+        get: function get() {
+          var buffer = this.buffer,
+              offset = index << 2;
+          return (buffer[offset] | buffer[offset + 1] << 8 | buffer[offset + 2] << 16 | buffer[offset + 3] << 24) >>> 0;
+        },
+        set: function set(value) {
+          var buffer = this.buffer,
+              offset = index << 2;
+          buffer[offset] = value & 255;
+          buffer[offset + 1] = value >> 8 & 255;
+          buffer[offset + 2] = value >> 16 & 255;
+          buffer[offset + 3] = value >>> 24 & 255;
         }
-      } else {
-        error('Cannot resolve callback ' + callbackId);
+      };
+    }
+    function ensureUint32ArrayViewProps(length) {
+      while (uint32ArrayViewSetters < length) {
+        Object.defineProperty(Uint32ArrayView.prototype, uint32ArrayViewSetters, createUint32ArrayProp(uint32ArrayViewSetters));
+        uint32ArrayViewSetters++;
       }
-    } else if (data.action in ah) {
-      var action = ah[data.action];
-      if (data.callbackId) {
-        var sourceName = _this.sourceName;
-        var targetName = data.sourceName;
-        Promise.resolve().then(function () {
-          return action[0].call(action[1], data.data);
-        }).then(function (result) {
-          comObj.postMessage({
-            sourceName: sourceName,
-            targetName: targetName,
-            isReply: true,
-            callbackId: data.callbackId,
-            data: result
-          });
-        }, function (reason) {
-          if (reason instanceof Error) {
-            reason = reason + '';
-          }
-          comObj.postMessage({
-            sourceName: sourceName,
-            targetName: targetName,
-            isReply: true,
-            callbackId: data.callbackId,
-            error: reason
-          });
+    }
+    function TypedArray(arg1) {
+      var result, i, n;
+      if (typeof arg1 === 'number') {
+        result = [];
+        for (i = 0; i < arg1; ++i) {
+          result[i] = 0;
+        }
+      } else if ('slice' in arg1) {
+        result = arg1.slice(0);
+      } else {
+        result = [];
+        for (i = 0, n = arg1.length; i < n; ++i) {
+          result[i] = arg1[i];
+        }
+      }
+      result.subarray = subarray;
+      result.buffer = result;
+      result.byteLength = result.length;
+      result.set = setArrayOffset;
+      if ((typeof arg1 === 'undefined' ? 'undefined' : _typeof(arg1)) === 'object' && arg1.buffer) {
+        result.buffer = arg1.buffer;
+      }
+      return result;
+    }
+    globalScope.Uint8Array = TypedArray;
+    globalScope.Int8Array = TypedArray;
+    globalScope.Int32Array = TypedArray;
+    globalScope.Uint16Array = TypedArray;
+    globalScope.Float32Array = TypedArray;
+    globalScope.Float64Array = TypedArray;
+    globalScope.Uint32Array = function () {
+      if (arguments.length === 3) {
+        if (arguments[1] !== 0) {
+          throw new Error('offset !== 0 is not supported');
+        }
+        return new Uint32ArrayView(arguments[0], arguments[2]);
+      }
+      return TypedArray.apply(this, arguments);
+    };
+  })();
+  (function canvasPixelArrayBuffer() {
+    if (!hasDOM || !window.CanvasPixelArray) {
+      return;
+    }
+    var cpaProto = window.CanvasPixelArray.prototype;
+    if ('buffer' in cpaProto) {
+      return;
+    }
+    Object.defineProperty(cpaProto, 'buffer', {
+      get: function get() {
+        return this;
+      },
+
+      enumerable: false,
+      configurable: true
+    });
+    Object.defineProperty(cpaProto, 'byteLength', {
+      get: function get() {
+        return this.length;
+      },
+
+      enumerable: false,
+      configurable: true
+    });
+  })();
+  (function normalizeURLObject() {
+    if (!globalScope.URL) {
+      globalScope.URL = globalScope.webkitURL;
+    }
+  })();
+  (function checkObjectDefinePropertyCompatibility() {
+    if (typeof Object.defineProperty !== 'undefined') {
+      var definePropertyPossible = true;
+      try {
+        if (hasDOM) {
+          Object.defineProperty(new Image(), 'id', { value: 'test' });
+        }
+        var Test = function Test() {};
+        Test.prototype = {
+          get id() {}
+        };
+        Object.defineProperty(new Test(), 'id', {
+          value: '',
+          configurable: true,
+          enumerable: true,
+          writable: false
         });
-      } else {
-        action[0].call(action[1], data.data);
+      } catch (e) {
+        definePropertyPossible = false;
+      }
+      if (definePropertyPossible) {
+        return;
+      }
+    }
+    Object.defineProperty = function objectDefineProperty(obj, name, def) {
+      delete obj[name];
+      if ('get' in def) {
+        obj.__defineGetter__(name, def['get']);
+      }
+      if ('set' in def) {
+        obj.__defineSetter__(name, def['set']);
+      }
+      if ('value' in def) {
+        obj.__defineSetter__(name, function objectDefinePropertySetter(value) {
+          this.__defineGetter__(name, function objectDefinePropertyGetter() {
+            return value;
+          });
+          return value;
+        });
+        obj[name] = def.value;
+      }
+    };
+  })();
+  (function checkXMLHttpRequestResponseCompatibility() {
+    if (typeof XMLHttpRequest === 'undefined') {
+      return;
+    }
+    var xhrPrototype = XMLHttpRequest.prototype;
+    var xhr = new XMLHttpRequest();
+    if (!('overrideMimeType' in xhr)) {
+      Object.defineProperty(xhrPrototype, 'overrideMimeType', {
+        value: function xmlHttpRequestOverrideMimeType(mimeType) {}
+      });
+    }
+    if ('responseType' in xhr) {
+      return;
+    }
+    Object.defineProperty(xhrPrototype, 'responseType', {
+      get: function xmlHttpRequestGetResponseType() {
+        return this._responseType || 'text';
+      },
+      set: function xmlHttpRequestSetResponseType(value) {
+        if (value === 'text' || value === 'arraybuffer') {
+          this._responseType = value;
+          if (value === 'arraybuffer' && typeof this.overrideMimeType === 'function') {
+            this.overrideMimeType('text/plain; charset=x-user-defined');
+          }
+        }
+      }
+    });
+    if (typeof VBArray !== 'undefined') {
+      Object.defineProperty(xhrPrototype, 'response', {
+        get: function xmlHttpRequestResponseGet() {
+          if (this.responseType === 'arraybuffer') {
+            return new Uint8Array(new VBArray(this.responseBody).toArray());
+          }
+          return this.responseText;
+        }
+      });
+      return;
+    }
+    Object.defineProperty(xhrPrototype, 'response', {
+      get: function xmlHttpRequestResponseGet() {
+        if (this.responseType !== 'arraybuffer') {
+          return this.responseText;
+        }
+        var text = this.responseText;
+        var i,
+            n = text.length;
+        var result = new Uint8Array(n);
+        for (i = 0; i < n; ++i) {
+          result[i] = text.charCodeAt(i) & 0xFF;
+        }
+        return result.buffer;
+      }
+    });
+  })();
+  (function checkWindowBtoaCompatibility() {
+    if ('btoa' in globalScope) {
+      return;
+    }
+    var digits = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+    globalScope.btoa = function (chars) {
+      var buffer = '';
+      var i, n;
+      for (i = 0, n = chars.length; i < n; i += 3) {
+        var b1 = chars.charCodeAt(i) & 0xFF;
+        var b2 = chars.charCodeAt(i + 1) & 0xFF;
+        var b3 = chars.charCodeAt(i + 2) & 0xFF;
+        var d1 = b1 >> 2,
+            d2 = (b1 & 3) << 4 | b2 >> 4;
+        var d3 = i + 1 < n ? (b2 & 0xF) << 2 | b3 >> 6 : 64;
+        var d4 = i + 2 < n ? b3 & 0x3F : 64;
+        buffer += digits.charAt(d1) + digits.charAt(d2) + digits.charAt(d3) + digits.charAt(d4);
+      }
+      return buffer;
+    };
+  })();
+  (function checkWindowAtobCompatibility() {
+    if ('atob' in globalScope) {
+      return;
+    }
+    var digits = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+    globalScope.atob = function (input) {
+      input = input.replace(/=+$/, '');
+      if (input.length % 4 === 1) {
+        throw new Error('bad atob input');
+      }
+      for (var bc = 0, bs, buffer, idx = 0, output = ''; buffer = input.charAt(idx++); ~buffer && (bs = bc % 4 ? bs * 64 + buffer : buffer, bc++ % 4) ? output += String.fromCharCode(255 & bs >> (-2 * bc & 6)) : 0) {
+        buffer = digits.indexOf(buffer);
+      }
+      return output;
+    };
+  })();
+  (function checkFunctionPrototypeBindCompatibility() {
+    if (typeof Function.prototype.bind !== 'undefined') {
+      return;
+    }
+    Function.prototype.bind = function functionPrototypeBind(obj) {
+      var fn = this,
+          headArgs = Array.prototype.slice.call(arguments, 1);
+      var bound = function functionPrototypeBindBound() {
+        var args = headArgs.concat(Array.prototype.slice.call(arguments));
+        return fn.apply(obj, args);
+      };
+      return bound;
+    };
+  })();
+  (function checkDatasetProperty() {
+    if (!hasDOM) {
+      return;
+    }
+    var div = document.createElement('div');
+    if ('dataset' in div) {
+      return;
+    }
+    Object.defineProperty(HTMLElement.prototype, 'dataset', {
+      get: function get() {
+        if (this._dataset) {
+          return this._dataset;
+        }
+        var dataset = {};
+        for (var j = 0, jj = this.attributes.length; j < jj; j++) {
+          var attribute = this.attributes[j];
+          if (attribute.name.substring(0, 5) !== 'data-') {
+            continue;
+          }
+          var key = attribute.name.substring(5).replace(/\-([a-z])/g, function (all, ch) {
+            return ch.toUpperCase();
+          });
+          dataset[key] = attribute.value;
+        }
+        Object.defineProperty(this, '_dataset', {
+          value: dataset,
+          writable: false,
+          enumerable: false
+        });
+        return dataset;
+      },
+
+      enumerable: true
+    });
+  })();
+  (function checkClassListProperty() {
+    function changeList(element, itemName, add, remove) {
+      var s = element.className || '';
+      var list = s.split(/\s+/g);
+      if (list[0] === '') {
+        list.shift();
+      }
+      var index = list.indexOf(itemName);
+      if (index < 0 && add) {
+        list.push(itemName);
+      }
+      if (index >= 0 && remove) {
+        list.splice(index, 1);
+      }
+      element.className = list.join(' ');
+      return index >= 0;
+    }
+    if (!hasDOM) {
+      return;
+    }
+    var div = document.createElement('div');
+    if ('classList' in div) {
+      return;
+    }
+    var classListPrototype = {
+      add: function add(name) {
+        changeList(this.element, name, true, false);
+      },
+      contains: function contains(name) {
+        return changeList(this.element, name, false, false);
+      },
+      remove: function remove(name) {
+        changeList(this.element, name, false, true);
+      },
+      toggle: function toggle(name) {
+        changeList(this.element, name, true, true);
+      }
+    };
+    Object.defineProperty(HTMLElement.prototype, 'classList', {
+      get: function get() {
+        if (this._classList) {
+          return this._classList;
+        }
+        var classList = Object.create(classListPrototype, {
+          element: {
+            value: this,
+            writable: false,
+            enumerable: true
+          }
+        });
+        Object.defineProperty(this, '_classList', {
+          value: classList,
+          writable: false,
+          enumerable: false
+        });
+        return classList;
+      },
+
+      enumerable: true
+    });
+  })();
+  (function checkWorkerConsoleCompatibility() {
+    if (typeof importScripts === 'undefined' || 'console' in globalScope) {
+      return;
+    }
+    var consoleTimer = {};
+    var workerConsole = {
+      log: function log() {
+        var args = Array.prototype.slice.call(arguments);
+        globalScope.postMessage({
+          targetName: 'main',
+          action: 'console_log',
+          data: args
+        });
+      },
+      error: function error() {
+        var args = Array.prototype.slice.call(arguments);
+        globalScope.postMessage({
+          targetName: 'main',
+          action: 'console_error',
+          data: args
+        });
+      },
+      time: function time(name) {
+        consoleTimer[name] = Date.now();
+      },
+      timeEnd: function timeEnd(name) {
+        var time = consoleTimer[name];
+        if (!time) {
+          throw new Error('Unknown timer name ' + name);
+        }
+        this.log('Timer:', name, Date.now() - time);
+      }
+    };
+    globalScope.console = workerConsole;
+  })();
+  (function checkConsoleCompatibility() {
+    if (!hasDOM) {
+      return;
+    }
+    if (!('console' in window)) {
+      window.console = {
+        log: function log() {},
+        error: function error() {},
+        warn: function warn() {}
+      };
+      return;
+    }
+    if (!('bind' in console.log)) {
+      console.log = function (fn) {
+        return function (msg) {
+          return fn(msg);
+        };
+      }(console.log);
+      console.error = function (fn) {
+        return function (msg) {
+          return fn(msg);
+        };
+      }(console.error);
+      console.warn = function (fn) {
+        return function (msg) {
+          return fn(msg);
+        };
+      }(console.warn);
+      return;
+    }
+  })();
+  (function checkOnClickCompatibility() {
+    function ignoreIfTargetDisabled(event) {
+      if (isDisabled(event.target)) {
+        event.stopPropagation();
+      }
+    }
+    function isDisabled(node) {
+      return node.disabled || node.parentNode && isDisabled(node.parentNode);
+    }
+    if (isOpera) {
+      document.addEventListener('click', ignoreIfTargetDisabled, true);
+    }
+  })();
+  (function checkOnBlobSupport() {
+    if (isIE || isIOSChrome) {
+      PDFJS.disableCreateObjectURL = true;
+    }
+  })();
+  (function checkNavigatorLanguage() {
+    if (typeof navigator === 'undefined') {
+      return;
+    }
+    if ('language' in navigator) {
+      return;
+    }
+    PDFJS.locale = navigator.userLanguage || 'en-US';
+  })();
+  (function checkRangeRequests() {
+    if (isSafari || isAndroidPre3 || isChromeWithRangeBug || isIOS) {
+      PDFJS.disableRange = true;
+      PDFJS.disableStream = true;
+    }
+  })();
+  (function checkHistoryManipulation() {
+    if (!hasDOM) {
+      return;
+    }
+    if (!history.pushState || isAndroidPre3) {
+      PDFJS.disableHistory = true;
+    }
+  })();
+  (function checkSetPresenceInImageData() {
+    if (!hasDOM) {
+      return;
+    }
+    if (window.CanvasPixelArray) {
+      if (typeof window.CanvasPixelArray.prototype.set !== 'function') {
+        window.CanvasPixelArray.prototype.set = function (arr) {
+          for (var i = 0, ii = this.length; i < ii; i++) {
+            this[i] = arr[i];
+          }
+        };
       }
     } else {
-      error('Unknown action from worker: ' + data.action);
+      var polyfill = false,
+          versionMatch;
+      if (isChrome) {
+        versionMatch = userAgent.match(/Chrom(e|ium)\/([0-9]+)\./);
+        polyfill = versionMatch && parseInt(versionMatch[2]) < 21;
+      } else if (isAndroid) {
+        polyfill = isAndroidPre5;
+      } else if (isSafari) {
+        versionMatch = userAgent.match(/Version\/([0-9]+)\.([0-9]+)\.([0-9]+) Safari\//);
+        polyfill = versionMatch && parseInt(versionMatch[1]) < 6;
+      }
+      if (polyfill) {
+        var contextPrototype = window.CanvasRenderingContext2D.prototype;
+        var createImageData = contextPrototype.createImageData;
+        contextPrototype.createImageData = function (w, h) {
+          var imageData = createImageData.call(this, w, h);
+          imageData.data.set = function (arr) {
+            for (var i = 0, ii = this.length; i < ii; i++) {
+              this[i] = arr[i];
+            }
+          };
+          return imageData;
+        };
+        contextPrototype = null;
+      }
     }
-  };
-  comObj.addEventListener('message', this._onComObjOnMessage);
-}
-MessageHandler.prototype = {
-  on: function on(actionName, handler, scope) {
-    var ah = this.actionHandler;
-    if (ah[actionName]) {
-      error('There is already an actionName called "' + actionName + '"');
+  })();
+  (function checkRequestAnimationFrame() {
+    function installFakeAnimationFrameFunctions() {
+      window.requestAnimationFrame = function (callback) {
+        return window.setTimeout(callback, 20);
+      };
+      window.cancelAnimationFrame = function (timeoutID) {
+        window.clearTimeout(timeoutID);
+      };
     }
-    ah[actionName] = [handler, scope];
-  },
-  send: function send(actionName, data, transfers) {
-    var message = {
-      sourceName: this.sourceName,
-      targetName: this.targetName,
-      action: actionName,
-      data: data
-    };
-    this.postMessage(message, transfers);
-  },
-  sendWithPromise: function sendWithPromise(actionName, data, transfers) {
-    var callbackId = this.callbackIndex++;
-    var message = {
-      sourceName: this.sourceName,
-      targetName: this.targetName,
-      action: actionName,
-      data: data,
-      callbackId: callbackId
-    };
-    var capability = createPromiseCapability();
-    this.callbacksCapabilities[callbackId] = capability;
+    if (!hasDOM) {
+      return;
+    }
+    if (isIOS) {
+      installFakeAnimationFrameFunctions();
+      return;
+    }
+    if ('requestAnimationFrame' in window) {
+      return;
+    }
+    window.requestAnimationFrame = window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+    if (window.requestAnimationFrame) {
+      return;
+    }
+    installFakeAnimationFrameFunctions();
+  })();
+  (function checkCanvasSizeLimitation() {
+    if (isIOS || isAndroid) {
+      PDFJS.maxCanvasPixels = 5242880;
+    }
+  })();
+  (function checkFullscreenSupport() {
+    if (!hasDOM) {
+      return;
+    }
+    if (isIE && window.parent !== window) {
+      PDFJS.disableFullscreen = true;
+    }
+  })();
+  (function checkCurrentScript() {
+    if (!hasDOM) {
+      return;
+    }
+    if ('currentScript' in document) {
+      return;
+    }
+    Object.defineProperty(document, 'currentScript', {
+      get: function get() {
+        var scripts = document.getElementsByTagName('script');
+        return scripts[scripts.length - 1];
+      },
+
+      enumerable: true,
+      configurable: true
+    });
+  })();
+  (function checkInputTypeNumberAssign() {
+    if (!hasDOM) {
+      return;
+    }
+    var el = document.createElement('input');
     try {
-      this.postMessage(message, transfers);
-    } catch (e) {
-      capability.reject(e);
+      el.type = 'number';
+    } catch (ex) {
+      var inputProto = el.constructor.prototype;
+      var typeProperty = Object.getOwnPropertyDescriptor(inputProto, 'type');
+      Object.defineProperty(inputProto, 'type', {
+        get: function get() {
+          return typeProperty.get.call(this);
+        },
+        set: function set(value) {
+          typeProperty.set.call(this, value === 'number' ? 'text' : value);
+        },
+
+        enumerable: true,
+        configurable: true
+      });
     }
-    return capability.promise;
-  },
-  postMessage: function postMessage(message, transfers) {
-    if (transfers && this.postMessageTransfers) {
-      this.comObj.postMessage(message, transfers);
-    } else {
-      this.comObj.postMessage(message);
+  })();
+  (function checkDocumentReadyState() {
+    if (!hasDOM) {
+      return;
     }
+    if (!document.attachEvent) {
+      return;
+    }
+    var documentProto = document.constructor.prototype;
+    var readyStateProto = Object.getOwnPropertyDescriptor(documentProto, 'readyState');
+    Object.defineProperty(documentProto, 'readyState', {
+      get: function get() {
+        var value = readyStateProto.get.call(this);
+        return value === 'interactive' ? 'loading' : value;
+      },
+      set: function set(value) {
+        readyStateProto.set.call(this, value);
+      },
+
+      enumerable: true,
+      configurable: true
+    });
+  })();
+  (function checkChildNodeRemove() {
+    if (!hasDOM) {
+      return;
+    }
+    if (typeof Element.prototype.remove !== 'undefined') {
+      return;
+    }
+    Element.prototype.remove = function () {
+      if (this.parentNode) {
+        this.parentNode.removeChild(this);
+      }
+    };
+  })();
+  (function checkPromise() {
+    if (globalScope.Promise) {
+      if (typeof globalScope.Promise.all !== 'function') {
+        globalScope.Promise.all = function (iterable) {
+          var count = 0,
+              results = [],
+              resolve,
+              reject;
+          var promise = new globalScope.Promise(function (resolve_, reject_) {
+            resolve = resolve_;
+            reject = reject_;
+          });
+          iterable.forEach(function (p, i) {
+            count++;
+            p.then(function (result) {
+              results[i] = result;
+              count--;
+              if (count === 0) {
+                resolve(results);
+              }
+            }, reject);
+          });
+          if (count === 0) {
+            resolve(results);
+          }
+          return promise;
+        };
+      }
+      if (typeof globalScope.Promise.resolve !== 'function') {
+        globalScope.Promise.resolve = function (value) {
+          return new globalScope.Promise(function (resolve) {
+            resolve(value);
+          });
+        };
+      }
+      if (typeof globalScope.Promise.reject !== 'function') {
+        globalScope.Promise.reject = function (reason) {
+          return new globalScope.Promise(function (resolve, reject) {
+            reject(reason);
+          });
+        };
+      }
+      if (typeof globalScope.Promise.prototype.catch !== 'function') {
+        globalScope.Promise.prototype.catch = function (onReject) {
+          return globalScope.Promise.prototype.then(undefined, onReject);
+        };
+      }
+      return;
+    }
+    var STATUS_PENDING = 0;
+    var STATUS_RESOLVED = 1;
+    var STATUS_REJECTED = 2;
+    var REJECTION_TIMEOUT = 500;
+    var HandlerManager = {
+      handlers: [],
+      running: false,
+      unhandledRejections: [],
+      pendingRejectionCheck: false,
+      scheduleHandlers: function scheduleHandlers(promise) {
+        if (promise._status === STATUS_PENDING) {
+          return;
+        }
+        this.handlers = this.handlers.concat(promise._handlers);
+        promise._handlers = [];
+        if (this.running) {
+          return;
+        }
+        this.running = true;
+        setTimeout(this.runHandlers.bind(this), 0);
+      },
+      runHandlers: function runHandlers() {
+        var RUN_TIMEOUT = 1;
+        var timeoutAt = Date.now() + RUN_TIMEOUT;
+        while (this.handlers.length > 0) {
+          var handler = this.handlers.shift();
+          var nextStatus = handler.thisPromise._status;
+          var nextValue = handler.thisPromise._value;
+          try {
+            if (nextStatus === STATUS_RESOLVED) {
+              if (typeof handler.onResolve === 'function') {
+                nextValue = handler.onResolve(nextValue);
+              }
+            } else if (typeof handler.onReject === 'function') {
+              nextValue = handler.onReject(nextValue);
+              nextStatus = STATUS_RESOLVED;
+              if (handler.thisPromise._unhandledRejection) {
+                this.removeUnhandeledRejection(handler.thisPromise);
+              }
+            }
+          } catch (ex) {
+            nextStatus = STATUS_REJECTED;
+            nextValue = ex;
+          }
+          handler.nextPromise._updateStatus(nextStatus, nextValue);
+          if (Date.now() >= timeoutAt) {
+            break;
+          }
+        }
+        if (this.handlers.length > 0) {
+          setTimeout(this.runHandlers.bind(this), 0);
+          return;
+        }
+        this.running = false;
+      },
+      addUnhandledRejection: function addUnhandledRejection(promise) {
+        this.unhandledRejections.push({
+          promise: promise,
+          time: Date.now()
+        });
+        this.scheduleRejectionCheck();
+      },
+      removeUnhandeledRejection: function removeUnhandeledRejection(promise) {
+        promise._unhandledRejection = false;
+        for (var i = 0; i < this.unhandledRejections.length; i++) {
+          if (this.unhandledRejections[i].promise === promise) {
+            this.unhandledRejections.splice(i);
+            i--;
+          }
+        }
+      },
+      scheduleRejectionCheck: function scheduleRejectionCheck() {
+        var _this = this;
+
+        if (this.pendingRejectionCheck) {
+          return;
+        }
+        this.pendingRejectionCheck = true;
+        setTimeout(function () {
+          _this.pendingRejectionCheck = false;
+          var now = Date.now();
+          for (var i = 0; i < _this.unhandledRejections.length; i++) {
+            if (now - _this.unhandledRejections[i].time > REJECTION_TIMEOUT) {
+              var unhandled = _this.unhandledRejections[i].promise._value;
+              var msg = 'Unhandled rejection: ' + unhandled;
+              if (unhandled.stack) {
+                msg += '\n' + unhandled.stack;
+              }
+              try {
+                throw new Error(msg);
+              } catch (_) {
+                console.warn(msg);
+              }
+              _this.unhandledRejections.splice(i);
+              i--;
+            }
+          }
+          if (_this.unhandledRejections.length) {
+            _this.scheduleRejectionCheck();
+          }
+        }, REJECTION_TIMEOUT);
+      }
+    };
+    var Promise = function Promise(resolver) {
+      this._status = STATUS_PENDING;
+      this._handlers = [];
+      try {
+        resolver.call(this, this._resolve.bind(this), this._reject.bind(this));
+      } catch (e) {
+        this._reject(e);
+      }
+    };
+    Promise.all = function Promise_all(promises) {
+      var resolveAll, rejectAll;
+      var deferred = new Promise(function (resolve, reject) {
+        resolveAll = resolve;
+        rejectAll = reject;
+      });
+      var unresolved = promises.length;
+      var results = [];
+      if (unresolved === 0) {
+        resolveAll(results);
+        return deferred;
+      }
+      function reject(reason) {
+        if (deferred._status === STATUS_REJECTED) {
+          return;
+        }
+        results = [];
+        rejectAll(reason);
+      }
+      for (var i = 0, ii = promises.length; i < ii; ++i) {
+        var promise = promises[i];
+        var resolve = function (i) {
+          return function (value) {
+            if (deferred._status === STATUS_REJECTED) {
+              return;
+            }
+            results[i] = value;
+            unresolved--;
+            if (unresolved === 0) {
+              resolveAll(results);
+            }
+          };
+        }(i);
+        if (Promise.isPromise(promise)) {
+          promise.then(resolve, reject);
+        } else {
+          resolve(promise);
+        }
+      }
+      return deferred;
+    };
+    Promise.isPromise = function Promise_isPromise(value) {
+      return value && typeof value.then === 'function';
+    };
+    Promise.resolve = function Promise_resolve(value) {
+      return new Promise(function (resolve) {
+        resolve(value);
+      });
+    };
+    Promise.reject = function Promise_reject(reason) {
+      return new Promise(function (resolve, reject) {
+        reject(reason);
+      });
+    };
+    Promise.prototype = {
+      _status: null,
+      _value: null,
+      _handlers: null,
+      _unhandledRejection: null,
+      _updateStatus: function Promise__updateStatus(status, value) {
+        if (this._status === STATUS_RESOLVED || this._status === STATUS_REJECTED) {
+          return;
+        }
+        if (status === STATUS_RESOLVED && Promise.isPromise(value)) {
+          value.then(this._updateStatus.bind(this, STATUS_RESOLVED), this._updateStatus.bind(this, STATUS_REJECTED));
+          return;
+        }
+        this._status = status;
+        this._value = value;
+        if (status === STATUS_REJECTED && this._handlers.length === 0) {
+          this._unhandledRejection = true;
+          HandlerManager.addUnhandledRejection(this);
+        }
+        HandlerManager.scheduleHandlers(this);
+      },
+      _resolve: function Promise_resolve(value) {
+        this._updateStatus(STATUS_RESOLVED, value);
+      },
+      _reject: function Promise_reject(reason) {
+        this._updateStatus(STATUS_REJECTED, reason);
+      },
+      then: function Promise_then(onResolve, onReject) {
+        var nextPromise = new Promise(function (resolve, reject) {
+          this.resolve = resolve;
+          this.reject = reject;
+        });
+        this._handlers.push({
+          thisPromise: this,
+          onResolve: onResolve,
+          onReject: onReject,
+          nextPromise: nextPromise
+        });
+        HandlerManager.scheduleHandlers(this);
+        return nextPromise;
+      },
+      catch: function Promise_catch(onReject) {
+        return this.then(undefined, onReject);
+      }
+    };
+    globalScope.Promise = Promise;
+  })();
+  (function checkWeakMap() {
+    if (globalScope.WeakMap) {
+      return;
+    }
+    var id = 0;
+    function WeakMap() {
+      this.id = '$weakmap' + id++;
+    }
+    WeakMap.prototype = {
+      has: function has(obj) {
+        return !!Object.getOwnPropertyDescriptor(obj, this.id);
+      },
+      get: function get(obj, defaultValue) {
+        return this.has(obj) ? obj[this.id] : defaultValue;
+      },
+      set: function set(obj, value) {
+        Object.defineProperty(obj, this.id, {
+          value: value,
+          enumerable: false,
+          configurable: true
+        });
+      },
+      delete: function _delete(obj) {
+        delete obj[this.id];
+      }
+    };
+    globalScope.WeakMap = WeakMap;
+  })();
+  (function checkURLConstructor() {
+    var hasWorkingUrl = false;
+    try {
+      if (typeof URL === 'function' && _typeof(URL.prototype) === 'object' && 'origin' in URL.prototype) {
+        var u = new URL('b', 'http://a');
+        u.pathname = 'c%20d';
+        hasWorkingUrl = u.href === 'http://a/c%20d';
+      }
+    } catch (e) {}
+    if (hasWorkingUrl) {
+      return;
+    }
+    var relative = Object.create(null);
+    relative['ftp'] = 21;
+    relative['file'] = 0;
+    relative['gopher'] = 70;
+    relative['http'] = 80;
+    relative['https'] = 443;
+    relative['ws'] = 80;
+    relative['wss'] = 443;
+    var relativePathDotMapping = Object.create(null);
+    relativePathDotMapping['%2e'] = '.';
+    relativePathDotMapping['.%2e'] = '..';
+    relativePathDotMapping['%2e.'] = '..';
+    relativePathDotMapping['%2e%2e'] = '..';
+    function isRelativeScheme(scheme) {
+      return relative[scheme] !== undefined;
+    }
+    function invalid() {
+      clear.call(this);
+      this._isInvalid = true;
+    }
+    function IDNAToASCII(h) {
+      if (h === '') {
+        invalid.call(this);
+      }
+      return h.toLowerCase();
+    }
+    function percentEscape(c) {
+      var unicode = c.charCodeAt(0);
+      if (unicode > 0x20 && unicode < 0x7F && [0x22, 0x23, 0x3C, 0x3E, 0x3F, 0x60].indexOf(unicode) === -1) {
+        return c;
+      }
+      return encodeURIComponent(c);
+    }
+    function percentEscapeQuery(c) {
+      var unicode = c.charCodeAt(0);
+      if (unicode > 0x20 && unicode < 0x7F && [0x22, 0x23, 0x3C, 0x3E, 0x60].indexOf(unicode) === -1) {
+        return c;
+      }
+      return encodeURIComponent(c);
+    }
+    var EOF,
+        ALPHA = /[a-zA-Z]/,
+        ALPHANUMERIC = /[a-zA-Z0-9\+\-\.]/;
+    function parse(input, stateOverride, base) {
+      function err(message) {
+        errors.push(message);
+      }
+      var state = stateOverride || 'scheme start',
+          cursor = 0,
+          buffer = '',
+          seenAt = false,
+          seenBracket = false,
+          errors = [];
+      loop: while ((input[cursor - 1] !== EOF || cursor === 0) && !this._isInvalid) {
+        var c = input[cursor];
+        switch (state) {
+          case 'scheme start':
+            if (c && ALPHA.test(c)) {
+              buffer += c.toLowerCase();
+              state = 'scheme';
+            } else if (!stateOverride) {
+              buffer = '';
+              state = 'no scheme';
+              continue;
+            } else {
+              err('Invalid scheme.');
+              break loop;
+            }
+            break;
+          case 'scheme':
+            if (c && ALPHANUMERIC.test(c)) {
+              buffer += c.toLowerCase();
+            } else if (c === ':') {
+              this._scheme = buffer;
+              buffer = '';
+              if (stateOverride) {
+                break loop;
+              }
+              if (isRelativeScheme(this._scheme)) {
+                this._isRelative = true;
+              }
+              if (this._scheme === 'file') {
+                state = 'relative';
+              } else if (this._isRelative && base && base._scheme === this._scheme) {
+                state = 'relative or authority';
+              } else if (this._isRelative) {
+                state = 'authority first slash';
+              } else {
+                state = 'scheme data';
+              }
+            } else if (!stateOverride) {
+              buffer = '';
+              cursor = 0;
+              state = 'no scheme';
+              continue;
+            } else if (c === EOF) {
+              break loop;
+            } else {
+              err('Code point not allowed in scheme: ' + c);
+              break loop;
+            }
+            break;
+          case 'scheme data':
+            if (c === '?') {
+              this._query = '?';
+              state = 'query';
+            } else if (c === '#') {
+              this._fragment = '#';
+              state = 'fragment';
+            } else {
+              if (c !== EOF && c !== '\t' && c !== '\n' && c !== '\r') {
+                this._schemeData += percentEscape(c);
+              }
+            }
+            break;
+          case 'no scheme':
+            if (!base || !isRelativeScheme(base._scheme)) {
+              err('Missing scheme.');
+              invalid.call(this);
+            } else {
+              state = 'relative';
+              continue;
+            }
+            break;
+          case 'relative or authority':
+            if (c === '/' && input[cursor + 1] === '/') {
+              state = 'authority ignore slashes';
+            } else {
+              err('Expected /, got: ' + c);
+              state = 'relative';
+              continue;
+            }
+            break;
+          case 'relative':
+            this._isRelative = true;
+            if (this._scheme !== 'file') {
+              this._scheme = base._scheme;
+            }
+            if (c === EOF) {
+              this._host = base._host;
+              this._port = base._port;
+              this._path = base._path.slice();
+              this._query = base._query;
+              this._username = base._username;
+              this._password = base._password;
+              break loop;
+            } else if (c === '/' || c === '\\') {
+              if (c === '\\') {
+                err('\\ is an invalid code point.');
+              }
+              state = 'relative slash';
+            } else if (c === '?') {
+              this._host = base._host;
+              this._port = base._port;
+              this._path = base._path.slice();
+              this._query = '?';
+              this._username = base._username;
+              this._password = base._password;
+              state = 'query';
+            } else if (c === '#') {
+              this._host = base._host;
+              this._port = base._port;
+              this._path = base._path.slice();
+              this._query = base._query;
+              this._fragment = '#';
+              this._username = base._username;
+              this._password = base._password;
+              state = 'fragment';
+            } else {
+              var nextC = input[cursor + 1];
+              var nextNextC = input[cursor + 2];
+              if (this._scheme !== 'file' || !ALPHA.test(c) || nextC !== ':' && nextC !== '|' || nextNextC !== EOF && nextNextC !== '/' && nextNextC !== '\\' && nextNextC !== '?' && nextNextC !== '#') {
+                this._host = base._host;
+                this._port = base._port;
+                this._username = base._username;
+                this._password = base._password;
+                this._path = base._path.slice();
+                this._path.pop();
+              }
+              state = 'relative path';
+              continue;
+            }
+            break;
+          case 'relative slash':
+            if (c === '/' || c === '\\') {
+              if (c === '\\') {
+                err('\\ is an invalid code point.');
+              }
+              if (this._scheme === 'file') {
+                state = 'file host';
+              } else {
+                state = 'authority ignore slashes';
+              }
+            } else {
+              if (this._scheme !== 'file') {
+                this._host = base._host;
+                this._port = base._port;
+                this._username = base._username;
+                this._password = base._password;
+              }
+              state = 'relative path';
+              continue;
+            }
+            break;
+          case 'authority first slash':
+            if (c === '/') {
+              state = 'authority second slash';
+            } else {
+              err('Expected \'/\', got: ' + c);
+              state = 'authority ignore slashes';
+              continue;
+            }
+            break;
+          case 'authority second slash':
+            state = 'authority ignore slashes';
+            if (c !== '/') {
+              err('Expected \'/\', got: ' + c);
+              continue;
+            }
+            break;
+          case 'authority ignore slashes':
+            if (c !== '/' && c !== '\\') {
+              state = 'authority';
+              continue;
+            } else {
+              err('Expected authority, got: ' + c);
+            }
+            break;
+          case 'authority':
+            if (c === '@') {
+              if (seenAt) {
+                err('@ already seen.');
+                buffer += '%40';
+              }
+              seenAt = true;
+              for (var i = 0; i < buffer.length; i++) {
+                var cp = buffer[i];
+                if (cp === '\t' || cp === '\n' || cp === '\r') {
+                  err('Invalid whitespace in authority.');
+                  continue;
+                }
+                if (cp === ':' && this._password === null) {
+                  this._password = '';
+                  continue;
+                }
+                var tempC = percentEscape(cp);
+                if (this._password !== null) {
+                  this._password += tempC;
+                } else {
+                  this._username += tempC;
+                }
+              }
+              buffer = '';
+            } else if (c === EOF || c === '/' || c === '\\' || c === '?' || c === '#') {
+              cursor -= buffer.length;
+              buffer = '';
+              state = 'host';
+              continue;
+            } else {
+              buffer += c;
+            }
+            break;
+          case 'file host':
+            if (c === EOF || c === '/' || c === '\\' || c === '?' || c === '#') {
+              if (buffer.length === 2 && ALPHA.test(buffer[0]) && (buffer[1] === ':' || buffer[1] === '|')) {
+                state = 'relative path';
+              } else if (buffer.length === 0) {
+                state = 'relative path start';
+              } else {
+                this._host = IDNAToASCII.call(this, buffer);
+                buffer = '';
+                state = 'relative path start';
+              }
+              continue;
+            } else if (c === '\t' || c === '\n' || c === '\r') {
+              err('Invalid whitespace in file host.');
+            } else {
+              buffer += c;
+            }
+            break;
+          case 'host':
+          case 'hostname':
+            if (c === ':' && !seenBracket) {
+              this._host = IDNAToASCII.call(this, buffer);
+              buffer = '';
+              state = 'port';
+              if (stateOverride === 'hostname') {
+                break loop;
+              }
+            } else if (c === EOF || c === '/' || c === '\\' || c === '?' || c === '#') {
+              this._host = IDNAToASCII.call(this, buffer);
+              buffer = '';
+              state = 'relative path start';
+              if (stateOverride) {
+                break loop;
+              }
+              continue;
+            } else if (c !== '\t' && c !== '\n' && c !== '\r') {
+              if (c === '[') {
+                seenBracket = true;
+              } else if (c === ']') {
+                seenBracket = false;
+              }
+              buffer += c;
+            } else {
+              err('Invalid code point in host/hostname: ' + c);
+            }
+            break;
+          case 'port':
+            if (/[0-9]/.test(c)) {
+              buffer += c;
+            } else if (c === EOF || c === '/' || c === '\\' || c === '?' || c === '#' || stateOverride) {
+              if (buffer !== '') {
+                var temp = parseInt(buffer, 10);
+                if (temp !== relative[this._scheme]) {
+                  this._port = temp + '';
+                }
+                buffer = '';
+              }
+              if (stateOverride) {
+                break loop;
+              }
+              state = 'relative path start';
+              continue;
+            } else if (c === '\t' || c === '\n' || c === '\r') {
+              err('Invalid code point in port: ' + c);
+            } else {
+              invalid.call(this);
+            }
+            break;
+          case 'relative path start':
+            if (c === '\\') {
+              err('\'\\\' not allowed in path.');
+            }
+            state = 'relative path';
+            if (c !== '/' && c !== '\\') {
+              continue;
+            }
+            break;
+          case 'relative path':
+            if (c === EOF || c === '/' || c === '\\' || !stateOverride && (c === '?' || c === '#')) {
+              if (c === '\\') {
+                err('\\ not allowed in relative path.');
+              }
+              var tmp;
+              if (tmp = relativePathDotMapping[buffer.toLowerCase()]) {
+                buffer = tmp;
+              }
+              if (buffer === '..') {
+                this._path.pop();
+                if (c !== '/' && c !== '\\') {
+                  this._path.push('');
+                }
+              } else if (buffer === '.' && c !== '/' && c !== '\\') {
+                this._path.push('');
+              } else if (buffer !== '.') {
+                if (this._scheme === 'file' && this._path.length === 0 && buffer.length === 2 && ALPHA.test(buffer[0]) && buffer[1] === '|') {
+                  buffer = buffer[0] + ':';
+                }
+                this._path.push(buffer);
+              }
+              buffer = '';
+              if (c === '?') {
+                this._query = '?';
+                state = 'query';
+              } else if (c === '#') {
+                this._fragment = '#';
+                state = 'fragment';
+              }
+            } else if (c !== '\t' && c !== '\n' && c !== '\r') {
+              buffer += percentEscape(c);
+            }
+            break;
+          case 'query':
+            if (!stateOverride && c === '#') {
+              this._fragment = '#';
+              state = 'fragment';
+            } else if (c !== EOF && c !== '\t' && c !== '\n' && c !== '\r') {
+              this._query += percentEscapeQuery(c);
+            }
+            break;
+          case 'fragment':
+            if (c !== EOF && c !== '\t' && c !== '\n' && c !== '\r') {
+              this._fragment += c;
+            }
+            break;
+        }
+        cursor++;
+      }
+    }
+    function clear() {
+      this._scheme = '';
+      this._schemeData = '';
+      this._username = '';
+      this._password = null;
+      this._host = '';
+      this._port = '';
+      this._path = [];
+      this._query = '';
+      this._fragment = '';
+      this._isInvalid = false;
+      this._isRelative = false;
+    }
+    function JURL(url, base) {
+      if (base !== undefined && !(base instanceof JURL)) {
+        base = new JURL(String(base));
+      }
+      this._url = url;
+      clear.call(this);
+      var input = url.replace(/^[ \t\r\n\f]+|[ \t\r\n\f]+$/g, '');
+      parse.call(this, input, null, base);
+    }
+    JURL.prototype = {
+      toString: function toString() {
+        return this.href;
+      },
+
+      get href() {
+        if (this._isInvalid) {
+          return this._url;
+        }
+        var authority = '';
+        if (this._username !== '' || this._password !== null) {
+          authority = this._username + (this._password !== null ? ':' + this._password : '') + '@';
+        }
+        return this.protocol + (this._isRelative ? '//' + authority + this.host : '') + this.pathname + this._query + this._fragment;
+      },
+      set href(href) {
+        clear.call(this);
+        parse.call(this, href);
+      },
+      get protocol() {
+        return this._scheme + ':';
+      },
+      set protocol(protocol) {
+        if (this._isInvalid) {
+          return;
+        }
+        parse.call(this, protocol + ':', 'scheme start');
+      },
+      get host() {
+        return this._isInvalid ? '' : this._port ? this._host + ':' + this._port : this._host;
+      },
+      set host(host) {
+        if (this._isInvalid || !this._isRelative) {
+          return;
+        }
+        parse.call(this, host, 'host');
+      },
+      get hostname() {
+        return this._host;
+      },
+      set hostname(hostname) {
+        if (this._isInvalid || !this._isRelative) {
+          return;
+        }
+        parse.call(this, hostname, 'hostname');
+      },
+      get port() {
+        return this._port;
+      },
+      set port(port) {
+        if (this._isInvalid || !this._isRelative) {
+          return;
+        }
+        parse.call(this, port, 'port');
+      },
+      get pathname() {
+        return this._isInvalid ? '' : this._isRelative ? '/' + this._path.join('/') : this._schemeData;
+      },
+      set pathname(pathname) {
+        if (this._isInvalid || !this._isRelative) {
+          return;
+        }
+        this._path = [];
+        parse.call(this, pathname, 'relative path start');
+      },
+      get search() {
+        return this._isInvalid || !this._query || this._query === '?' ? '' : this._query;
+      },
+      set search(search) {
+        if (this._isInvalid || !this._isRelative) {
+          return;
+        }
+        this._query = '?';
+        if (search[0] === '?') {
+          search = search.slice(1);
+        }
+        parse.call(this, search, 'query');
+      },
+      get hash() {
+        return this._isInvalid || !this._fragment || this._fragment === '#' ? '' : this._fragment;
+      },
+      set hash(hash) {
+        if (this._isInvalid) {
+          return;
+        }
+        this._fragment = '#';
+        if (hash[0] === '#') {
+          hash = hash.slice(1);
+        }
+        parse.call(this, hash, 'fragment');
+      },
+      get origin() {
+        var host;
+        if (this._isInvalid || !this._scheme) {
+          return '';
+        }
+        switch (this._scheme) {
+          case 'data':
+          case 'file':
+          case 'javascript':
+          case 'mailto':
+            return 'null';
+        }
+        host = this.host;
+        if (!host) {
+          return '';
+        }
+        return this._scheme + '://' + host;
+      }
+    };
+    var OriginalURL = globalScope.URL;
+    if (OriginalURL) {
+      JURL.createObjectURL = function (blob) {
+        return OriginalURL.createObjectURL.apply(OriginalURL, arguments);
+      };
+      JURL.revokeObjectURL = function (url) {
+        OriginalURL.revokeObjectURL(url);
+      };
+    }
+    globalScope.URL = JURL;
+  })();
+}
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+
+/***/ }),
+/* 39 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* Copyright 2017 Mozilla Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.PDFJS = exports.isWorker = exports.globalScope = undefined;
+
+var _api = __webpack_require__(10);
+
+var _dom_utils = __webpack_require__(5);
+
+var _util = __webpack_require__(0);
+
+var _annotation_layer = __webpack_require__(13);
+
+var _metadata = __webpack_require__(12);
+
+var _text_layer = __webpack_require__(14);
+
+var _svg = __webpack_require__(15);
+
+var isWorker = typeof window === 'undefined';
+if (!_util.globalScope.PDFJS) {
+  _util.globalScope.PDFJS = {};
+}
+var PDFJS = _util.globalScope.PDFJS;
+{
+  PDFJS.version = '1.8.366';
+  PDFJS.build = '32bb0e8c';
+}
+PDFJS.pdfBug = false;
+if (PDFJS.verbosity !== undefined) {
+  (0, _util.setVerbosityLevel)(PDFJS.verbosity);
+}
+delete PDFJS.verbosity;
+Object.defineProperty(PDFJS, 'verbosity', {
+  get: function get() {
+    return (0, _util.getVerbosityLevel)();
   },
-  destroy: function destroy() {
-    this.comObj.removeEventListener('message', this._onComObjOnMessage);
+  set: function set(level) {
+    (0, _util.setVerbosityLevel)(level);
+  },
+
+  enumerable: true,
+  configurable: true
+});
+PDFJS.VERBOSITY_LEVELS = _util.VERBOSITY_LEVELS;
+PDFJS.OPS = _util.OPS;
+PDFJS.UNSUPPORTED_FEATURES = _util.UNSUPPORTED_FEATURES;
+PDFJS.isValidUrl = _dom_utils.isValidUrl;
+PDFJS.shadow = _util.shadow;
+PDFJS.createBlob = _util.createBlob;
+PDFJS.createObjectURL = function PDFJS_createObjectURL(data, contentType) {
+  return (0, _util.createObjectURL)(data, contentType, PDFJS.disableCreateObjectURL);
+};
+Object.defineProperty(PDFJS, 'isLittleEndian', {
+  configurable: true,
+  get: function PDFJS_isLittleEndian() {
+    return (0, _util.shadow)(PDFJS, 'isLittleEndian', (0, _util.isLittleEndian)());
+  }
+});
+PDFJS.removeNullCharacters = _util.removeNullCharacters;
+PDFJS.PasswordResponses = _util.PasswordResponses;
+PDFJS.PasswordException = _util.PasswordException;
+PDFJS.UnknownErrorException = _util.UnknownErrorException;
+PDFJS.InvalidPDFException = _util.InvalidPDFException;
+PDFJS.MissingPDFException = _util.MissingPDFException;
+PDFJS.UnexpectedResponseException = _util.UnexpectedResponseException;
+PDFJS.Util = _util.Util;
+PDFJS.PageViewport = _util.PageViewport;
+PDFJS.createPromiseCapability = _util.createPromiseCapability;
+PDFJS.maxImageSize = PDFJS.maxImageSize === undefined ? -1 : PDFJS.maxImageSize;
+PDFJS.cMapUrl = PDFJS.cMapUrl === undefined ? null : PDFJS.cMapUrl;
+PDFJS.cMapPacked = PDFJS.cMapPacked === undefined ? false : PDFJS.cMapPacked;
+PDFJS.disableFontFace = PDFJS.disableFontFace === undefined ? false : PDFJS.disableFontFace;
+PDFJS.imageResourcesPath = PDFJS.imageResourcesPath === undefined ? '' : PDFJS.imageResourcesPath;
+PDFJS.disableWorker = PDFJS.disableWorker === undefined ? false : PDFJS.disableWorker;
+PDFJS.workerSrc = PDFJS.workerSrc === undefined ? null : PDFJS.workerSrc;
+PDFJS.workerPort = PDFJS.workerPort === undefined ? null : PDFJS.workerPort;
+PDFJS.disableRange = PDFJS.disableRange === undefined ? false : PDFJS.disableRange;
+PDFJS.disableStream = PDFJS.disableStream === undefined ? false : PDFJS.disableStream;
+PDFJS.disableAutoFetch = PDFJS.disableAutoFetch === undefined ? false : PDFJS.disableAutoFetch;
+PDFJS.pdfBug = PDFJS.pdfBug === undefined ? false : PDFJS.pdfBug;
+PDFJS.postMessageTransfers = PDFJS.postMessageTransfers === undefined ? true : PDFJS.postMessageTransfers;
+PDFJS.disableCreateObjectURL = PDFJS.disableCreateObjectURL === undefined ? false : PDFJS.disableCreateObjectURL;
+PDFJS.disableWebGL = PDFJS.disableWebGL === undefined ? true : PDFJS.disableWebGL;
+PDFJS.externalLinkTarget = PDFJS.externalLinkTarget === undefined ? _dom_utils.LinkTarget.NONE : PDFJS.externalLinkTarget;
+PDFJS.externalLinkRel = PDFJS.externalLinkRel === undefined ? _dom_utils.DEFAULT_LINK_REL : PDFJS.externalLinkRel;
+PDFJS.isEvalSupported = PDFJS.isEvalSupported === undefined ? true : PDFJS.isEvalSupported;
+PDFJS.pdfjsNext = PDFJS.pdfjsNext === undefined ? false : PDFJS.pdfjsNext;
+{
+  var savedOpenExternalLinksInNewWindow = PDFJS.openExternalLinksInNewWindow;
+  delete PDFJS.openExternalLinksInNewWindow;
+  Object.defineProperty(PDFJS, 'openExternalLinksInNewWindow', {
+    get: function get() {
+      return PDFJS.externalLinkTarget === _dom_utils.LinkTarget.BLANK;
+    },
+    set: function set(value) {
+      if (value) {
+        (0, _util.deprecated)('PDFJS.openExternalLinksInNewWindow, please use ' + '"PDFJS.externalLinkTarget = PDFJS.LinkTarget.BLANK" instead.');
+      }
+      if (PDFJS.externalLinkTarget !== _dom_utils.LinkTarget.NONE) {
+        (0, _util.warn)('PDFJS.externalLinkTarget is already initialized');
+        return;
+      }
+      PDFJS.externalLinkTarget = value ? _dom_utils.LinkTarget.BLANK : _dom_utils.LinkTarget.NONE;
+    },
+
+    enumerable: true,
+    configurable: true
+  });
+  if (savedOpenExternalLinksInNewWindow) {
+    PDFJS.openExternalLinksInNewWindow = savedOpenExternalLinksInNewWindow;
+  }
+}
+PDFJS.getDocument = _api.getDocument;
+PDFJS.LoopbackPort = _api.LoopbackPort;
+PDFJS.PDFDataRangeTransport = _api.PDFDataRangeTransport;
+PDFJS.PDFWorker = _api.PDFWorker;
+PDFJS.hasCanvasTypedArrays = true;
+PDFJS.CustomStyle = _dom_utils.CustomStyle;
+PDFJS.LinkTarget = _dom_utils.LinkTarget;
+PDFJS.addLinkAttributes = _dom_utils.addLinkAttributes;
+PDFJS.getFilenameFromUrl = _dom_utils.getFilenameFromUrl;
+PDFJS.isExternalLinkTargetSet = _dom_utils.isExternalLinkTargetSet;
+PDFJS.AnnotationLayer = _annotation_layer.AnnotationLayer;
+PDFJS.renderTextLayer = _text_layer.renderTextLayer;
+PDFJS.Metadata = _metadata.Metadata;
+PDFJS.SVGGraphics = _svg.SVGGraphics;
+PDFJS.UnsupportedManager = _api._UnsupportedManager;
+exports.globalScope = _util.globalScope;
+exports.isWorker = isWorker;
+exports.PDFJS = PDFJS;
+
+/***/ }),
+/* 40 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* Copyright 2017 Mozilla Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.FontLoader = exports.FontFaceObject = undefined;
+
+var _util = __webpack_require__(0);
+
+function FontLoader(docId) {
+  this.docId = docId;
+  this.styleElement = null;
+  this.nativeFontFaces = [];
+  this.loadTestFontId = 0;
+  this.loadingContext = {
+    requests: [],
+    nextRequestId: 0
+  };
+}
+FontLoader.prototype = {
+  insertRule: function fontLoaderInsertRule(rule) {
+    var styleElement = this.styleElement;
+    if (!styleElement) {
+      styleElement = this.styleElement = document.createElement('style');
+      styleElement.id = 'PDFJS_FONT_STYLE_TAG_' + this.docId;
+      document.documentElement.getElementsByTagName('head')[0].appendChild(styleElement);
+    }
+    var styleSheet = styleElement.sheet;
+    styleSheet.insertRule(rule, styleSheet.cssRules.length);
+  },
+  clear: function fontLoaderClear() {
+    if (this.styleElement) {
+      this.styleElement.remove();
+      this.styleElement = null;
+    }
+    this.nativeFontFaces.forEach(function (nativeFontFace) {
+      document.fonts.delete(nativeFontFace);
+    });
+    this.nativeFontFaces.length = 0;
   }
 };
-function loadJpegStream(id, imageUrl, objs) {
-  var img = new Image();
-  img.onload = function loadJpegStream_onloadClosure() {
-    objs.resolve(id, img);
+{
+  var getLoadTestFont = function getLoadTestFont() {
+    return atob('T1RUTwALAIAAAwAwQ0ZGIDHtZg4AAAOYAAAAgUZGVE1lkzZwAAAEHAAAABxHREVGABQAFQ' + 'AABDgAAAAeT1MvMlYNYwkAAAEgAAAAYGNtYXABDQLUAAACNAAAAUJoZWFk/xVFDQAAALwA' + 'AAA2aGhlYQdkA+oAAAD0AAAAJGhtdHgD6AAAAAAEWAAAAAZtYXhwAAJQAAAAARgAAAAGbm' + 'FtZVjmdH4AAAGAAAAAsXBvc3T/hgAzAAADeAAAACAAAQAAAAEAALZRFsRfDzz1AAsD6AAA' + 'AADOBOTLAAAAAM4KHDwAAAAAA+gDIQAAAAgAAgAAAAAAAAABAAADIQAAAFoD6AAAAAAD6A' + 'ABAAAAAAAAAAAAAAAAAAAAAQAAUAAAAgAAAAQD6AH0AAUAAAKKArwAAACMAooCvAAAAeAA' + 'MQECAAACAAYJAAAAAAAAAAAAAQAAAAAAAAAAAAAAAFBmRWQAwAAuAC4DIP84AFoDIQAAAA' + 'AAAQAAAAAAAAAAACAAIAABAAAADgCuAAEAAAAAAAAAAQAAAAEAAAAAAAEAAQAAAAEAAAAA' + 'AAIAAQAAAAEAAAAAAAMAAQAAAAEAAAAAAAQAAQAAAAEAAAAAAAUAAQAAAAEAAAAAAAYAAQ' + 'AAAAMAAQQJAAAAAgABAAMAAQQJAAEAAgABAAMAAQQJAAIAAgABAAMAAQQJAAMAAgABAAMA' + 'AQQJAAQAAgABAAMAAQQJAAUAAgABAAMAAQQJAAYAAgABWABYAAAAAAAAAwAAAAMAAAAcAA' + 'EAAAAAADwAAwABAAAAHAAEACAAAAAEAAQAAQAAAC7//wAAAC7////TAAEAAAAAAAABBgAA' + 'AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAA' + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAA' + 'AAAAD/gwAyAAAAAQAAAAAAAAAAAAAAAAAAAAABAAQEAAEBAQJYAAEBASH4DwD4GwHEAvgc' + 'A/gXBIwMAYuL+nz5tQXkD5j3CBLnEQACAQEBIVhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWF' + 'hYWFhYWFhYAAABAQAADwACAQEEE/t3Dov6fAH6fAT+fPp8+nwHDosMCvm1Cvm1DAz6fBQA' + 'AAAAAAABAAAAAMmJbzEAAAAAzgTjFQAAAADOBOQpAAEAAAAAAAAADAAUAAQAAAABAAAAAg' + 'ABAAAAAAAAAAAD6AAAAAAAAA==');
   };
-  img.onerror = function loadJpegStream_onerrorClosure() {
-    objs.resolve(id, null);
-    warn('Error during JPEG image loading');
+  Object.defineProperty(FontLoader.prototype, 'loadTestFont', {
+    get: function get() {
+      return (0, _util.shadow)(this, 'loadTestFont', getLoadTestFont());
+    },
+
+    configurable: true
+  });
+  FontLoader.prototype.addNativeFontFace = function fontLoader_addNativeFontFace(nativeFontFace) {
+    this.nativeFontFaces.push(nativeFontFace);
+    document.fonts.add(nativeFontFace);
   };
-  img.src = imageUrl;
+  FontLoader.prototype.bind = function fontLoaderBind(fonts, callback) {
+    var rules = [];
+    var fontsToLoad = [];
+    var fontLoadPromises = [];
+    var getNativeFontPromise = function getNativeFontPromise(nativeFontFace) {
+      return nativeFontFace.loaded.catch(function (e) {
+        (0, _util.warn)('Failed to load font "' + nativeFontFace.family + '": ' + e);
+      });
+    };
+    var isFontLoadingAPISupported = FontLoader.isFontLoadingAPISupported && !FontLoader.isSyncFontLoadingSupported;
+    for (var i = 0, ii = fonts.length; i < ii; i++) {
+      var font = fonts[i];
+      if (font.attached || font.loading === false) {
+        continue;
+      }
+      font.attached = true;
+      if (isFontLoadingAPISupported) {
+        var nativeFontFace = font.createNativeFontFace();
+        if (nativeFontFace) {
+          this.addNativeFontFace(nativeFontFace);
+          fontLoadPromises.push(getNativeFontPromise(nativeFontFace));
+        }
+      } else {
+        var rule = font.createFontFaceRule();
+        if (rule) {
+          this.insertRule(rule);
+          rules.push(rule);
+          fontsToLoad.push(font);
+        }
+      }
+    }
+    var request = this.queueLoadingCallback(callback);
+    if (isFontLoadingAPISupported) {
+      Promise.all(fontLoadPromises).then(function () {
+        request.complete();
+      });
+    } else if (rules.length > 0 && !FontLoader.isSyncFontLoadingSupported) {
+      this.prepareFontLoadEvent(rules, fontsToLoad, request);
+    } else {
+      request.complete();
+    }
+  };
+  FontLoader.prototype.queueLoadingCallback = function FontLoader_queueLoadingCallback(callback) {
+    function LoadLoader_completeRequest() {
+      (0, _util.assert)(!request.end, 'completeRequest() cannot be called twice');
+      request.end = Date.now();
+      while (context.requests.length > 0 && context.requests[0].end) {
+        var otherRequest = context.requests.shift();
+        setTimeout(otherRequest.callback, 0);
+      }
+    }
+    var context = this.loadingContext;
+    var requestId = 'pdfjs-font-loading-' + context.nextRequestId++;
+    var request = {
+      id: requestId,
+      complete: LoadLoader_completeRequest,
+      callback: callback,
+      started: Date.now()
+    };
+    context.requests.push(request);
+    return request;
+  };
+  FontLoader.prototype.prepareFontLoadEvent = function fontLoaderPrepareFontLoadEvent(rules, fonts, request) {
+    function int32(data, offset) {
+      return data.charCodeAt(offset) << 24 | data.charCodeAt(offset + 1) << 16 | data.charCodeAt(offset + 2) << 8 | data.charCodeAt(offset + 3) & 0xff;
+    }
+    function spliceString(s, offset, remove, insert) {
+      var chunk1 = s.substr(0, offset);
+      var chunk2 = s.substr(offset + remove);
+      return chunk1 + insert + chunk2;
+    }
+    var i, ii;
+    var canvas = document.createElement('canvas');
+    canvas.width = 1;
+    canvas.height = 1;
+    var ctx = canvas.getContext('2d');
+    var called = 0;
+    function isFontReady(name, callback) {
+      called++;
+      if (called > 30) {
+        (0, _util.warn)('Load test font never loaded.');
+        callback();
+        return;
+      }
+      ctx.font = '30px ' + name;
+      ctx.fillText('.', 0, 20);
+      var imageData = ctx.getImageData(0, 0, 1, 1);
+      if (imageData.data[3] > 0) {
+        callback();
+        return;
+      }
+      setTimeout(isFontReady.bind(null, name, callback));
+    }
+    var loadTestFontId = 'lt' + Date.now() + this.loadTestFontId++;
+    var data = this.loadTestFont;
+    var COMMENT_OFFSET = 976;
+    data = spliceString(data, COMMENT_OFFSET, loadTestFontId.length, loadTestFontId);
+    var CFF_CHECKSUM_OFFSET = 16;
+    var XXXX_VALUE = 0x58585858;
+    var checksum = int32(data, CFF_CHECKSUM_OFFSET);
+    for (i = 0, ii = loadTestFontId.length - 3; i < ii; i += 4) {
+      checksum = checksum - XXXX_VALUE + int32(loadTestFontId, i) | 0;
+    }
+    if (i < loadTestFontId.length) {
+      checksum = checksum - XXXX_VALUE + int32(loadTestFontId + 'XXX', i) | 0;
+    }
+    data = spliceString(data, CFF_CHECKSUM_OFFSET, 4, (0, _util.string32)(checksum));
+    var url = 'url(data:font/opentype;base64,' + btoa(data) + ');';
+    var rule = '@font-face { font-family:"' + loadTestFontId + '";src:' + url + '}';
+    this.insertRule(rule);
+    var names = [];
+    for (i = 0, ii = fonts.length; i < ii; i++) {
+      names.push(fonts[i].loadedName);
+    }
+    names.push(loadTestFontId);
+    var div = document.createElement('div');
+    div.setAttribute('style', 'visibility: hidden;' + 'width: 10px; height: 10px;' + 'position: absolute; top: 0px; left: 0px;');
+    for (i = 0, ii = names.length; i < ii; ++i) {
+      var span = document.createElement('span');
+      span.textContent = 'Hi';
+      span.style.fontFamily = names[i];
+      div.appendChild(span);
+    }
+    document.body.appendChild(div);
+    isFontReady(loadTestFontId, function () {
+      document.body.removeChild(div);
+      request.complete();
+    });
+  };
 }
-exports.FONT_IDENTITY_MATRIX = FONT_IDENTITY_MATRIX;
-exports.IDENTITY_MATRIX = IDENTITY_MATRIX;
-exports.OPS = OPS;
-exports.VERBOSITY_LEVELS = VERBOSITY_LEVELS;
-exports.UNSUPPORTED_FEATURES = UNSUPPORTED_FEATURES;
-exports.AnnotationBorderStyleType = AnnotationBorderStyleType;
-exports.AnnotationFieldFlag = AnnotationFieldFlag;
-exports.AnnotationFlag = AnnotationFlag;
-exports.AnnotationType = AnnotationType;
-exports.FontType = FontType;
-exports.ImageKind = ImageKind;
-exports.CMapCompressionType = CMapCompressionType;
-exports.InvalidPDFException = InvalidPDFException;
-exports.MessageHandler = MessageHandler;
-exports.MissingDataException = MissingDataException;
-exports.MissingPDFException = MissingPDFException;
-exports.NativeImageDecoding = NativeImageDecoding;
-exports.NotImplementedException = NotImplementedException;
-exports.PageViewport = PageViewport;
-exports.PasswordException = PasswordException;
-exports.PasswordResponses = PasswordResponses;
-exports.StatTimer = StatTimer;
-exports.StreamType = StreamType;
-exports.TextRenderingMode = TextRenderingMode;
-exports.UnexpectedResponseException = UnexpectedResponseException;
-exports.UnknownErrorException = UnknownErrorException;
-exports.Util = Util;
-exports.XRefParseException = XRefParseException;
-exports.arrayByteLength = arrayByteLength;
-exports.arraysToBytes = arraysToBytes;
-exports.assert = assert;
-exports.bytesToString = bytesToString;
-exports.createBlob = createBlob;
-exports.createPromiseCapability = createPromiseCapability;
-exports.createObjectURL = createObjectURL;
-exports.deprecated = deprecated;
-exports.error = error;
-exports.getLookupTableFactory = getLookupTableFactory;
-exports.getVerbosityLevel = getVerbosityLevel;
-exports.globalScope = globalScope;
-exports.info = info;
-exports.isArray = isArray;
-exports.isArrayBuffer = isArrayBuffer;
-exports.isBool = isBool;
-exports.isEmptyObj = isEmptyObj;
-exports.isInt = isInt;
-exports.isNum = isNum;
-exports.isString = isString;
-exports.isSpace = isSpace;
-exports.isNodeJS = isNodeJS;
-exports.isSameOrigin = isSameOrigin;
-exports.createValidAbsoluteUrl = createValidAbsoluteUrl;
-exports.isLittleEndian = isLittleEndian;
-exports.isEvalSupported = isEvalSupported;
-exports.loadJpegStream = loadJpegStream;
-exports.log2 = log2;
-exports.readInt8 = readInt8;
-exports.readUint16 = readUint16;
-exports.readUint32 = readUint32;
-exports.removeNullCharacters = removeNullCharacters;
-exports.setVerbosityLevel = setVerbosityLevel;
-exports.shadow = shadow;
-exports.string32 = string32;
-exports.stringToBytes = stringToBytes;
-exports.stringToPDFString = stringToPDFString;
-exports.stringToUTF8String = stringToUTF8String;
-exports.utf8StringToString = utf8StringToString;
-exports.warn = warn;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10), __webpack_require__(51)))
+{
+  FontLoader.isFontLoadingAPISupported = typeof document !== 'undefined' && !!document.fonts;
+}
+{
+  var isSyncFontLoadingSupported = function isSyncFontLoadingSupported() {
+    if (typeof navigator === 'undefined') {
+      return true;
+    }
+    var supported = false;
+    var m = /Mozilla\/5.0.*?rv:(\d+).*? Gecko/.exec(navigator.userAgent);
+    if (m && m[1] >= 14) {
+      supported = true;
+    }
+    return supported;
+  };
+  Object.defineProperty(FontLoader, 'isSyncFontLoadingSupported', {
+    get: function get() {
+      return (0, _util.shadow)(FontLoader, 'isSyncFontLoadingSupported', isSyncFontLoadingSupported());
+    },
+
+    enumerable: true,
+    configurable: true
+  });
+}
+var IsEvalSupportedCached = {
+  get value() {
+    return (0, _util.shadow)(this, 'value', (0, _util.isEvalSupported)());
+  }
+};
+var FontFaceObject = function FontFaceObjectClosure() {
+  function FontFaceObject(translatedData, options) {
+    this.compiledGlyphs = Object.create(null);
+    for (var i in translatedData) {
+      this[i] = translatedData[i];
+    }
+    this.options = options;
+  }
+  FontFaceObject.prototype = {
+    createNativeFontFace: function FontFaceObject_createNativeFontFace() {
+      if (!this.data) {
+        return null;
+      }
+      if (this.options.disableFontFace) {
+        this.disableFontFace = true;
+        return null;
+      }
+      var nativeFontFace = new FontFace(this.loadedName, this.data, {});
+      if (this.options.fontRegistry) {
+        this.options.fontRegistry.registerFont(this);
+      }
+      return nativeFontFace;
+    },
+    createFontFaceRule: function FontFaceObject_createFontFaceRule() {
+      if (!this.data) {
+        return null;
+      }
+      if (this.options.disableFontFace) {
+        this.disableFontFace = true;
+        return null;
+      }
+      var data = (0, _util.bytesToString)(new Uint8Array(this.data));
+      var fontName = this.loadedName;
+      var url = 'url(data:' + this.mimetype + ';base64,' + btoa(data) + ');';
+      var rule = '@font-face { font-family:"' + fontName + '";src:' + url + '}';
+      if (this.options.fontRegistry) {
+        this.options.fontRegistry.registerFont(this, url);
+      }
+      return rule;
+    },
+    getPathGenerator: function FontFaceObject_getPathGenerator(objs, character) {
+      if (!(character in this.compiledGlyphs)) {
+        var cmds = objs.get(this.loadedName + '_path_' + character);
+        var current, i, len;
+        if (this.options.isEvalSupported && IsEvalSupportedCached.value) {
+          var args,
+              js = '';
+          for (i = 0, len = cmds.length; i < len; i++) {
+            current = cmds[i];
+            if (current.args !== undefined) {
+              args = current.args.join(',');
+            } else {
+              args = '';
+            }
+            js += 'c.' + current.cmd + '(' + args + ');\n';
+          }
+          this.compiledGlyphs[character] = new Function('c', 'size', js);
+        } else {
+          this.compiledGlyphs[character] = function (c, size) {
+            for (i = 0, len = cmds.length; i < len; i++) {
+              current = cmds[i];
+              if (current.cmd === 'scale') {
+                current.args = [size, -size];
+              }
+              c[current.cmd].apply(c, current.args);
+            }
+          };
+        }
+      }
+      return this.compiledGlyphs[character];
+    }
+  };
+  return FontFaceObject;
+}();
+exports.FontFaceObject = FontFaceObject;
+exports.FontLoader = FontLoader;
+
+/***/ }),
+/* 41 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* Copyright 2017 Mozilla Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.CanvasGraphics = undefined;
+
+var _util = __webpack_require__(0);
+
+var _pattern_helper = __webpack_require__(42);
+
+var _webgl = __webpack_require__(11);
+
+var MIN_FONT_SIZE = 16;
+var MAX_FONT_SIZE = 100;
+var MAX_GROUP_SIZE = 4096;
+var MIN_WIDTH_FACTOR = 0.65;
+var COMPILE_TYPE3_GLYPHS = true;
+var MAX_SIZE_TO_COMPILE = 1000;
+var FULL_CHUNK_HEIGHT = 16;
+var IsLittleEndianCached = {
+  get value() {
+    return (0, _util.shadow)(IsLittleEndianCached, 'value', (0, _util.isLittleEndian)());
+  }
+};
+function addContextCurrentTransform(ctx) {
+  if (!ctx.mozCurrentTransform) {
+    ctx._originalSave = ctx.save;
+    ctx._originalRestore = ctx.restore;
+    ctx._originalRotate = ctx.rotate;
+    ctx._originalScale = ctx.scale;
+    ctx._originalTranslate = ctx.translate;
+    ctx._originalTransform = ctx.transform;
+    ctx._originalSetTransform = ctx.setTransform;
+    ctx._transformMatrix = ctx._transformMatrix || [1, 0, 0, 1, 0, 0];
+    ctx._transformStack = [];
+    Object.defineProperty(ctx, 'mozCurrentTransform', {
+      get: function getCurrentTransform() {
+        return this._transformMatrix;
+      }
+    });
+    Object.defineProperty(ctx, 'mozCurrentTransformInverse', {
+      get: function getCurrentTransformInverse() {
+        var m = this._transformMatrix;
+        var a = m[0],
+            b = m[1],
+            c = m[2],
+            d = m[3],
+            e = m[4],
+            f = m[5];
+        var ad_bc = a * d - b * c;
+        var bc_ad = b * c - a * d;
+        return [d / ad_bc, b / bc_ad, c / bc_ad, a / ad_bc, (d * e - c * f) / bc_ad, (b * e - a * f) / ad_bc];
+      }
+    });
+    ctx.save = function ctxSave() {
+      var old = this._transformMatrix;
+      this._transformStack.push(old);
+      this._transformMatrix = old.slice(0, 6);
+      this._originalSave();
+    };
+    ctx.restore = function ctxRestore() {
+      var prev = this._transformStack.pop();
+      if (prev) {
+        this._transformMatrix = prev;
+        this._originalRestore();
+      }
+    };
+    ctx.translate = function ctxTranslate(x, y) {
+      var m = this._transformMatrix;
+      m[4] = m[0] * x + m[2] * y + m[4];
+      m[5] = m[1] * x + m[3] * y + m[5];
+      this._originalTranslate(x, y);
+    };
+    ctx.scale = function ctxScale(x, y) {
+      var m = this._transformMatrix;
+      m[0] = m[0] * x;
+      m[1] = m[1] * x;
+      m[2] = m[2] * y;
+      m[3] = m[3] * y;
+      this._originalScale(x, y);
+    };
+    ctx.transform = function ctxTransform(a, b, c, d, e, f) {
+      var m = this._transformMatrix;
+      this._transformMatrix = [m[0] * a + m[2] * b, m[1] * a + m[3] * b, m[0] * c + m[2] * d, m[1] * c + m[3] * d, m[0] * e + m[2] * f + m[4], m[1] * e + m[3] * f + m[5]];
+      ctx._originalTransform(a, b, c, d, e, f);
+    };
+    ctx.setTransform = function ctxSetTransform(a, b, c, d, e, f) {
+      this._transformMatrix = [a, b, c, d, e, f];
+      ctx._originalSetTransform(a, b, c, d, e, f);
+    };
+    ctx.rotate = function ctxRotate(angle) {
+      var cosValue = Math.cos(angle);
+      var sinValue = Math.sin(angle);
+      var m = this._transformMatrix;
+      this._transformMatrix = [m[0] * cosValue + m[2] * sinValue, m[1] * cosValue + m[3] * sinValue, m[0] * -sinValue + m[2] * cosValue, m[1] * -sinValue + m[3] * cosValue, m[4], m[5]];
+      this._originalRotate(angle);
+    };
+  }
+}
+var CachedCanvases = function CachedCanvasesClosure() {
+  function CachedCanvases(canvasFactory) {
+    this.canvasFactory = canvasFactory;
+    this.cache = Object.create(null);
+  }
+  CachedCanvases.prototype = {
+    getCanvas: function CachedCanvases_getCanvas(id, width, height, trackTransform) {
+      var canvasEntry;
+      if (this.cache[id] !== undefined) {
+        canvasEntry = this.cache[id];
+        this.canvasFactory.reset(canvasEntry, width, height);
+        canvasEntry.context.setTransform(1, 0, 0, 1, 0, 0);
+      } else {
+        canvasEntry = this.canvasFactory.create(width, height);
+        this.cache[id] = canvasEntry;
+      }
+      if (trackTransform) {
+        addContextCurrentTransform(canvasEntry.context);
+      }
+      return canvasEntry;
+    },
+    clear: function clear() {
+      for (var id in this.cache) {
+        var canvasEntry = this.cache[id];
+        this.canvasFactory.destroy(canvasEntry);
+        delete this.cache[id];
+      }
+    }
+  };
+  return CachedCanvases;
+}();
+function compileType3Glyph(imgData) {
+  var POINT_TO_PROCESS_LIMIT = 1000;
+  var width = imgData.width,
+      height = imgData.height;
+  var i,
+      j,
+      j0,
+      width1 = width + 1;
+  var points = new Uint8Array(width1 * (height + 1));
+  var POINT_TYPES = new Uint8Array([0, 2, 4, 0, 1, 0, 5, 4, 8, 10, 0, 8, 0, 2, 1, 0]);
+  var lineSize = width + 7 & ~7,
+      data0 = imgData.data;
+  var data = new Uint8Array(lineSize * height),
+      pos = 0,
+      ii;
+  for (i = 0, ii = data0.length; i < ii; i++) {
+    var mask = 128,
+        elem = data0[i];
+    while (mask > 0) {
+      data[pos++] = elem & mask ? 0 : 255;
+      mask >>= 1;
+    }
+  }
+  var count = 0;
+  pos = 0;
+  if (data[pos] !== 0) {
+    points[0] = 1;
+    ++count;
+  }
+  for (j = 1; j < width; j++) {
+    if (data[pos] !== data[pos + 1]) {
+      points[j] = data[pos] ? 2 : 1;
+      ++count;
+    }
+    pos++;
+  }
+  if (data[pos] !== 0) {
+    points[j] = 2;
+    ++count;
+  }
+  for (i = 1; i < height; i++) {
+    pos = i * lineSize;
+    j0 = i * width1;
+    if (data[pos - lineSize] !== data[pos]) {
+      points[j0] = data[pos] ? 1 : 8;
+      ++count;
+    }
+    var sum = (data[pos] ? 4 : 0) + (data[pos - lineSize] ? 8 : 0);
+    for (j = 1; j < width; j++) {
+      sum = (sum >> 2) + (data[pos + 1] ? 4 : 0) + (data[pos - lineSize + 1] ? 8 : 0);
+      if (POINT_TYPES[sum]) {
+        points[j0 + j] = POINT_TYPES[sum];
+        ++count;
+      }
+      pos++;
+    }
+    if (data[pos - lineSize] !== data[pos]) {
+      points[j0 + j] = data[pos] ? 2 : 4;
+      ++count;
+    }
+    if (count > POINT_TO_PROCESS_LIMIT) {
+      return null;
+    }
+  }
+  pos = lineSize * (height - 1);
+  j0 = i * width1;
+  if (data[pos] !== 0) {
+    points[j0] = 8;
+    ++count;
+  }
+  for (j = 1; j < width; j++) {
+    if (data[pos] !== data[pos + 1]) {
+      points[j0 + j] = data[pos] ? 4 : 8;
+      ++count;
+    }
+    pos++;
+  }
+  if (data[pos] !== 0) {
+    points[j0 + j] = 4;
+    ++count;
+  }
+  if (count > POINT_TO_PROCESS_LIMIT) {
+    return null;
+  }
+  var steps = new Int32Array([0, width1, -1, 0, -width1, 0, 0, 0, 1]);
+  var outlines = [];
+  for (i = 0; count && i <= height; i++) {
+    var p = i * width1;
+    var end = p + width;
+    while (p < end && !points[p]) {
+      p++;
+    }
+    if (p === end) {
+      continue;
+    }
+    var coords = [p % width1, i];
+    var type = points[p],
+        p0 = p,
+        pp;
+    do {
+      var step = steps[type];
+      do {
+        p += step;
+      } while (!points[p]);
+      pp = points[p];
+      if (pp !== 5 && pp !== 10) {
+        type = pp;
+        points[p] = 0;
+      } else {
+        type = pp & 0x33 * type >> 4;
+        points[p] &= type >> 2 | type << 2;
+      }
+      coords.push(p % width1);
+      coords.push(p / width1 | 0);
+      --count;
+    } while (p0 !== p);
+    outlines.push(coords);
+    --i;
+  }
+  var drawOutline = function drawOutline(c) {
+    c.save();
+    c.scale(1 / width, -1 / height);
+    c.translate(0, -height);
+    c.beginPath();
+    for (var i = 0, ii = outlines.length; i < ii; i++) {
+      var o = outlines[i];
+      c.moveTo(o[0], o[1]);
+      for (var j = 2, jj = o.length; j < jj; j += 2) {
+        c.lineTo(o[j], o[j + 1]);
+      }
+    }
+    c.fill();
+    c.beginPath();
+    c.restore();
+  };
+  return drawOutline;
+}
+var CanvasExtraState = function CanvasExtraStateClosure() {
+  function CanvasExtraState(old) {
+    this.alphaIsShape = false;
+    this.fontSize = 0;
+    this.fontSizeScale = 1;
+    this.textMatrix = _util.IDENTITY_MATRIX;
+    this.textMatrixScale = 1;
+    this.fontMatrix = _util.FONT_IDENTITY_MATRIX;
+    this.leading = 0;
+    this.x = 0;
+    this.y = 0;
+    this.lineX = 0;
+    this.lineY = 0;
+    this.charSpacing = 0;
+    this.wordSpacing = 0;
+    this.textHScale = 1;
+    this.textRenderingMode = _util.TextRenderingMode.FILL;
+    this.textRise = 0;
+    this.fillColor = '#000000';
+    this.strokeColor = '#000000';
+    this.patternFill = false;
+    this.fillAlpha = 1;
+    this.strokeAlpha = 1;
+    this.lineWidth = 1;
+    this.activeSMask = null;
+    this.resumeSMaskCtx = null;
+    this.old = old;
+  }
+  CanvasExtraState.prototype = {
+    clone: function CanvasExtraState_clone() {
+      return Object.create(this);
+    },
+    setCurrentPoint: function CanvasExtraState_setCurrentPoint(x, y) {
+      this.x = x;
+      this.y = y;
+    }
+  };
+  return CanvasExtraState;
+}();
+var CanvasGraphics = function CanvasGraphicsClosure() {
+  var EXECUTION_TIME = 15;
+  var EXECUTION_STEPS = 10;
+  function CanvasGraphics(canvasCtx, commonObjs, objs, canvasFactory, imageLayer) {
+    this.ctx = canvasCtx;
+    this.current = new CanvasExtraState();
+    this.stateStack = [];
+    this.pendingClip = null;
+    this.pendingEOFill = false;
+    this.res = null;
+    this.xobjs = null;
+    this.commonObjs = commonObjs;
+    this.objs = objs;
+    this.canvasFactory = canvasFactory;
+    this.imageLayer = imageLayer;
+    this.groupStack = [];
+    this.processingType3 = null;
+    this.baseTransform = null;
+    this.baseTransformStack = [];
+    this.groupLevel = 0;
+    this.smaskStack = [];
+    this.smaskCounter = 0;
+    this.tempSMask = null;
+    this.cachedCanvases = new CachedCanvases(this.canvasFactory);
+    if (canvasCtx) {
+      addContextCurrentTransform(canvasCtx);
+    }
+    this.cachedGetSinglePixelWidth = null;
+  }
+  function putBinaryImageData(ctx, imgData) {
+    if (typeof ImageData !== 'undefined' && imgData instanceof ImageData) {
+      ctx.putImageData(imgData, 0, 0);
+      return;
+    }
+    var height = imgData.height,
+        width = imgData.width;
+    var partialChunkHeight = height % FULL_CHUNK_HEIGHT;
+    var fullChunks = (height - partialChunkHeight) / FULL_CHUNK_HEIGHT;
+    var totalChunks = partialChunkHeight === 0 ? fullChunks : fullChunks + 1;
+    var chunkImgData = ctx.createImageData(width, FULL_CHUNK_HEIGHT);
+    var srcPos = 0,
+        destPos;
+    var src = imgData.data;
+    var dest = chunkImgData.data;
+    var i, j, thisChunkHeight, elemsInThisChunk;
+    if (imgData.kind === _util.ImageKind.GRAYSCALE_1BPP) {
+      var srcLength = src.byteLength;
+      var dest32 = new Uint32Array(dest.buffer, 0, dest.byteLength >> 2);
+      var dest32DataLength = dest32.length;
+      var fullSrcDiff = width + 7 >> 3;
+      var white = 0xFFFFFFFF;
+      var black = IsLittleEndianCached.value ? 0xFF000000 : 0x000000FF;
+      for (i = 0; i < totalChunks; i++) {
+        thisChunkHeight = i < fullChunks ? FULL_CHUNK_HEIGHT : partialChunkHeight;
+        destPos = 0;
+        for (j = 0; j < thisChunkHeight; j++) {
+          var srcDiff = srcLength - srcPos;
+          var k = 0;
+          var kEnd = srcDiff > fullSrcDiff ? width : srcDiff * 8 - 7;
+          var kEndUnrolled = kEnd & ~7;
+          var mask = 0;
+          var srcByte = 0;
+          for (; k < kEndUnrolled; k += 8) {
+            srcByte = src[srcPos++];
+            dest32[destPos++] = srcByte & 128 ? white : black;
+            dest32[destPos++] = srcByte & 64 ? white : black;
+            dest32[destPos++] = srcByte & 32 ? white : black;
+            dest32[destPos++] = srcByte & 16 ? white : black;
+            dest32[destPos++] = srcByte & 8 ? white : black;
+            dest32[destPos++] = srcByte & 4 ? white : black;
+            dest32[destPos++] = srcByte & 2 ? white : black;
+            dest32[destPos++] = srcByte & 1 ? white : black;
+          }
+          for (; k < kEnd; k++) {
+            if (mask === 0) {
+              srcByte = src[srcPos++];
+              mask = 128;
+            }
+            dest32[destPos++] = srcByte & mask ? white : black;
+            mask >>= 1;
+          }
+        }
+        while (destPos < dest32DataLength) {
+          dest32[destPos++] = 0;
+        }
+        ctx.putImageData(chunkImgData, 0, i * FULL_CHUNK_HEIGHT);
+      }
+    } else if (imgData.kind === _util.ImageKind.RGBA_32BPP) {
+      j = 0;
+      elemsInThisChunk = width * FULL_CHUNK_HEIGHT * 4;
+      for (i = 0; i < fullChunks; i++) {
+        dest.set(src.subarray(srcPos, srcPos + elemsInThisChunk));
+        srcPos += elemsInThisChunk;
+        ctx.putImageData(chunkImgData, 0, j);
+        j += FULL_CHUNK_HEIGHT;
+      }
+      if (i < totalChunks) {
+        elemsInThisChunk = width * partialChunkHeight * 4;
+        dest.set(src.subarray(srcPos, srcPos + elemsInThisChunk));
+        ctx.putImageData(chunkImgData, 0, j);
+      }
+    } else if (imgData.kind === _util.ImageKind.RGB_24BPP) {
+      thisChunkHeight = FULL_CHUNK_HEIGHT;
+      elemsInThisChunk = width * thisChunkHeight;
+      for (i = 0; i < totalChunks; i++) {
+        if (i >= fullChunks) {
+          thisChunkHeight = partialChunkHeight;
+          elemsInThisChunk = width * thisChunkHeight;
+        }
+        destPos = 0;
+        for (j = elemsInThisChunk; j--;) {
+          dest[destPos++] = src[srcPos++];
+          dest[destPos++] = src[srcPos++];
+          dest[destPos++] = src[srcPos++];
+          dest[destPos++] = 255;
+        }
+        ctx.putImageData(chunkImgData, 0, i * FULL_CHUNK_HEIGHT);
+      }
+    } else {
+      (0, _util.error)('bad image kind: ' + imgData.kind);
+    }
+  }
+  function putBinaryImageMask(ctx, imgData) {
+    var height = imgData.height,
+        width = imgData.width;
+    var partialChunkHeight = height % FULL_CHUNK_HEIGHT;
+    var fullChunks = (height - partialChunkHeight) / FULL_CHUNK_HEIGHT;
+    var totalChunks = partialChunkHeight === 0 ? fullChunks : fullChunks + 1;
+    var chunkImgData = ctx.createImageData(width, FULL_CHUNK_HEIGHT);
+    var srcPos = 0;
+    var src = imgData.data;
+    var dest = chunkImgData.data;
+    for (var i = 0; i < totalChunks; i++) {
+      var thisChunkHeight = i < fullChunks ? FULL_CHUNK_HEIGHT : partialChunkHeight;
+      var destPos = 3;
+      for (var j = 0; j < thisChunkHeight; j++) {
+        var mask = 0;
+        for (var k = 0; k < width; k++) {
+          if (!mask) {
+            var elem = src[srcPos++];
+            mask = 128;
+          }
+          dest[destPos] = elem & mask ? 0 : 255;
+          destPos += 4;
+          mask >>= 1;
+        }
+      }
+      ctx.putImageData(chunkImgData, 0, i * FULL_CHUNK_HEIGHT);
+    }
+  }
+  function copyCtxState(sourceCtx, destCtx) {
+    var properties = ['strokeStyle', 'fillStyle', 'fillRule', 'globalAlpha', 'lineWidth', 'lineCap', 'lineJoin', 'miterLimit', 'globalCompositeOperation', 'font'];
+    for (var i = 0, ii = properties.length; i < ii; i++) {
+      var property = properties[i];
+      if (sourceCtx[property] !== undefined) {
+        destCtx[property] = sourceCtx[property];
+      }
+    }
+    if (sourceCtx.setLineDash !== undefined) {
+      destCtx.setLineDash(sourceCtx.getLineDash());
+      destCtx.lineDashOffset = sourceCtx.lineDashOffset;
+    }
+  }
+  function composeSMaskBackdrop(bytes, r0, g0, b0) {
+    var length = bytes.length;
+    for (var i = 3; i < length; i += 4) {
+      var alpha = bytes[i];
+      if (alpha === 0) {
+        bytes[i - 3] = r0;
+        bytes[i - 2] = g0;
+        bytes[i - 1] = b0;
+      } else if (alpha < 255) {
+        var alpha_ = 255 - alpha;
+        bytes[i - 3] = bytes[i - 3] * alpha + r0 * alpha_ >> 8;
+        bytes[i - 2] = bytes[i - 2] * alpha + g0 * alpha_ >> 8;
+        bytes[i - 1] = bytes[i - 1] * alpha + b0 * alpha_ >> 8;
+      }
+    }
+  }
+  function composeSMaskAlpha(maskData, layerData, transferMap) {
+    var length = maskData.length;
+    var scale = 1 / 255;
+    for (var i = 3; i < length; i += 4) {
+      var alpha = transferMap ? transferMap[maskData[i]] : maskData[i];
+      layerData[i] = layerData[i] * alpha * scale | 0;
+    }
+  }
+  function composeSMaskLuminosity(maskData, layerData, transferMap) {
+    var length = maskData.length;
+    for (var i = 3; i < length; i += 4) {
+      var y = maskData[i - 3] * 77 + maskData[i - 2] * 152 + maskData[i - 1] * 28;
+      layerData[i] = transferMap ? layerData[i] * transferMap[y >> 8] >> 8 : layerData[i] * y >> 16;
+    }
+  }
+  function genericComposeSMask(maskCtx, layerCtx, width, height, subtype, backdrop, transferMap) {
+    var hasBackdrop = !!backdrop;
+    var r0 = hasBackdrop ? backdrop[0] : 0;
+    var g0 = hasBackdrop ? backdrop[1] : 0;
+    var b0 = hasBackdrop ? backdrop[2] : 0;
+    var composeFn;
+    if (subtype === 'Luminosity') {
+      composeFn = composeSMaskLuminosity;
+    } else {
+      composeFn = composeSMaskAlpha;
+    }
+    var PIXELS_TO_PROCESS = 1048576;
+    var chunkSize = Math.min(height, Math.ceil(PIXELS_TO_PROCESS / width));
+    for (var row = 0; row < height; row += chunkSize) {
+      var chunkHeight = Math.min(chunkSize, height - row);
+      var maskData = maskCtx.getImageData(0, row, width, chunkHeight);
+      var layerData = layerCtx.getImageData(0, row, width, chunkHeight);
+      if (hasBackdrop) {
+        composeSMaskBackdrop(maskData.data, r0, g0, b0);
+      }
+      composeFn(maskData.data, layerData.data, transferMap);
+      maskCtx.putImageData(layerData, 0, row);
+    }
+  }
+  function composeSMask(ctx, smask, layerCtx) {
+    var mask = smask.canvas;
+    var maskCtx = smask.context;
+    ctx.setTransform(smask.scaleX, 0, 0, smask.scaleY, smask.offsetX, smask.offsetY);
+    var backdrop = smask.backdrop || null;
+    if (!smask.transferMap && _webgl.WebGLUtils.isEnabled) {
+      var composed = _webgl.WebGLUtils.composeSMask(layerCtx.canvas, mask, {
+        subtype: smask.subtype,
+        backdrop: backdrop
+      });
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.drawImage(composed, smask.offsetX, smask.offsetY);
+      return;
+    }
+    genericComposeSMask(maskCtx, layerCtx, mask.width, mask.height, smask.subtype, backdrop, smask.transferMap);
+    ctx.drawImage(mask, 0, 0);
+  }
+  var LINE_CAP_STYLES = ['butt', 'round', 'square'];
+  var LINE_JOIN_STYLES = ['miter', 'round', 'bevel'];
+  var NORMAL_CLIP = {};
+  var EO_CLIP = {};
+  CanvasGraphics.prototype = {
+    beginDrawing: function beginDrawing(_ref) {
+      var transform = _ref.transform,
+          viewport = _ref.viewport,
+          transparency = _ref.transparency,
+          _ref$background = _ref.background,
+          background = _ref$background === undefined ? null : _ref$background;
+
+      var width = this.ctx.canvas.width;
+      var height = this.ctx.canvas.height;
+      this.ctx.save();
+      this.ctx.fillStyle = background || 'rgb(255, 255, 255)';
+      this.ctx.fillRect(0, 0, width, height);
+      this.ctx.restore();
+      if (transparency) {
+        var transparentCanvas = this.cachedCanvases.getCanvas('transparent', width, height, true);
+        this.compositeCtx = this.ctx;
+        this.transparentCanvas = transparentCanvas.canvas;
+        this.ctx = transparentCanvas.context;
+        this.ctx.save();
+        this.ctx.transform.apply(this.ctx, this.compositeCtx.mozCurrentTransform);
+      }
+      this.ctx.save();
+      if (transform) {
+        this.ctx.transform.apply(this.ctx, transform);
+      }
+      this.ctx.transform.apply(this.ctx, viewport.transform);
+      this.baseTransform = this.ctx.mozCurrentTransform.slice();
+      if (this.imageLayer) {
+        this.imageLayer.beginLayout();
+      }
+    },
+
+    executeOperatorList: function CanvasGraphics_executeOperatorList(operatorList, executionStartIdx, continueCallback, stepper) {
+      var argsArray = operatorList.argsArray;
+      var fnArray = operatorList.fnArray;
+      var i = executionStartIdx || 0;
+      var argsArrayLen = argsArray.length;
+      if (argsArrayLen === i) {
+        return i;
+      }
+      var chunkOperations = argsArrayLen - i > EXECUTION_STEPS && typeof continueCallback === 'function';
+      var endTime = chunkOperations ? Date.now() + EXECUTION_TIME : 0;
+      var steps = 0;
+      var commonObjs = this.commonObjs;
+      var objs = this.objs;
+      var fnId;
+      while (true) {
+        if (stepper !== undefined && i === stepper.nextBreakPoint) {
+          stepper.breakIt(i, continueCallback);
+          return i;
+        }
+        fnId = fnArray[i];
+        if (fnId !== _util.OPS.dependency) {
+          this[fnId].apply(this, argsArray[i]);
+        } else {
+          var deps = argsArray[i];
+          for (var n = 0, nn = deps.length; n < nn; n++) {
+            var depObjId = deps[n];
+            var common = depObjId[0] === 'g' && depObjId[1] === '_';
+            var objsPool = common ? commonObjs : objs;
+            if (!objsPool.isResolved(depObjId)) {
+              objsPool.get(depObjId, continueCallback);
+              return i;
+            }
+          }
+        }
+        i++;
+        if (i === argsArrayLen) {
+          return i;
+        }
+        if (chunkOperations && ++steps > EXECUTION_STEPS) {
+          if (Date.now() > endTime) {
+            continueCallback();
+            return i;
+          }
+          steps = 0;
+        }
+      }
+    },
+    endDrawing: function CanvasGraphics_endDrawing() {
+      if (this.current.activeSMask !== null) {
+        this.endSMaskGroup();
+      }
+      this.ctx.restore();
+      if (this.transparentCanvas) {
+        this.ctx = this.compositeCtx;
+        this.ctx.save();
+        this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+        this.ctx.drawImage(this.transparentCanvas, 0, 0);
+        this.ctx.restore();
+        this.transparentCanvas = null;
+      }
+      this.cachedCanvases.clear();
+      _webgl.WebGLUtils.clear();
+      if (this.imageLayer) {
+        this.imageLayer.endLayout();
+      }
+    },
+    setLineWidth: function CanvasGraphics_setLineWidth(width) {
+      this.current.lineWidth = width;
+      this.ctx.lineWidth = width;
+    },
+    setLineCap: function CanvasGraphics_setLineCap(style) {
+      this.ctx.lineCap = LINE_CAP_STYLES[style];
+    },
+    setLineJoin: function CanvasGraphics_setLineJoin(style) {
+      this.ctx.lineJoin = LINE_JOIN_STYLES[style];
+    },
+    setMiterLimit: function CanvasGraphics_setMiterLimit(limit) {
+      this.ctx.miterLimit = limit;
+    },
+    setDash: function CanvasGraphics_setDash(dashArray, dashPhase) {
+      var ctx = this.ctx;
+      if (ctx.setLineDash !== undefined) {
+        ctx.setLineDash(dashArray);
+        ctx.lineDashOffset = dashPhase;
+      }
+    },
+    setRenderingIntent: function CanvasGraphics_setRenderingIntent(intent) {},
+    setFlatness: function CanvasGraphics_setFlatness(flatness) {},
+    setGState: function CanvasGraphics_setGState(states) {
+      for (var i = 0, ii = states.length; i < ii; i++) {
+        var state = states[i];
+        var key = state[0];
+        var value = state[1];
+        switch (key) {
+          case 'LW':
+            this.setLineWidth(value);
+            break;
+          case 'LC':
+            this.setLineCap(value);
+            break;
+          case 'LJ':
+            this.setLineJoin(value);
+            break;
+          case 'ML':
+            this.setMiterLimit(value);
+            break;
+          case 'D':
+            this.setDash(value[0], value[1]);
+            break;
+          case 'RI':
+            this.setRenderingIntent(value);
+            break;
+          case 'FL':
+            this.setFlatness(value);
+            break;
+          case 'Font':
+            this.setFont(value[0], value[1]);
+            break;
+          case 'CA':
+            this.current.strokeAlpha = state[1];
+            break;
+          case 'ca':
+            this.current.fillAlpha = state[1];
+            this.ctx.globalAlpha = state[1];
+            break;
+          case 'BM':
+            this.ctx.globalCompositeOperation = value;
+            break;
+          case 'SMask':
+            if (this.current.activeSMask) {
+              if (this.stateStack.length > 0 && this.stateStack[this.stateStack.length - 1].activeSMask === this.current.activeSMask) {
+                this.suspendSMaskGroup();
+              } else {
+                this.endSMaskGroup();
+              }
+            }
+            this.current.activeSMask = value ? this.tempSMask : null;
+            if (this.current.activeSMask) {
+              this.beginSMaskGroup();
+            }
+            this.tempSMask = null;
+            break;
+        }
+      }
+    },
+    beginSMaskGroup: function CanvasGraphics_beginSMaskGroup() {
+      var activeSMask = this.current.activeSMask;
+      var drawnWidth = activeSMask.canvas.width;
+      var drawnHeight = activeSMask.canvas.height;
+      var cacheId = 'smaskGroupAt' + this.groupLevel;
+      var scratchCanvas = this.cachedCanvases.getCanvas(cacheId, drawnWidth, drawnHeight, true);
+      var currentCtx = this.ctx;
+      var currentTransform = currentCtx.mozCurrentTransform;
+      this.ctx.save();
+      var groupCtx = scratchCanvas.context;
+      groupCtx.scale(1 / activeSMask.scaleX, 1 / activeSMask.scaleY);
+      groupCtx.translate(-activeSMask.offsetX, -activeSMask.offsetY);
+      groupCtx.transform.apply(groupCtx, currentTransform);
+      activeSMask.startTransformInverse = groupCtx.mozCurrentTransformInverse;
+      copyCtxState(currentCtx, groupCtx);
+      this.ctx = groupCtx;
+      this.setGState([['BM', 'source-over'], ['ca', 1], ['CA', 1]]);
+      this.groupStack.push(currentCtx);
+      this.groupLevel++;
+    },
+    suspendSMaskGroup: function CanvasGraphics_endSMaskGroup() {
+      var groupCtx = this.ctx;
+      this.groupLevel--;
+      this.ctx = this.groupStack.pop();
+      composeSMask(this.ctx, this.current.activeSMask, groupCtx);
+      this.ctx.restore();
+      this.ctx.save();
+      copyCtxState(groupCtx, this.ctx);
+      this.current.resumeSMaskCtx = groupCtx;
+      var deltaTransform = _util.Util.transform(this.current.activeSMask.startTransformInverse, groupCtx.mozCurrentTransform);
+      this.ctx.transform.apply(this.ctx, deltaTransform);
+      groupCtx.save();
+      groupCtx.setTransform(1, 0, 0, 1, 0, 0);
+      groupCtx.clearRect(0, 0, groupCtx.canvas.width, groupCtx.canvas.height);
+      groupCtx.restore();
+    },
+    resumeSMaskGroup: function CanvasGraphics_endSMaskGroup() {
+      var groupCtx = this.current.resumeSMaskCtx;
+      var currentCtx = this.ctx;
+      this.ctx = groupCtx;
+      this.groupStack.push(currentCtx);
+      this.groupLevel++;
+    },
+    endSMaskGroup: function CanvasGraphics_endSMaskGroup() {
+      var groupCtx = this.ctx;
+      this.groupLevel--;
+      this.ctx = this.groupStack.pop();
+      composeSMask(this.ctx, this.current.activeSMask, groupCtx);
+      this.ctx.restore();
+      copyCtxState(groupCtx, this.ctx);
+      var deltaTransform = _util.Util.transform(this.current.activeSMask.startTransformInverse, groupCtx.mozCurrentTransform);
+      this.ctx.transform.apply(this.ctx, deltaTransform);
+    },
+    save: function CanvasGraphics_save() {
+      this.ctx.save();
+      var old = this.current;
+      this.stateStack.push(old);
+      this.current = old.clone();
+      this.current.resumeSMaskCtx = null;
+    },
+    restore: function CanvasGraphics_restore() {
+      if (this.current.resumeSMaskCtx) {
+        this.resumeSMaskGroup();
+      }
+      if (this.current.activeSMask !== null && (this.stateStack.length === 0 || this.stateStack[this.stateStack.length - 1].activeSMask !== this.current.activeSMask)) {
+        this.endSMaskGroup();
+      }
+      if (this.stateStack.length !== 0) {
+        this.current = this.stateStack.pop();
+        this.ctx.restore();
+        this.pendingClip = null;
+        this.cachedGetSinglePixelWidth = null;
+      }
+    },
+    transform: function CanvasGraphics_transform(a, b, c, d, e, f) {
+      this.ctx.transform(a, b, c, d, e, f);
+      this.cachedGetSinglePixelWidth = null;
+    },
+    constructPath: function CanvasGraphics_constructPath(ops, args) {
+      var ctx = this.ctx;
+      var current = this.current;
+      var x = current.x,
+          y = current.y;
+      for (var i = 0, j = 0, ii = ops.length; i < ii; i++) {
+        switch (ops[i] | 0) {
+          case _util.OPS.rectangle:
+            x = args[j++];
+            y = args[j++];
+            var width = args[j++];
+            var height = args[j++];
+            if (width === 0) {
+              width = this.getSinglePixelWidth();
+            }
+            if (height === 0) {
+              height = this.getSinglePixelWidth();
+            }
+            var xw = x + width;
+            var yh = y + height;
+            this.ctx.moveTo(x, y);
+            this.ctx.lineTo(xw, y);
+            this.ctx.lineTo(xw, yh);
+            this.ctx.lineTo(x, yh);
+            this.ctx.lineTo(x, y);
+            this.ctx.closePath();
+            break;
+          case _util.OPS.moveTo:
+            x = args[j++];
+            y = args[j++];
+            ctx.moveTo(x, y);
+            break;
+          case _util.OPS.lineTo:
+            x = args[j++];
+            y = args[j++];
+            ctx.lineTo(x, y);
+            break;
+          case _util.OPS.curveTo:
+            x = args[j + 4];
+            y = args[j + 5];
+            ctx.bezierCurveTo(args[j], args[j + 1], args[j + 2], args[j + 3], x, y);
+            j += 6;
+            break;
+          case _util.OPS.curveTo2:
+            ctx.bezierCurveTo(x, y, args[j], args[j + 1], args[j + 2], args[j + 3]);
+            x = args[j + 2];
+            y = args[j + 3];
+            j += 4;
+            break;
+          case _util.OPS.curveTo3:
+            x = args[j + 2];
+            y = args[j + 3];
+            ctx.bezierCurveTo(args[j], args[j + 1], x, y, x, y);
+            j += 4;
+            break;
+          case _util.OPS.closePath:
+            ctx.closePath();
+            break;
+        }
+      }
+      current.setCurrentPoint(x, y);
+    },
+    closePath: function CanvasGraphics_closePath() {
+      this.ctx.closePath();
+    },
+    stroke: function CanvasGraphics_stroke(consumePath) {
+      consumePath = typeof consumePath !== 'undefined' ? consumePath : true;
+      var ctx = this.ctx;
+      var strokeColor = this.current.strokeColor;
+      ctx.lineWidth = Math.max(this.getSinglePixelWidth() * MIN_WIDTH_FACTOR, this.current.lineWidth);
+      ctx.globalAlpha = this.current.strokeAlpha;
+      if (strokeColor && strokeColor.hasOwnProperty('type') && strokeColor.type === 'Pattern') {
+        ctx.save();
+        ctx.strokeStyle = strokeColor.getPattern(ctx, this);
+        ctx.stroke();
+        ctx.restore();
+      } else {
+        ctx.stroke();
+      }
+      if (consumePath) {
+        this.consumePath();
+      }
+      ctx.globalAlpha = this.current.fillAlpha;
+    },
+    closeStroke: function CanvasGraphics_closeStroke() {
+      this.closePath();
+      this.stroke();
+    },
+    fill: function CanvasGraphics_fill(consumePath) {
+      consumePath = typeof consumePath !== 'undefined' ? consumePath : true;
+      var ctx = this.ctx;
+      var fillColor = this.current.fillColor;
+      var isPatternFill = this.current.patternFill;
+      var needRestore = false;
+      if (isPatternFill) {
+        ctx.save();
+        if (this.baseTransform) {
+          ctx.setTransform.apply(ctx, this.baseTransform);
+        }
+        ctx.fillStyle = fillColor.getPattern(ctx, this);
+        needRestore = true;
+      }
+      if (this.pendingEOFill) {
+        ctx.fill('evenodd');
+        this.pendingEOFill = false;
+      } else {
+        ctx.fill();
+      }
+      if (needRestore) {
+        ctx.restore();
+      }
+      if (consumePath) {
+        this.consumePath();
+      }
+    },
+    eoFill: function CanvasGraphics_eoFill() {
+      this.pendingEOFill = true;
+      this.fill();
+    },
+    fillStroke: function CanvasGraphics_fillStroke() {
+      this.fill(false);
+      this.stroke(false);
+      this.consumePath();
+    },
+    eoFillStroke: function CanvasGraphics_eoFillStroke() {
+      this.pendingEOFill = true;
+      this.fillStroke();
+    },
+    closeFillStroke: function CanvasGraphics_closeFillStroke() {
+      this.closePath();
+      this.fillStroke();
+    },
+    closeEOFillStroke: function CanvasGraphics_closeEOFillStroke() {
+      this.pendingEOFill = true;
+      this.closePath();
+      this.fillStroke();
+    },
+    endPath: function CanvasGraphics_endPath() {
+      this.consumePath();
+    },
+    clip: function CanvasGraphics_clip() {
+      this.pendingClip = NORMAL_CLIP;
+    },
+    eoClip: function CanvasGraphics_eoClip() {
+      this.pendingClip = EO_CLIP;
+    },
+    beginText: function CanvasGraphics_beginText() {
+      this.current.textMatrix = _util.IDENTITY_MATRIX;
+      this.current.textMatrixScale = 1;
+      this.current.x = this.current.lineX = 0;
+      this.current.y = this.current.lineY = 0;
+    },
+    endText: function CanvasGraphics_endText() {
+      var paths = this.pendingTextPaths;
+      var ctx = this.ctx;
+      if (paths === undefined) {
+        ctx.beginPath();
+        return;
+      }
+      ctx.save();
+      ctx.beginPath();
+      for (var i = 0; i < paths.length; i++) {
+        var path = paths[i];
+        ctx.setTransform.apply(ctx, path.transform);
+        ctx.translate(path.x, path.y);
+        path.addToPath(ctx, path.fontSize);
+      }
+      ctx.restore();
+      ctx.clip();
+      ctx.beginPath();
+      delete this.pendingTextPaths;
+    },
+    setCharSpacing: function CanvasGraphics_setCharSpacing(spacing) {
+      this.current.charSpacing = spacing;
+    },
+    setWordSpacing: function CanvasGraphics_setWordSpacing(spacing) {
+      this.current.wordSpacing = spacing;
+    },
+    setHScale: function CanvasGraphics_setHScale(scale) {
+      this.current.textHScale = scale / 100;
+    },
+    setLeading: function CanvasGraphics_setLeading(leading) {
+      this.current.leading = -leading;
+    },
+    setFont: function CanvasGraphics_setFont(fontRefName, size) {
+      var fontObj = this.commonObjs.get(fontRefName);
+      var current = this.current;
+      if (!fontObj) {
+        (0, _util.error)('Can\'t find font for ' + fontRefName);
+      }
+      current.fontMatrix = fontObj.fontMatrix ? fontObj.fontMatrix : _util.FONT_IDENTITY_MATRIX;
+      if (current.fontMatrix[0] === 0 || current.fontMatrix[3] === 0) {
+        (0, _util.warn)('Invalid font matrix for font ' + fontRefName);
+      }
+      if (size < 0) {
+        size = -size;
+        current.fontDirection = -1;
+      } else {
+        current.fontDirection = 1;
+      }
+      this.current.font = fontObj;
+      this.current.fontSize = size;
+      if (fontObj.isType3Font) {
+        return;
+      }
+      var name = fontObj.loadedName || 'sans-serif';
+      var bold = fontObj.black ? '900' : fontObj.bold ? 'bold' : 'normal';
+      var italic = fontObj.italic ? 'italic' : 'normal';
+      var typeface = '"' + name + '", ' + fontObj.fallbackName;
+      var browserFontSize = size < MIN_FONT_SIZE ? MIN_FONT_SIZE : size > MAX_FONT_SIZE ? MAX_FONT_SIZE : size;
+      this.current.fontSizeScale = size / browserFontSize;
+      var rule = italic + ' ' + bold + ' ' + browserFontSize + 'px ' + typeface;
+      this.ctx.font = rule;
+    },
+    setTextRenderingMode: function CanvasGraphics_setTextRenderingMode(mode) {
+      this.current.textRenderingMode = mode;
+    },
+    setTextRise: function CanvasGraphics_setTextRise(rise) {
+      this.current.textRise = rise;
+    },
+    moveText: function CanvasGraphics_moveText(x, y) {
+      this.current.x = this.current.lineX += x;
+      this.current.y = this.current.lineY += y;
+    },
+    setLeadingMoveText: function CanvasGraphics_setLeadingMoveText(x, y) {
+      this.setLeading(-y);
+      this.moveText(x, y);
+    },
+    setTextMatrix: function CanvasGraphics_setTextMatrix(a, b, c, d, e, f) {
+      this.current.textMatrix = [a, b, c, d, e, f];
+      this.current.textMatrixScale = Math.sqrt(a * a + b * b);
+      this.current.x = this.current.lineX = 0;
+      this.current.y = this.current.lineY = 0;
+    },
+    nextLine: function CanvasGraphics_nextLine() {
+      this.moveText(0, this.current.leading);
+    },
+    paintChar: function CanvasGraphics_paintChar(character, x, y) {
+      var ctx = this.ctx;
+      var current = this.current;
+      var font = current.font;
+      var textRenderingMode = current.textRenderingMode;
+      var fontSize = current.fontSize / current.fontSizeScale;
+      var fillStrokeMode = textRenderingMode & _util.TextRenderingMode.FILL_STROKE_MASK;
+      var isAddToPathSet = !!(textRenderingMode & _util.TextRenderingMode.ADD_TO_PATH_FLAG);
+      var addToPath;
+      if (font.disableFontFace || isAddToPathSet) {
+        addToPath = font.getPathGenerator(this.commonObjs, character);
+      }
+      if (font.disableFontFace) {
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.beginPath();
+        addToPath(ctx, fontSize);
+        if (fillStrokeMode === _util.TextRenderingMode.FILL || fillStrokeMode === _util.TextRenderingMode.FILL_STROKE) {
+          ctx.fill();
+        }
+        if (fillStrokeMode === _util.TextRenderingMode.STROKE || fillStrokeMode === _util.TextRenderingMode.FILL_STROKE) {
+          ctx.stroke();
+        }
+        ctx.restore();
+      } else {
+        if (fillStrokeMode === _util.TextRenderingMode.FILL || fillStrokeMode === _util.TextRenderingMode.FILL_STROKE) {
+          ctx.fillText(character, x, y);
+        }
+        if (fillStrokeMode === _util.TextRenderingMode.STROKE || fillStrokeMode === _util.TextRenderingMode.FILL_STROKE) {
+          ctx.strokeText(character, x, y);
+        }
+      }
+      if (isAddToPathSet) {
+        var paths = this.pendingTextPaths || (this.pendingTextPaths = []);
+        paths.push({
+          transform: ctx.mozCurrentTransform,
+          x: x,
+          y: y,
+          fontSize: fontSize,
+          addToPath: addToPath
+        });
+      }
+    },
+    get isFontSubpixelAAEnabled() {
+      var ctx = this.canvasFactory.create(10, 10).context;
+      ctx.scale(1.5, 1);
+      ctx.fillText('I', 0, 10);
+      var data = ctx.getImageData(0, 0, 10, 10).data;
+      var enabled = false;
+      for (var i = 3; i < data.length; i += 4) {
+        if (data[i] > 0 && data[i] < 255) {
+          enabled = true;
+          break;
+        }
+      }
+      return (0, _util.shadow)(this, 'isFontSubpixelAAEnabled', enabled);
+    },
+    showText: function CanvasGraphics_showText(glyphs) {
+      var current = this.current;
+      var font = current.font;
+      if (font.isType3Font) {
+        return this.showType3Text(glyphs);
+      }
+      var fontSize = current.fontSize;
+      if (fontSize === 0) {
+        return;
+      }
+      var ctx = this.ctx;
+      var fontSizeScale = current.fontSizeScale;
+      var charSpacing = current.charSpacing;
+      var wordSpacing = current.wordSpacing;
+      var fontDirection = current.fontDirection;
+      var textHScale = current.textHScale * fontDirection;
+      var glyphsLength = glyphs.length;
+      var vertical = font.vertical;
+      var spacingDir = vertical ? 1 : -1;
+      var defaultVMetrics = font.defaultVMetrics;
+      var widthAdvanceScale = fontSize * current.fontMatrix[0];
+      var simpleFillText = current.textRenderingMode === _util.TextRenderingMode.FILL && !font.disableFontFace;
+      ctx.save();
+      ctx.transform.apply(ctx, current.textMatrix);
+      ctx.translate(current.x, current.y + current.textRise);
+      if (current.patternFill) {
+        ctx.fillStyle = current.fillColor.getPattern(ctx, this);
+      }
+      if (fontDirection > 0) {
+        ctx.scale(textHScale, -1);
+      } else {
+        ctx.scale(textHScale, 1);
+      }
+      var lineWidth = current.lineWidth;
+      var scale = current.textMatrixScale;
+      if (scale === 0 || lineWidth === 0) {
+        var fillStrokeMode = current.textRenderingMode & _util.TextRenderingMode.FILL_STROKE_MASK;
+        if (fillStrokeMode === _util.TextRenderingMode.STROKE || fillStrokeMode === _util.TextRenderingMode.FILL_STROKE) {
+          this.cachedGetSinglePixelWidth = null;
+          lineWidth = this.getSinglePixelWidth() * MIN_WIDTH_FACTOR;
+        }
+      } else {
+        lineWidth /= scale;
+      }
+      if (fontSizeScale !== 1.0) {
+        ctx.scale(fontSizeScale, fontSizeScale);
+        lineWidth /= fontSizeScale;
+      }
+      ctx.lineWidth = lineWidth;
+      var x = 0,
+          i;
+      for (i = 0; i < glyphsLength; ++i) {
+        var glyph = glyphs[i];
+        if ((0, _util.isNum)(glyph)) {
+          x += spacingDir * glyph * fontSize / 1000;
+          continue;
+        }
+        var restoreNeeded = false;
+        var spacing = (glyph.isSpace ? wordSpacing : 0) + charSpacing;
+        var character = glyph.fontChar;
+        var accent = glyph.accent;
+        var scaledX, scaledY, scaledAccentX, scaledAccentY;
+        var width = glyph.width;
+        if (vertical) {
+          var vmetric, vx, vy;
+          vmetric = glyph.vmetric || defaultVMetrics;
+          vx = glyph.vmetric ? vmetric[1] : width * 0.5;
+          vx = -vx * widthAdvanceScale;
+          vy = vmetric[2] * widthAdvanceScale;
+          width = vmetric ? -vmetric[0] : width;
+          scaledX = vx / fontSizeScale;
+          scaledY = (x + vy) / fontSizeScale;
+        } else {
+          scaledX = x / fontSizeScale;
+          scaledY = 0;
+        }
+        if (font.remeasure && width > 0) {
+          var measuredWidth = ctx.measureText(character).width * 1000 / fontSize * fontSizeScale;
+          if (width < measuredWidth && this.isFontSubpixelAAEnabled) {
+            var characterScaleX = width / measuredWidth;
+            restoreNeeded = true;
+            ctx.save();
+            ctx.scale(characterScaleX, 1);
+            scaledX /= characterScaleX;
+          } else if (width !== measuredWidth) {
+            scaledX += (width - measuredWidth) / 2000 * fontSize / fontSizeScale;
+          }
+        }
+        if (glyph.isInFont || font.missingFile) {
+          if (simpleFillText && !accent) {
+            ctx.fillText(character, scaledX, scaledY);
+          } else {
+            this.paintChar(character, scaledX, scaledY);
+            if (accent) {
+              scaledAccentX = scaledX + accent.offset.x / fontSizeScale;
+              scaledAccentY = scaledY - accent.offset.y / fontSizeScale;
+              this.paintChar(accent.fontChar, scaledAccentX, scaledAccentY);
+            }
+          }
+        }
+        var charWidth = width * widthAdvanceScale + spacing * fontDirection;
+        x += charWidth;
+        if (restoreNeeded) {
+          ctx.restore();
+        }
+      }
+      if (vertical) {
+        current.y -= x * textHScale;
+      } else {
+        current.x += x * textHScale;
+      }
+      ctx.restore();
+    },
+    showType3Text: function CanvasGraphics_showType3Text(glyphs) {
+      var ctx = this.ctx;
+      var current = this.current;
+      var font = current.font;
+      var fontSize = current.fontSize;
+      var fontDirection = current.fontDirection;
+      var spacingDir = font.vertical ? 1 : -1;
+      var charSpacing = current.charSpacing;
+      var wordSpacing = current.wordSpacing;
+      var textHScale = current.textHScale * fontDirection;
+      var fontMatrix = current.fontMatrix || _util.FONT_IDENTITY_MATRIX;
+      var glyphsLength = glyphs.length;
+      var isTextInvisible = current.textRenderingMode === _util.TextRenderingMode.INVISIBLE;
+      var i, glyph, width, spacingLength;
+      if (isTextInvisible || fontSize === 0) {
+        return;
+      }
+      this.cachedGetSinglePixelWidth = null;
+      ctx.save();
+      ctx.transform.apply(ctx, current.textMatrix);
+      ctx.translate(current.x, current.y);
+      ctx.scale(textHScale, fontDirection);
+      for (i = 0; i < glyphsLength; ++i) {
+        glyph = glyphs[i];
+        if ((0, _util.isNum)(glyph)) {
+          spacingLength = spacingDir * glyph * fontSize / 1000;
+          this.ctx.translate(spacingLength, 0);
+          current.x += spacingLength * textHScale;
+          continue;
+        }
+        var spacing = (glyph.isSpace ? wordSpacing : 0) + charSpacing;
+        var operatorList = font.charProcOperatorList[glyph.operatorListId];
+        if (!operatorList) {
+          (0, _util.warn)('Type3 character "' + glyph.operatorListId + '" is not available.');
+          continue;
+        }
+        this.processingType3 = glyph;
+        this.save();
+        ctx.scale(fontSize, fontSize);
+        ctx.transform.apply(ctx, fontMatrix);
+        this.executeOperatorList(operatorList);
+        this.restore();
+        var transformed = _util.Util.applyTransform([glyph.width, 0], fontMatrix);
+        width = transformed[0] * fontSize + spacing;
+        ctx.translate(width, 0);
+        current.x += width * textHScale;
+      }
+      ctx.restore();
+      this.processingType3 = null;
+    },
+    setCharWidth: function CanvasGraphics_setCharWidth(xWidth, yWidth) {},
+    setCharWidthAndBounds: function CanvasGraphics_setCharWidthAndBounds(xWidth, yWidth, llx, lly, urx, ury) {
+      this.ctx.rect(llx, lly, urx - llx, ury - lly);
+      this.clip();
+      this.endPath();
+    },
+    getColorN_Pattern: function CanvasGraphics_getColorN_Pattern(IR) {
+      var _this = this;
+
+      var pattern;
+      if (IR[0] === 'TilingPattern') {
+        var color = IR[1];
+        var baseTransform = this.baseTransform || this.ctx.mozCurrentTransform.slice();
+        var canvasGraphicsFactory = {
+          createCanvasGraphics: function createCanvasGraphics(ctx) {
+            return new CanvasGraphics(ctx, _this.commonObjs, _this.objs, _this.canvasFactory);
+          }
+        };
+        pattern = new _pattern_helper.TilingPattern(IR, color, this.ctx, canvasGraphicsFactory, baseTransform);
+      } else {
+        pattern = (0, _pattern_helper.getShadingPatternFromIR)(IR);
+      }
+      return pattern;
+    },
+    setStrokeColorN: function CanvasGraphics_setStrokeColorN() {
+      this.current.strokeColor = this.getColorN_Pattern(arguments);
+    },
+    setFillColorN: function CanvasGraphics_setFillColorN() {
+      this.current.fillColor = this.getColorN_Pattern(arguments);
+      this.current.patternFill = true;
+    },
+    setStrokeRGBColor: function CanvasGraphics_setStrokeRGBColor(r, g, b) {
+      var color = _util.Util.makeCssRgb(r, g, b);
+      this.ctx.strokeStyle = color;
+      this.current.strokeColor = color;
+    },
+    setFillRGBColor: function CanvasGraphics_setFillRGBColor(r, g, b) {
+      var color = _util.Util.makeCssRgb(r, g, b);
+      this.ctx.fillStyle = color;
+      this.current.fillColor = color;
+      this.current.patternFill = false;
+    },
+    shadingFill: function CanvasGraphics_shadingFill(patternIR) {
+      var ctx = this.ctx;
+      this.save();
+      var pattern = (0, _pattern_helper.getShadingPatternFromIR)(patternIR);
+      ctx.fillStyle = pattern.getPattern(ctx, this, true);
+      var inv = ctx.mozCurrentTransformInverse;
+      if (inv) {
+        var canvas = ctx.canvas;
+        var width = canvas.width;
+        var height = canvas.height;
+        var bl = _util.Util.applyTransform([0, 0], inv);
+        var br = _util.Util.applyTransform([0, height], inv);
+        var ul = _util.Util.applyTransform([width, 0], inv);
+        var ur = _util.Util.applyTransform([width, height], inv);
+        var x0 = Math.min(bl[0], br[0], ul[0], ur[0]);
+        var y0 = Math.min(bl[1], br[1], ul[1], ur[1]);
+        var x1 = Math.max(bl[0], br[0], ul[0], ur[0]);
+        var y1 = Math.max(bl[1], br[1], ul[1], ur[1]);
+        this.ctx.fillRect(x0, y0, x1 - x0, y1 - y0);
+      } else {
+        this.ctx.fillRect(-1e10, -1e10, 2e10, 2e10);
+      }
+      this.restore();
+    },
+    beginInlineImage: function CanvasGraphics_beginInlineImage() {
+      (0, _util.error)('Should not call beginInlineImage');
+    },
+    beginImageData: function CanvasGraphics_beginImageData() {
+      (0, _util.error)('Should not call beginImageData');
+    },
+    paintFormXObjectBegin: function CanvasGraphics_paintFormXObjectBegin(matrix, bbox) {
+      this.save();
+      this.baseTransformStack.push(this.baseTransform);
+      if ((0, _util.isArray)(matrix) && matrix.length === 6) {
+        this.transform.apply(this, matrix);
+      }
+      this.baseTransform = this.ctx.mozCurrentTransform;
+      if ((0, _util.isArray)(bbox) && bbox.length === 4) {
+        var width = bbox[2] - bbox[0];
+        var height = bbox[3] - bbox[1];
+        this.ctx.rect(bbox[0], bbox[1], width, height);
+        this.clip();
+        this.endPath();
+      }
+    },
+    paintFormXObjectEnd: function CanvasGraphics_paintFormXObjectEnd() {
+      this.restore();
+      this.baseTransform = this.baseTransformStack.pop();
+    },
+    beginGroup: function CanvasGraphics_beginGroup(group) {
+      this.save();
+      var currentCtx = this.ctx;
+      if (!group.isolated) {
+        (0, _util.info)('TODO: Support non-isolated groups.');
+      }
+      if (group.knockout) {
+        (0, _util.warn)('Knockout groups not supported.');
+      }
+      var currentTransform = currentCtx.mozCurrentTransform;
+      if (group.matrix) {
+        currentCtx.transform.apply(currentCtx, group.matrix);
+      }
+      (0, _util.assert)(group.bbox, 'Bounding box is required.');
+      var bounds = _util.Util.getAxialAlignedBoundingBox(group.bbox, currentCtx.mozCurrentTransform);
+      var canvasBounds = [0, 0, currentCtx.canvas.width, currentCtx.canvas.height];
+      bounds = _util.Util.intersect(bounds, canvasBounds) || [0, 0, 0, 0];
+      var offsetX = Math.floor(bounds[0]);
+      var offsetY = Math.floor(bounds[1]);
+      var drawnWidth = Math.max(Math.ceil(bounds[2]) - offsetX, 1);
+      var drawnHeight = Math.max(Math.ceil(bounds[3]) - offsetY, 1);
+      var scaleX = 1,
+          scaleY = 1;
+      if (drawnWidth > MAX_GROUP_SIZE) {
+        scaleX = drawnWidth / MAX_GROUP_SIZE;
+        drawnWidth = MAX_GROUP_SIZE;
+      }
+      if (drawnHeight > MAX_GROUP_SIZE) {
+        scaleY = drawnHeight / MAX_GROUP_SIZE;
+        drawnHeight = MAX_GROUP_SIZE;
+      }
+      var cacheId = 'groupAt' + this.groupLevel;
+      if (group.smask) {
+        cacheId += '_smask_' + this.smaskCounter++ % 2;
+      }
+      var scratchCanvas = this.cachedCanvases.getCanvas(cacheId, drawnWidth, drawnHeight, true);
+      var groupCtx = scratchCanvas.context;
+      groupCtx.scale(1 / scaleX, 1 / scaleY);
+      groupCtx.translate(-offsetX, -offsetY);
+      groupCtx.transform.apply(groupCtx, currentTransform);
+      if (group.smask) {
+        this.smaskStack.push({
+          canvas: scratchCanvas.canvas,
+          context: groupCtx,
+          offsetX: offsetX,
+          offsetY: offsetY,
+          scaleX: scaleX,
+          scaleY: scaleY,
+          subtype: group.smask.subtype,
+          backdrop: group.smask.backdrop,
+          transferMap: group.smask.transferMap || null,
+          startTransformInverse: null
+        });
+      } else {
+        currentCtx.setTransform(1, 0, 0, 1, 0, 0);
+        currentCtx.translate(offsetX, offsetY);
+        currentCtx.scale(scaleX, scaleY);
+      }
+      copyCtxState(currentCtx, groupCtx);
+      this.ctx = groupCtx;
+      this.setGState([['BM', 'source-over'], ['ca', 1], ['CA', 1]]);
+      this.groupStack.push(currentCtx);
+      this.groupLevel++;
+      this.current.activeSMask = null;
+    },
+    endGroup: function CanvasGraphics_endGroup(group) {
+      this.groupLevel--;
+      var groupCtx = this.ctx;
+      this.ctx = this.groupStack.pop();
+      if (this.ctx.imageSmoothingEnabled !== undefined) {
+        this.ctx.imageSmoothingEnabled = false;
+      } else {
+        this.ctx.mozImageSmoothingEnabled = false;
+      }
+      if (group.smask) {
+        this.tempSMask = this.smaskStack.pop();
+      } else {
+        this.ctx.drawImage(groupCtx.canvas, 0, 0);
+      }
+      this.restore();
+    },
+    beginAnnotations: function CanvasGraphics_beginAnnotations() {
+      this.save();
+      this.current = new CanvasExtraState();
+      if (this.baseTransform) {
+        this.ctx.setTransform.apply(this.ctx, this.baseTransform);
+      }
+    },
+    endAnnotations: function CanvasGraphics_endAnnotations() {
+      this.restore();
+    },
+    beginAnnotation: function CanvasGraphics_beginAnnotation(rect, transform, matrix) {
+      this.save();
+      if ((0, _util.isArray)(rect) && rect.length === 4) {
+        var width = rect[2] - rect[0];
+        var height = rect[3] - rect[1];
+        this.ctx.rect(rect[0], rect[1], width, height);
+        this.clip();
+        this.endPath();
+      }
+      this.transform.apply(this, transform);
+      this.transform.apply(this, matrix);
+    },
+    endAnnotation: function CanvasGraphics_endAnnotation() {
+      this.restore();
+    },
+    paintJpegXObject: function CanvasGraphics_paintJpegXObject(objId, w, h) {
+      var domImage = this.objs.get(objId);
+      if (!domImage) {
+        (0, _util.warn)('Dependent image isn\'t ready yet');
+        return;
+      }
+      this.save();
+      var ctx = this.ctx;
+      ctx.scale(1 / w, -1 / h);
+      ctx.drawImage(domImage, 0, 0, domImage.width, domImage.height, 0, -h, w, h);
+      if (this.imageLayer) {
+        var currentTransform = ctx.mozCurrentTransformInverse;
+        var position = this.getCanvasPosition(0, 0);
+        this.imageLayer.appendImage({
+          objId: objId,
+          left: position[0],
+          top: position[1],
+          width: w / currentTransform[0],
+          height: h / currentTransform[3]
+        });
+      }
+      this.restore();
+    },
+    paintImageMaskXObject: function CanvasGraphics_paintImageMaskXObject(img) {
+      var ctx = this.ctx;
+      var width = img.width,
+          height = img.height;
+      var fillColor = this.current.fillColor;
+      var isPatternFill = this.current.patternFill;
+      var glyph = this.processingType3;
+      if (COMPILE_TYPE3_GLYPHS && glyph && glyph.compiled === undefined) {
+        if (width <= MAX_SIZE_TO_COMPILE && height <= MAX_SIZE_TO_COMPILE) {
+          glyph.compiled = compileType3Glyph({
+            data: img.data,
+            width: width,
+            height: height
+          });
+        } else {
+          glyph.compiled = null;
+        }
+      }
+      if (glyph && glyph.compiled) {
+        glyph.compiled(ctx);
+        return;
+      }
+      var maskCanvas = this.cachedCanvases.getCanvas('maskCanvas', width, height);
+      var maskCtx = maskCanvas.context;
+      maskCtx.save();
+      putBinaryImageMask(maskCtx, img);
+      maskCtx.globalCompositeOperation = 'source-in';
+      maskCtx.fillStyle = isPatternFill ? fillColor.getPattern(maskCtx, this) : fillColor;
+      maskCtx.fillRect(0, 0, width, height);
+      maskCtx.restore();
+      this.paintInlineImageXObject(maskCanvas.canvas);
+    },
+    paintImageMaskXObjectRepeat: function CanvasGraphics_paintImageMaskXObjectRepeat(imgData, scaleX, scaleY, positions) {
+      var width = imgData.width;
+      var height = imgData.height;
+      var fillColor = this.current.fillColor;
+      var isPatternFill = this.current.patternFill;
+      var maskCanvas = this.cachedCanvases.getCanvas('maskCanvas', width, height);
+      var maskCtx = maskCanvas.context;
+      maskCtx.save();
+      putBinaryImageMask(maskCtx, imgData);
+      maskCtx.globalCompositeOperation = 'source-in';
+      maskCtx.fillStyle = isPatternFill ? fillColor.getPattern(maskCtx, this) : fillColor;
+      maskCtx.fillRect(0, 0, width, height);
+      maskCtx.restore();
+      var ctx = this.ctx;
+      for (var i = 0, ii = positions.length; i < ii; i += 2) {
+        ctx.save();
+        ctx.transform(scaleX, 0, 0, scaleY, positions[i], positions[i + 1]);
+        ctx.scale(1, -1);
+        ctx.drawImage(maskCanvas.canvas, 0, 0, width, height, 0, -1, 1, 1);
+        ctx.restore();
+      }
+    },
+    paintImageMaskXObjectGroup: function CanvasGraphics_paintImageMaskXObjectGroup(images) {
+      var ctx = this.ctx;
+      var fillColor = this.current.fillColor;
+      var isPatternFill = this.current.patternFill;
+      for (var i = 0, ii = images.length; i < ii; i++) {
+        var image = images[i];
+        var width = image.width,
+            height = image.height;
+        var maskCanvas = this.cachedCanvases.getCanvas('maskCanvas', width, height);
+        var maskCtx = maskCanvas.context;
+        maskCtx.save();
+        putBinaryImageMask(maskCtx, image);
+        maskCtx.globalCompositeOperation = 'source-in';
+        maskCtx.fillStyle = isPatternFill ? fillColor.getPattern(maskCtx, this) : fillColor;
+        maskCtx.fillRect(0, 0, width, height);
+        maskCtx.restore();
+        ctx.save();
+        ctx.transform.apply(ctx, image.transform);
+        ctx.scale(1, -1);
+        ctx.drawImage(maskCanvas.canvas, 0, 0, width, height, 0, -1, 1, 1);
+        ctx.restore();
+      }
+    },
+    paintImageXObject: function CanvasGraphics_paintImageXObject(objId) {
+      var imgData = this.objs.get(objId);
+      if (!imgData) {
+        (0, _util.warn)('Dependent image isn\'t ready yet');
+        return;
+      }
+      this.paintInlineImageXObject(imgData);
+    },
+    paintImageXObjectRepeat: function CanvasGraphics_paintImageXObjectRepeat(objId, scaleX, scaleY, positions) {
+      var imgData = this.objs.get(objId);
+      if (!imgData) {
+        (0, _util.warn)('Dependent image isn\'t ready yet');
+        return;
+      }
+      var width = imgData.width;
+      var height = imgData.height;
+      var map = [];
+      for (var i = 0, ii = positions.length; i < ii; i += 2) {
+        map.push({
+          transform: [scaleX, 0, 0, scaleY, positions[i], positions[i + 1]],
+          x: 0,
+          y: 0,
+          w: width,
+          h: height
+        });
+      }
+      this.paintInlineImageXObjectGroup(imgData, map);
+    },
+    paintInlineImageXObject: function CanvasGraphics_paintInlineImageXObject(imgData) {
+      var width = imgData.width;
+      var height = imgData.height;
+      var ctx = this.ctx;
+      this.save();
+      ctx.scale(1 / width, -1 / height);
+      var currentTransform = ctx.mozCurrentTransformInverse;
+      var a = currentTransform[0],
+          b = currentTransform[1];
+      var widthScale = Math.max(Math.sqrt(a * a + b * b), 1);
+      var c = currentTransform[2],
+          d = currentTransform[3];
+      var heightScale = Math.max(Math.sqrt(c * c + d * d), 1);
+      var imgToPaint, tmpCanvas;
+      if (imgData instanceof HTMLElement || !imgData.data) {
+        imgToPaint = imgData;
+      } else {
+        tmpCanvas = this.cachedCanvases.getCanvas('inlineImage', width, height);
+        var tmpCtx = tmpCanvas.context;
+        putBinaryImageData(tmpCtx, imgData);
+        imgToPaint = tmpCanvas.canvas;
+      }
+      var paintWidth = width,
+          paintHeight = height;
+      var tmpCanvasId = 'prescale1';
+      while (widthScale > 2 && paintWidth > 1 || heightScale > 2 && paintHeight > 1) {
+        var newWidth = paintWidth,
+            newHeight = paintHeight;
+        if (widthScale > 2 && paintWidth > 1) {
+          newWidth = Math.ceil(paintWidth / 2);
+          widthScale /= paintWidth / newWidth;
+        }
+        if (heightScale > 2 && paintHeight > 1) {
+          newHeight = Math.ceil(paintHeight / 2);
+          heightScale /= paintHeight / newHeight;
+        }
+        tmpCanvas = this.cachedCanvases.getCanvas(tmpCanvasId, newWidth, newHeight);
+        tmpCtx = tmpCanvas.context;
+        tmpCtx.clearRect(0, 0, newWidth, newHeight);
+        tmpCtx.drawImage(imgToPaint, 0, 0, paintWidth, paintHeight, 0, 0, newWidth, newHeight);
+        imgToPaint = tmpCanvas.canvas;
+        paintWidth = newWidth;
+        paintHeight = newHeight;
+        tmpCanvasId = tmpCanvasId === 'prescale1' ? 'prescale2' : 'prescale1';
+      }
+      ctx.drawImage(imgToPaint, 0, 0, paintWidth, paintHeight, 0, -height, width, height);
+      if (this.imageLayer) {
+        var position = this.getCanvasPosition(0, -height);
+        this.imageLayer.appendImage({
+          imgData: imgData,
+          left: position[0],
+          top: position[1],
+          width: width / currentTransform[0],
+          height: height / currentTransform[3]
+        });
+      }
+      this.restore();
+    },
+    paintInlineImageXObjectGroup: function CanvasGraphics_paintInlineImageXObjectGroup(imgData, map) {
+      var ctx = this.ctx;
+      var w = imgData.width;
+      var h = imgData.height;
+      var tmpCanvas = this.cachedCanvases.getCanvas('inlineImage', w, h);
+      var tmpCtx = tmpCanvas.context;
+      putBinaryImageData(tmpCtx, imgData);
+      for (var i = 0, ii = map.length; i < ii; i++) {
+        var entry = map[i];
+        ctx.save();
+        ctx.transform.apply(ctx, entry.transform);
+        ctx.scale(1, -1);
+        ctx.drawImage(tmpCanvas.canvas, entry.x, entry.y, entry.w, entry.h, 0, -1, 1, 1);
+        if (this.imageLayer) {
+          var position = this.getCanvasPosition(entry.x, entry.y);
+          this.imageLayer.appendImage({
+            imgData: imgData,
+            left: position[0],
+            top: position[1],
+            width: w,
+            height: h
+          });
+        }
+        ctx.restore();
+      }
+    },
+    paintSolidColorImageMask: function CanvasGraphics_paintSolidColorImageMask() {
+      this.ctx.fillRect(0, 0, 1, 1);
+    },
+    paintXObject: function CanvasGraphics_paintXObject() {
+      (0, _util.warn)('Unsupported \'paintXObject\' command.');
+    },
+    markPoint: function CanvasGraphics_markPoint(tag) {},
+    markPointProps: function CanvasGraphics_markPointProps(tag, properties) {},
+    beginMarkedContent: function CanvasGraphics_beginMarkedContent(tag) {},
+    beginMarkedContentProps: function CanvasGraphics_beginMarkedContentProps(tag, properties) {},
+    endMarkedContent: function CanvasGraphics_endMarkedContent() {},
+    beginCompat: function CanvasGraphics_beginCompat() {},
+    endCompat: function CanvasGraphics_endCompat() {},
+    consumePath: function CanvasGraphics_consumePath() {
+      var ctx = this.ctx;
+      if (this.pendingClip) {
+        if (this.pendingClip === EO_CLIP) {
+          ctx.clip('evenodd');
+        } else {
+          ctx.clip();
+        }
+        this.pendingClip = null;
+      }
+      ctx.beginPath();
+    },
+    getSinglePixelWidth: function CanvasGraphics_getSinglePixelWidth(scale) {
+      if (this.cachedGetSinglePixelWidth === null) {
+        this.ctx.save();
+        var inverse = this.ctx.mozCurrentTransformInverse;
+        this.ctx.restore();
+        this.cachedGetSinglePixelWidth = Math.sqrt(Math.max(inverse[0] * inverse[0] + inverse[1] * inverse[1], inverse[2] * inverse[2] + inverse[3] * inverse[3]));
+      }
+      return this.cachedGetSinglePixelWidth;
+    },
+    getCanvasPosition: function CanvasGraphics_getCanvasPosition(x, y) {
+      var transform = this.ctx.mozCurrentTransform;
+      return [transform[0] * x + transform[2] * y + transform[4], transform[1] * x + transform[3] * y + transform[5]];
+    }
+  };
+  for (var op in _util.OPS) {
+    CanvasGraphics.prototype[_util.OPS[op]] = CanvasGraphics.prototype[op];
+  }
+  return CanvasGraphics;
+}();
+exports.CanvasGraphics = CanvasGraphics;
+
+/***/ }),
+/* 42 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* Copyright 2017 Mozilla Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.TilingPattern = exports.getShadingPatternFromIR = undefined;
+
+var _util = __webpack_require__(0);
+
+var _webgl = __webpack_require__(11);
+
+var ShadingIRs = {};
+ShadingIRs.RadialAxial = {
+  fromIR: function RadialAxial_fromIR(raw) {
+    var type = raw[1];
+    var colorStops = raw[2];
+    var p0 = raw[3];
+    var p1 = raw[4];
+    var r0 = raw[5];
+    var r1 = raw[6];
+    return {
+      type: 'Pattern',
+      getPattern: function RadialAxial_getPattern(ctx) {
+        var grad;
+        if (type === 'axial') {
+          grad = ctx.createLinearGradient(p0[0], p0[1], p1[0], p1[1]);
+        } else if (type === 'radial') {
+          grad = ctx.createRadialGradient(p0[0], p0[1], r0, p1[0], p1[1], r1);
+        }
+        for (var i = 0, ii = colorStops.length; i < ii; ++i) {
+          var c = colorStops[i];
+          grad.addColorStop(c[0], c[1]);
+        }
+        return grad;
+      }
+    };
+  }
+};
+var createMeshCanvas = function createMeshCanvasClosure() {
+  function drawTriangle(data, context, p1, p2, p3, c1, c2, c3) {
+    var coords = context.coords,
+        colors = context.colors;
+    var bytes = data.data,
+        rowSize = data.width * 4;
+    var tmp;
+    if (coords[p1 + 1] > coords[p2 + 1]) {
+      tmp = p1;
+      p1 = p2;
+      p2 = tmp;
+      tmp = c1;
+      c1 = c2;
+      c2 = tmp;
+    }
+    if (coords[p2 + 1] > coords[p3 + 1]) {
+      tmp = p2;
+      p2 = p3;
+      p3 = tmp;
+      tmp = c2;
+      c2 = c3;
+      c3 = tmp;
+    }
+    if (coords[p1 + 1] > coords[p2 + 1]) {
+      tmp = p1;
+      p1 = p2;
+      p2 = tmp;
+      tmp = c1;
+      c1 = c2;
+      c2 = tmp;
+    }
+    var x1 = (coords[p1] + context.offsetX) * context.scaleX;
+    var y1 = (coords[p1 + 1] + context.offsetY) * context.scaleY;
+    var x2 = (coords[p2] + context.offsetX) * context.scaleX;
+    var y2 = (coords[p2 + 1] + context.offsetY) * context.scaleY;
+    var x3 = (coords[p3] + context.offsetX) * context.scaleX;
+    var y3 = (coords[p3 + 1] + context.offsetY) * context.scaleY;
+    if (y1 >= y3) {
+      return;
+    }
+    var c1r = colors[c1],
+        c1g = colors[c1 + 1],
+        c1b = colors[c1 + 2];
+    var c2r = colors[c2],
+        c2g = colors[c2 + 1],
+        c2b = colors[c2 + 2];
+    var c3r = colors[c3],
+        c3g = colors[c3 + 1],
+        c3b = colors[c3 + 2];
+    var minY = Math.round(y1),
+        maxY = Math.round(y3);
+    var xa, car, cag, cab;
+    var xb, cbr, cbg, cbb;
+    var k;
+    for (var y = minY; y <= maxY; y++) {
+      if (y < y2) {
+        k = y < y1 ? 0 : y1 === y2 ? 1 : (y1 - y) / (y1 - y2);
+        xa = x1 - (x1 - x2) * k;
+        car = c1r - (c1r - c2r) * k;
+        cag = c1g - (c1g - c2g) * k;
+        cab = c1b - (c1b - c2b) * k;
+      } else {
+        k = y > y3 ? 1 : y2 === y3 ? 0 : (y2 - y) / (y2 - y3);
+        xa = x2 - (x2 - x3) * k;
+        car = c2r - (c2r - c3r) * k;
+        cag = c2g - (c2g - c3g) * k;
+        cab = c2b - (c2b - c3b) * k;
+      }
+      k = y < y1 ? 0 : y > y3 ? 1 : (y1 - y) / (y1 - y3);
+      xb = x1 - (x1 - x3) * k;
+      cbr = c1r - (c1r - c3r) * k;
+      cbg = c1g - (c1g - c3g) * k;
+      cbb = c1b - (c1b - c3b) * k;
+      var x1_ = Math.round(Math.min(xa, xb));
+      var x2_ = Math.round(Math.max(xa, xb));
+      var j = rowSize * y + x1_ * 4;
+      for (var x = x1_; x <= x2_; x++) {
+        k = (xa - x) / (xa - xb);
+        k = k < 0 ? 0 : k > 1 ? 1 : k;
+        bytes[j++] = car - (car - cbr) * k | 0;
+        bytes[j++] = cag - (cag - cbg) * k | 0;
+        bytes[j++] = cab - (cab - cbb) * k | 0;
+        bytes[j++] = 255;
+      }
+    }
+  }
+  function drawFigure(data, figure, context) {
+    var ps = figure.coords;
+    var cs = figure.colors;
+    var i, ii;
+    switch (figure.type) {
+      case 'lattice':
+        var verticesPerRow = figure.verticesPerRow;
+        var rows = Math.floor(ps.length / verticesPerRow) - 1;
+        var cols = verticesPerRow - 1;
+        for (i = 0; i < rows; i++) {
+          var q = i * verticesPerRow;
+          for (var j = 0; j < cols; j++, q++) {
+            drawTriangle(data, context, ps[q], ps[q + 1], ps[q + verticesPerRow], cs[q], cs[q + 1], cs[q + verticesPerRow]);
+            drawTriangle(data, context, ps[q + verticesPerRow + 1], ps[q + 1], ps[q + verticesPerRow], cs[q + verticesPerRow + 1], cs[q + 1], cs[q + verticesPerRow]);
+          }
+        }
+        break;
+      case 'triangles':
+        for (i = 0, ii = ps.length; i < ii; i += 3) {
+          drawTriangle(data, context, ps[i], ps[i + 1], ps[i + 2], cs[i], cs[i + 1], cs[i + 2]);
+        }
+        break;
+      default:
+        (0, _util.error)('illigal figure');
+        break;
+    }
+  }
+  function createMeshCanvas(bounds, combinesScale, coords, colors, figures, backgroundColor, cachedCanvases) {
+    var EXPECTED_SCALE = 1.1;
+    var MAX_PATTERN_SIZE = 3000;
+    var BORDER_SIZE = 2;
+    var offsetX = Math.floor(bounds[0]);
+    var offsetY = Math.floor(bounds[1]);
+    var boundsWidth = Math.ceil(bounds[2]) - offsetX;
+    var boundsHeight = Math.ceil(bounds[3]) - offsetY;
+    var width = Math.min(Math.ceil(Math.abs(boundsWidth * combinesScale[0] * EXPECTED_SCALE)), MAX_PATTERN_SIZE);
+    var height = Math.min(Math.ceil(Math.abs(boundsHeight * combinesScale[1] * EXPECTED_SCALE)), MAX_PATTERN_SIZE);
+    var scaleX = boundsWidth / width;
+    var scaleY = boundsHeight / height;
+    var context = {
+      coords: coords,
+      colors: colors,
+      offsetX: -offsetX,
+      offsetY: -offsetY,
+      scaleX: 1 / scaleX,
+      scaleY: 1 / scaleY
+    };
+    var paddedWidth = width + BORDER_SIZE * 2;
+    var paddedHeight = height + BORDER_SIZE * 2;
+    var canvas, tmpCanvas, i, ii;
+    if (_webgl.WebGLUtils.isEnabled) {
+      canvas = _webgl.WebGLUtils.drawFigures(width, height, backgroundColor, figures, context);
+      tmpCanvas = cachedCanvases.getCanvas('mesh', paddedWidth, paddedHeight, false);
+      tmpCanvas.context.drawImage(canvas, BORDER_SIZE, BORDER_SIZE);
+      canvas = tmpCanvas.canvas;
+    } else {
+      tmpCanvas = cachedCanvases.getCanvas('mesh', paddedWidth, paddedHeight, false);
+      var tmpCtx = tmpCanvas.context;
+      var data = tmpCtx.createImageData(width, height);
+      if (backgroundColor) {
+        var bytes = data.data;
+        for (i = 0, ii = bytes.length; i < ii; i += 4) {
+          bytes[i] = backgroundColor[0];
+          bytes[i + 1] = backgroundColor[1];
+          bytes[i + 2] = backgroundColor[2];
+          bytes[i + 3] = 255;
+        }
+      }
+      for (i = 0; i < figures.length; i++) {
+        drawFigure(data, figures[i], context);
+      }
+      tmpCtx.putImageData(data, BORDER_SIZE, BORDER_SIZE);
+      canvas = tmpCanvas.canvas;
+    }
+    return {
+      canvas: canvas,
+      offsetX: offsetX - BORDER_SIZE * scaleX,
+      offsetY: offsetY - BORDER_SIZE * scaleY,
+      scaleX: scaleX,
+      scaleY: scaleY
+    };
+  }
+  return createMeshCanvas;
+}();
+ShadingIRs.Mesh = {
+  fromIR: function Mesh_fromIR(raw) {
+    var coords = raw[2];
+    var colors = raw[3];
+    var figures = raw[4];
+    var bounds = raw[5];
+    var matrix = raw[6];
+    var background = raw[8];
+    return {
+      type: 'Pattern',
+      getPattern: function Mesh_getPattern(ctx, owner, shadingFill) {
+        var scale;
+        if (shadingFill) {
+          scale = _util.Util.singularValueDecompose2dScale(ctx.mozCurrentTransform);
+        } else {
+          scale = _util.Util.singularValueDecompose2dScale(owner.baseTransform);
+          if (matrix) {
+            var matrixScale = _util.Util.singularValueDecompose2dScale(matrix);
+            scale = [scale[0] * matrixScale[0], scale[1] * matrixScale[1]];
+          }
+        }
+        var temporaryPatternCanvas = createMeshCanvas(bounds, scale, coords, colors, figures, shadingFill ? null : background, owner.cachedCanvases);
+        if (!shadingFill) {
+          ctx.setTransform.apply(ctx, owner.baseTransform);
+          if (matrix) {
+            ctx.transform.apply(ctx, matrix);
+          }
+        }
+        ctx.translate(temporaryPatternCanvas.offsetX, temporaryPatternCanvas.offsetY);
+        ctx.scale(temporaryPatternCanvas.scaleX, temporaryPatternCanvas.scaleY);
+        return ctx.createPattern(temporaryPatternCanvas.canvas, 'no-repeat');
+      }
+    };
+  }
+};
+ShadingIRs.Dummy = {
+  fromIR: function Dummy_fromIR() {
+    return {
+      type: 'Pattern',
+      getPattern: function Dummy_fromIR_getPattern() {
+        return 'hotpink';
+      }
+    };
+  }
+};
+function getShadingPatternFromIR(raw) {
+  var shadingIR = ShadingIRs[raw[0]];
+  if (!shadingIR) {
+    (0, _util.error)('Unknown IR type: ' + raw[0]);
+  }
+  return shadingIR.fromIR(raw);
+}
+var TilingPattern = function TilingPatternClosure() {
+  var PaintType = {
+    COLORED: 1,
+    UNCOLORED: 2
+  };
+  var MAX_PATTERN_SIZE = 3000;
+  function TilingPattern(IR, color, ctx, canvasGraphicsFactory, baseTransform) {
+    this.operatorList = IR[2];
+    this.matrix = IR[3] || [1, 0, 0, 1, 0, 0];
+    this.bbox = _util.Util.normalizeRect(IR[4]);
+    this.xstep = IR[5];
+    this.ystep = IR[6];
+    this.paintType = IR[7];
+    this.tilingType = IR[8];
+    this.color = color;
+    this.canvasGraphicsFactory = canvasGraphicsFactory;
+    this.baseTransform = baseTransform;
+    this.type = 'Pattern';
+    this.ctx = ctx;
+  }
+  TilingPattern.prototype = {
+    createPatternCanvas: function TilinPattern_createPatternCanvas(owner) {
+      var operatorList = this.operatorList;
+      var bbox = this.bbox;
+      var xstep = this.xstep;
+      var ystep = this.ystep;
+      var paintType = this.paintType;
+      var tilingType = this.tilingType;
+      var color = this.color;
+      var canvasGraphicsFactory = this.canvasGraphicsFactory;
+      (0, _util.info)('TilingType: ' + tilingType);
+      var x0 = bbox[0],
+          y0 = bbox[1],
+          x1 = bbox[2],
+          y1 = bbox[3];
+      var topLeft = [x0, y0];
+      var botRight = [x0 + xstep, y0 + ystep];
+      var width = botRight[0] - topLeft[0];
+      var height = botRight[1] - topLeft[1];
+      var matrixScale = _util.Util.singularValueDecompose2dScale(this.matrix);
+      var curMatrixScale = _util.Util.singularValueDecompose2dScale(this.baseTransform);
+      var combinedScale = [matrixScale[0] * curMatrixScale[0], matrixScale[1] * curMatrixScale[1]];
+      width = Math.min(Math.ceil(Math.abs(width * combinedScale[0])), MAX_PATTERN_SIZE);
+      height = Math.min(Math.ceil(Math.abs(height * combinedScale[1])), MAX_PATTERN_SIZE);
+      var tmpCanvas = owner.cachedCanvases.getCanvas('pattern', width, height, true);
+      var tmpCtx = tmpCanvas.context;
+      var graphics = canvasGraphicsFactory.createCanvasGraphics(tmpCtx);
+      graphics.groupLevel = owner.groupLevel;
+      this.setFillAndStrokeStyleToContext(tmpCtx, paintType, color);
+      this.setScale(width, height, xstep, ystep);
+      this.transformToScale(graphics);
+      var tmpTranslate = [1, 0, 0, 1, -topLeft[0], -topLeft[1]];
+      graphics.transform.apply(graphics, tmpTranslate);
+      this.clipBbox(graphics, bbox, x0, y0, x1, y1);
+      graphics.executeOperatorList(operatorList);
+      return tmpCanvas.canvas;
+    },
+    setScale: function TilingPattern_setScale(width, height, xstep, ystep) {
+      this.scale = [width / xstep, height / ystep];
+    },
+    transformToScale: function TilingPattern_transformToScale(graphics) {
+      var scale = this.scale;
+      var tmpScale = [scale[0], 0, 0, scale[1], 0, 0];
+      graphics.transform.apply(graphics, tmpScale);
+    },
+    scaleToContext: function TilingPattern_scaleToContext() {
+      var scale = this.scale;
+      this.ctx.scale(1 / scale[0], 1 / scale[1]);
+    },
+    clipBbox: function clipBbox(graphics, bbox, x0, y0, x1, y1) {
+      if ((0, _util.isArray)(bbox) && bbox.length === 4) {
+        var bboxWidth = x1 - x0;
+        var bboxHeight = y1 - y0;
+        graphics.ctx.rect(x0, y0, bboxWidth, bboxHeight);
+        graphics.clip();
+        graphics.endPath();
+      }
+    },
+    setFillAndStrokeStyleToContext: function setFillAndStrokeStyleToContext(context, paintType, color) {
+      switch (paintType) {
+        case PaintType.COLORED:
+          var ctx = this.ctx;
+          context.fillStyle = ctx.fillStyle;
+          context.strokeStyle = ctx.strokeStyle;
+          break;
+        case PaintType.UNCOLORED:
+          var cssColor = _util.Util.makeCssRgb(color[0], color[1], color[2]);
+          context.fillStyle = cssColor;
+          context.strokeStyle = cssColor;
+          break;
+        default:
+          (0, _util.error)('Unsupported paint type: ' + paintType);
+      }
+    },
+    getPattern: function TilingPattern_getPattern(ctx, owner) {
+      var temporaryPatternCanvas = this.createPatternCanvas(owner);
+      ctx = this.ctx;
+      ctx.setTransform.apply(ctx, this.baseTransform);
+      ctx.transform.apply(ctx, this.matrix);
+      this.scaleToContext();
+      return ctx.createPattern(temporaryPatternCanvas, 'repeat');
+    }
+  };
+  return TilingPattern;
+}();
+exports.getShadingPatternFromIR = getShadingPatternFromIR;
+exports.TilingPattern = TilingPattern;
+
+/***/ }),
+/* 43 */
+/***/ (function(module, exports) {
+
+module.exports = function(obj){
+var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+with(obj||{}){
+__p+='<div class="mContainer">\n\n    <div class="findbar hidden doorHanger" id="findbar">\n        <div id="findbarInputContainer">\n            <input id="findInput" class="toolbarField" title="Find" placeholder="Find in document…" tabindex="91" data-l10n-id="find_input">\n            <div class="splitToolbarButton">\n                <button id="findPrevious" class="toolbarButton findPrevious" title="Find the previous occurrence of the phrase" tabindex="92" data-l10n-id="find_previous">\n                    <span data-l10n-id="find_previous_label">Previous</span>\n                </button>\n                <div class="splitToolbarButtonSeparator"></div>\n                <button id="findNext" class="toolbarButton findNext" title="Find the next occurrence of the phrase" tabindex="93" data-l10n-id="find_next">\n                    <span data-l10n-id="find_next_label">Next</span>\n                </button>\n            </div>\n        </div>\n\n        <div id="findbarOptionsContainer">\n            <input type="checkbox" id="findHighlightAll" class="toolbarField" tabindex="94">\n            <label for="findHighlightAll" class="toolbarLabel" data-l10n-id="find_highlight">Highlight all</label>\n            <input type="checkbox" id="findMatchCase" class="toolbarField" tabindex="95">\n            <label for="findMatchCase" class="toolbarLabel" data-l10n-id="find_match_case_label">Match case</label>\n            <span id="findResultsCount" class="toolbarLabel hidden"></span>\n        </div>\n\n        <div id="findbarMessageContainer">\n            <span id="findMsg" class="toolbarLabel"></span>\n        </div>\n    </div>  <!-- findbar -->\n\n\n    <div class="toolbar">\n        <div id="toolbarContainer">\n            <div id="toolbarViewer">\n                <div id="toolbarViewerLeft">\n                    <button id="viewFind" class="toolbarButton" title="Find in Document" tabindex="12" data-l10n-id="findbar">\n                        <span data-l10n-id="findbar_label">Find</span>\n                    </button>\n                    <button id="presentationMode" class="toolbarButton presentationMode hiddenLargeView" title="Switch to Presentation Mode" tabindex="31" data-l10n-id="presentation_mode">\n                        <span data-l10n-id="presentation_mode_label">Presentation Mode</span>\n                    </button>\n                </div>\n                <div id="toolbarViewerMiddle">\n                    <div class="splitToolbarButton">\n                        <button id="zoomOut" class="toolbarButton zoomOut" title="Zoom Out" tabindex="21" data-l10n-id="zoom_out">\n                            <span data-l10n-id="zoom_out_label">Zoom Out</span>\n                        </button>\n                        <div class="splitToolbarButtonSeparator"></div>\n                        <button id="zoomIn" class="toolbarButton zoomIn" title="Zoom In" tabindex="22" data-l10n-id="zoom_in">\n                            <span data-l10n-id="zoom_in_label">Zoom In</span>\n                        </button>\n                        <div class="splitToolbarButtonSeparator"></div>\n                    </div>\n                    <button id="reset" class="toolbarButton reset" title="Reset" tabindex="23" data-l10n-id="reset">\n                        <span data-l10n-id="reset_label">Reset</span>\n                    </button>\n                </div>\n            </div>\n        </div>\n    </div>\n    <div id="viewerContainer" tabindex="0">\n        <div id="viewer" class="pdfViewer"></div>\n    </div>\n</div>\n';
+}
+return __p;
+};
 
 /***/ })
-
-},[140]);
+],[31]);
 //# sourceMappingURL=document_pdfjs.js.map
