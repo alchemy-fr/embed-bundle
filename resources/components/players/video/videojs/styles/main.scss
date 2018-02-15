@@ -105,7 +105,9 @@ $asset-theme-path: './assets/images/';
   cursor: pointer; }
 
 .vjs-chapters-thumbnails-item-image {
-  width: 100%; }
+  width: 100%;
+  margin-top: 5px;
+}
 
 .vjs-chapters-thumbnails-item-title {
   display: block; }
@@ -114,6 +116,8 @@ $asset-theme-path: './assets/images/';
 /** custom styles */
 .vjs-chapters-thumbnails-item {
   img {
-    display: none;
+    //display: none;
+    width: auto;
+    height: 100%;
   }
 }

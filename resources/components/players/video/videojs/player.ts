@@ -7,7 +7,7 @@
 (<any>window).HELP_IMPROVE_VIDEOJS = false;
 let videojs = require('../../../../../node_modules/video.js/dist/video.js');
 
-let chapters = require('../../../../../node_modules/videojs-chapter-thumbnails/dist/videojs.chapter-thumbnails.js')
+let chapters = require('../../../../../node_modules/videojs-chapter-thumbnails/dist/videojs.chapter-thumbnails.js');
 
 import * as _ from 'underscore';
 import ConfigService from '../../../embed/config/service';
