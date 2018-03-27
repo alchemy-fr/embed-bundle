@@ -15,6 +15,7 @@ let ui_utils:any = require('../../../../../node_modules/pdfjs-dist/lib/web/ui_ut
 import * as _ from 'underscore';
 import ConfigService from '../../../embed/config/service';
 let playerTemplate:any = require('./player.html');
+let pym = require('pym.js');
 
 
 let FindStates = {
@@ -30,6 +31,10 @@ export default class DocumentPlayer {
     private configService;
     private $documentContainer;
     private documentEmbedContainerId;
+    private pymChild;
+    private $embedContainer;
+    private resourceOriginalWidth;
+    private resourceOriginalHeight;
 
     constructor() {
         let SCALE_DELTA = 1.5;
@@ -39,11 +44,30 @@ export default class DocumentPlayer {
         let opened = false;
         let isFullScreen = false;
         this.configService = new ConfigService();
+        let that = this;
 
         let docContainers =  document.getElementsByClassName('document-player');
         this.$documentContainer = docContainers[0];
         this.$documentContainer.insertAdjacentHTML('afterbegin', playerTemplate( this.configService.get('resource') ));
+        this.$embedContainer = document.getElementById('embed-content');
 
+        this.resourceOriginalWidth = this.configService.get('resource.width');
+        this.resourceOriginalHeight = this.configService.get('resource.height');
+
+        if (this.configService.get('isStandalone') !== true) {
+            this.pymChild = new (<any>pym).Child({
+                id: 'phraseanet-embed-frame', renderCallback: (windowWidth) => {
+                    let ratio = that.resourceOriginalHeight / that.resourceOriginalWidth;
+                    let height = windowWidth > 0 ? (windowWidth * ratio) : that.resourceOriginalHeight;
+                    // send video calculated height
+                    that.$embedContainer.style.height = height + 'px';
+                }
+            });
+
+            this.pymChild.onMessage('shouldResize', (container) => {
+                this.pymChild.sendHeight()
+            })
+        }
 
         let pdf = this.configService.get('resource.url');
         //let pdf = '/assets/helloworld.pdf';
@@ -67,6 +91,21 @@ export default class DocumentPlayer {
 
         let pdfViewer = new (<any>window).PDFJS.PDFViewer({
             container: container
+        });
+
+        window.addEventListener('resize', _.debounce(() => {
+            if (this.pymChild !== undefined) {
+                this.pymChild.sendHeight()
+            }
+            pdfViewer.currentScaleValue = 'page-width';
+        }, 200), false);
+
+        container.addEventListener('pagesinit', function () {
+            // change default scale.
+            pdfViewer.currentScaleValue = 'page-width';
+            if (this.pymChild !== undefined) {
+                this.pymChild.sendHeight()
+            }
         });
 
         //set localization
@@ -348,6 +387,9 @@ export default class DocumentPlayer {
             .then(function(document){
                 console.log("render");
                 pdfViewer.setDocument(document);
+                if (that.pymChild !== undefined) {
+                    that.pymChild.sendHeight()
+                }
             });
     }
 }

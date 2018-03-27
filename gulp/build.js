@@ -17,7 +17,6 @@ gulp.task('webpack:build', ['styles', 'hbs-tpl'], function(callback) {
     // modify some webpack config options
     var myConfig = Object.create(webpackConfig);
     myConfig.plugins = myConfig.plugins.concat(
-        new webpack.optimize.DedupePlugin(),
         new webpack.optimize.UglifyJsPlugin({
             compress: {
                 drop_console: true,

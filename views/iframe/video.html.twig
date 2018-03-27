@@ -21,6 +21,7 @@
         var envConfiguration = (function () {
             return {
                 locale: '{{app.locale}}',
+                isStandalone: (window === window.top) ? true : false,
                 resource: {
                     width: {{embedMedia.dimensions.width}},
                     height: {{embedMedia.dimensions.height}},
