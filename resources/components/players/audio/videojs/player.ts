@@ -12,6 +12,7 @@ import * as _ from 'underscore';
 import ConfigService from '../../../embed/config/service';
 import ResizeEl from '../../../utils/resizeEl';
 let playerTemplate:any = require('./player.html');
+let pym = require('pym.js');
 
 export default class AudioPlayer {
     private configService;
@@ -21,7 +22,9 @@ export default class AudioPlayer {
     private $embedResource;
     private resizer;
     private $playerContainer;
+    private pymChild;
     constructor() {
+        let that = this;
         this.configService = new ConfigService();
 
         let audioContainers =  document.getElementsByClassName('audio-player'); //$('.video-player');
@@ -33,6 +36,31 @@ export default class AudioPlayer {
         this.resourceOriginalWidth = this.configService.get('resource.width');
         this.resourceOriginalHeight = this.configService.get('resource.height');
 
+        if( this.configService.get('isStandalone') === true ) {
+            this.initResizer();
+        } else {
+            this.pymChild = new (<any>pym).Child({id: 'phraseanet-embed-frame', renderCallback: function(windowWidth) {
+                //let ratio = that.resourceOriginalHeight / that.resourceOriginalWidth;
+                // send video calculated height
+                //that.$embedContainer.style.height = windowWidth * ratio + 'px';
+            }});
+
+            window.addEventListener('resize', _.debounce(() => {
+                if (this.pymChild !== undefined) {
+                    this.pymChild.sendHeight()
+                }
+            }, 200), false);
+
+            if (this.pymChild.parentUrl === '') {
+                // no parent pym:
+                this.initResizer();
+            }
+        }
+
+        this.setupVideo();
+    }
+
+    initResizer() {
         this.resizer = new ResizeEl({
             target: this.$embedResource,
             container: this.$embedContainer,
@@ -54,8 +82,6 @@ export default class AudioPlayer {
             height: this.resourceOriginalHeight
         });
         this.resizer.resize();
-
-        this.setupVideo();
     }
 
     setupVideo() {

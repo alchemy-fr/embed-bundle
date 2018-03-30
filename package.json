@@ -1,9 +1,10 @@
 {
   "name": "alchemy-embed-medias",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "",
   "scripts": {
     "dist": "node_modules/.bin/gulp deploy;",
+    "dev": "./node_modules/.bin/gulp watch;",
     "publish-patch": "git add -A && npm run dist && git commit && git push -u origin master && git push --tags && npm version patch && npm publish",
     "publish-minor": "git add -A && npm run dist && git commit && git push -u origin master && git push --tags && npm version minor && npm publish"
   },
@@ -33,11 +34,13 @@
   "dependencies": {
     "es5-shim": "^4.3.1",
     "flowplayer": "^6.0.4",
+    "gulp-install": "^1.0.0",
     "html5shiv": "~3.7.3",
     "jquery": "~1.11.3",
     "lodash.merge": "^3.3.2",
     "modernizr": "~3.0.0",
     "pdfjs-dist": "1.8.366",
+    "pym.js": "^1.3.2",
     "screenfull": "^2.0.0",
     "swfobject": "^2.2.1",
     "underscore": "^1.8.3",
