@@ -30,15 +30,12 @@ class Embed
         ];
 
         if (isset($embedConfiguration)) {
-
             $userConfig = $this->normalizeConfig($embedConfiguration);
 
             // override default options with users defined:
             $config = array_replace_recursive($config, $userConfig);
-
         }
         $this->embedConfiguration = $config;
-
     }
 
     /**

@@ -91,7 +91,7 @@ class EmbedController
 
                 // if document type is pdf and player is active, let's use original documents:
 
-                $ie8OrLess = preg_match('/(?i)msie [6-8]/',$_SERVER['HTTP_USER_AGENT']);
+                $ie8OrLess = preg_match('/(?i)msie [6-8]/', $_SERVER['HTTP_USER_AGENT']);
 
                 if ($record->getMimeType() == 'application/pdf' && !$ie8OrLess) {
                     if ($embedConfig['document']['enable-pdfjs'] === true) {
