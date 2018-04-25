@@ -21,7 +21,6 @@ use Silex\Api\ControllerProviderInterface;
 use Silex\Application as SilexApplication;
 use Silex\ControllerCollection;
 
-
 class EmbedServiceProvider implements ServiceProviderInterface, ControllerProviderInterface
 {
     public function register(Container $app)
@@ -31,30 +30,24 @@ class EmbedServiceProvider implements ServiceProviderInterface, ControllerProvid
             return new ChainedResourceResolver($app['alchemy_embed.resource_resolvers']);
         };
 
-        $app['alchemy_embed.controller.embed'] =
-          function (Application $app) {
-              return new EmbedController($app, $app['alchemy_embed.service.media'], $app['alchemy_embed.service.embed']);
-          }
-        ;
+        $app['alchemy_embed.controller.embed'] = function (Application $app) {
+            return new EmbedController($app, $app['alchemy_embed.service.media'], $app['alchemy_embed.service.embed']);
+        };
 
-        $app['alchemy_embed.service.embed'] =
-          function(Application $app) {
-              return new Embed($app['phraseanet.configuration']['embed_bundle']);
-          }
-        ;
+        $app['alchemy_embed.service.embed'] = function (Application $app) {
+            return new Embed($app['phraseanet.configuration']['embed_bundle']);
+        };
 
-        $app['alchemy_embed.service.media'] =
-          function(Application $app) {
+        $app['alchemy_embed.service.media'] = function (Application $app) {
               return new Media($app);
-          }
-        ;
+        };
 
         $app['twig.loader.filesystem'] =
-          $app->extend('twig.loader.filesystem', function (\Twig_Loader_Filesystem $loader) {
-              $loader->addPath(__DIR__.'/../../views', 'alchemy_embed');
+            $app->extend('twig.loader.filesystem', function (\Twig_Loader_Filesystem $loader) {
+                $loader->addPath(__DIR__.'/../../views', 'alchemy_embed');
 
-              return $loader;
-          });
+                return $loader;
+            });
     }
 
     public function connect(SilexApplication $app)
