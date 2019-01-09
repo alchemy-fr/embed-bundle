@@ -93,7 +93,18 @@ class EmbedController
 
                 $ie8OrLess = preg_match('/(?i)msie [6-8]/',$_SERVER['HTTP_USER_AGENT']);
 
-                if ($record->getMimeType() == 'application/pdf' && !$ie8OrLess) {
+                if ($mediaInformation->getResource()->get_name() == 'preview' &&
+                    $mediaInformation->getResource()->get_mime() == 'application/pdf' &&
+                    !$ie8OrLess)
+                {
+                    if ($embedConfig['document']['enable-pdfjs'] === true) {
+                        if ($record->has_subdef('preview')) {
+                            $subdef = $record->get_subdef('preview');
+                            $embedConfig['document']['player'] = 'pdfjs';
+                            $metaData['embedMedia']['url'] = (string)$subdef->get_permalink()->get_url();
+                        }
+                    }
+                }elseif ($record->getMimeType() == 'application/pdf' && !$ie8OrLess) {
                     if ($embedConfig['document']['enable-pdfjs'] === true) {
                         if ($record->has_subdef('document')) {
                             $subdef = $record->get_subdef('document');
@@ -109,6 +120,25 @@ class EmbedController
                     $embedConfig['audio']['autoplay'] = true;
                 }
                 $template = 'audio.html.twig';
+                break;
+            case 'image':
+                $ie8OrLess = preg_match('/(?i)msie [6-8]/',$_SERVER['HTTP_USER_AGENT']);
+
+                if ($mediaInformation->getResource()->get_name() == 'preview' &&
+                    $mediaInformation->getResource()->get_mime() == 'application/pdf' &&
+                    !$ie8OrLess)
+                {
+                    if ($embedConfig['document']['enable-pdfjs'] === true) {
+                        if ($record->has_subdef('preview')) {
+                            $subdef = $record->get_subdef('preview');
+                            $embedConfig['document']['player'] = 'pdfjs';
+                            $metaData['embedMedia']['url'] = (string)$subdef->get_permalink()->get_url();
+                        }
+                    }
+
+                    $template = 'document.html.twig';
+                }
+
                 break;
             default:
                 $template = 'image.html.twig';
