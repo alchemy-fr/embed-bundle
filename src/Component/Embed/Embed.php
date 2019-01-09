@@ -30,7 +30,6 @@ class Embed
         ];
 
         if (isset($embedConfiguration)) {
-
             $userConfig = $this->normalizeConfig($embedConfiguration);
 
             // override default options with users defined:
@@ -38,7 +37,6 @@ class Embed
 
         }
         $this->embedConfiguration = $config;
-
     }
 
     /**
