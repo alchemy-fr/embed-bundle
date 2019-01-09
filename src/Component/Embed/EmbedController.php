@@ -137,6 +137,8 @@ class EmbedController
                     }
 
                     $template = 'document.html.twig';
+                }else{
+                    $template = 'image.html.twig';
                 }
 
                 break;
