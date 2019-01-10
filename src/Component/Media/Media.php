@@ -220,7 +220,6 @@ class Media extends AbstractDelivery
 
             // extract vtt content from ids
             foreach ($record->get_caption()->get_fields(null, true) as $field) {
-
                 // if a category is matching, ensure it's vtt related
                 if (!in_array($id, $vttIds) || $id !== $field->get_meta_struct_id()) {
                     continue;
@@ -268,7 +267,7 @@ class Media extends AbstractDelivery
                     $kind = '';
                     $setAsDefault = false;
                     $vttFoundKind = strtolower($foundParts[1]);
-                    switch($vttFoundKind) {
+                    switch ($vttFoundKind) {
                         case 'chapters':
                             $setAsDefault = true;
                             $kind = 'chapters';
@@ -288,7 +287,6 @@ class Media extends AbstractDelivery
 
             // extract vtt metadatas from ids
             foreach ($record->get_caption()->get_fields(null, true) as $field) {
-
                 $metaStructId = $field->get_meta_struct_id();
 
                 if (!in_array($metaStructId, $vttIds)) {
