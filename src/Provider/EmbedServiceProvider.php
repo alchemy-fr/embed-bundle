@@ -30,29 +30,34 @@ class EmbedServiceProvider implements ServiceProviderInterface, ControllerProvid
         });
 
         $app['alchemy_embed.controller.embed'] = $app->share(
-          function (Application $app) {
-              return new EmbedController($app, $app['alchemy_embed.service.media'], $app['alchemy_embed.service.embed']);
-          }
+            function (Application $app) {
+                return new EmbedController(
+                    $app,
+                    $app['alchemy_embed.service.media'],
+                    $app['alchemy_embed.service.embed']
+                );
+            }
         );
 
         $app['alchemy_embed.service.embed'] = $app->share(
-          function(Application $app) {
-              return new Embed($app['phraseanet.configuration']['embed_bundle']);
-          }
+            function (Application $app) {
+                return new Embed($app['phraseanet.configuration']['embed_bundle']);
+            }
         );
 
         $app['alchemy_embed.service.media'] = $app->share(
-          function(Application $app) {
-              return new Media($app);
-          }
+            function (Application $app) {
+                return new Media($app);
+            }
         );
 
         $app['twig.loader.filesystem'] = $app->share(
-          $app->extend('twig.loader.filesystem', function (\Twig_Loader_Filesystem $loader) {
-              $loader->addPath(__DIR__.'/../../views', 'alchemy_embed');
+            $app->extend('twig.loader.filesystem', function (\Twig_Loader_Filesystem $loader) {
+                $loader->addPath(__DIR__.'/../../views', 'alchemy_embed');
 
-              return $loader;
-          }));
+                return $loader;
+            })
+        );
     }
 
     public function boot(SilexApplication $app)
