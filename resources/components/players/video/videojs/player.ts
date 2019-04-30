@@ -21,6 +21,7 @@ export default class VideoPlayer {
     private resourceOriginalHeight;
     private $embedContainer;
     private $embedVideoResource;
+    private $currentTime;
     private resizer;
     private $playerContainer;
     constructor() {
@@ -32,6 +33,8 @@ export default class VideoPlayer {
 
         this.$embedContainer = document.getElementById('embed-content'); //$('#embed-content');
         this.$embedVideoResource = document.getElementById('embed-video'); //$('#embed-video');
+
+        this.$currentTime = this.configService.get('resource.currentTime'); // current time to start video
 
         this.resourceOriginalWidth = this.configService.get('resource.width');
         this.resourceOriginalHeight = this.configService.get('resource.height');
@@ -95,7 +98,6 @@ export default class VideoPlayer {
             }
 
         let player: VideoJSPlayer = this.initVideo('embed-video', options, () => {
-
             let metadatas = player.on('loadedmetadata', () => {
 
                 let videoWidth = this.$embedVideoResource.videoWidth,
@@ -108,6 +110,12 @@ export default class VideoPlayer {
                     });
                     this.resizer.resize();
                 }
+                /*set currentTime to play video */
+                if( this.$currentTime !== null ) {
+                    player.currentTime(parseInt(this.$currentTime));
+
+                }
+
             });
 
         });
