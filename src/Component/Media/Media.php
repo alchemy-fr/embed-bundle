@@ -236,7 +236,7 @@ class Media extends AbstractDelivery
     }
 
     /**
-     * list available video text tracks (only metadatas)
+     * list available video text tracks (only metadatas -)
      * @param MediaInformation $media
      * @return array
      */
