@@ -245,7 +245,7 @@ class Media extends AbstractDelivery
         $record = $media->getResource()->get_record();
         $videoTextTrack = [];
 
-        if ($record->getType() === 'video') {
+        if ($record->getType() == 'video') {
             $databox = $record->getDatabox();
             $vttIds = [];
             $vttMetadata = [];
