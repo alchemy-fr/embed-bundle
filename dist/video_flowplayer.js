@@ -1,17 +1,7148 @@
-webpackJsonp([4],{2:function(e,t){var n;n=function(){return this}();try{n=n||Function("return this")()||(0,eval)("this")}catch(e){"object"==typeof window&&(n=window)}e.exports=n},24:function(e,t,n){window.HELP_IMPROVE_VIDEOJS=!1;var r=n(25),o=n(0),i=n(5),a=n(4),s=n(26),l=function(){function e(){this.configService=new i.default;var e=document.getElementsByClassName("video-player");this.$playerContainer=e[0],this.$playerContainer.insertAdjacentHTML("afterbegin",s(this.configService.get("resource"))),this.$embedContainer=document.getElementById("embed-content"),this.$embedVideoResource=document.getElementById("embed-video"),this.resourceOriginalWidth=this.configService.get("resource.width"),this.resourceOriginalHeight=this.configService.get("resource.height"),this.resizer=new a.default({target:this.$embedVideoResource,container:this.$embedContainer,resizeOnWindowChange:!0===this.configService.get("resource.fitIn"),resizeCallback:function(e){}}),this.resizer.setContainerDimensions({width:window.innerWidth,height:window.innerHeight}),this.resizer.setTargetDimensions({width:this.resourceOriginalWidth,height:this.resourceOriginalHeight}),this.resizer.resize(),this.setupVideo()}return e.prototype.setupVideo=function(){var e=(this.configService.get("resource.aspectRatio"),{clip:{sources:[]},embed:!1,splash:this.configService.get("resource.coverUrl")});null!==this.configService.get("resource.aspectRatio")&&(e.aspectRatio=this.configService.get("resource.aspectRatio")),null!==this.configService.get("resource.autoplay")&&(e.autoplay=!0),null!==this.configService.get("resource.playbackRates")&&(e.speeds=this.configService.get("resource.playbackRates")),e.swf="/assets/vendors/alchemy-embed-medias/players/flowplayer/flowplayer.swf",e.swfHls="/assets/vendors/alchemy-embed-medias/players/flowplayer/flowplayerhls.swf",o.each(this.configService.get("resource.sources"),function(t){var n={type:t.type,src:t.url};e.clip.sources.push(n)});this.initVideo(document.getElementById("embed-video"),e).on("ready",function(){})},e.prototype.initVideo=function(){for(var e=[],t=0;t<arguments.length;t++)e[t-0]=arguments[t];return r.apply(this,e)},e}();t.default=l,window.embedPlugin=new l},25:function(e,t,n){(function(t){var n,n;/*!
+webpackJsonp([4],{
+
+/***/ 2:
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+
+/***/ 24:
+/***/ (function(module, exports, __webpack_require__) {
+
+/// <reference path="../../../../embed/embed.d.ts" />
+/**
+ * FlowPlayer Player for Embed Videos
+ */
+// require('html5shiv');
+window.HELP_IMPROVE_VIDEOJS = false;
+var flowplayer = __webpack_require__(25);
+var _ = __webpack_require__(0);
+var service_1 = __webpack_require__(5);
+var resizeEl_1 = __webpack_require__(4);
+var playerTemplate = __webpack_require__(26);
+var VideoPlayer = function () {
+    function VideoPlayer() {
+        this.configService = new service_1.default();
+        var videoContainers = document.getElementsByClassName('video-player');
+        this.$playerContainer = videoContainers[0];
+        this.$playerContainer.insertAdjacentHTML('afterbegin', playerTemplate(this.configService.get('resource')));
+        this.$embedContainer = document.getElementById('embed-content');
+        this.$embedVideoResource = document.getElementById('embed-video');
+        this.resourceOriginalWidth = this.configService.get('resource.width');
+        this.resourceOriginalHeight = this.configService.get('resource.height');
+        this.resizer = new resizeEl_1.default({
+            target: this.$embedVideoResource,
+            container: this.$embedContainer,
+            resizeOnWindowChange: this.configService.get('resource.fitIn') === true ? true : false,
+            resizeCallback: function (dimensions) {
+                // this.$embedContainer.firstChild.setAttribute('style', 'width: '+dimensions.width+'px; height: '+dimensions.height+'px');
+            }
+        });
+        this.resizer.setContainerDimensions({
+            width: window.innerWidth,
+            height: window.innerHeight
+        });
+        this.resizer.setTargetDimensions({
+            width: this.resourceOriginalWidth,
+            height: this.resourceOriginalHeight
+        });
+        this.resizer.resize();
+        this.setupVideo();
+    }
+    VideoPlayer.prototype.setupVideo = function () {
+        var aspectRatio = this.configService.get('resource.aspectRatio'),
+            options = {
+            clip: {
+                sources: []
+            },
+            embed: false,
+            splash: this.configService.get('resource.coverUrl')
+        };
+        if (this.configService.get('resource.aspectRatio') !== null) {
+            options.aspectRatio = this.configService.get('resource.aspectRatio');
+        }
+        if (this.configService.get('resource.autoplay') !== null) {
+            options.autoplay = true; // this.configService.get('resource.autoplay');
+        }
+        if (this.configService.get('resource.playbackRates') !== null) {
+            options.speeds = this.configService.get('resource.playbackRates');
+        }
+        options.swf = '/assets/vendors/alchemy-embed-medias/players/flowplayer/flowplayer.swf';
+        options.swfHls = '/assets/vendors/alchemy-embed-medias/players/flowplayer/flowplayerhls.swf';
+        _.each(this.configService.get('resource.sources'), function (s) {
+            var source = {
+                type: s.type,
+                src: s.url
+            };
+            options['clip']['sources'].push(source);
+        });
+        // console.log('player options', document.getElementById('embed-video'), options);
+        var player = this.initVideo(document.getElementById('embed-video'), options).on("ready", function () {});
+    };
+    VideoPlayer.prototype.initVideo = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i - 0] = arguments[_i];
+        }
+        return flowplayer.apply(this, args);
+    };
+    return VideoPlayer;
+}();
+exports.default = VideoPlayer;
+window.embedPlugin = new VideoPlayer();
+
+/***/ }),
+
+/***/ 25:
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {var require;var require;/*!
 
    Flowplayer v6.0.5 (2016-01-13) | flowplayer.org/license
 
 */
 /*! (C) WebReflection Mit Style License */
-!function(e){function t(e,t,n,r){for(var i,a=n.slice(),s=o(t,e),l=0,c=a.length;l<c&&(handler=a[l],"object"==typeof handler&&"function"==typeof handler.handleEvent?handler.handleEvent(s):handler.call(e,s),!s.stoppedImmediatePropagation);l++);return i=!s.stoppedPropagation,r&&i&&e.parentNode?e.parentNode.dispatchEvent(s):!s.defaultPrevented}function n(e,t){return{configurable:!0,get:e,set:t}}function r(e,t,r){var o=y(t||e,r);m(e,"textContent",n(function(){return o.get.call(this)},function(e){o.set.call(this,e)}))}function o(e,t){return e.currentTarget=t,e.eventPhase=e.target===e.currentTarget?2:3,e}function i(e,t){for(var n=e.length;n--&&e[n]!==t;);return n}function a(){if("BR"===this.tagName)return"\n";for(var e=this.firstChild,t=[];e;)8!==e.nodeType&&7!==e.nodeType&&t.push(e.textContent),e=e.nextSibling;return t.join("")}function s(e){!f&&k.test(document.readyState)&&(f=!f,document.detachEvent(d,s),e=document.createEvent("Event"),e.initEvent(p,!0,!0),document.dispatchEvent(e))}function l(e){for(var t;t=this.lastChild;)this.removeChild(t);null!=e&&this.appendChild(document.createTextNode(e))}function c(t,n){return n||(n=e.event),n.target||(n.target=n.srcElement||n.fromElement||document),n.timeStamp||(n.timeStamp=(new Date).getTime()),n}if(!document.createEvent){var u=!0,f=!1,d="onreadystatechange",p="DOMContentLoaded",h="__IE8__"+Math.random(),v=e.Object,m=v.defineProperty||function(e,t,n){e[t]=n.value},g=v.defineProperties||function(t,n){for(var r in n)if(b.call(n,r))try{m(t,r,n[r])}catch(t){e.console}},y=v.getOwnPropertyDescriptor,b=v.prototype.hasOwnProperty,w=e.Element.prototype,x=e.Text.prototype,E=/^[a-z]+$/,k=/loaded|complete/,T={},S=document.createElement("div");r(e.HTMLCommentElement.prototype,w,"nodeValue"),r(e.HTMLScriptElement.prototype,null,"text"),r(x,null,"nodeValue"),r(e.HTMLTitleElement.prototype,null,"text"),m(e.HTMLStyleElement.prototype,"textContent",function(e){return n(function(){return e.get.call(this.styleSheet)},function(t){e.set.call(this.styleSheet,t)})}(y(e.CSSStyleSheet.prototype,"cssText"))),g(w,{textContent:{get:a,set:l},firstElementChild:{get:function(){for(var e=this.childNodes||[],t=0,n=e.length;t<n;t++)if(1==e[t].nodeType)return e[t]}},lastElementChild:{get:function(){for(var e=this.childNodes||[],t=e.length;t--;)if(1==e[t].nodeType)return e[t]}},previousElementSibling:{get:function(){for(var e=this.previousSibling;e&&1!=e.nodeType;)e=e.previousSibling;return e}},nextElementSibling:{get:function(){for(var e=this.nextSibling;e&&1!=e.nodeType;)e=e.nextSibling;return e}},childElementCount:{get:function(){for(var e=0,t=this.childNodes||[],n=t.length;n--;e+=1==t[n].nodeType);return e}},addEventListener:{value:function(e,n,r){var o,a=this,s="on"+e,l=a[h]||m(a,h,{value:{}})[h],u=l[s]||(l[s]={}),f=u.h||(u.h=[]);if(!b.call(u,"w")){if(u.w=function(e){return e[h]||t(a,c(a,e),f,!1)},!b.call(T,s))if(E.test(e))try{o=document.createEventObject(),o[h]=!0,9!=a.nodeType&&null==a.parentNode&&S.appendChild(a),a.fireEvent(s,o),T[s]=!0}catch(o){for(T[s]=!1;S.hasChildNodes();)S.removeChild(S.firstChild)}else T[s]=!1;(u.n=T[s])&&a.attachEvent(s,u.w)}i(f,n)<0&&f[r?"unshift":"push"](n)}},dispatchEvent:{value:function(e){var n,r=this,o="on"+e.type,i=r[h],a=i&&i[o],s=!!a;return e.target||(e.target=r),s?a.n?r.fireEvent(o,e):t(r,e,a.h,!0):!(n=r.parentNode)||n.dispatchEvent(e),!e.defaultPrevented}},removeEventListener:{value:function(e,t,n){var r=this,o="on"+e,a=r[h],s=a&&a[o],l=s&&s.h,c=l?i(l,t):-1;-1<c&&l.splice(c,1)}}}),g(x,{addEventListener:{value:w.addEventListener},dispatchEvent:{value:w.dispatchEvent},removeEventListener:{value:w.removeEventListener}}),g(e.XMLHttpRequest.prototype,{addEventListener:{value:function(e,t,n){var r=this,o="on"+e,a=r[h]||m(r,h,{value:{}})[h],s=a[o]||(a[o]={}),l=s.h||(s.h=[]);i(l,t)<0&&(r[o]||(r[o]=function(){var t=document.createEvent("Event");t.initEvent(e,!0,!0),r.dispatchEvent(t)}),l[n?"unshift":"push"](t))}},dispatchEvent:{value:function(e){var n=this,r="on"+e.type,o=n[h],i=o&&o[r];return!!i&&(i.n?n.fireEvent(r,e):t(n,e,i.h,!0))}},removeEventListener:{value:w.removeEventListener}}),g(e.Event.prototype,{bubbles:{value:!0,writable:!0},cancelable:{value:!0,writable:!0},preventDefault:{value:function(){this.cancelable&&(this.defaultPrevented=!0,this.returnValue=!1)}},stopPropagation:{value:function(){this.stoppedPropagation=!0,this.cancelBubble=!0}},stopImmediatePropagation:{value:function(){this.stoppedImmediatePropagation=!0,this.stopPropagation()}},initEvent:{value:function(e,t,n){this.type=e,this.bubbles=!!t,this.cancelable=!!n,this.bubbles||this.stopPropagation()}}}),g(e.HTMLDocument.prototype,{textContent:{get:function(){return 11===this.nodeType?a.call(this):null},set:function(e){11===this.nodeType&&l.call(this,e)}},addEventListener:{value:function(t,n,r){var o=this;w.addEventListener.call(o,t,n,r),u&&t===p&&!k.test(o.readyState)&&(u=!1,o.attachEvent(d,s),e==top&&function e(t){try{o.documentElement.doScroll("left"),s()}catch(t){setTimeout(e,50)}}())}},dispatchEvent:{value:w.dispatchEvent},removeEventListener:{value:w.removeEventListener},createEvent:{value:function(e){var t;if("Event"!==e)throw new Error("unsupported "+e);return t=document.createEventObject(),t.timeStamp=(new Date).getTime(),t}}}),g(e.Window.prototype,{getComputedStyle:{value:function(){function e(e){this._=e}function t(){}var n=/^(?:[+-]?(?:\d*\.|)\d+(?:[eE][+-]?\d+|))(?!px)[a-z%]+$/,r=/^(top|right|bottom|left)$/,o=/\-([a-z])/g,i=function(e,t){return t.toUpperCase()};return e.prototype.getPropertyValue=function(e){var t,a,s,l=this._,c=l.style,u=l.currentStyle,f=l.runtimeStyle;return e=("float"===e?"style-float":e).replace(o,i),t=u?u[e]:c[e],n.test(t)&&!r.test(e)&&(a=c.left,s=f&&f.left,s&&(f.left=u.left),c.left="fontSize"===e?"1em":t,t=c.pixelLeft+"px",c.left=a,s&&(f.left=s)),null==t?t:t+""||"auto"},t.prototype.getPropertyValue=function(){return null},function(n,r){return r?new t(n):new e(n)}}()},addEventListener:{value:function(n,r,o){var a,s=e,l="on"+n;s[l]||(s[l]=function(e){return t(s,c(s,e),a,!1)}),a=s[l][h]||(s[l][h]=[]),i(a,r)<0&&a[o?"unshift":"push"](r)}},dispatchEvent:{value:function(t){var n=e["on"+t.type];return!n||!1!==n.call(e,t)&&!t.defaultPrevented}},removeEventListener:{value:function(t,n,r){var o="on"+t,a=(e[o]||v)[h],s=a?i(a,n):-1;-1<s&&a.splice(s,1)}}})}}(this),function(t){e.exports=t()}(function(){var e;return function e(t,r,o){function i(s,l){if(!r[s]){if(!t[s]){var c="function"==typeof n&&n;if(!l&&c)return n(s,!0);if(a)return a(s,!0);var u=new Error("Cannot find module '"+s+"'");throw u.code="MODULE_NOT_FOUND",u}var f=r[s]={exports:{}};t[s][0].call(f.exports,function(e){var n=t[s][1][e];return i(n||e)},f,f.exports,e,t,r,o)}return r[s].exports}for(var a="function"==typeof n&&n,s=0;s<o.length;s++)i(o[s]);return i}({1:[function(e,t,n){"use strict";var r=t.exports={},o=e("class-list"),i=window.jQuery,a=e("punycode"),s=e("computed-style");r.noop=function(){},r.identity=function(e){return e},r.removeNode=function(e){e&&e.parentNode&&e.parentNode.removeChild(e)},r.find=function(e,t){return i?i(e,t).toArray():(t=t||document,Array.prototype.map.call(t.querySelectorAll(e),function(e){return e}))},r.text=function(e,t){e["innerText"in e?"innerText":"textContent"]=t},r.findDirect=function(e,t){return r.find(e,t).filter(function(e){return e.parentNode===t})},r.hasClass=function(e,t){return o(e).contains(t)},r.isSameDomain=function(e){var t=window.location,n=r.createElement("a",{href:e});return t.hostname===n.hostname&&t.protocol===n.protocol&&t.port===n.port},r.css=function(e,t,n){return"object"==typeof t?Object.keys(t).forEach(function(n){r.css(e,n,t[n])}):void 0!==n?""===n?e?e.style.removeProperty(t):void 0:e?e.style.setProperty(t,n):void 0:e?s(e,t):void 0},r.createElement=function(e,t,n){try{var o=document.createElement(e);for(var a in t)t.hasOwnProperty(a)&&("css"===a?r.css(o,t[a]):r.attr(o,a,t[a]));return o.innerHTML=n||"",o}catch(r){if(!i)throw r;return i("<"+e+">"+n+"</"+e+">").attr(t)[0]}},r.toggleClass=function(e,t,n){if(e){var r=o(e);void 0===n?r.toggle(t):n?r.add(t):n||r.remove(t)}},r.addClass=function(e,t){return r.toggleClass(e,t,!0)},r.removeClass=function(e,t){return r.toggleClass(e,t,!1)},r.append=function(e,t){return e.appendChild(t),e},r.appendTo=function(e,t){return r.append(t,e),e},r.prepend=function(e,t){e.insertBefore(t,e.firstChild)},r.insertAfter=function(e,t,n){t==r.lastChild(e)&&e.appendChild(n);var o=Array.prototype.indexOf.call(e.children,t);e.insertBefore(n,e.children[o+1])},r.html=function(e,t){e=e.length?e:[e],e.forEach(function(e){e.innerHTML=t})},r.attr=function(e,t,n){if("class"===t&&(t="className"),r.hasOwnOrPrototypeProperty(e,t))try{e[t]=n}catch(r){if(!i)throw r;i(e).attr(t,n)}else!1===n?e.removeAttribute(t):e.setAttribute(t,n);return e},r.prop=function(e,t,n){if(void 0===n)return e&&e[t];e[t]=n},r.offset=function(e){var t=e.getBoundingClientRect();return e.offsetWidth/e.offsetHeight>e.clientWidth/e.clientHeight&&(t={left:100*t.left,right:100*t.right,top:100*t.top,bottom:100*t.bottom,width:100*t.width,height:100*t.height}),t},r.width=function(e,t){if(t)return e.style.width=(""+t).replace(/px$/,"")+"px";var n=r.offset(e).width;return void 0===n?e.offsetWidth:n},r.height=function(e,t){if(t)return e.style.height=(""+t).replace(/px$/,"")+"px";var n=r.offset(e).height;return void 0===n?e.offsetHeight:n},r.lastChild=function(e){return e.children[e.children.length-1]},r.hasParent=function(e,t){for(var n=e.parentElement;n;){if(r.matches(n,t))return!0;n=n.parentElement}return!1},r.createAbsoluteUrl=function(e){return r.createElement("a",{href:e}).href},r.xhrGet=function(e,t,n){var r=new XMLHttpRequest;r.onreadystatechange=function(){if(4===this.readyState)return this.status>=400?n():void t(this.responseText)},r.open("get",e,!0),r.send()},r.pick=function(e,t){var n={};return t.forEach(function(t){e.hasOwnProperty(t)&&(n[t]=e[t])}),n},r.hostname=function(e){return a.toUnicode(e||window.location.hostname)},r.browser={webkit:"WebkitAppearance"in document.documentElement.style},r.getPrototype=function(e){return Object.getPrototypeOf?Object.getPrototypeOf(e):e.__proto__},r.hasOwnOrPrototypeProperty=function(e,t){for(var n=e;n;){if(Object.prototype.hasOwnProperty.call(n,t))return!0;n=r.getPrototype(n)}return!1},r.matches=function(e,t){var n=Element.prototype;return(n.matches||n.matchesSelector||n.mozMatchesSelector||n.msMatchesSelector||n.oMatchesSelector||n.webkitMatchesSelector||function(e){for(var t=this,n=(t.document||t.ownerDocument).querySelectorAll(e),r=0;n[r]&&n[r]!==t;)r++;return!!n[r]}).call(e,t)},function(e){function t(e){return e.replace(/-[a-z]/g,function(e){return e[1].toUpperCase()})}void 0!==e.setAttribute&&(e.setProperty=function(e,n){return this.setAttribute(t(e),String(n))},e.getPropertyValue=function(e){return this.getAttribute(t(e))||null},e.removeProperty=function(e){var n=this.getPropertyValue(e);return this.removeAttribute(t(e)),n})}(window.CSSStyleDeclaration.prototype)},{"class-list":22,"computed-style":24,punycode:21}],2:[function(e,t,n){"use strict";var r=e("../common");t.exports=function(e,t,n,o){n=n||"opaque";var i="obj"+(""+Math.random()).slice(2,15),a='<object class="fp-engine" id="'+i+'" name="'+i+'" ',s=navigator.userAgent.indexOf("MSIE")>-1;a+=s?'classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000">':' data="'+e+'" type="application/x-shockwave-flash">';var l={width:"100%",height:"100%",allowscriptaccess:"always",wmode:n,quality:"high",flashvars:"",movie:e+(s?"?"+i:""),name:i};"transparent"!==n&&(l.bgcolor=o||"#333333"),Object.keys(t).forEach(function(e){l.flashvars+=e+"="+t[e]+"&"}),Object.keys(l).forEach(function(e){a+='<param name="'+e+'" value="'+l[e]+'"/>'}),a+="</object>";var c=r.createElement("div",{},a);return r.find("object",c)},window.attachEvent&&window.attachEvent("onbeforeunload",function(){window.__flash_savedUnloadHandler=window.__flash_unloadHandler=function(){}})},{"../common":1}],3:[function(e,t,n){"use strict";function r(e){return/^https?:/.test(e)}var o,i=e("../flowplayer"),a=e("../common"),s=e("./embed"),l=e("extend-object"),c=e("bean");o=function(e,t){function n(e){function t(e){return("0"+parseInt(e).toString(16)).slice(-2)}if(e=e.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/))return"#"+t(e[1])+t(e[2])+t(e[3])}function u(e){return 7===e.length?e:"#"+e.split("").slice(1).map(function(e){return e+e}).join("")}function f(e){return/application\/x-mpegurl/i.test(e.type)}var d,p,h,v=e.conf,m=(e.video,window,{engineName:o.engineName,pick:function(t){var n=l({},function(){if(i.support.flashVideo){for(var n,r,o=0;o<t.length;o++)if(r=t[o],/mp4|flv|flash/i.test(r.type)&&(n=r),e.conf.swfHls&&/mpegurl/i.test(r.type)&&(n=r),n&&!/mp4/i.test(n.type))return n;return n}}());if(n)return!n.src||r(n.src)||e.conf.rtmp||n.rtmp||(n.src=a.createAbsoluteUrl(n.src)),n},load:function(o){function g(e){return e.replace(/&amp;/g,"%26").replace(/&/g,"%26").replace(/=/g,"%3D")}d=o;var y=a.findDirect("video",t)[0]||a.find(".fp-player > video",t)[0],b=o.src,w=r(b),x=function(){a.removeNode(y)};i.support.video&&a.prop(y,"autoplay")&&function(e){return e.some(function(e){return!!y.canPlayType(e.type)})}(o.sources)?c.one(y,"timeupdate",x):x();var E=o.rtmp||v.rtmp;if(w||E||(b=a.createAbsoluteUrl(b)),h&&f(o)&&h.data!==v.swfHls&&m.unload(),h){["live","preload","loop"].forEach(function(e){o.hasOwnProperty(e)&&h.__set(e,o[e])}),Object.keys(o.flashls||{}).forEach(function(e){h.__set("hls_"+e,o.flashls[e])});var k=!1;if(!w&&E)h.__set("rtmp",E.url||E);else{k=!!h.__get("rtmp"),h.__set("rtmp",null)}h.__play(b,k||o.rtmp&&o.rtmp!==v.rtmp)}else{p="fpCallback"+(""+Math.random()).slice(3,15),b=g(b);var T={hostname:v.embedded?a.hostname(v.hostname):a.hostname(location.hostname),url:b,callback:p};t.getAttribute("data-origin")&&(T.origin=t.getAttribute("data-origin")),["proxy","key","autoplay","preload","subscribe","live","loop","debug","splash","poster","rtmpt"].forEach(function(e){v.hasOwnProperty(e)&&(T[e]=v[e]),o.hasOwnProperty(e)&&(T[e]=o[e]),(v.rtmp||{}).hasOwnProperty(e)&&(T[e]=(v.rtmp||{})[e]),(o.rtmp||{}).hasOwnProperty(e)&&(T[e]=(o.rtmp||{})[e])}),v.rtmp&&(T.rtmp=v.rtmp.url||v.rtmp),o.rtmp&&(T.rtmp=o.rtmp.url||o.rtmp),Object.keys(o.flashls||{}).forEach(function(e){var t=o.flashls[e];T["hls_"+e]=t}),void 0!==v.bufferTime&&(T.bufferTime=v.bufferTime),w&&delete T.rtmp,T.rtmp&&(T.rtmp=g(T.rtmp));var S,C=v.bgcolor||a.css(t,"background-color")||"";0===C.indexOf("rgb")?S=n(C):0===C.indexOf("#")&&(S=u(C)),T.initialVolume=e.volumeLevel;var O=f(o)?v.swfHls:v.swf;h=s(O,T,v.wmode,S)[0];var N=a.find(".fp-player",t)[0];a.prepend(N,h),setTimeout(function(){try{if(!h.PercentLoaded())return e.trigger("error",[e,{code:7,url:v.swf}])}catch(e){}},5e3),setTimeout(function(){void 0===h.PercentLoaded&&e.trigger("flashdisabled",[e])},1e3),e.off("resume.flashhack").on("resume.flashhack",function(){var t=setTimeout(function(){e.playing&&e.trigger("flashdisabled",[e])},1e3);e.one("progress",function(){clearTimeout(t)})}),h.pollInterval=setInterval(function(){if(h){var t=h.__status?h.__status():null;t&&(e.playing&&t.time&&t.time!==e.video.time&&e.trigger("progress",[e,t.time]),o.buffer=t.buffer/o.bytes*o.duration,e.trigger("buffer",[e,o.buffer]),!o.buffered&&t.time>0&&(o.buffered=!0,e.trigger("buffered",[e])))}},250),window[p]=function(n,r){var o=d;v.debug&&0===n.indexOf("debug")&&r&&r.length;var i={type:n};switch(n){case"ready":r=l(o,r);break;case"click":i.flash=!0;break;case"keydown":i.which=r;break;case"seek":o.time=r;break;case"status":e.trigger("progress",[e,r.time]),r.buffer<o.bytes&&!o.buffered?(o.buffer=r.buffer/o.bytes*o.duration,e.trigger("buffer",o.buffer)):o.buffered||(o.buffered=!0,e.trigger("buffered"))}"click"===n||"keydown"===n?(i.target=t,c.fire(t,n,[i])):"buffered"!=n&&"unload"!==n?setTimeout(function(){e.trigger(i,[e,r])},1):"unload"===n&&e.trigger(i,[e,r])}}},speed:a.noop,unload:function(){h&&h.__unload&&h.__unload();try{p&&window[p]&&delete window[p]}catch(e){}a.find("object",t).forEach(a.removeNode),h=0,e.off(".flashengine"),clearInterval(h.pollInterval)}});return["pause","resume","seek","volume"].forEach(function(t){m[t]=function(n){try{e.ready&&(void 0===n?h["__"+t]():h["__"+t](n))}catch(n){if(void 0===h["__"+t])return e.trigger("flashdisabled",[e]);throw n}}}),m},o.engineName="flash",o.canPlay=function(e,t){return i.support.flashVideo&&/video\/(mp4|flash|flv)/i.test(e)||i.support.flashVideo&&t.swfHls&&/mpegurl/i.test(e)},i.engines.push(o)},{"../common":1,"../flowplayer":18,"./embed":2,bean:20,"extend-object":26}],4:[function(e,t,n){"use strict";function r(e,t){return t=t||100,Math.round(e*t)/t}function o(e){return/mpegurl/i.test(e)?"application/x-mpegurl":e}function i(e){return/^(video|application)/i.test(e)||(e=o(e)),!!h.canPlayType(e).replace("no","")}function a(e,t){var n=e.filter(function(e){return e.type===t});return n.length?n[0]:null}var s,l,c=e("../flowplayer"),u=e("bean"),f=e("class-list"),d=e("extend-object"),p=e("../common"),h=document.createElement("video"),v={ended:"finish",pause:"pause",play:"resume",progress:"buffer",timeupdate:"progress",volumechange:"volume",ratechange:"speed",seeked:"seek",loadeddata:"ready",error:"error",dataunavailable:"error",webkitendfullscreen:!c.support.inlineVideo&&"unload"},m=function(e,t,n,r){if(void 0===t&&(t=!0),void 0===n&&(n="none"),void 0===r&&(r=!0),r&&s)return s.type=o(e.type),s.src=e.src,p.find("track",s).forEach(p.removeNode),s.removeAttribute("crossorigin"),s;var i=document.createElement("video");return i.src=e.src,i.type=o(e.type),i.className="fp-engine",i.autoplay=!!t&&"autoplay",i.preload=n,i.setAttribute("x-webkit-airplay","allow"),r&&(s=i),i};l=function(e,t){function n(n,o,a){var s=t.getAttribute("data-flowplayer-instance-id");if(n.listeners&&n.listeners.hasOwnProperty(s))return void(n.listeners[s]=a);(n.listeners||(n.listeners={}))[s]=a,u.on(o,"error",function(t){try{i(t.target.getAttribute("type"))&&e.trigger("error",[e,{code:4,video:d(a,{src:n.src,url:n.src})}])}catch(e){}}),e.on("shutdown",function(){u.off(o)});var l={};return Object.keys(v).forEach(function(o){var i=v[o];if(i){var c=function(l){if(a=n.listeners[s],l.target&&f(l.target).contains("fp-engine")&&(w.debug&&/progress/.test(i),(e.ready||/ready|error/.test(i))&&i&&p.find("video",t).length)){var c;if("unload"===i)return void e.unload();var u=function(){e.trigger(i,[e,c])};switch(i){case"ready":c=d(a,{duration:n.duration,width:n.videoWidth,height:n.videoHeight,url:n.currentSrc,src:n.currentSrc});try{c.seekable=!e.live&&/mpegurl/i.test(a?a.type||"":"")&&n.duration||n.seekable&&n.seekable.end(null)}catch(e){}if(h=h||setInterval(function(){try{c.buffer=n.buffered.end(null)}catch(e){}c.buffer&&(r(c.buffer,1e3)<r(c.duration,1e3)&&!c.buffered?e.trigger("buffer",l):c.buffered||(c.buffered=!0,e.trigger("buffer",l).trigger("buffered",l),clearInterval(h),h=0))},250),!e.live&&!c.duration&&!b.hlsDuration&&"loadeddata"===o){var v=function(){c.duration=n.duration;try{c.seekable=n.seekable&&n.seekable.end(null)}catch(e){}u(),n.removeEventListener("durationchange",v),f(t).remove("is-live")};n.addEventListener("durationchange",v);var m=function(){e.ready||n.duration||(c.duration=0,f(t).add("is-live"),u()),n.removeEventListener("timeupdate",m)};return void n.addEventListener("timeupdate",m)}break;case"progress":case"seek":e.video.duration;if(n.currentTime>0||e.live)c=Math.max(n.currentTime,0);else if("progress"==i)return;break;case"speed":c=r(n.playbackRate);break;case"volume":c=r(n.volume);break;case"error":try{c=(l.srcElement||l.originalTarget).error,c.video=d(a,{src:n.src,url:n.src})}catch(e){return}}u()}};t.addEventListener(o,c,!0),l[o]||(l[o]=[]),l[o].push(c)}}),l}var o,h,g,y=p.findDirect("video",t)[0]||p.find(".fp-player > video",t)[0],b=c.support,w=(p.find("track",y)[0],e.conf);return o={engineName:l.engineName,pick:function(e){var t=function(){if(b.video){if(w.videoTypePreference){var t=a(e,w.videoTypePreference);if(t)return t}for(var n=0;n<e.length;n++)if(i(e[n].type))return e[n]}}();if(t)return"string"==typeof t.src&&(t.src=p.createAbsoluteUrl(t.src)),t},load:function(r){var i=!1,a=p.find(".fp-player",t)[0],s=!1;w.splash&&!y?(y=m(r),p.prepend(a,y),i=!0):y?(f(y).add("fp-engine"),p.find("source,track",y).forEach(p.removeNode),e.conf.nativesubtitles||p.attr(y,"crossorigin",!1),s=y.src===r.src):(y=m(r,!!r.autoplay||!!w.autoplay,w.clip.preload||"metadata",!1),p.prepend(a,y),i=!0),b.inlineVideo||p.css(y,{position:"absolute",top:"-9999em"}),u.off(y,"timeupdate",p.noop),u.on(y,"timeupdate",p.noop),p.prop(y,"loop",!(!r.loop&&!w.loop)),void 0!==g&&(y.volume=g),(e.video.src&&r.src!=e.video.src||r.index)&&p.attr(y,"autoplay","autoplay"),y.src=r.src,y.type=r.type,o._listeners=n(y,p.find("source",y).concat(y),r),("none"==w.clip.preload||"mpegurl"==r.type)&&b.zeropreload&&b.dataload||y.load(),(i||s)&&y.load(),y.paused&&(r.autoplay||w.autoplay)&&y.play()},pause:function(){y.pause()},resume:function(){y.play()},speed:function(e){y.playbackRate=e},seek:function(t){try{var n=e.paused;y.currentTime=t,n&&y.pause()}catch(e){}},volume:function(e){g=e,y&&(y.volume=e)},unload:function(){p.find("video.fp-engine",t).forEach(p.removeNode),b.cachedVideoTag||(s=null),h=clearInterval(h);var e=t.getAttribute("data-flowplayer-instance-id");delete y.listeners[e],y=0,o._listeners&&Object.keys(o._listeners).forEach(function(e){o._listeners[e].forEach(function(n){t.removeEventListener(e,n,!0)})})}}},l.canPlay=function(e){return c.support.video&&i(e)},l.engineName="html5",c.engines.push(l)},{"../common":1,"../flowplayer":18,bean:20,"class-list":22,"extend-object":26}],5:[function(e,t,n){"use strict";var r=e("../flowplayer"),o=e("./resolve").TYPE_RE,i=e("scriptjs"),a=e("bean");r(function(e,t){var n,r=e.conf.analytics,s=0,l=0;if(r){"undefined"==typeof _gat&&i("//google-analytics.com/ga.js");var c=function(){var e=_gat._getTracker(r);return e._setAllowLinker(!0),e},u=function(r,i,a){if(a=a||e.video,s&&"undefined"!=typeof _gat){c()._trackEvent("Video / Seconds played",e.engine.engineName+"/"+a.type,a.title||t.getAttribute("title")||a.src.split("/").slice(-1)[0].replace(o,""),Math.round(s/1e3)),s=0,n&&(clearTimeout(n),n=null)}};e.bind("load unload",u).bind("progress",function(){e.seeking||(s+=l?+new Date-l:0,l=+new Date),n||(n=setTimeout(function(){n=null,c()._trackEvent("Flowplayer heartbeat","Heartbeat","",0,!0)},6e5))}).bind("pause",function(){l=0}),e.bind("shutdown",function(){a.off(window,"unload",u)}),a.on(window,"unload",u)}})},{"../flowplayer":18,"./resolve":13,bean:20,scriptjs:29}],6:[function(e,t,n){"use strict";var r=e("../flowplayer"),o=e("class-list"),i=e("../common"),a=e("bean");r(function(e,t){function n(e){t.className=t.className.replace(s," "),e>=0&&o(t).add("cue"+e)}function r(t){var n=t&&!isNaN(t.time)?t.time:t;return n<0&&(n=e.video.duration+n),.125*Math.round(n/.125)}var s=/ ?cue\d+ ?/,l=!1,c={},u=-.125,f=function(t){var r=e.cuepoints.indexOf(t);isNaN(t)||(t={time:t}),t.index=r,n(r),e.trigger("cuepoint",[e,t])};e.on("progress",function(e,t,n){if(!l)for(var o=r(n);u<o;)u+=.125,c[u]&&c[u].forEach(f)}).on("unload",n).on("beforeseek",function(e){setTimeout(function(){e.defaultPrevented||(l=!0)})}).on("seek",function(e,t,o){n(),u=r(o||0)-.125,l=!1,!o&&c[0]&&c[0].forEach(f)}).on("ready",function(t,n,r){u=-.125;var o=r.cuepoints||e.conf.cuepoints||[];e.setCuepoints(o)}).on("finish",function(){u=-.125}),e.conf.generate_cuepoints&&e.bind("load",function(){i.find(".fp-cuepoint",t).forEach(i.removeNode)}),e.setCuepoints=function(t){return e.cuepoints=[],c={},t.forEach(e.addCuepoint),e},e.addCuepoint=function(n){e.cuepoints||(e.cuepoints=[]);var o=r(n);if(c[o]||(c[o]=[]),c[o].push(n),e.cuepoints.push(n),e.conf.generate_cuepoints&&!1!==n.visible){var s=e.video.duration,l=i.find(".fp-timeline",t)[0];i.css(l,"overflow","visible");var u=n.time||n;u<0&&(u=s+u);var f=i.createElement("a",{className:"fp-cuepoint fp-cuepoint"+(e.cuepoints.length-1)});i.css(f,"left",u/s*100+"%"),l.appendChild(f),a.on(f,"mousedown",function(t){t.preventDefault(),t.stopPropagation(),e.seek(u)})}return e},e.removeCuepoint=function(t){var n=e.cuepoints.indexOf(t),o=r(t);if(-1!==n){e.cuepoints=e.cuepoints.slice(0,n).concat(e.cuepoints.slice(n+1));var i=c[o].indexOf(t);if(-1!==i)return c[o]=c[o].slice(0,i).concat(c[o].slice(i+1)),e}}})},{"../common":1,"../flowplayer":18,bean:20,"class-list":22}],7:[function(e,t,n){"use strict";var r=e("../flowplayer"),o=e("bean"),i=e("../common"),a=(e("is-object"),e("extend-object")),s=e("class-list");r(function(e,t){if(!1!==e.conf.embed){var n=(e.conf,i.find(".fp-ui",t)[0]),r=i.createElement("a",{class:"fp-embed",title:"Copy to your site"}),s=i.createElement("div",{class:"fp-embed-code"},"<label>Paste this HTML code on your site to embed.</label><textarea></textarea>"),c=i.find("textarea",s)[0];n.appendChild(r),n.appendChild(s),e.embedCode=function(){var n=e.conf.embed||{},r=e.video;if(n.iframe){var o=(e.conf.embed.iframe,n.width||r.width||i.width(t)),s=n.height||r.height||i.height(t);return'<iframe src="'+e.conf.embed.iframe+'" allowfullscreen style="width:'+o+";height:"+s+';border:none;"></iframe>'}var l=["ratio","rtmp","live","bufferTime","origin","analytics","key","subscribe","swf","swfHls","embed","adaptiveRatio","logo"];n.playlist&&l.push("playlist");var c=i.pick(e.conf,l);c.logo&&(c.logo=i.createElement("img",{src:c.logo}).src),n.playlist&&e.conf.playlist.length||(c.clip=a({},e.conf.clip,i.pick(e.video,["sources"])));var u='var w=window,d=document,e;w._fpes||(w._fpes=[],w.addEventListener("load",function(){var s=d.createElement("script");s.src="//embed.flowplayer.org/6.0.5/embed.min.js",d.body.appendChild(s)})),e=[].slice.call(d.getElementsByTagName("script"),-1)[0].parentNode,w._fpes.push({e:e,l:"$library",c:$conf});\n'.replace("$conf",JSON.stringify(c)).replace("$library",n.library||"");return'<a href="$href">Watch video!\n<script>$script<\/script></a>'.replace("$href",e.conf.origin||window.location.href).replace("$script",u)},l(t,".fp-embed","is-embedding"),o.on(t,"click",".fp-embed-code textarea",function(){c.select()}),o.on(t,"click",".fp-embed",function(){c.textContent=e.embedCode().replace(/(\r\n|\n|\r)/gm,""),c.focus(),c.select()})}});var l=function(e,t,n){function r(){a.remove(n),o.off(document,".st")}var a=s(e);o.on(e,"click",t||"a",function(e){e.preventDefault(),a.toggle(n),a.contains(n)&&(o.on(document,"keydown.st",function(e){27==e.which&&r()}),o.on(document,"click.st",function(e){i.hasParent(e.target,"."+n)||r()}))})}},{"../common":1,"../flowplayer":18,bean:20,"class-list":22,"extend-object":26,"is-object":28}],8:[function(e,t,n){"use strict";t.exports=function(e,t){t||(t=document.createElement("div"));var n={},r={},o=function(e,o,i){var a=e.split(".")[0],s=function(l){i&&(t.removeEventListener(a,s),n[e].splice(n[e].indexOf(s),1));var c=[l].concat(r[l.timeStamp+l.type]||[]);o&&o.apply(void 0,c)};t.addEventListener(a,s),n[e]||(n[e]=[]),n[e].push(s)};e.on=e.bind=function(t,n){return t.split(" ").forEach(function(e){o(e,n)}),e},e.one=function(t,n){return t.split(" ").forEach(function(e){o(e,n,!0)}),e};var i=function(e,t){return 0===t.filter(function(t){return-1===e.indexOf(t)}).length};e.off=e.unbind=function(r){return r.split(" ").forEach(function(e){var r=e.split(".").slice(1),o=e.split(".")[0];Object.keys(n).filter(function(e){var t=e.split(".").slice(1);return(!o||0===e.indexOf(o))&&i(t,r)}).forEach(function(e){var r=n[e],o=e.split(".")[0];r.forEach(function(e){t.removeEventListener(o,e),r.splice(r.indexOf(e),1)})})}),e},e.trigger=function(n,o,i){if(n){o=(o||[]).length?o||[]:[o];var a,s=document.createEvent("Event");return a=n.type||n,s.initEvent(a,!1,!0),Object.defineProperty&&(s.preventDefault=function(){Object.defineProperty(this,"defaultPrevented",{get:function(){return!0}})}),r[s.timeStamp+s.type]=o,t.dispatchEvent(s),i?s:e}}},t.exports.EVENTS=["beforeseek","disable","error","finish","fullscreen","fullscreen-exit","load","mute","pause","progress","ready","resume","seek","speed","stop","unload","volume","boot","shutdown"]},{}],9:[function(e,t,n){"use strict";var r,o=e("../flowplayer"),i=e("bean"),a=e("class-list"),s=(e("extend-object"),e("../common")),l=(o.support.browser.mozilla,"fullscreen-exit"),c=o.support.fullscreen,u=(document.exitFullscreen,navigator.userAgent.toLowerCase()),f=/(safari)[ \/]([\w.]+)/.exec(u)&&!/(chrome)[ \/]([\w.]+)/.exec(u);i.on(document,"fullscreenchange.ffscr webkitfullscreenchange.ffscr mozfullscreenchange.ffscr MSFullscreenChange.ffscr",function(e){var t=document.webkitCurrentFullScreenElement||document.mozFullScreenElement||document.fullscreenElement||document.msFullscreenElement||e.target;if(r||t.parentNode&&t.parentNode.getAttribute("data-flowplayer-instance-id")){var n=r||o(t.parentNode);t&&!r?r=n.trigger("fullscreen",[t]):(r.trigger(l,[r]),r=null)}}),o(function(e,t){var n=s.createElement("div",{className:"fp-player"});if(Array.prototype.map.call(t.children,s.identity).forEach(function(e){s.matches(e,".fp-ratio,script")||n.appendChild(e)}),t.appendChild(n),e.conf.fullscreen){var o,i,u=window,d=a(t);e.isFullscreen=!1,e.fullscreen=function(t){if(!e.disabled)return void 0===t&&(t=!e.isFullscreen),t&&(o=u.scrollY,i=u.scrollX),c?t?["requestFullScreen","webkitRequestFullScreen","mozRequestFullScreen","msRequestFullscreen"].forEach(function(e){if("function"==typeof n[e])return n[e](Element.ALLOW_KEYBOARD_INPUT),!f||document.webkitCurrentFullScreenElement||document.mozFullScreenElement||n[e](),!1}):["exitFullscreen","webkitCancelFullScreen","mozCancelFullScreen","msExitFullscreen"].forEach(function(e){if("function"==typeof document[e])return document[e](),!1}):e.trigger(t?"fullscreen":l,[e]),e};var p;e.on("mousedown.fs",function(){+new Date-p<150&&e.ready&&e.fullscreen(),p=+new Date}),e.on("fullscreen",function(n){d.add("is-fullscreen"),c||s.css(t,"position","fixed"),e.isFullscreen=!0}).on(l,function(n){var r;c||"html5"!==e.engine||(r=t.css("opacity")||"",s.css(t,"opacity",0)),c||s.css(t,"position",""),d.remove("is-fullscreen"),c||"html5"!==e.engine||setTimeout(function(){t.css("opacity",r)}),e.isFullscreen=!1,u.scrollTo(i,o)}).on("unload",function(){e.isFullscreen&&e.fullscreen()}),e.on("shutdown",function(){r=null})}})},{"../common":1,"../flowplayer":18,bean:20,"class-list":22,"extend-object":26}],10:[function(e,t,n){"use strict";var r,o,i=e("../flowplayer"),a=e("bean"),s=e("../common"),l=e("class-list");a.on(document,"keydown.fp",function(e){var t=r,n=e.ctrlKey||e.metaKey||e.altKey,i=e.which,a=t&&t.conf,s=o&&l(o);if(t&&a.keyboard&&!t.disabled){if(-1!=[63,187,191].indexOf(i))return s.toggle("is-help"),!1;if(27==i&&s.contains("is-help"))return s.toggle("is-help"),!1;if(!n&&t.ready){if(e.preventDefault(),e.shiftKey)return void(39==i?t.speed(!0):37==i&&t.speed(!1));if(i<58&&i>47)return t.seekTo(i-48);switch(i){case 38:case 75:t.volume(t.volumeLevel+.15);break;case 40:case 74:t.volume(t.volumeLevel-.15);break;case 39:case 76:t.seeking=!0,t.seek(!0);break;case 37:case 72:t.seeking=!0,t.seek(!1);break;case 190:t.seekTo();break;case 32:t.toggle();break;case 70:a.fullscreen&&t.fullscreen();break;case 77:t.mute();break;case 81:t.unload()}}}}),i(function(e,t){if(e.conf.keyboard){a.on(t,"mouseenter mouseleave",function(n){(r=e.disabled||"mouseover"!=n.type?0:e)&&(o=t)});var n=i.support.video&&"flash"!==e.conf.engine&&document.createElement("video").playbackRate?"<p><em>shift</em> + <em>&#8592;</em><em>&#8594;</em>slower / faster</p>":"";if(t.appendChild(s.createElement("div",{className:"fp-help"},'         <a class="fp-close"></a>         <div class="fp-help-section fp-help-basics">            <p><em>space</em>play / pause</p>            <p><em>q</em>unload | stop</p>            <p><em>f</em>fullscreen</p>'+n+'         </div>         <div class="fp-help-section">            <p><em>&#8593;</em><em>&#8595;</em>volume</p>            <p><em>m</em>mute</p>         </div>         <div class="fp-help-section">            <p><em>&#8592;</em><em>&#8594;</em>seek</p>            <p><em>&nbsp;. </em>seek to previous            </p><p><em>1</em><em>2</em>&hellip; <em>6</em> seek to 10%, 20% &hellip; 60% </p>         </div>   ')),e.conf.tooltip){var c=s.find(".fp-ui",t)[0];c.setAttribute("title","Hit ? for help"),a.one(t,"mouseout.tip",".fp-ui",function(){c.removeAttribute("title")})}a.on(t,"click",".fp-close",function(){l(t).toggle("is-help")}),e.bind("shutdown",function(){o==t&&(o=null)})}})},{"../common":1,"../flowplayer":18,bean:20,"class-list":22}],11:[function(e,t,n){"use strict";var r=e("../flowplayer"),o=/IEMobile/.test(window.navigator.userAgent),i=e("class-list"),a=e("../common"),s=e("bean"),l=e("./ui").format,c=window.navigator.userAgent;(r.support.touch||o)&&r(function(e,t){var n=/Android/.test(c)&&!/Firefox/.test(c)&&!/Opera/.test(c),u=/Silk/.test(c),f=n?parseFloat(/Android\ (\d\.\d)/.exec(c)[1],10):0,d=i(t);if(n&&!o){if(!/Chrome/.test(c)&&f<4){var p=e.load;e.load=function(t,n){var r=p.apply(e,arguments);return e.trigger("ready",[e,e.video]),r}}var h,v=0,m=function(e){h=setInterval(function(){e.video.time=++v,e.trigger("progress",[e,v])},1e3)};e.bind("ready pause unload",function(){h&&(clearInterval(h),h=null)}),e.bind("ready",function(){v=0}),e.bind("resume",function(t,n){if(n.live)return v?m(n):void e.one("progress",function(e,t,n){0===n&&m(t)})})}r.support.volume||(d.add("no-volume"),d.add("no-mute")),d.add("is-touch"),e.sliders&&e.sliders.timeline&&e.sliders.timeline.disableAnimation(),r.support.inlineVideo&&!e.conf.native_fullscreen||(e.conf.nativesubtitles=!0);var g=!1;s.on(t,"touchmove",function(){g=!0}),s.on(t,"touchend click",function(t){return g?void(g=!1):e.playing&&!d.contains("is-mouseover")?(d.add("is-mouseover"),d.remove("is-mouseout"),t.preventDefault(),void t.stopPropagation()):void(e.playing||e.splash||!d.contains("is-mouseout")||d.contains("is-mouseover")||setTimeout(function(){e.playing||e.splash||e.resume()},400))}),e.conf.native_fullscreen&&"function"==typeof document.createElement("video").webkitEnterFullScreen&&(e.fullscreen=function(){var e=a.find("video.fp-engine",t)[0];e.webkitEnterFullScreen(),s.one(e,"webkitendfullscreen",function(){a.prop(e,"controls",!0),a.prop(e,"controls",!1)})}),(n||u)&&e.bind("ready",function(){var n=a.find("video.fp-engine",t)[0];s.one(n,"canplay",function(){n.play()}),n.play(),e.bind("progress.dur",function(){var r=n.duration;1!==r&&(e.video.duration=r,a.find(".fp-duration",t)[0].innerHTML=l(r),e.unbind("progress.dur"))})})})},{"../common":1,"../flowplayer":18,"./ui":17,bean:20,"class-list":22}],12:[function(e,t,n){"use strict";var r=e("../flowplayer"),o=e("extend-object"),i=e("bean"),a=e("class-list"),s=e("../common"),l=e("./resolve"),c=new l,u=window.jQuery,f=/^#/;r(function(e,t){function n(){return s.find(v.query,r())}function r(){if(!f.test(v.query))return t}function d(){return s.find(v.query+"."+m,r())}function p(){var n=s.find(".fp-playlist",t)[0];if(!n){n=s.createElement("div",{className:"fp-playlist"});var r=s.find(".fp-next,.fp-prev",t);r.length?r[0].parentElement.insertBefore(n,r[0]):s.insertAfter(t,s.find("video",t)[0],n)}n.innerHTML="",e.conf.playlist[0].length&&(e.conf.playlist=e.conf.playlist.map(function(e){if("string"==typeof e){var t=e.split(l.TYPE_RE)[1];return{sources:[{type:"m3u8"===t.toLowerCase()?"application/x-mpegurl":"video/"+t,src:e}]}}return{sources:e.map(function(e){var t={};return Object.keys(e).forEach(function(n){t.type=/mpegurl/i.test(n)?"application/x-mpegurl":"video/"+n,t.src=e[n]}),t})}})),e.conf.playlist.forEach(function(e,t){var r=e.sources[0].src;n.appendChild(s.createElement("a",{href:r,"data-index":t}))})}function h(t){return void 0!==t.index?t.index:void 0!==e.video.index?e.video.index:e.conf.startIndex||0}var v=o({active:"is-active",advance:!0,query:".fp-playlist a"},e.conf),m=v.active,g=a(t);e.play=function(t){if(void 0===t)return e.resume();if("number"==typeof t&&!e.conf.playlist[t])return e;if("number"!=typeof t)return e.load.apply(null,arguments);var n=o({index:t},e.conf.playlist[t]);return t===e.video.index?e.load(n,function(){e.resume()}):(e.off("resume.fromfirst"),e.load(n,function(){e.video.index=t}),e)},e.next=function(t){t&&t.preventDefault();var n=e.video.index;return-1!=n&&(n=n===e.conf.playlist.length-1?0:n+1,e.play(n)),e},e.prev=function(t){t&&t.preventDefault();var n=e.video.index;return-1!=n&&(n=0===n?e.conf.playlist.length-1:n-1,e.play(n)),e},e.setPlaylist=function(t){return e.conf.playlist=t,delete e.video.index,p(),e},e.addPlaylistItem=function(t){return e.setPlaylist(e.conf.playlist.concat([t]))},e.removePlaylistItem=function(t){var n=e.conf.playlist;return e.setPlaylist(n.slice(0,t).concat(n.slice(t+1)))},i.on(t,"click",".fp-next",e.next),i.on(t,"click",".fp-prev",e.prev),v.advance&&e.off("finish.pl").on("finish.pl",function(e,t){if(t.video.loop)return t.seek(0,function(){t.resume()});var n=t.video.index>=0?t.video.index+1:void 0;n<t.conf.playlist.length||v.loop?(n=n===t.conf.playlist.length?0:n,g.remove("is-finished"),setTimeout(function(){t.play(n)})):t.conf.playlist.length>1&&t.one("resume.fromfirst",function(){return t.play(0),!1})});var y=!1;e.conf.playlist.length&&(y=!0,p(),e.conf.clip&&e.conf.clip.sources.length||(e.conf.clip=e.conf.playlist[e.conf.startIndex||0])),n().length&&!y&&(e.conf.playlist=[],delete e.conf.startIndex,n().forEach(function(t){var n=t.href;t.setAttribute("data-index",e.conf.playlist.length);var r=c.resolve(n,e.conf.clip.sources);u&&o(r,u(t).data()),e.conf.playlist.push(r)})),i.on(f.test(v.query)?document:t,"click",v.query,function(t){t.preventDefault();var n=t.currentTarget,r=Number(n.getAttribute("data-index"));-1!=r&&e.play(r)}),e.on("load",function(n,o,i){if(e.conf.playlist.length){var l=d()[0],c=l&&l.getAttribute("data-index"),u=i.index=h(i),f=s.find(v.query+'[data-index="'+u+'"]',r())[0],p=u==e.conf.playlist.length-1;l&&a(l).remove(m),f&&a(f).add(m),g.remove("video"+c),g.add("video"+u),s.toggleClass(t,"last-video",p),i.index=o.video.index=u,i.is_last=o.video.is_last=p}}).on("unload.pl",function(){e.conf.playlist.length&&(d().forEach(function(e){a(e).toggle(m)}),e.conf.playlist.forEach(function(e,t){g.remove("video"+t)}))}),e.conf.playlist.length&&(e.conf.loop=!1)})},{"../common":1,"../flowplayer":18,"./resolve":13,bean:20,"class-list":22,"extend-object":26}],13:[function(e,t,n){"use strict";function r(e){var t=e.attr("src"),n=e.attr("type")||"",r=t.split(i)[1];return n=n.toLowerCase(),a(e.data(),{src:t,suffix:r||n,type:n||r})}function o(e){return/mpegurl/i.test(e)?"application/x-mpegurl":"video/"+e}var i=/\.(\w{3,4})(\?.*)?$/i,a=e("extend-object");t.exports=function(){var e=this;e.sourcesFromVideoTag=function(e,t){var n=[];return t("source",e).each(function(){n.push(r(t(this)))}),!n.length&&e.length&&n.push(r(e)),n},e.resolve=function(e,t){return e?("string"==typeof e&&(e={src:e,sources:[]},e.sources=(t||[]).map(function(t){var n=t.src.split(i)[1];return{type:t.type,src:e.src.replace(i,"."+n+"$2")}})),e instanceof Array&&(e={sources:e.map(function(e){return e.type&&e.src?e:Object.keys(e).reduce(function(t,n){return a(t,{type:o(n),src:e[n]})},{})})}),e):{sources:t}}},t.exports.TYPE_RE=i},{"extend-object":26}],14:[function(e,t,n){"use strict";var r=e("class-list"),o=e("bean"),i=e("../common"),a=function(e,t){var n;return function(){n||(e.apply(this,arguments),n=1,setTimeout(function(){n=0},t))}},s=function(e,t){var n,s,l,c,u,f,d,p=(/iPad/.test(navigator.userAgent)&&/CriOS/.test(navigator.userAgent),i.lastChild(e)),h=r(e),v=r(p),m=!1,g=function(){s=i.offset(e),l=i.width(e),c=i.height(e),u=l,d=x(f)},y=function(t){n||t==E.value||f&&!(t<f)||(o.fire(e,"slide",[t]),E.value=t)},b=function(e){var n=e.pageX||e.clientX;!n&&e.originalEvent&&e.originalEvent.touches&&e.originalEvent.touches.length&&(n=e.originalEvent.touches[0].pageX);var r=n-s.left;r=Math.max(0,Math.min(d||u,r));var o=r/u;return t&&(o=1-o),w(o,0,!0)},w=function(e,t){void 0===t&&(t=0),e>1&&(e=1);var n=Math.round(1e3*e)/10+"%";return(!f||e<=f)&&(v.remove("animated"),m?v.remove("animated"):(v.add("animated"),i.css(p,"transition-duration",(t||0)+"ms")),i.css(p,"width",n)),e},x=function(e){return Math.max(0,Math.min(u,e*l))},E={max:function(e){f=e},disable:function(e){n=e},slide:function(e,t,n){g(),n&&y(e),w(e,t)},disableAnimation:function(t,n){m=!1!==t,i.toggleClass(e,"no-animation",!!n)}};return g(),o.on(e,"mousedown.sld touchstart",function(e){if(e.preventDefault(),!n){var t=a(y,100);g(),E.dragging=!0,h.add("is-dragging"),y(b(e)),o.on(document,"mousemove.sld touchmove.sld",function(e){e.preventDefault(),t(b(e))}),o.one(document,"mouseup touchend",function(){E.dragging=!1,h.remove("is-dragging"),o.off(document,"mousemove.sld touchmove.sld")})}}),E};t.exports=s},{"../common":1,bean:20,"class-list":22}],15:[function(e,t,n){"use strict";var r=e("../flowplayer"),o=e("../common"),i=e("bean"),a=e("class-list");r.defaults.subtitleParser=function(e){function t(e){var t=e.split(":");return 2==t.length&&t.unshift(0),60*t[0]*60+60*t[1]+parseFloat(t[2].replace(",","."))}for(var n,r,o,i=/^(([0-9]{2}:){1,2}[0-9]{2}[,.][0-9]{3}) --\> (([0-9]{2}:){1,2}[0-9]{2}[,.][0-9]{3})(.*)/,a=[],s=0,l=e.split("\n"),c=l.length,u={};s<c;s++)if(r=i.exec(l[s])){for(n=l[s-1],o="<p>"+l[++s]+"</p><br/>";"string"==typeof l[++s]&&l[s].trim()&&s<l.length;)o+="<p>"+l[s]+"</p><br/>";u={title:n,startTime:t(r[1]),endTime:t(r[3]),text:o},a.push(u)}return a},r(function(e,t){var n,s,l,c,u=a(t),f=function(){c=o.createElement("a",{className:"fp-menu"});var n=o.createElement("ul",{className:"fp-dropdown fp-dropup"});return n.appendChild(o.createElement("li",{"data-subtitle-index":-1},"No subtitles")),(e.video.subtitles||[]).forEach(function(e,t){var r=e.srclang||"en",i=e.label||"Default ("+r+")",a=o.createElement("li",{"data-subtitle-index":t},i);n.appendChild(a)}),c.appendChild(n),o.find(".fp-controls",t)[0].appendChild(c),c};i.on(t,"click",".fp-menu",function(e){a(c).toggle("dropdown-open")}),i.on(t,"click",".fp-menu li[data-subtitle-index]",function(t){var n=t.target.getAttribute("data-subtitle-index");if("-1"===n)return e.disableSubtitles();e.loadSubtitles(n)});var d=function(){var e=o.find(".fp-player",t)[0];l=o.find(".fp-subtitle",t)[0],l=l||o.appendTo(o.createElement("div",{class:"fp-subtitle"}),e),Array.prototype.forEach.call(l.children,o.removeNode),n=a(l),o.find(".fp-menu",t).forEach(o.removeNode),f()};e.on("ready",function(n,i,a){var s=i.conf;if(r.support.subtitles&&s.nativesubtitles&&"html5"==i.engine.engineName){var l=function(e){var n=o.find("video",t)[0].textTracks;n.length&&(n[0].mode=e)};if(!a.subtitles||!a.subtitles.length)return;var c=o.find("video.fp-engine",t)[0];return a.subtitles.some(function(e){return!o.isSameDomain(e.src)})&&o.attr(c,"crossorigin","anonymous"),c.textTracks.addEventListener("addtrack",function(){l("disabled"),l("showing")}),void a.subtitles.forEach(function(e){c.appendChild(o.createElement("track",{kind:"subtitles",srclang:e.srclang||"en",label:e.label||"en",src:e.src,default:e.default}))})}if(i.subtitles=[],d(),u.remove("has-menu"),e.disableSubtitles(),a.subtitles&&a.subtitles.length){u.add("has-menu");var f=a.subtitles.filter(function(e){return e.default})[0];f&&i.loadSubtitles(a.subtitles.indexOf(f))}}),e.bind("cuepoint",function(e,t,r){r.subtitle?(s=r.index,o.html(l,r.subtitle.text),n.add("fp-active")):r.subtitleEnd&&(n.remove("fp-active"),s=r.index)}),e.bind("seek",function(t,r,o){s&&e.cuepoints[s]&&e.cuepoints[s].time>o&&(n.remove("fp-active"),s=null),(e.cuepoints||[]).forEach(function(t){var n=t.subtitle;n&&s!=t.index?o>=t.time&&(!n.endTime||o<=n.endTime)&&e.trigger("cuepoint",[e,t]):t.subtitleEnd&&o>=t.time&&t.index==s+1&&e.trigger("cuepoint",[e,t])})});var p=function(e){o.toggleClass(o.find("li.active",t)[0],"active"),o.toggleClass(o.find('li[data-subtitle-index="'+e+'"]',t)[0],"active")};e.disableSubtitles=function(){return e.subtitles=[],(e.cuepoints||[]).forEach(function(t){(t.subtitle||t.subtitleEnd)&&e.removeCuepoint(t)}),l&&Array.prototype.forEach.call(l.children,o.removeNode),p(-1),e},e.loadSubtitles=function(t){e.disableSubtitles();var n=e.video.subtitles[t],r=n.src;if(r)return p(t),o.xhrGet(r,function(t){e.conf.subtitleParser(t).forEach(function(t){var n={time:t.startTime,subtitle:t,visible:!1};e.subtitles.push(t),e.addCuepoint(n),e.addCuepoint({time:t.endTime,subtitleEnd:t.title,visible:!1}),0!==t.startTime||e.video.time||e.trigger("cuepoint",[e,n])})},function(){return e.trigger("error",{code:8,url:r}),!1}),e}})},{"../common":1,"../flowplayer":18,bean:20,"class-list":22}],16:[function(e,t,n){"use strict";var r=e("../flowplayer"),o=e("extend-object");!function(){var e={},t=navigator.userAgent.toLowerCase(),n=/(chrome)[ \/]([\w.]+)/.exec(t)||/(safari)[ \/]([\w.]+)/.exec(t)||/(webkit)[ \/]([\w.]+)/.exec(t)||/(opera)(?:.*version|)[ \/]([\w.]+)/.exec(t)||/(msie) ([\w.]+)/.exec(t)||t.indexOf("compatible")<0&&/(mozilla)(?:.*? rv:([\w.]+)|)/.exec(t)||[];n[1]&&(e[n[1]]=!0,e.version=n[2]||"0");var i=function(){var e=document.createElement("video");return e.loop=!0,e.autoplay=!0,e.preload=!0,e}(),a=navigator.userAgent,s=e.msie||/Trident\/7/.test(a),l=/iPad|MeeGo/.test(a)&&!/CriOS/.test(a),c=/iPad/.test(a)&&/CriOS/.test(a),u=/iP(hone|od)/i.test(a)&&!/iPad/.test(a)&&!/IEMobile/i.test(a),f=/Android/.test(a)&&!/Firefox/.test(a),d=/Android/.test(a)&&/Firefox/.test(a),p=/Silk/.test(a),h=/IEMobile/.test(a),v=h?parseFloat(/Windows\ Phone\ (\d+\.\d+)/.exec(a)[1],10):0,m=h?parseFloat(/IEMobile\/(\d+\.\d+)/.exec(a)[1],10):0,g=(l&&function(e){var t=/Version\/(\d\.\d)/.exec(e);t&&t.length>1&&parseFloat(t[1],10)}(a),f?parseFloat(/Android\ (\d\.\d)/.exec(a)[1],10):0),y=o(r.support,{browser:e,subtitles:!!i.addTextTrack,fullscreen:"function"==typeof document.webkitCancelFullScreen&&!/Mac OS X 10_5.+Version\/5\.0\.\d Safari/.test(a)||document.mozFullScreenEnabled||"function"==typeof document.exitFullscreen||"function"==typeof document.msExitFullscreen,inlineBlock:!(s&&e.version<8),touch:"ontouchstart"in window,dataload:!l&&!u&&!h,zeropreload:!s&&!f,volume:!(l||f||u||p||c),cachedVideoTag:!(l||u||c||h),firstframe:!(u||l||f||p||c||h||d),inlineVideo:!u&&(!h||v>=8.1&&m>=11)&&(!f||g>=3),hlsDuration:!f&&(!e.safari||l||u||c),seekable:!l&&!c});try{var b=navigator.plugins["Shockwave Flash"],w=s?new ActiveXObject("ShockwaveFlash.ShockwaveFlash").GetVariable("$version"):b.description;s||b[0].enabledPlugin?(w=w.split(/\D+/),w.length&&!w[0]&&(w=w.slice(1)),y.flashVideo=w[0]>9||9==w[0]&&w[3]>=115):y.flashVideo=!1}catch(e){}try{y.video=!!i.canPlayType,y.video&&i.canPlayType("video/mp4")}catch(e){y.video=!1}y.animation=function(){for(var e=["","Webkit","Moz","O","ms","Khtml"],t=document.createElement("p"),n=0;n<e.length;n++)if(void 0!==t.style[e[n]+"AnimationName"])return!0}()}()},{"../flowplayer":18,"extend-object":26}],17:[function(e,t,n){"use strict";function r(e){return e=parseInt(e,10),e>=10?e:"0"+e}function o(e){e=e||0;var t=Math.floor(e/3600),n=Math.floor(e/60);return e-=60*n,t>=1?(n-=60*t,t+":"+r(n)+":"+r(e)):r(n)+":"+r(e)}var i=e("../flowplayer"),a=e("../common"),s=e("class-list"),l=e("bean"),c=e("./slider");i(function(e,t){function n(e){return a.find(".fp-"+e,t)[0]}function r(e){a.css(w,"padding-top",100*e+"%"),p.inlineBlock||a.height(a.find("object",t)[0],a.height(t))}function u(e){e?(h.add("is-mouseover"),h.remove("is-mouseout")):(h.add("is-mouseout"),h.remove("is-mouseover"))}var f,d=e.conf,p=i.support,h=s(t);a.find(".fp-ratio,.fp-ui",t).forEach(a.removeNode),h.add("flowplayer"),t.appendChild(a.createElement("div",{className:"fp-ratio"}));var v=a.createElement("div",{className:"fp-ui"},'         <div class="waiting"><em></em><em></em><em></em></div>         <a class="fullscreen"></a>         <a class="unload"></a>         <p class="speed"></p>         <div class="controls">            <a class="play"></a>            <div class="timeline">               <div class="buffer"></div>               <div class="progress"></div>            </div>            <div class="timeline-tooltip fp-tooltip"></div>            <div class="volume">               <a class="mute"></a>               <div class="volumeslider">                  <div class="volumelevel"></div>               </div>            </div>         </div>         <div class="time">            <em class="elapsed">00:00</em>            <em class="remaining"></em>            <em class="duration">00:00</em>         </div>         <div class="message"><h2></h2><p></p></div>'.replace(/class="/g,'class="fp-'));t.appendChild(v);var m=(n("progress"),n("buffer")),g=n("elapsed"),y=n("remaining"),b=n("waiting"),w=n("ratio"),x=n("speed"),E=s(x),k=n("duration"),T=n("controls"),S=n("timeline-tooltip"),C=a.css(w,"padding-top"),O=n("timeline"),N=c(O,e.rtl),j=(n("volume"),n("fullscreen")),P=n("volumeslider"),_=c(P,e.rtl),D=h.contains("fixed-controls")||h.contains("no-toggle");N.disableAnimation(h.contains("is-touch")),e.sliders=e.sliders||{},e.sliders.timeline=N,e.sliders.volume=_,p.animation||a.html(b,"<p>loading &hellip;</p>"),d.ratio&&r(d.ratio);try{d.fullscreen||a.removeNode(j)}catch(e){a.removeNode(j)}e.on("ready",function(e,n,i){var s=n.video.duration;N.disable(n.disabled||!s),d.adaptiveRatio&&!isNaN(i.height/i.width)&&r(i.height/i.width),a.html([k,y],o(s)),a.toggleClass(t,"is-long",s>=3600),_.slide(n.volumeLevel),"flash"===n.engine.engineName?N.disableAnimation(!0,!0):N.disableAnimation(!1),a.find(".fp-title",v).forEach(a.removeNode),i.title&&a.prepend(v,a.createElement("div",{className:"fp-title"},i.title))}).on("unload",function(){C||d.splash||a.css(w,"paddingTop",""),N.slide(0)}).on("buffer",function(){var t=e.video,n=t.buffer/t.duration;!t.seekable&&p.seekable&&N.max(n),n<1?a.css(m,"width",100*n+"%"):a.css(m,"width","100%")}).on("speed",function(e,t,n){a.text(x,n+"x"),E.add("fp-hilite"),setTimeout(function(){E.remove("fp-hilite")},1e3)}).on("buffered",function(){a.css(m,"width","100%"),N.max(1)}).on("progress",function(){var t=e.video.time,n=e.video.duration;N.dragging||N.slide(t/n,e.seeking?0:250),a.html(g,o(t)),a.html(y,"-"+o(n-t))}).on("finish resume seek",function(e){a.toggleClass(t,"is-finished","finish"==e.type)}).on("stop",function(){a.html(g,o(0)),N.slide(0,100)}).on("finish",function(){a.html(g,o(e.video.duration)),N.slide(1,100),h.remove("is-seeking")}).on("beforeseek",function(){}).on("volume",function(){_.slide(e.volumeLevel)}).on("disable",function(){var n=e.disabled;N.disable(n),_.disable(n),a.toggleClass(t,"is-disabled",e.disabled)}).on("mute",function(e,n,r){a.toggleClass(t,"is-muted",r)}).on("error",function(e,n,r){if(a.removeClass(t,"is-loading"),a.removeClass(t,"is-seeking"),a.addClass(t,"is-error"),r){r.message=d.errors[r.code],n.error=!0;var o=a.find(".fp-message",t)[0],i=r.video||n.video;a.find("h2",o)[0].innerHTML=(n.engine&&n.engine.engineName||"html5")+": "+r.message,a.find("p",o)[0].innerHTML=r.url||i.url||i.src||d.errorUrls[r.code],n.off("mouseenter click"),h.remove("is-mouseover")}}),l.on(t,"mouseenter mouseleave",function(n){if(!D){var r,o="mouseover"==n.type;if(u(o),o){var i=function(){u(!0),r=new Date};e.on("pause.x volume.x",i),l.on(t,"mousemove.x",i),f=setInterval(function(){new Date-r>d.mouseoutTimeout&&(u(!1),r=new Date)},100)}else l.off(t,"mousemove.x"),e.off("pause.x volume.x"),clearInterval(f)}}),l.on(t,"mouseleave",function(){(N.dragging||_.dragging)&&(h.add("is-mouseover"),h.remove("is-mouseout"))}),l.on(t,"click.player",function(t){if(!e.disabled){var n=s(t.target);return n.contains("fp-ui")||n.contains("fp-engine")||t.flash?(t.preventDefault&&t.preventDefault(),e.toggle()):void 0}}),l.on(t,"mousemove",".fp-timeline",function(t){var n=t.pageX||t.clientX,r=n-a.offset(O).left,i=r/a.width(O),s=i*e.video.duration;i<0||(a.html(S,o(s)),a.css(S,"left",n-a.offset(T).left-a.width(S)/2+"px"))}),l.on(t,"contextmenu",function(e){var n=a.offset(a.find(".fp-player",t)[0]),r=window,o=e.clientX-(n.left+r.scrollX),i=e.clientY-(n.top+r.scrollY);if(!h.contains("is-flash-disabled")){var s=a.find(".fp-context-menu",t)[0];s&&(e.preventDefault(),a.css(s,{left:o+"px",top:i+"px",display:"block"}),l.on(t,"click",".fp-context-menu",function(e){e.stopPropagation()}),l.on(document,"click.outsidemenu",function(e){a.css(s,"display","none"),l.off(document,"click.outsidemenu")}))}}),e.on("flashdisabled",function(){h.add("is-flash-disabled"),e.one("ready progress",function(){h.remove("is-flash-disabled"),a.find(".fp-flash-disabled",t).forEach(a.removeNode)}),t.appendChild(a.createElement("div",{className:"fp-flash-disabled"},"Adobe Flash is disabled for this page, click player area to enable"))}),d.poster&&a.css(t,"background-image","url("+d.poster+")");var A=a.css(t,"background-color"),I="none"!=a.css(t,"background-image")||A&&"rgba(0, 0, 0, 0)"!=A&&"transparent"!=A;I&&!d.splash&&(d.poster||(d.poster=!0),e.on("ready stop",function(){h.add("is-poster"),e.poster=!0,e.one("progress",function(){h.remove("is-poster"),e.poster=!1})})),"string"==typeof d.splash&&a.css(t,"background-image","url('"+d.splash+"')"),!I&&e.forcedSplash&&a.css(t,"background-color","#555"),l.on(t,"click",".fp-toggle, .fp-play",function(){e.disabled||e.toggle()}),l.on(t,"click",".fp-mute",function(){e.mute()}),l.on(t,"click",".fp-fullscreen",function(){e.fullscreen()}),l.on(t,"click",".fp-unload",function(){e.unload()}),l.on(O,"slide",function(t){e.seeking=!0,e.seek(t*e.video.duration)}),l.on(P,"slide",function(t){e.volume(t)});var M=n("time");l.on(t,"click",".fp-time",function(){s(M).toggle("is-inverted")}),u(D),e.on("shutdown",function(){l.off(O),l.off(P)})}),t.exports.format=o},{"../common":1,"../flowplayer":18,"./slider":14,bean:20,"class-list":22}],18:[function(e,t,n){"use strict";function r(e,t,n){t&&t.embed&&(t.embed=o({},g.defaults.embed,t.embed));var r,d,h=e,v=a(h),m=o({},g.defaults,g.conf,t),w={},x=new b;v.add("is-loading");try{w=p?window.localStorage:w}catch(e){}var E=h.currentStyle&&"rtl"===h.currentStyle.direction||window.getComputedStyle&&null!==window.getComputedStyle(h,null)&&"rtl"===window.getComputedStyle(h,null).getPropertyValue("direction");E&&v.add("is-rtl");var k={conf:m,currentSpeed:1,volumeLevel:m.muted?0:void 0===m.volume?1*w.volume:m.volume,video:{},disabled:!1,finished:!1,loading:!1,muted:"true"==w.muted||m.muted,paused:!1,playing:!1,ready:!1,splash:!1,rtl:E,load:function(e,t){if(!k.error&&!k.loading){k.video={},k.finished=!1,e=e||m.clip,e=o({},x.resolve(e,m.clip.sources)),(k.playing||k.engine)&&(e.autoplay=!0);var n=T(e);if(!n)return k.trigger("error",[k,{code:g.support.flashVideo?5:10}]);if(!n.engineName)throw new Error("engineName property of factory should be exposed");if(k.engine&&n.engineName===k.engine.engineName||(k.ready=!1,k.engine&&(k.engine.unload(),k.conf.autoplay=!0),d=k.engine=n(k,h),k.one("ready",function(){d.volume(k.volumeLevel)})),o(e,d.pick(e.sources.filter(function(e){return!e.engine||e.engine===d.engineName}))),e.src){k.trigger("load",[k,e,d],!0).defaultPrevented?k.loading=!1:(d.load(e),i(e)&&(t=e),t&&k.one("ready",t))}return k}},pause:function(e){return!k.ready||k.seeking||k.loading||(d.pause(),k.one("pause",e)),k},resume:function(){return k.ready&&k.paused&&(d.resume(),k.finished&&(k.trigger("resume",[k]),k.finished=!1)),k},toggle:function(){return k.ready?k.paused?k.resume():k.pause():k.load()},seek:function(e,t){if(k.ready&&!k.live){if("boolean"==typeof e){var n=.1*k.video.duration;e=k.video.time+(e?n:-n)}e=r=Math.min(Math.max(e,0),k.video.duration-.1).toFixed(1);k.trigger("beforeseek",[k,e],!0).defaultPrevented?(k.seeking=!1,l.toggleClass(h,"is-seeking",k.seeking)):(d.seek(e),i(t)&&k.one("seek",t))}return k},seekTo:function(e,t){var n=void 0===e?r:.1*k.video.duration*e;return k.seek(n,t)},mute:function(e,t){return void 0===e&&(e=!k.muted),t||(w.muted=k.muted=e,w.volume=isNaN(w.volume)?m.volume:w.volume),k.volume(e?0:w.volume,!0),k.trigger("mute",[k,e]),k},volume:function(e,t){return k.ready&&(e=Math.min(Math.max(e,0),1),t||(w.volume=e),d.volume(e)),k},speed:function(e,t){return k.ready&&("boolean"==typeof e&&(e=m.speeds[m.speeds.indexOf(k.currentSpeed)+(e?1:-1)]||k.currentSpeed),d.speed(e),t&&h.one("speed",t)),k},stop:function(){return k.ready&&(k.pause(),k.seek(0,function(){k.trigger("stop",[k])})),k},unload:function(){return v.contains("is-embedding")||(m.splash?(k.trigger("unload",[k]),d&&(d.unload(),k.engine=d=0)):k.stop()),k},shutdown:function(){k.unload(),k.trigger("shutdown",[k]),s.off(h),delete u[h.getAttribute("data-flowplayer-instance-id")],h.removeAttribute("data-flowplayer-instance-id")},disable:function(e){return void 0===e&&(e=!k.disabled),e!=k.disabled&&(k.disabled=e,k.trigger("disable",e)),k}};k.conf=o(k.conf,m),c(k);var T=function(e){var t,n=g.engines;if(m.engine){var r=n.filter(function(e){return e.engineName===m.engine})[0];if(r&&e.sources.some(function(e){return(!e.engine||e.engine===r.engineName)&&r.canPlay(e.type,k.conf)}))return r}return m.enginePreference&&(n=g.engines.filter(function(e){return m.enginePreference.indexOf(e.engineName)>-1}).sort(function(e,t){return m.enginePreference.indexOf(e.engineName)-m.enginePreference.indexOf(t.engineName)})),e.sources.some(function(e){var r=n.filter(function(t){return(!e.engine||e.engine===t.engineName)&&t.canPlay(e.type,k.conf)}).shift();return r&&(t=r),!!r}),t};return h.getAttribute("data-flowplayer-instance-id")||(h.setAttribute("data-flowplayer-instance-id",y++),k.on("boot",function(){(m.splash||v.contains("is-splash")||!g.support.firstframe)&&(k.forcedSplash=!m.splash&&!v.contains("is-splash"),k.splash=m.autoplay=!0,m.splash||(m.splash=!0),v.add("is-splash")),m.splash&&l.find("video",h).forEach(l.removeNode),(m.live||v.contains("is-live"))&&(k.live=m.live=!0,v.add("is-live")),f.forEach(function(e){e(k,h)}),u.push(k),m.splash?k.unload():k.load(),m.disabled&&k.disable(),k.one("ready",n)}).on("load",function(e,t,n){m.splash&&l.find(".flowplayer.is-ready,.flowplayer.is-loading").forEach(function(e){var t=e.getAttribute("data-flowplayer-instance-id");if(t!==h.getAttribute("data-flowplayer-instance-id")){var n=u[Number(t)];n&&n.conf.splash&&n.unload()}}),v.add("is-loading"),t.loading=!0,void 0!==n.live&&(l.toggleClass(h,"is-live",n.live),t.live=n.live)}).on("ready",function(e,t,n){n.time=0,t.video=n,v.remove("is-loading"),t.loading=!1,t.muted?t.mute(!0,!0):t.volume(t.volumeLevel);var r=t.conf.hlsFix&&/mpegurl/i.exec(n.type);l.toggleClass(h,"hls-fix",!!r)}).on("unload",function(e){v.remove("is-loading"),k.loading=!1}).on("ready unload",function(e){var t="ready"==e.type;l.toggleClass(h,"is-splash",!t),l.toggleClass(h,"is-ready",t),k.ready=t,k.splash=!t}).on("progress",function(e,t,n){t.video.time=n}).on("speed",function(e,t,n){t.currentSpeed=n}).on("volume",function(e,t,n){t.volumeLevel=Math.round(100*n)/100,t.muted?n&&t.mute(!1):w.volume=n}).on("beforeseek seek",function(e){k.seeking="beforeseek"==e.type,l.toggleClass(h,"is-seeking",k.seeking)}).on("ready pause resume unload finish stop",function(e,t,n){k.paused=/pause|finish|unload|stop/.test(e.type),k.paused=k.paused||"ready"===e.type&&!m.autoplay&&!k.playing,k.playing=!k.paused,l.toggleClass(h,"is-paused",k.paused),l.toggleClass(h,"is-playing",k.playing),k.load.ed||k.pause()}).on("finish",function(e){k.finished=!0}).on("error",function(){})),k.trigger("boot",[k,h]),k}var o=e("extend-object"),i=e("is-function"),a=e("class-list"),s=e("bean"),l=e("./common"),c=e("./ext/events"),u=[],f=[],d=(window.navigator.userAgent,window.onbeforeunload);window.onbeforeunload=function(e){if(u.forEach(function(e){e.conf.splash?e.unload():e.bind("error",function(){l.find(".flowplayer.is-error .fp-message").forEach(l.removeNode)})}),d)return d(e)};var p=!1;try{"object"==typeof window.localStorage&&(window.localStorage.flowplayerTestStorage="test",p=!0)}catch(e){}var h=/Safari/.exec(navigator.userAgent)&&!/Chrome/.exec(navigator.userAgent),v=/(\d+\.\d+) Safari/.exec(navigator.userAgent),m=v?Number(v[1]):100,g=t.exports=function(e,t,n){if(i(e))return f.push(e);if("number"==typeof e||void 0===e)return u[e||0];if(e.nodeType){if(null!==e.getAttribute("data-flowplayer-instance-id"))return u[e.getAttribute("data-flowplayer-instance-id")];if(!t)return;return r(e,t,n)}if(e.jquery)return g(e[0],t,n);if("string"==typeof e){var o=l.find(e)[0];return o&&g(o,t,n)}};o(g,{version:"6.0.5",engines:[],conf:{},set:function(e,t){"string"==typeof e?g.conf[e]=t:o(g.conf,e)},support:{},defaults:{debug:!!p&&!!localStorage.flowplayerDebug,disabled:!1,fullscreen:window==window.top,keyboard:!0,ratio:9/16,adaptiveRatio:!1,rtmp:0,proxy:"best",splash:!1,live:!1,swf:"//releases.flowplayer.org/6.0.5/flowplayer.swf",swfHls:"//releases.flowplayer.org/6.0.5/flowplayerhls.swf",speeds:[.25,.5,1,1.5,2],tooltip:!0,mouseoutTimeout:5e3,volume:p?"true"==localStorage.muted?0:isNaN(localStorage.volume)?1:localStorage.volume||1:1,errors:["","Video loading aborted","Network error","Video not properly encoded","Video file not found","Unsupported video","Skin not found","SWF file not found","Subtitles not found","Invalid RTMP URL","Unsupported video format. Try installing Adobe Flash."],errorUrls:["","","","","","","","","","","http://get.adobe.com/flashplayer/"],playlist:[],hlsFix:h&&m<8},bean:s,common:l,extend:o});var y=0,b=e("./ext/resolve");if(void 0!==window.jQuery){var w=window.jQuery;w(function(){"function"==typeof w.fn.flowplayer&&w('.flowplayer:has(video,script[type="application/json"])').flowplayer()});var x=function(e){if(!e.length)return{};var t=e.data()||{},n={};return w.each(["autoplay","loop","preload","poster"],function(r,o){var i=e.attr(o);void 0!==i&&-1!==["autoplay","poster"].indexOf(o)?n[o]=i||!0:void 0!==i&&(t[o]=i||!0)}),t.subtitles=e.find("track").map(function(){var e=w(this);return{src:e.attr("src"),kind:e.attr("kind"),label:e.attr("label"),srclang:e.attr("srclang"),default:e.prop("default")}}).get(),t.sources=(new b).sourcesFromVideoTag(e,w),o(n,{clip:t})};w.fn.flowplayer=function(e,t){return this.each(function(){"string"==typeof e&&(e={swf:e}),i(e)&&(t=e,e={});var n=w(this),o=n.find('script[type="application/json"]'),a=o.length?JSON.parse(o.text()):x(n.find("video")),s=w.extend({},e||{},a,n.data()),l=r(this,s,t);c.EVENTS.forEach(function(e){l.on(e+".jquery",function(e){n.trigger.call(n,e.type,e.detail&&e.detail.args)})}),n.data("flowplayer",l)})}}},{"./common":1,"./ext/events":8,"./ext/resolve":13,bean:20,"class-list":22,"extend-object":26,"is-function":27}],19:[function(e,t,n){e("es5-shim");var r=t.exports=e("./flowplayer");e("./ext/support"),e("./engine/embed"),e("./engine/html5"),e("./engine/flash"),e("./ext/ui"),e("./ext/keyboard"),e("./ext/playlist"),e("./ext/cuepoint"),e("./ext/subtitle"),e("./ext/analytics"),e("./ext/embed"),e("./ext/fullscreen"),e("./ext/mobile"),r(function(e,t){var n=function(e){return"none"!==window.getComputedStyle(e).display},o=e.conf,i=r.common,a=i.createElement,s=o.swf.indexOf("flowplayer.org")&&o.e&&t.getAttribute("data-origin"),l=s?function(e){var t=document.createElement("a");return t.href=e,i.hostname(t.hostname)}(s):i.hostname(),c=(document,o.key);"file:"==location.protocol&&(l="localhost"),e.load.ed=1,o.hostname=l,o.origin=s||location.href,s&&function(e,t){-1===e.className.split(" ").indexOf(t)&&(e.className+=" "+t)}(t,"is-embedded"),"string"==typeof c&&(c=c.split(/,\s*/));var u=function(e,n){var r=a("a",{href:n,className:"fp-brand"});r.innerHTML=e,i.find(".fp-controls",t)[0].appendChild(r)};if(c&&"function"==typeof key_check&&key_check(c,l)){if(o.logo){var f=i.find(".fp-player",t)[0],d=a("a",{className:"fp-logo"});s&&(d.href=s),o.embed&&o.embed.popup&&(d.target="_blank");var p=a("img",{src:o.logo});d.appendChild(p),(f||t).appendChild(d)}o.brand&&s||o.brand&&o.brand.showOnOrigin?u(o.brand.text||o.brand,s||location.href):i.addClass(t,"no-brand")}else{u("flowplayer","http://flowplayer.org");var d=a("a",{href:"http://flowplayer.org"});t.appendChild(d);var h=a("div",{className:"fp-context-menu"},'<ul><li class="copyright">&copy; 2015</li><li><a href="http://flowplayer.org">About Flowplayer</a></li><li><a href="http://flowplayer.org/license">GPL based license</a></li></ul>'),v=window.location.href.indexOf("localhost"),f=i.find(".fp-player",t)[0];7!==v&&(f||t).appendChild(h),e.on("pause resume finish unload ready",function(e,r){i.removeClass(t,"no-brand");var o=-1;if(r.video.src)for(var a=[["org","flowplayer","drive"],["org","flowplayer","my"],["org","flowplayer","cdn"]],s=0;s<a.length&&-1===(o=r.video.src.indexOf("://"+a[s].reverse().join(".")));s++);if((4===o||5===o)&&i.addClass(t,"no-brand"),/pause|resume/.test(e.type)&&"flash"!=r.engine.engineName&&4!=o&&5!=o){var l={display:"block",position:"absolute",left:"16px",bottom:"46px",zIndex:99999,width:"100px",height:"20px",backgroundImage:"url("+[".png","logo","/",".net",".cloudfront","d32wqyuo10o653","//"].reverse().join("")+")"};for(var c in l)l.hasOwnProperty(c)&&(d.style[c]=l[c]);r.load.ed=n(d)&&(7===v||h.parentNode==t||h.parentNode==f)&&!i.hasClass(t,"no-brand"),r.load.ed||r.pause()}else d.style.display="none"})}})},{"./engine/embed":2,"./engine/flash":3,"./engine/html5":4,"./ext/analytics":5,"./ext/cuepoint":6,"./ext/embed":7,"./ext/fullscreen":9,"./ext/keyboard":10,"./ext/mobile":11,"./ext/playlist":12,"./ext/subtitle":15,"./ext/support":16,"./ext/ui":17,"./flowplayer":18,"es5-shim":25}],20:[function(t,n,r){/*!
+(function(e){function g(e,t,n,r){for(var i,s=n.slice(),o=w(t,e),u=0,a=s.length;u<a;u++){handler=s[u],typeof handler=="object"&&typeof handler.handleEvent=="function"?handler.handleEvent(o):handler.call(e,o);if(o.stoppedImmediatePropagation)break}return i=!o.stoppedPropagation,r&&i&&e.parentNode?e.parentNode.dispatchEvent(o):!o.defaultPrevented}function y(e,t){return{configurable:!0,get:e,set:t}}function b(e,t,n){var r=f(t||e,n);u(e,"textContent",y(function(){return r.get.call(this)},function(e){r.set.call(this,e)}))}function w(e,t){return e.currentTarget=t,e.eventPhase=e.target===e.currentTarget?2:3,e}function E(e,t){var n=e.length;while(n--&&e[n]!==t);return n}function S(){if(this.tagName==="BR")return"\n";var e=this.firstChild,t=[];while(e)e.nodeType!==8&&e.nodeType!==7&&t.push(e.textContent),e=e.nextSibling;return t.join("")}function x(e){return e.nodeType!==9&&document.documentElement.contains(e)}function T(e){!n&&d.test(document.readyState)&&(n=!n,document.detachEvent(r,T),e=document.createEvent("Event"),e.initEvent(i,!0,!0),document.dispatchEvent(e))}function N(e){var t;while(t=this.lastChild)this.removeChild(t);e!=null&&this.appendChild(document.createTextNode(e))}function C(t,n){return n||(n=e.event),n.target||(n.target=n.srcElement||n.fromElement||document),n.timeStamp||(n.timeStamp=(new Date).getTime()),n}if(document.createEvent)return;var t=!0,n=!1,r="onreadystatechange",i="DOMContentLoaded",s="__IE8__"+Math.random(),o=e.Object,u=o.defineProperty||function(e,t,n){e[t]=n.value},a=o.defineProperties||function(t,n){for(var r in n)if(l.call(n,r))try{u(t,r,n[r])}catch(i){e.console&&console.log(r+" failed on object:",t,i.message)}},f=o.getOwnPropertyDescriptor,l=o.prototype.hasOwnProperty,c=e.Element.prototype,h=e.Text.prototype,p=/^[a-z]+$/,d=/loaded|complete/,v={},m=document.createElement("div");b(e.HTMLCommentElement.prototype,c,"nodeValue"),b(e.HTMLScriptElement.prototype,null,"text"),b(h,null,"nodeValue"),b(e.HTMLTitleElement.prototype,null,"text"),u(e.HTMLStyleElement.prototype,"textContent",function(e){return y(function(){return e.get.call(this.styleSheet)},function(t){e.set.call(this.styleSheet,t)})}(f(e.CSSStyleSheet.prototype,"cssText"))),a(c,{textContent:{get:S,set:N},firstElementChild:{get:function(){for(var e=this.childNodes||[],t=0,n=e.length;t<n;t++)if(e[t].nodeType==1)return e[t]}},lastElementChild:{get:function(){for(var e=this.childNodes||[],t=e.length;t--;)if(e[t].nodeType==1)return e[t]}},previousElementSibling:{get:function(){var e=this.previousSibling;while(e&&e.nodeType!=1)e=e.previousSibling;return e}},nextElementSibling:{get:function(){var e=this.nextSibling;while(e&&e.nodeType!=1)e=e.nextSibling;return e}},childElementCount:{get:function(){for(var e=0,t=this.childNodes||[],n=t.length;n--;e+=t[n].nodeType==1);return e}},addEventListener:{value:function(e,t,n){var r=this,i="on"+e,o=r[s]||u(r,s,{value:{}})[s],a=o[i]||(o[i]={}),f=a.h||(a.h=[]),c;if(!l.call(a,"w")){a.w=function(e){return e[s]||g(r,C(r,e),f,!1)};if(!l.call(v,i))if(p.test(e))try{c=document.createEventObject(),c[s]=!0,r.nodeType!=9&&r.parentNode==null&&m.appendChild(r),r.fireEvent(i,c),v[i]=!0}catch(c){v[i]=!1;while(m.hasChildNodes())m.removeChild(m.firstChild)}else v[i]=!1;(a.n=v[i])&&r.attachEvent(i,a.w)}E(f,t)<0&&f[n?"unshift":"push"](t)}},dispatchEvent:{value:function(e){var t=this,n="on"+e.type,r=t[s],i=r&&r[n],o=!!i,u;return e.target||(e.target=t),o?i.n?t.fireEvent(n,e):g(t,e,i.h,!0):(u=t.parentNode)?u.dispatchEvent(e):!0,!e.defaultPrevented}},removeEventListener:{value:function(e,t,n){var r=this,i="on"+e,o=r[s],u=o&&o[i],a=u&&u.h,f=a?E(a,t):-1;-1<f&&a.splice(f,1)}}}),a(h,{addEventListener:{value:c.addEventListener},dispatchEvent:{value:c.dispatchEvent},removeEventListener:{value:c.removeEventListener}}),a(e.XMLHttpRequest.prototype,{addEventListener:{value:function(e,t,n){var r=this,i="on"+e,o=r[s]||u(r,s,{value:{}})[s],a=o[i]||(o[i]={}),f=a.h||(a.h=[]);E(f,t)<0&&(r[i]||(r[i]=function(){var t=document.createEvent("Event");t.initEvent(e,!0,!0),r.dispatchEvent(t)}),f[n?"unshift":"push"](t))}},dispatchEvent:{value:function(e){var t=this,n="on"+e.type,r=t[s],i=r&&r[n],o=!!i;return o&&(i.n?t.fireEvent(n,e):g(t,e,i.h,!0))}},removeEventListener:{value:c.removeEventListener}}),a(e.Event.prototype,{bubbles:{value:!0,writable:!0},cancelable:{value:!0,writable:!0},preventDefault:{value:function(){this.cancelable&&(this.defaultPrevented=!0,this.returnValue=!1)}},stopPropagation:{value:function(){this.stoppedPropagation=!0,this.cancelBubble=!0}},stopImmediatePropagation:{value:function(){this.stoppedImmediatePropagation=!0,this.stopPropagation()}},initEvent:{value:function(e,t,n){this.type=e,this.bubbles=!!t,this.cancelable=!!n,this.bubbles||this.stopPropagation()}}}),a(e.HTMLDocument.prototype,{textContent:{get:function(){return this.nodeType===11?S.call(this):null},set:function(e){this.nodeType===11&&N.call(this,e)}},addEventListener:{value:function(n,s,o){var u=this;c.addEventListener.call(u,n,s,o),t&&n===i&&!d.test(u.readyState)&&(t=!1,u.attachEvent(r,T),e==top&&function a(e){try{u.documentElement.doScroll("left"),T()}catch(t){setTimeout(a,50)}}())}},dispatchEvent:{value:c.dispatchEvent},removeEventListener:{value:c.removeEventListener},createEvent:{value:function(e){var t;if(e!=="Event")throw new Error("unsupported "+e);return t=document.createEventObject(),t.timeStamp=(new Date).getTime(),t}}}),a(e.Window.prototype,{getComputedStyle:{value:function(){function i(e){this._=e}function s(){}var e=/^(?:[+-]?(?:\d*\.|)\d+(?:[eE][+-]?\d+|))(?!px)[a-z%]+$/,t=/^(top|right|bottom|left)$/,n=/\-([a-z])/g,r=function(e,t){return t.toUpperCase()};return i.prototype.getPropertyValue=function(i){var s=this._,o=s.style,u=s.currentStyle,a=s.runtimeStyle,f,l,c;return i=(i==="float"?"style-float":i).replace(n,r),f=u?u[i]:o[i],e.test(f)&&!t.test(i)&&(l=o.left,c=a&&a.left,c&&(a.left=u.left),o.left=i==="fontSize"?"1em":f,f=o.pixelLeft+"px",o.left=l,c&&(a.left=c)),f==null?f:f+""||"auto"},s.prototype.getPropertyValue=function(){return null},function(e,t){return t?new s(e):new i(e)}}()},addEventListener:{value:function(t,n,r){var i=e,o="on"+t,u;i[o]||(i[o]=function(e){return g(i,C(i,e),u,!1)}),u=i[o][s]||(i[o][s]=[]),E(u,n)<0&&u[r?"unshift":"push"](n)}},dispatchEvent:{value:function(t){var n=e["on"+t.type];return n?n.call(e,t)!==!1&&!t.defaultPrevented:!0}},removeEventListener:{value:function(t,n,r){var i="on"+t,u=(e[i]||o)[s],a=u?E(u,n):-1;-1<a&&u.splice(a,1)}}})})(this);
+!function(e){if(true)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.flowplayer=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return require(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
+'use strict';
+var common = module.exports = {},
+    ClassList = _dereq_('class-list'),
+    $ = window.jQuery,
+    punycode = _dereq_('punycode'),
+    computedStyle = _dereq_('computed-style');
+
+common.noop = function() {};
+common.identity = function(i) { return i; };
+
+common.removeNode = function(el) {
+  if (!el || !el.parentNode) return;
+  el.parentNode.removeChild(el);
+};
+
+common.find = function(query, ctx) {
+  if ($) return $(query, ctx).toArray();
+  ctx = ctx || document;
+  return Array.prototype.map.call(ctx.querySelectorAll(query), function(el) { return el; });
+};
+
+common.text = function(el, txt) {
+  el[('innerText' in el) ? 'innerText' : 'textContent'] = txt;
+};
+
+common.findDirect = function(query, ctx) {
+  return common.find(query, ctx).filter(function(node) {
+    return node.parentNode === ctx;
+  });
+};
+
+common.hasClass = function(el, kls) {
+  return ClassList(el).contains(kls);
+};
+
+common.isSameDomain = function(url) {
+  var w = window.location,
+      a = common.createElement('a', { href: url });
+  return w.hostname === a.hostname &&
+         w.protocol === a.protocol &&
+         w.port === a.port;
+};
+
+common.css = function(el, property, value) {
+  if (typeof property === 'object') {
+    return Object.keys(property).forEach(function(key) {
+      common.css(el, key, property[key]);
+    });
+  }
+  if (typeof value !== 'undefined') {
+    if (value === '') return el ? el.style.removeProperty(property)  : undefined;
+    return el ? el.style.setProperty(property, value) : undefined;
+  }
+  return el ? computedStyle(el, property) : undefined;
+};
+
+common.createElement = function(tag, attributes, innerHTML) {
+  try {
+    var el = document.createElement(tag);
+    for (var key in attributes) {
+      if (!attributes.hasOwnProperty(key)) continue;
+      if (key === 'css') {
+        common.css(el, attributes[key]);
+      } else {
+        common.attr(el, key, attributes[key]);
+      }
+    }
+    el.innerHTML = innerHTML || '';
+    return el;
+  } catch (e) {
+    if (!$) throw e;
+    return $('<' + tag + '>' + innerHTML + '</' + tag + '>').attr(attributes)[0];
+  }
+};
+
+common.toggleClass = function(el, cls, flag) {
+  if (!el) return;
+  var classes = ClassList(el);
+  if (typeof flag === 'undefined') classes.toggle(cls);
+  else if (flag) classes.add(cls);
+  else if (!flag) classes.remove(cls);
+};
+
+common.addClass = function(el, cls) {
+  return common.toggleClass(el, cls, true);
+};
+
+common.removeClass = function(el, cls) {
+  return common.toggleClass(el, cls, false);
+};
+
+common.append = function(par, child) {
+  par.appendChild(child);
+  return par;
+};
+
+common.appendTo = function(child, par) {
+  common.append(par, child);
+  return child;
+};
+
+common.prepend = function(par, child) {
+  par.insertBefore(child, par.firstChild);
+};
+
+
+// Inserts `el` after `child` that is child of `par`
+common.insertAfter = function(par, child, el) {
+  if (child == common.lastChild(par)) par.appendChild(el);
+  var childIndex = Array.prototype.indexOf.call(par.children, child);
+  par.insertBefore(el, par.children[childIndex + 1]);
+};
+
+common.html = function(elms, val) {
+  elms = elms.length ? elms : [elms];
+  elms.forEach(function(elm) {
+    elm.innerHTML = val;
+  });
+};
+
+
+common.attr = function(el, key, val) {
+  if (key === 'class') key = 'className';
+  if (common.hasOwnOrPrototypeProperty(el, key)) {
+    try {
+      el[key] = val;
+    } catch (e) { // Most likely IE not letting set property
+      if ($) {
+        $(el).attr(key, val);
+      } else {
+        throw e;
+      }
+    }
+  } else {
+    if (val === false) {
+      el.removeAttribute(key);
+    } else {
+      el.setAttribute(key, val);
+    }
+  }
+  return el;
+};
+
+common.prop = function(el, key, val) {
+  if (typeof val === 'undefined') {
+    return el && el[key];
+  }
+  el[key] = val;
+};
+
+common.offset = function(el) {
+  var ret = el.getBoundingClientRect();
+  if (el.offsetWidth / el.offsetHeight > el.clientWidth / el.clientHeight) { // https://github.com/flowplayer/flowplayer/issues/757
+    ret = {
+      left: ret.left * 100,
+      right: ret.right * 100,
+      top: ret.top * 100,
+      bottom: ret.bottom * 100,
+      width: ret.width * 100,
+      height: ret.height * 100
+    };
+  }
+  return ret;
+};
+
+common.width = function(el, val) {
+  /*jshint -W093 */
+  if (val) return el.style.width = (''+val).replace(/px$/, '') + 'px';
+  var ret = common.offset(el).width;
+  return typeof ret === 'undefined' ? el.offsetWidth : ret;
+};
+
+common.height = function(el, val) {
+  /*jshint -W093 */
+  if (val) return el.style.height = (''+val).replace(/px$/, '') + 'px';
+  var ret = common.offset(el).height;
+  return typeof ret === 'undefined' ? el.offsetHeight : ret;
+};
+
+common.lastChild = function(el) {
+  return el.children[el.children.length - 1];
+};
+
+common.hasParent = function(el, parentSelector) {
+  var parent = el.parentElement;
+  while (parent) {
+    if (common.matches(parent, parentSelector)) return true;
+    parent = parent.parentElement;
+  }
+  return false;
+};
+
+common.createAbsoluteUrl = function(url) {
+  return common.createElement('a', {href: url}).href; // This won't work on IE7
+};
+
+common.xhrGet = function(url, successCb, errorCb) {
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function() {
+    if (this.readyState !== 4) return;
+    if (this.status >= 400) return errorCb();
+    successCb(this.responseText);
+  };
+  xhr.open('get', url, true);
+  xhr.send();
+};
+
+common.pick = function(obj, props) {
+  var ret = {};
+  props.forEach(function(prop) {
+    if (obj.hasOwnProperty(prop)) ret[prop] = obj[prop];
+  });
+  return ret;
+};
+
+common.hostname = function(host) {
+  return punycode.toUnicode(host || window.location.hostname);
+};
+
+//Hacks
+common.browser = {
+  webkit: 'WebkitAppearance' in document.documentElement.style
+};
+
+common.getPrototype = function(el) {
+  /* jshint proto:true */
+  if (!Object.getPrototypeOf) return el.__proto__;
+  return Object.getPrototypeOf(el);
+};
+
+common.hasOwnOrPrototypeProperty = function(obj, prop) {
+  var o = obj;
+  while (o) {
+    if (Object.prototype.hasOwnProperty.call(o, prop)) return true;
+    o = common.getPrototype(o);
+  }
+  return false;
+};
+
+
+// Polyfill for Element.matches
+// adapted from https://developer.mozilla.org/en/docs/Web/API/Element/matches
+common.matches = function(elem, selector) {
+  var proto = Element.prototype,
+      fn = proto.matches ||
+          proto.matchesSelector ||
+          proto.mozMatchesSelector ||
+          proto.msMatchesSelector ||
+          proto.oMatchesSelector ||
+          proto.webkitMatchesSelector ||
+          function (selector) {
+            var element = this,
+                matches = (element.document || element.ownerDocument).querySelectorAll(selector),
+                i = 0;
+            while (matches[i] && matches[i] !== element) {
+              i++;
+            }
+
+            return matches[i] ? true : false;
+      };
+  return fn.call(elem, selector);
+};
+
+
+// Polyfill for CSSStyleDeclaration
+// from https://github.com/shawnbot/aight
+(function(CSSSDProto) {
+
+  function getAttribute(property) {
+    return property.replace(/-[a-z]/g, function(bit) {
+      return bit[1].toUpperCase();
+    });
+  }
+
+  // patch CSSStyleDeclaration.prototype using IE8's methods
+  if (typeof CSSSDProto.setAttribute !== "undefined") {
+    CSSSDProto.setProperty = function(property, value) {
+      return this.setAttribute(getAttribute(property), String(value) /*, important */ );
+    };
+    CSSSDProto.getPropertyValue = function(property) {
+      return this.getAttribute(getAttribute(property)) || null;
+    };
+    CSSSDProto.removeProperty = function(property) {
+      var value = this.getPropertyValue(property);
+      this.removeAttribute(getAttribute(property));
+      return value;
+    };
+  }
+
+})(window.CSSStyleDeclaration.prototype);
+
+},{"class-list":22,"computed-style":24,"punycode":21}],2:[function(_dereq_,module,exports){
+'use strict';
+var common = _dereq_('../common');
+
+// movie required in opts
+module.exports = function embed(swf, flashvars, wmode, bgColor) {
+   wmode = wmode || "opaque";
+
+   var id = "obj" + ("" + Math.random()).slice(2, 15),
+       tag = '<object class="fp-engine" id="' + id+ '" name="' + id + '" ',
+       msie = navigator.userAgent.indexOf('MSIE') > -1;
+
+   tag += msie ? 'classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000">' :
+      ' data="' + swf  + '" type="application/x-shockwave-flash">';
+
+   var opts = {
+      width: "100%",
+      height: "100%",
+      allowscriptaccess: "always",
+      wmode: wmode,
+      quality: "high",
+      flashvars: "",
+
+      // https://github.com/flowplayer/flowplayer/issues/13#issuecomment-9369919
+      movie: swf + (msie ? "?" + id : ""),
+      name: id
+   };
+
+   if (wmode !== 'transparent') opts.bgcolor = bgColor || '#333333';
+
+   // flashvars
+   Object.keys(flashvars).forEach(function(key) {
+      opts.flashvars += key + "=" + flashvars[key] + "&";
+   });
+
+   // parameters
+   Object.keys(opts).forEach(function(key) {
+      tag += '<param name="' + key + '" value="'+ opts[key] +'"/>';
+   });
+
+   tag += "</object>";
+   var el = common.createElement('div', {}, tag);
+   return common.find('object', el);
+
+};
+
+
+// Flash is buggy allover
+if (window.attachEvent) {
+   window.attachEvent("onbeforeunload", function() {
+      window.__flash_savedUnloadHandler = window.__flash_unloadHandler = function() {};
+   });
+}
+
+
+},{"../common":1}],3:[function(_dereq_,module,exports){
+'use strict';
+var flowplayer = _dereq_('../flowplayer'),
+    common = _dereq_('../common'),
+    embed = _dereq_('./embed'),
+    extend = _dereq_('extend-object'),
+    bean = _dereq_('bean'),
+    engineImpl;
+
+engineImpl = function flashEngine(player, root) {
+
+   var conf = player.conf,
+      video = player.video,
+      loadVideo,
+      callbackId,
+      objectTag,
+      api;
+
+   var win = window;
+
+   var engine = {
+      engineName: engineImpl.engineName,
+
+      pick: function(sources) {
+
+        var source = extend({}, (function() {
+          if (flowplayer.support.flashVideo) {
+            var selectedSource;
+            for (var i = 0, source; i < sources.length; i++) {
+               source = sources[i];
+               if (/mp4|flv|flash/i.test(source.type)) selectedSource = source;
+               if (player.conf.swfHls && /mpegurl/i.test(source.type)) selectedSource = source;
+               if (selectedSource && !/mp4/i.test(selectedSource.type)) return selectedSource;
+               // Did not find any source or source was video/mp4, let's try find more
+            }
+            return selectedSource; // Accept the fact we don't have anything or just an MP4
+          }
+        })());
+        if (!source) return;
+        if (source.src && !isAbsolute(source.src) && !player.conf.rtmp && !source.rtmp) source.src = common.createAbsoluteUrl(source.src);
+        return source;
+      },
+
+      load: function(video) {
+         loadVideo = video;
+
+         function escapeURL(url) {
+            return url.replace(/&amp;/g, '%26').replace(/&/g, '%26').replace(/=/g, '%3D');
+         }
+
+         var html5Tag = common.findDirect('video', root)[0] || common.find('.fp-player > video', root)[0],
+            url = video.src,
+            is_absolute = isAbsolute(url);
+
+         var removeTag = function() {
+            common.removeNode(html5Tag);
+         };
+         var hasSupportedSource = function(sources) {
+            return sources.some(function(src) {
+               return !!html5Tag.canPlayType(src.type);
+            });
+         };
+         if (flowplayer.support.video &&
+            common.prop(html5Tag, 'autoplay') &&
+            hasSupportedSource(video.sources)) bean.one(html5Tag, 'timeupdate', removeTag);
+         else removeTag();
+
+         // convert to absolute
+         var rtmp = video.rtmp || conf.rtmp;
+         if (!is_absolute && !rtmp) url = common.createAbsoluteUrl(url);
+
+         if (api && isHLS(video) && api.data !== conf.swfHls) engine.unload();
+
+         if (api) {
+            ['live', 'preload', 'loop'].forEach(function(prop) {
+              if (!video.hasOwnProperty(prop)) return;
+              api.__set(prop, video[prop]);
+            });
+            Object.keys(video.flashls || {}).forEach(function(key) {
+              api.__set('hls_' + key, video.flashls[key]);
+            });
+            var providerChangeNeeded = false;
+            if (!is_absolute && rtmp) api.__set('rtmp', rtmp.url || rtmp);
+            else {
+              var oldRtmp = api.__get('rtmp');
+              providerChangeNeeded = !!oldRtmp;
+              api.__set('rtmp', null);
+            }
+            api.__play(url, providerChangeNeeded || video.rtmp && video.rtmp !== conf.rtmp);
+
+         } else {
+
+            callbackId = "fpCallback" + ("" + Math.random()).slice(3, 15);
+            url = escapeURL(url);
+
+            var opts = {
+               hostname: conf.embedded ? common.hostname(conf.hostname) : common.hostname(location.hostname),
+               url: url,
+               callback: callbackId
+            };
+            if (root.getAttribute('data-origin')) {
+               opts.origin = root.getAttribute('data-origin');
+            }
+
+            // optional conf
+            ['proxy', 'key', 'autoplay', 'preload', 'subscribe', 'live', 'loop', 'debug', 'splash', 'poster', 'rtmpt'].forEach(function(key) {
+              if (conf.hasOwnProperty(key)) opts[key] = conf[key];
+              if (video.hasOwnProperty(key)) opts[key] = video[key];
+              if ((conf.rtmp || {}).hasOwnProperty(key)) opts[key] = (conf.rtmp || {})[key];
+              if ((video.rtmp || {}).hasOwnProperty(key)) opts[key] = (video.rtmp || {})[key];
+            });
+            if (conf.rtmp) opts.rtmp = conf.rtmp.url || conf.rtmp;
+            if (video.rtmp) opts.rtmp = video.rtmp.url || video.rtmp;
+            Object.keys(video.flashls || {}).forEach(function(key) {
+              var val = video.flashls[key];
+              opts['hls_' + key] = val;
+            });
+            // bufferTime might be 0
+            if (conf.bufferTime !== undefined) opts.bufferTime = conf.bufferTime;
+
+            if (is_absolute) delete opts.rtmp;
+
+            // issues #376
+            if (opts.rtmp) {
+               opts.rtmp = escapeURL(opts.rtmp);
+            }
+
+            // issues #733, 906
+            var bgColor = conf.bgcolor || common.css(root, 'background-color') ||'', bg;
+            if (bgColor.indexOf('rgb') === 0) {
+              bg = toHex(bgColor);
+            } else if (bgColor.indexOf('#') === 0) {
+              bg = toLongHex(bgColor);
+            }
+
+            // issues #387
+            opts.initialVolume = player.volumeLevel;
+
+            var swfUrl = isHLS(video) ? conf.swfHls : conf.swf;
+
+            api = embed(swfUrl, opts, conf.wmode, bg)[0];
+
+            var container = common.find('.fp-player', root)[0];
+
+            common.prepend(container, api);
+
+            // throw error if no loading occurs
+            setTimeout(function() {
+               try {
+                  if (!api.PercentLoaded()) {
+                     return player.trigger("error", [player, { code: 7, url: conf.swf }]);
+                  }
+               } catch (e) {}
+            }, 5000);
+
+            // detect disabled flash
+            setTimeout(function() {
+              if (typeof api.PercentLoaded === 'undefined') {
+                player.trigger('flashdisabled', [player]);
+              }
+            }, 1000);
+
+            player.off('resume.flashhack').on('resume.flashhack', function() {
+              var timer = setTimeout(function() {
+                if (player.playing) {
+                  player.trigger('flashdisabled', [player]);
+                }
+              }, 1000);
+              player.one('progress', function() {
+                clearTimeout(timer);
+              });
+            });
+
+
+            api.pollInterval = setInterval(function () {
+               if (!api) return;
+               var status = api.__status ? api.__status() : null;
+
+               if (!status) return;
+
+               if (player.playing && status.time && status.time !== player.video.time) player.trigger("progress", [player, status.time]);
+
+               video.buffer = status.buffer / video.bytes * video.duration;
+               player.trigger("buffer", [player, video.buffer]);
+               if (!video.buffered && status.time > 0) {
+                  video.buffered = true;
+                  player.trigger("buffered", [player]);
+               }
+
+            }, 250);
+
+            // listen
+            window[callbackId] = function(type, arg) {
+               var video = loadVideo;
+
+               if (conf.debug) {
+                 if (type.indexOf('debug') === 0 && arg && arg.length) {
+                   console.log.apply(console, ['-- ' + type].concat(arg));
+                 }
+                 else console.log("--", type, arg);
+               }
+
+               var event = {
+                 type: type
+               };
+
+               switch (type) {
+
+                  // RTMP sends a lot of finish events in vain
+                  // case "finish": if (conf.rtmp) return;
+                  case "ready": arg = extend(video, arg); break;
+                  case "click": event.flash = true; break;
+                  case "keydown": event.which = arg; break;
+                  case "seek": video.time = arg; break;
+                  case "status":
+                     player.trigger("progress", [player, arg.time]);
+
+                     if (arg.buffer < video.bytes && !video.buffered) {
+                        video.buffer = arg.buffer / video.bytes * video.duration;
+                        player.trigger("buffer", video.buffer);
+                     } else if (!video.buffered) {
+                        video.buffered = true;
+                        player.trigger("buffered");
+                     }
+
+                     break;
+               }
+               if (type === 'click' || type === 'keydown') {
+                 event.target = root;
+                 bean.fire(root, type, [event]);
+               }
+               else if (type != 'buffered' && type !== 'unload') {
+                  // add some delay so that player is truly ready after an event
+                  setTimeout(function() { player.trigger(event, [player, arg]); }, 1);
+               } else if (type === 'unload') {
+                 player.trigger(event, [player, arg]);
+               }
+
+            };
+
+         }
+
+      },
+
+      // not supported yet
+      speed: common.noop,
+
+
+      unload: function() {
+         if (api && api.__unload) api.__unload();
+         try {
+           if (callbackId && window[callbackId])delete window[callbackId];
+         } catch (e) {}
+         common.find("object", root).forEach(common.removeNode);
+         api = 0;
+         player.off('.flashengine');
+         clearInterval(api.pollInterval);
+      }
+
+   };
+
+   ['pause','resume','seek','volume'].forEach(function(name) {
+
+      engine[name] = function(arg) {
+         try {
+           if (player.ready) {
+
+              if (arg === undefined) {
+                 api["__" + name]();
+
+              } else {
+                 api["__" + name](arg);
+              }
+
+           }
+         } catch (e) {
+           if (typeof api["__" + name] === 'undefined') { //flash lost it's methods
+             return player.trigger('flashdisabled', [player]);
+           }
+           throw e;
+         }
+      };
+
+   });
+
+   function toHex(bg) {
+     function hex(x) {
+       return ("0" + parseInt(x).toString(16)).slice(-2);
+     }
+
+     bg = bg.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+     if (!bg) return;
+
+     return '#' + hex(bg[1]) + hex(bg[2]) + hex(bg[3]);
+   }
+
+   function toLongHex(bg) {
+     if (bg.length === 7) return bg;
+     var a = bg.split('').slice(1);
+     return '#' + a.map(function(i) {
+       return i + i;
+     }).join('');
+   }
+
+   function isHLS(video) {
+     return /application\/x-mpegurl/i.test(video.type);
+   }
+
+   return engine;
+
+};
+
+
+engineImpl.engineName = 'flash';
+engineImpl.canPlay = function(type, conf) {
+  return flowplayer.support.flashVideo && /video\/(mp4|flash|flv)/i.test(type) || flowplayer.support.flashVideo && conf.swfHls && /mpegurl/i.test(type);
+};
+flowplayer.engines.push(engineImpl);
+
+
+
+function isAbsolute(url) {
+  return /^https?:/.test(url);
+}
+
+},{"../common":1,"../flowplayer":18,"./embed":2,"bean":20,"extend-object":26}],4:[function(_dereq_,module,exports){
+'use strict';
+var flowplayer = _dereq_('../flowplayer'),
+    bean = _dereq_('bean'),
+    ClassList = _dereq_('class-list'),
+    extend = _dereq_('extend-object'),
+    common = _dereq_('../common');
+var VIDEO = document.createElement('video');
+
+// HTML5 --> Flowplayer event
+var EVENTS = {
+
+   // fired
+   ended: 'finish',
+   pause: 'pause',
+   play: 'resume',
+   progress: 'buffer',
+   timeupdate: 'progress',
+   volumechange: 'volume',
+   ratechange: 'speed',
+   //seeking: 'beforeseek',
+   seeked: 'seek',
+   // abort: 'resume',
+
+   // not fired
+   loadeddata: 'ready',
+   // loadedmetadata: 0,
+   // canplay: 0,
+
+   // error events
+   // load: 0,
+   // emptied: 0,
+   // empty: 0,
+   error: 'error',
+   dataunavailable: 'error',
+   webkitendfullscreen: !flowplayer.support.inlineVideo && 'unload'
+
+};
+
+function round(val, per) {
+   per = per || 100;
+   return Math.round(val * per) / per;
+}
+
+function getType(type) {
+   return /mpegurl/i.test(type) ? "application/x-mpegurl" : type;
+}
+
+function canPlay(type) {
+   if (!/^(video|application)/i.test(type))
+      type = getType(type);
+   return !!VIDEO.canPlayType(type).replace("no", '');
+}
+
+function findFromSourcesByType(sources, type) {
+   var arr = sources.filter(function(s) {
+      return s.type === type;
+   });
+   return arr.length ? arr[0] : null;
+}
+
+var videoTagCache;
+var createVideoTag = function(video, autoplay, preload, useCache) {
+  if (typeof autoplay === 'undefined') autoplay = true;
+  if (typeof preload === 'undefined') preload = 'none';
+  if (typeof useCache === 'undefined') useCache = true;
+  if (useCache && videoTagCache) {
+    videoTagCache.type = getType(video.type);
+    videoTagCache.src = video.src;
+    common.find('track', videoTagCache).forEach(common.removeNode);
+    videoTagCache.removeAttribute('crossorigin');
+    return videoTagCache;
+  }
+  var el  = document.createElement('video');
+  el.src = video.src;
+  el.type = getType(video.type);
+  el.className = 'fp-engine';
+  el.autoplay = autoplay ? 'autoplay' : false;
+  el.preload = preload;
+  el.setAttribute('x-webkit-airplay', 'allow');
+  if (useCache) videoTagCache = el;
+  return el;
+};
+
+var engine;
+
+engine = function(player, root) {
+
+  var api = common.findDirect('video', root)[0] || common.find('.fp-player > video', root)[0],
+      support = flowplayer.support,
+      track = common.find("track", api)[0],
+      conf = player.conf,
+      self,
+      timer,
+      volumeLevel;
+   /*jshint -W093 */
+   return self = {
+      engineName: engine.engineName,
+
+      pick: function(sources) {
+        var source = (function() {
+          if (support.video) {
+            if (conf.videoTypePreference) {
+               var mp4source = findFromSourcesByType(sources, conf.videoTypePreference);
+               if (mp4source) return mp4source;
+            }
+
+            for (var i = 0, source; i < sources.length; i++) {
+               if (canPlay(sources[i].type)) return sources[i];
+            }
+          }
+        })();
+        if (!source) return;
+        if (typeof source.src === 'string') source.src = common.createAbsoluteUrl(source.src);
+        return source;
+      },
+
+      load: function(video) {
+         var created = false, container = common.find('.fp-player', root)[0], reload = false;
+         if (conf.splash && !api) {
+           api = createVideoTag(video);
+           common.prepend(container, api);
+           created = true;
+         } else if (!api) {
+           api = createVideoTag(video, !!video.autoplay || !!conf.autoplay, conf.clip.preload || 'metadata', false);
+           common.prepend(container, api);
+           created = true;
+         } else {
+           ClassList(api).add('fp-engine');
+           common.find('source,track', api).forEach(common.removeNode);
+           if (!player.conf.nativesubtitles) common.attr(api, 'crossorigin', false);
+           reload = api.src === video.src;
+         }
+         if (!support.inlineVideo) {
+           common.css(api, {
+             position: 'absolute',
+             top: '-9999em'
+           });
+         }
+         //TODO subtitles support
+
+         // IE does not fire delegated timeupdate events
+         bean.off(api, 'timeupdate', common.noop);
+         bean.on(api, 'timeupdate', common.noop);
+
+         common.prop(api, 'loop', !!(video.loop || conf.loop));
+
+         if (typeof volumeLevel !== 'undefined') {
+           api.volume = volumeLevel;
+         }
+
+         if (player.video.src && video.src != player.video.src || video.index) common.attr(api, 'autoplay', 'autoplay');
+         api.src = video.src;
+         api.type = video.type;
+
+         self._listeners = listen(api, common.find("source", api).concat(api), video);
+
+         // iPad (+others?) demands load()
+         if (conf.clip.preload != 'none' && video.type != "mpegurl" || !support.zeropreload || !support.dataload) api.load();
+         if (created || reload) api.load();
+         if (api.paused && (video.autoplay || conf.autoplay)) api.play();
+      },
+
+      pause: function() {
+         api.pause();
+      },
+
+      resume: function() {
+         api.play();
+      },
+
+      speed: function(val) {
+         api.playbackRate = val;
+      },
+
+      seek: function(time) {
+         try {
+            var pausedState = player.paused;
+            api.currentTime = time;
+            if (pausedState) api.pause();
+         } catch (ignored) {}
+      },
+
+      volume: function(level) {
+         volumeLevel = level;
+         if (api) {
+            api.volume = level;
+         }
+      },
+
+      unload: function() {
+         common.find('video.fp-engine', root).forEach(common.removeNode);
+         if (!support.cachedVideoTag) videoTagCache = null;
+         timer = clearInterval(timer);
+         var instanceId = root.getAttribute('data-flowplayer-instance-id');
+         delete api.listeners[instanceId];
+         api = 0;
+         if (self._listeners) Object.keys(self._listeners).forEach(function(typ) {
+           self._listeners[typ].forEach(function(l) {
+             root.removeEventListener(typ, l, true);
+           });
+         });
+      }
+
+   };
+
+   function listen(api, sources, video) {
+      // listen only once
+      var instanceId = root.getAttribute('data-flowplayer-instance-id');
+
+      if (api.listeners && api.listeners.hasOwnProperty(instanceId)) {
+        api.listeners[instanceId] = video;
+        return;
+      }
+      (api.listeners || (api.listeners = {}))[instanceId] = video;
+
+      bean.on(sources, 'error', function(e) {
+         try {
+            if (canPlay(e.target.getAttribute('type'))) {
+               player.trigger("error", [player, { code: 4, video: extend(video, {src: api.src, url: api.src}) }]);
+            }
+         } catch (er) {
+            // Most likely: https://bugzilla.mozilla.org/show_bug.cgi?id=208427
+         }
+      });
+
+      player.on('shutdown', function() {
+        bean.off(sources);
+      });
+
+      var eventListeners = {};
+
+      Object.keys(EVENTS).forEach(function(type) {
+        var flow = EVENTS[type];
+        if (!flow) return;
+        var l = function(e) {
+          video = api.listeners[instanceId];
+          if (!e.target || !ClassList(e.target).contains('fp-engine')) return;
+
+            if (conf.debug && !/progress/.test(flow)) console.log(type, "->", flow, e);
+
+            // no events if player not ready
+            if (!player.ready && !/ready|error/.test(flow) || !flow || !common.find('video', root).length) { return; }
+
+            var arg, vtype;
+
+            if (flow === 'unload') { //Call player unload
+              player.unload();
+              return;
+            }
+
+            var triggerEvent = function() {
+              player.trigger(flow, [player, arg]);
+            };
+
+            switch (flow) {
+
+               case "ready":
+
+                  arg = extend(video, {
+                     duration: api.duration,
+                     width: api.videoWidth,
+                     height: api.videoHeight,
+                     url: api.currentSrc,
+                     src: api.currentSrc
+                  });
+
+                  try {
+                     arg.seekable = !player.live && /mpegurl/i.test(video ? (video.type || '') : '') && api.duration || api.seekable && api.seekable.end(null);
+
+                  } catch (ignored) {}
+
+                  // buffer
+                  timer = timer || setInterval(function() {
+
+                     try {
+                        arg.buffer = api.buffered.end(null);
+
+                     } catch (ignored) {}
+
+                     if (arg.buffer) {
+                        if (round(arg.buffer, 1000) < round(arg.duration, 1000) && !arg.buffered) {
+                           player.trigger("buffer", e);
+
+                        } else if (!arg.buffered) {
+                           arg.buffered = true;
+                           player.trigger("buffer", e).trigger("buffered", e);
+                           clearInterval(timer);
+                           timer = 0;
+                        }
+                     }
+
+                  }, 250);
+
+                  if (!player.live && !arg.duration && !support.hlsDuration && type === "loadeddata") {
+                     var durationChanged = function() {
+                        arg.duration = api.duration;
+                        try {
+                           arg.seekable = api.seekable && api.seekable.end(null);
+
+                        } catch (ignored) {}
+                        triggerEvent();
+                        api.removeEventListener('durationchange', durationChanged);
+                        ClassList(root).remove('is-live');
+                     };
+                     api.addEventListener('durationchange', durationChanged);
+
+                     // Ugly hack to handle broken Android devices
+                     var timeUpdated = function() {
+                       if (!player.ready && !api.duration) { // No duration even though the video already plays
+                         arg.duration = 0;
+                         ClassList(root).add('is-live'); // Make UI believe it's live
+                         triggerEvent();
+                       }
+                       api.removeEventListener('timeupdate', timeUpdated);
+                     };
+                     api.addEventListener('timeupdate', timeUpdated);
+                     return;
+                  }
+
+                  break;
+
+               case "progress": case "seek":
+
+                  var dur = player.video.duration;
+
+                  if (api.currentTime > 0 || player.live) {
+                     arg = Math.max(api.currentTime, 0);
+
+                  } else if (flow == 'progress') {
+                     return;
+                  }
+                  break;
+
+
+               case "speed":
+                  arg = round(api.playbackRate);
+                  break;
+
+               case "volume":
+                  arg = round(api.volume);
+                  break;
+
+               case "error":
+                  try {
+                     arg = (e.srcElement || e.originalTarget).error;
+                     arg.video = extend(video, {src: api.src, url: api.src});
+                  } catch (er) {
+                     // Most likely https://bugzilla.mozilla.org/show_bug.cgi?id=208427
+                     return;
+                  }
+            }
+
+            triggerEvent();
+
+
+        };
+        root.addEventListener(type, l, true);
+        if (!eventListeners[type]) eventListeners[type] = [];
+        eventListeners[type].push(l);
+
+      });
+      return eventListeners;
+
+   }
+
+};
+
+
+engine.canPlay = function(type) {
+  return flowplayer.support.video && canPlay(type);
+};
+
+engine.engineName = 'html5';
+
+flowplayer.engines.push(engine);
+
+},{"../common":1,"../flowplayer":18,"bean":20,"class-list":22,"extend-object":26}],5:[function(_dereq_,module,exports){
+'use strict';
+/* global _gat */
+var flowplayer = _dereq_('../flowplayer'),
+    TYPE_RE = _dereq_('./resolve').TYPE_RE,
+    scriptjs = _dereq_('scriptjs'),
+    bean = _dereq_('bean');
+flowplayer(function(player, root) {
+
+   var id = player.conf.analytics, time = 0, last = 0, timer;
+
+   if (id) {
+
+      // load Analytics script if needed
+      if (typeof _gat == 'undefined') scriptjs("//google-analytics.com/ga.js");
+
+      var getTracker = function() {
+        var tracker = _gat._getTracker(id);
+        tracker._setAllowLinker(true);
+        return tracker;
+      };
+
+      var  track = function track(e, api, video) {
+
+         video = video || player.video;
+
+         if (time && typeof _gat != 'undefined') {
+            var tracker = getTracker();
+
+
+            // http://code.google.com/apis/analytics/docs/tracking/eventTrackerGuide.html
+            tracker._trackEvent(
+               "Video / Seconds played",
+               player.engine.engineName + "/" + video.type,
+               video.title || root.getAttribute("title") || video.src.split("/").slice(-1)[0].replace(TYPE_RE, ''),
+               Math.round(time / 1000)
+            );
+            time = 0;
+            if (timer) {
+              clearTimeout(timer);
+              timer = null;
+            }
+         }
+
+      };
+
+      player.bind("load unload", track).bind("progress", function() {
+
+         if (!player.seeking) {
+            time += last ? (+new Date() - last) : 0;
+            last = +new Date();
+         }
+
+         if (!timer) {
+           timer = setTimeout(function() {
+             timer = null;
+             var tracker = getTracker();
+             tracker._trackEvent('Flowplayer heartbeat', 'Heartbeat', '', 0, true);
+           }, 10*60*1000); // heartbeat every 10 minutes
+         }
+
+      }).bind("pause", function() {
+         last = 0;
+      });
+
+      player.bind('shutdown', function() {
+        bean.off(window, 'unload', track);
+      });
+
+      bean.on(window, 'unload', track);
+
+   }
+
+});
+
+},{"../flowplayer":18,"./resolve":13,"bean":20,"scriptjs":29}],6:[function(_dereq_,module,exports){
+'use strict';
+var flowplayer = _dereq_('../flowplayer'),
+    ClassList = _dereq_('class-list'),
+    common = _dereq_('../common'),
+    bean = _dereq_('bean');
+
+flowplayer(function(player, root) {
+
+   var CUE_RE = / ?cue\d+ ?/;
+
+   var lastTime = 0, cuepointsDisabled = false;
+
+   function setClass(index) {
+      root.className = root.className.replace(CUE_RE, " ");
+      if (index >= 0) ClassList(root).add('cue' + index);
+   }
+
+   var segments = {}, lastFiredSegment = -0.125;
+
+   var fire = function(cue) {
+     var idx = player.cuepoints.indexOf(cue);
+     if (!isNaN(cue)) cue = { time: cue };
+     cue.index = idx;
+     setClass(idx);
+     player.trigger('cuepoint', [player, cue]);
+   };
+
+   player.on("progress", function(e, api, time) {
+     if (cuepointsDisabled) return;
+      var segment = segmentForCue(time);
+      while (lastFiredSegment < segment) {
+        lastFiredSegment += 0.125;
+        if (!segments[lastFiredSegment]) continue;
+        segments[lastFiredSegment].forEach(fire);
+      }
+
+   }).on("unload", setClass)
+   .on('beforeseek', function(ev) {
+     setTimeout(function() {
+       if (!ev.defaultPrevented) cuepointsDisabled = true;
+     });
+   }).on("seek", function(ev, api, time) {
+     setClass();
+     lastFiredSegment = segmentForCue(time || 0) - 0.125;
+     cuepointsDisabled = false;
+     if (!time && segments[0]) segments[0].forEach(fire);
+   }).on('ready', function(e, api, video) {
+     lastFiredSegment = -0.125;
+     var cues = video.cuepoints || player.conf.cuepoints || [];
+     player.setCuepoints(cues);
+   }).on('finish', function() {
+     lastFiredSegment = -0.125;
+   });
+   if (player.conf.generate_cuepoints) {
+
+      player.bind("load", function() {
+
+         // clean up cuepoint elements of previous playlist items
+         common.find('.fp-cuepoint', root).forEach(common.removeNode);
+
+      });
+   }
+
+   /**
+    * API
+    */
+   player.setCuepoints = function(cues) {
+     player.cuepoints = [];
+     segments = {};
+     cues.forEach(player.addCuepoint);
+     return player;
+   };
+   player.addCuepoint = function(cue) {
+     if (!player.cuepoints) player.cuepoints = [];
+     var segment = segmentForCue(cue);
+     if (!segments[segment]) segments[segment] = [];
+     segments[segment].push(cue);
+     player.cuepoints.push(cue);
+
+    if (player.conf.generate_cuepoints && cue.visible !== false) {
+       var duration = player.video.duration,
+           timeline = common.find('.fp-timeline', root)[0];
+        common.css(timeline, "overflow", "visible");
+
+        var time = cue.time || cue;
+        if (time < 0) time = duration + time;
+
+        var el = common.createElement('a', {className: 'fp-cuepoint fp-cuepoint' + (player.cuepoints.length - 1)});
+        common.css(el, "left", (time / duration * 100) + "%");
+
+        timeline.appendChild(el);
+        bean.on(el, 'mousedown', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          player.seek(time);
+        });
+    }
+    return player;
+   };
+
+   player.removeCuepoint = function(cue) {
+     var idx = player.cuepoints.indexOf(cue),
+         segment = segmentForCue(cue);
+     if (idx === -1) return;
+     player.cuepoints = player.cuepoints.slice(0, idx).concat(player.cuepoints.slice(idx+1));
+
+     var sIdx = segments[segment].indexOf(cue);
+     if (sIdx === -1) return;
+     segments[segment] = segments[segment].slice(0, sIdx).concat(segments[segment].slice(sIdx+1));
+     return player;
+   };
+
+   function segmentForCue(cue) {
+     var time = cue && !isNaN(cue.time) ? cue.time : cue;
+     if (time < 0) time = player.video.duration + time;
+     return Math.round(time/0.125)*0.125;
+   }
+
+});
+
+},{"../common":1,"../flowplayer":18,"bean":20,"class-list":22}],7:[function(_dereq_,module,exports){
+'use strict';
+var flowplayer = _dereq_('../flowplayer'),
+    bean = _dereq_('bean'),
+    common = _dereq_('../common'),
+    isObject = _dereq_('is-object'),
+    extend = _dereq_('extend-object'),
+    ClassList = _dereq_('class-list');
+
+
+
+flowplayer(function(player, root) {
+
+   // no embedding
+   if (player.conf.embed === false) return;
+
+   var conf = player.conf,
+      ui = common.find('.fp-ui', root)[0],
+      trigger = common.createElement('a', { "class": "fp-embed", title: 'Copy to your site'}),
+      target = common.createElement('div',{ 'class': 'fp-embed-code'}, '<label>Paste this HTML code on your site to embed.</label><textarea></textarea>'),
+      area = common.find("textarea", target)[0];
+
+   ui.appendChild(trigger);
+   ui.appendChild(target);
+
+   player.embedCode = function() {
+     var embedConf = player.conf.embed || {},
+         video = player.video;
+
+     if (embedConf.iframe) {
+       var src = player.conf.embed.iframe,
+           width = embedConf.width || video.width || common.width(root),
+           height = embedConf.height || video.height || common.height(root);
+       return '<iframe src="' + player.conf.embed.iframe + '" allowfullscreen style="width:' + width + ';height:' + height + ';border:none;"></iframe>';
+     }
+     var props = ['ratio', 'rtmp', 'live', 'bufferTime', 'origin', 'analytics', 'key', 'subscribe', 'swf', 'swfHls', 'embed', 'adaptiveRatio', 'logo'];
+     if (embedConf.playlist) props.push('playlist');
+     var c = common.pick(player.conf, props);
+     if (c.logo) c.logo = common.createElement('img', {src: c.logo}).src;
+     if (!embedConf.playlist || !player.conf.playlist.length) c.clip =  extend({}, player.conf.clip, common.pick(player.video, ['sources']));
+     var script = "var w=window,d=document,e;w._fpes||(w._fpes=[],w.addEventListener(\"load\",function(){var s=d.createElement(\"script\");s.src=\"//embed.flowplayer.org/6.0.5/embed.min.js\",d.body.appendChild(s)})),e=[].slice.call(d.getElementsByTagName(\"script\"),-1)[0].parentNode,w._fpes.push({e:e,l:\"$library\",c:$conf});\n".replace('$conf', JSON.stringify(c)).replace('$library', embedConf.library || '');
+
+     return '<a href="$href">Watch video!\n<script>$script</script></a>'.replace('$href', player.conf.origin || window.location.href).replace('$script', script);
+
+   };
+   fptip(root, ".fp-embed", "is-embedding");
+
+   bean.on(root, 'click', '.fp-embed-code textarea',  function() {
+      area.select();
+   });
+
+   bean.on(root, 'click', '.fp-embed', function() {
+      area.textContent = player.embedCode().replace(/(\r\n|\n|\r)/gm,"");
+      area.focus();
+      area.select();
+   });
+
+});
+
+var fptip = function(root, trigger, active) {
+
+  function close() {
+    rootClasses.remove(active);
+    bean.off(document, '.st');
+  }
+
+  var rootClasses = ClassList(root);
+
+  bean.on(root, 'click', trigger || 'a', function(e) {
+    e.preventDefault();
+
+    rootClasses.toggle(active);
+
+    if (rootClasses.contains(active)) {
+
+      bean.on(document, 'keydown.st', function(e) {
+        if (e.which == 27) close();
+      });
+      bean.on(document, 'click.st', function(e) {
+        if (!common.hasParent(e.target, '.' + active)) close();
+      });
+    }
+  });
+};
+
+
+},{"../common":1,"../flowplayer":18,"bean":20,"class-list":22,"extend-object":26,"is-object":28}],8:[function(_dereq_,module,exports){
+'use strict';
+/* global jQuery */
+/**
+ * Mimimal jQuery-like event emitter implementation
+ */
+module.exports = function(obj, elem) {
+  if (!elem) elem = document.createElement('div'); //In this case we always want to trigger (Custom)Events on dom element
+  var handlers = {}, eventArguments = {};
+
+  var listenEvent = function(type, hndlr, disposable) {
+    var actualEvent = type.split('.')[0]; //Strip namespace
+    var internalHandler = function(ev) {
+      if (disposable) {
+        elem.removeEventListener(actualEvent, internalHandler);
+        handlers[type].splice(handlers[type].indexOf(internalHandler), 1);
+      }
+      var args = [ev].concat(eventArguments[ev.timeStamp + ev.type] || []);
+      if (hndlr) hndlr.apply(undefined, args);
+    };
+    elem.addEventListener(actualEvent, internalHandler);
+
+    //Store handlers for unbinding
+    if (!handlers[type]) handlers[type] = [];
+    handlers[type].push(internalHandler);
+  };
+
+  obj.on = obj.bind = function(typ, hndlr) {
+    var types = typ.split(' ');
+    types.forEach(function(type) {
+      listenEvent(type, hndlr);
+    });
+    return obj; //for chaining
+  };
+
+  obj.one = function(typ, hndlr) {
+    var types = typ.split(' ');
+    types.forEach(function(type) {
+      listenEvent(type, hndlr, true);
+    });
+    return obj;
+  };
+
+  // Function to check if all items in toBeContained array are in the containing array
+  var containsAll = function(containing, toBeContained) {
+    return toBeContained.filter(function(i) {
+      return containing.indexOf(i) === -1;
+    }).length === 0;
+  };
+
+
+  obj.off = obj.unbind = function(typ) {
+    var types = typ.split(' ');
+    types.forEach(function(type) {
+      var typeNameSpaces = type.split('.').slice(1),
+          actualType = type.split('.')[0];
+      Object.keys(handlers).filter(function(t) {
+        var handlerNamespaces = t.split('.').slice(1);
+        return (!actualType || t.indexOf(actualType) === 0) && containsAll(handlerNamespaces, typeNameSpaces);
+      }).forEach(function(t) {
+        var registererHandlers = handlers[t],
+            actualEvent = t.split('.')[0];
+        registererHandlers.forEach(function(hndlr) {
+          elem.removeEventListener(actualEvent, hndlr);
+          registererHandlers.splice(registererHandlers.indexOf(hndlr), 1);
+        });
+      });
+    });
+    return obj;
+  };
+
+  obj.trigger = function(typ, args, returnEvent) {
+    if (!typ) return;
+    args = (args || []).length ? args || [] : [args];
+    var event = document.createEvent('Event'), typStr;
+    typStr = typ.type || typ;
+    event.initEvent(typStr, false, true);
+    if (Object.defineProperty) event.preventDefault = function() {
+      Object.defineProperty(this, 'defaultPrevented', { get: function() { return true; } });
+    };
+    eventArguments[event.timeStamp + event.type] = args;
+    elem.dispatchEvent(event);
+    return returnEvent ? event : obj;
+  };
+};
+
+
+module.exports.EVENTS = [
+  'beforeseek',
+  'disable',
+  'error',
+  'finish',
+  'fullscreen',
+  'fullscreen-exit',
+  'load',
+  'mute',
+  'pause',
+  'progress',
+  'ready',
+  'resume',
+  'seek',
+  'speed',
+  'stop',
+  'unload',
+  'volume',
+  'boot',
+  'shutdown'
+];
+
+},{}],9:[function(_dereq_,module,exports){
+'use strict';
+var flowplayer = _dereq_('../flowplayer'),
+    bean = _dereq_('bean'),
+    ClassList = _dereq_('class-list'),
+    extend = _dereq_('extend-object'),
+    common = _dereq_('../common'),
+   VENDOR = flowplayer.support.browser.mozilla ? "moz": "webkit",
+   FS_ENTER = "fullscreen",
+   FS_EXIT = "fullscreen-exit",
+   FULL_PLAYER,
+   FS_SUPPORT = flowplayer.support.fullscreen,
+   FS_NATIVE_SUPPORT = typeof document.exitFullscreen == 'function',
+   ua = navigator.userAgent.toLowerCase(),
+   IS_SAFARI = /(safari)[ \/]([\w.]+)/.exec(ua) && !/(chrome)[ \/]([\w.]+)/.exec(ua);
+
+
+// esc button
+bean.on(document, "fullscreenchange.ffscr webkitfullscreenchange.ffscr mozfullscreenchange.ffscr MSFullscreenChange.ffscr", function(e) {
+  var el = document.webkitCurrentFullScreenElement || document.mozFullScreenElement || document.fullscreenElement || document.msFullscreenElement || e.target;
+  if (!FULL_PLAYER && (!el.parentNode || !el.parentNode.getAttribute('data-flowplayer-instance-id'))) return;
+  var player = FULL_PLAYER || flowplayer(el.parentNode);
+  if (el && !FULL_PLAYER) {
+     FULL_PLAYER = player.trigger(FS_ENTER, [el]);
+  } else {
+     FULL_PLAYER.trigger(FS_EXIT, [FULL_PLAYER]);
+     FULL_PLAYER = null;
+  }
+ });
+
+flowplayer(function(player, root) {
+
+   var wrapper = common.createElement('div', {className: 'fp-player'});
+   Array.prototype.map.call(root.children, common.identity).forEach(function(el) {
+     if (common.matches(el, '.fp-ratio,script')) return;
+     wrapper.appendChild(el);
+   });
+   root.appendChild(wrapper);
+
+   if (!player.conf.fullscreen) return;
+
+   var win = window,
+      scrollY,
+      scrollX,
+      rootClasses = ClassList(root);
+
+   player.isFullscreen = false;
+
+   player.fullscreen = function(flag) {
+
+      if (player.disabled) return;
+
+      if (flag === undefined) flag = !player.isFullscreen;
+
+      if (flag) {
+        scrollY = win.scrollY;
+        scrollX = win.scrollX;
+      }
+
+      if (FS_SUPPORT) {
+
+         if (flag) {
+            ['requestFullScreen', 'webkitRequestFullScreen', 'mozRequestFullScreen', 'msRequestFullscreen'].forEach(function(fName) {
+               if (typeof wrapper[fName] === 'function') {
+                  wrapper[fName](Element.ALLOW_KEYBOARD_INPUT);
+                  if (IS_SAFARI && !document.webkitCurrentFullScreenElement && !document.mozFullScreenElement) { // Element.ALLOW_KEYBOARD_INPUT not allowed
+                     wrapper[fName]();
+                  }
+                  return false;
+               }
+            });
+
+         } else {
+            ['exitFullscreen', 'webkitCancelFullScreen', 'mozCancelFullScreen', 'msExitFullscreen'].forEach(function(fName) {
+              if (typeof document[fName] === 'function') {
+                document[fName]();
+                return false;
+              }
+            });
+         }
+
+      } else {
+         player.trigger(flag ? FS_ENTER : FS_EXIT, [player]);
+      }
+
+      return player;
+   };
+
+   var lastClick;
+
+   player.on("mousedown.fs", function() {
+      if (+new Date() - lastClick < 150 && player.ready) player.fullscreen();
+      lastClick = +new Date();
+   });
+
+   player.on(FS_ENTER, function(e) {
+      rootClasses.add("is-fullscreen");
+      if (!FS_SUPPORT) common.css(root, 'position', 'fixed');
+      player.isFullscreen = true;
+
+   }).on(FS_EXIT, function(e) {
+      var oldOpacity;
+      if (!FS_SUPPORT && player.engine === "html5") {
+        oldOpacity = root.css('opacity') || '';
+        common.css(root, 'opacity', 0);
+      }
+      if (!FS_SUPPORT) common.css(root, 'position', '');
+      rootClasses.remove("is-fullscreen");
+      if (!FS_SUPPORT && player.engine === "html5") setTimeout(function() { root.css('opacity', oldOpacity); });
+      player.isFullscreen = false;
+      win.scrollTo(scrollX, scrollY);
+   }).on('unload', function() {
+     if (player.isFullscreen) player.fullscreen();
+   });
+
+   player.on('shutdown', function() {
+     FULL_PLAYER = null;
+   });
+
+});
+
+},{"../common":1,"../flowplayer":18,"bean":20,"class-list":22,"extend-object":26}],10:[function(_dereq_,module,exports){
+'use strict';
+var flowplayer = _dereq_('../flowplayer'),
+    bean = _dereq_('bean'),
+    focused,
+    focusedRoot,
+    IS_HELP = "is-help",
+    common = _dereq_('../common'),
+    ClassList = _dereq_('class-list');
+
+ // keyboard. single global listener
+bean.on(document, "keydown.fp", function(e) {
+
+   var el = focused,
+      metaKeyPressed = e.ctrlKey || e.metaKey || e.altKey,
+      key = e.which,
+      conf = el && el.conf,
+      focusedRootClasses = focusedRoot && ClassList(focusedRoot);
+
+   if (!el || !conf.keyboard || el.disabled) return;
+
+   // help dialog (shift key not truly required)
+   if ([63, 187, 191].indexOf(key) != -1) {
+      focusedRootClasses.toggle(IS_HELP);
+      return false;
+   }
+
+   // close help / unload
+   if (key == 27 && focusedRootClasses.contains(IS_HELP)) {
+      focusedRootClasses.toggle(IS_HELP);
+      return false;
+   }
+
+   if (!metaKeyPressed && el.ready) {
+
+      e.preventDefault();
+
+      // slow motion / fast forward
+      if (e.shiftKey) {
+         if (key == 39) el.speed(true);
+         else if (key == 37) el.speed(false);
+         return;
+      }
+
+      // 1, 2, 3, 4 ..
+      if (key < 58 && key > 47) return el.seekTo(key - 48);
+
+      switch (key) {
+         case 38: case 75: el.volume(el.volumeLevel + 0.15); break;        // volume up
+         case 40: case 74: el.volume(el.volumeLevel - 0.15); break;        // volume down
+         case 39: case 76: el.seeking = true; el.seek(true); break;        // forward
+         case 37: case 72: el.seeking = true; el.seek(false); break;       // backward
+         case 190: el.seekTo(); break;                                     // to last seek position
+         case 32: el.toggle(); break;                                      // spacebar
+         case 70: if(conf.fullscreen) el.fullscreen(); break;               // toggle fullscreen
+         case 77: el.mute(); break;                                        // mute
+         case 81: el.unload(); break;                                      // unload/stop
+      }
+
+   }
+
+});
+
+flowplayer(function(api, root) {
+
+   // no keyboard configured
+   if (!api.conf.keyboard) return;
+
+   // hover
+   bean.on(root, "mouseenter mouseleave", function(e) {
+      focused = !api.disabled && e.type == 'mouseover' ? api : 0;
+      if (focused) focusedRoot = root;
+   });
+
+   var speedhelp = flowplayer.support.video && api.conf.engine !== "flash" &&
+      !!document.createElement('video').playbackRate ?
+      '<p><em>shift</em> + <em>&#8592;</em><em>&#8594;</em>slower / faster</p>' : '';
+
+   // TODO: add to player-layout.html
+   root.appendChild(common.createElement('div', { className: 'fp-help' }, '\
+         <a class="fp-close"></a>\
+         <div class="fp-help-section fp-help-basics">\
+            <p><em>space</em>play / pause</p>\
+            <p><em>q</em>unload | stop</p>\
+            <p><em>f</em>fullscreen</p>' + speedhelp + '\
+         </div>\
+         <div class="fp-help-section">\
+            <p><em>&#8593;</em><em>&#8595;</em>volume</p>\
+            <p><em>m</em>mute</p>\
+         </div>\
+         <div class="fp-help-section">\
+            <p><em>&#8592;</em><em>&#8594;</em>seek</p>\
+            <p><em>&nbsp;. </em>seek to previous\
+            </p><p><em>1</em><em>2</em>&hellip; <em>6</em> seek to 10%, 20% &hellip; 60% </p>\
+         </div>\
+   '));
+
+   if (api.conf.tooltip) {
+     var ui = common.find('.fp-ui', root)[0];
+     ui.setAttribute('title', 'Hit ? for help');
+     bean.one(root, "mouseout.tip", '.fp-ui', function() {
+       ui.removeAttribute('title');
+     });
+   }
+
+   bean.on(root, 'click', '.fp-close', function() {
+     ClassList(root).toggle(IS_HELP);
+   });
+
+   api.bind('shutdown', function() {
+     if (focusedRoot == root) focusedRoot = null;
+   });
+
+});
+
+
+},{"../common":1,"../flowplayer":18,"bean":20,"class-list":22}],11:[function(_dereq_,module,exports){
+'use strict';
+var flowplayer = _dereq_('../flowplayer'),
+    isIeMobile = /IEMobile/.test(window.navigator.userAgent),
+    ClassList = _dereq_('class-list'),
+    common = _dereq_('../common'),
+    bean = _dereq_('bean'),
+    format = _dereq_('./ui').format,
+    UA = window.navigator.userAgent;
+if (flowplayer.support.touch || isIeMobile) {
+
+   flowplayer(function(player, root) {
+      var isAndroid = /Android/.test(UA) && !/Firefox/.test(UA) && !/Opera/.test(UA),
+          isSilk = /Silk/.test(UA),
+          androidVer = isAndroid ? parseFloat(/Android\ (\d\.\d)/.exec(UA)[1], 10) : 0,
+          rootClasses = ClassList(root);
+
+      // custom load for android
+      if (isAndroid && !isIeMobile) {
+         if (!/Chrome/.test(UA) && androidVer < 4) {
+            var originalLoad = player.load;
+            player.load = function(video, callback) {
+               var ret = originalLoad.apply(player, arguments);
+               player.trigger('ready', [player, player.video]);
+               return ret;
+            };
+         }
+         var timer, currentTime = 0;
+         var resumeTimer = function(api) {
+           timer = setInterval(function() {
+             api.video.time = ++currentTime;
+             api.trigger('progress', [api, currentTime]);
+           }, 1000);
+         };
+         player.bind('ready pause unload', function() {
+           if (timer) {
+             clearInterval(timer);
+             timer = null;
+           }
+         });
+         player.bind('ready', function() {
+           currentTime = 0;
+         });
+         player.bind('resume', function(ev, api) {
+           if (!api.live) return;
+           if (currentTime) { return resumeTimer(api); }
+           player.one('progress', function(ev, api, t) {
+             if (t === 0) { // https://github.com/flowplayer/flowplayer/issues/727
+               resumeTimer(api);
+             }
+           });
+         });
+      }
+
+      // hide volume
+      if (!flowplayer.support.volume) {
+         rootClasses.add("no-volume");
+         rootClasses.add("no-mute");
+      }
+      rootClasses.add("is-touch");
+      if (player.sliders && player.sliders.timeline) player.sliders.timeline.disableAnimation();
+
+      if (!flowplayer.support.inlineVideo || player.conf.native_fullscreen) player.conf.nativesubtitles = true;
+
+      // fake mouseover effect with click
+      var hasMoved = false;
+      bean.on(root, 'touchmove', function() {
+        hasMoved = true;
+      });
+      bean.on(root, 'touchend click', function(e) {
+        if (hasMoved) { //not intentional, most likely scrolling
+          hasMoved = false;
+          return;
+        }
+
+        if (player.playing && !rootClasses.contains("is-mouseover")) {
+          rootClasses.add("is-mouseover");
+          rootClasses.remove("is-mouseout");
+          e.preventDefault();
+          e.stopPropagation();
+          return;
+        }
+
+        if (!player.playing && !player.splash && rootClasses.contains('is-mouseout') && !rootClasses.contains('is-mouseover')) {
+          setTimeout(function() {
+            if (!player.playing && !player.splash) {
+              player.resume();
+            }
+          }, 400);
+        }
+
+
+      });
+
+      // native fullscreen
+      if (player.conf.native_fullscreen && typeof document.createElement('video').webkitEnterFullScreen === 'function') {
+         player.fullscreen = function() {
+            var video = common.find('video.fp-engine', root)[0];
+            video.webkitEnterFullScreen();
+            bean.one(video, 'webkitendfullscreen', function() {
+              common.prop(video, 'controls', true);
+              common.prop(video, 'controls', false);
+            });
+         };
+      }
+
+
+      // Android browser gives video.duration == 1 until second 'timeupdate' event
+      if (isAndroid || isSilk) player.bind("ready", function() {
+
+         var video = common.find('video.fp-engine', root)[0];
+         bean.one(video, 'canplay', function() {
+            video.play();
+         });
+         video.play();
+
+         player.bind("progress.dur", function() {
+
+            var duration = video.duration;
+
+            if (duration !== 1) {
+               player.video.duration = duration;
+               common.find(".fp-duration", root)[0].innerHTML = format(duration);
+               player.unbind("progress.dur");
+            }
+         });
+      });
+
+
+   });
+
+}
+
+
+},{"../common":1,"../flowplayer":18,"./ui":17,"bean":20,"class-list":22}],12:[function(_dereq_,module,exports){
+'use strict';
+var flowplayer = _dereq_('../flowplayer'),
+    extend = _dereq_('extend-object'),
+    bean = _dereq_('bean'),
+    ClassList = _dereq_('class-list'),
+    common = _dereq_('../common'),
+    Resolve = _dereq_('./resolve'),
+    resolver = new Resolve(),
+    $ = window.jQuery,
+    externalRe = /^#/;
+flowplayer(function(player, root) {
+
+   var conf = extend({ active: 'is-active', advance: true, query: ".fp-playlist a" }, player.conf),
+      klass = conf.active, rootClasses = ClassList(root);
+
+   // getters
+   function els() {
+     return common.find(conf.query, queryRoot());
+   }
+
+   function queryRoot() {
+     if (externalRe.test(conf.query)) return;
+     return root;
+   }
+
+   function active() {
+      return common.find(conf.query + "." + klass, queryRoot());
+   }
+
+
+   player.play = function(i) {
+      if (i === undefined) return player.resume();
+      if (typeof i === 'number' && !player.conf.playlist[i]) return player;
+      else if (typeof i != 'number') return player.load.apply(null, arguments);
+      var arg = extend({index: i}, player.conf.playlist[i]);
+      if (i === player.video.index) return player.load(arg, function() { player.resume(); });
+      player.off('resume.fromfirst'); // Don't start from beginning if clip explicitely chosen
+      player.load(arg, function() {
+        player.video.index = i;
+      });
+      return player;
+   };
+
+   player.next = function(e) {
+      if (e) e.preventDefault();
+      var current = player.video.index;
+      if (current != -1) {
+         current = current === player.conf.playlist.length - 1 ? 0 : current + 1;
+         player.play(current);
+      }
+      return player;
+   };
+
+   player.prev = function(e) {
+      if (e) e.preventDefault();
+      var current = player.video.index;
+      if (current != -1) {
+         current = current === 0 ? player.conf.playlist.length - 1 : current - 1;
+         player.play(current);
+      }
+      return player;
+   };
+
+   player.setPlaylist = function(items) {
+     player.conf.playlist = items;
+     delete player.video.index;
+     generatePlaylist();
+     return player;
+   };
+
+   player.addPlaylistItem = function(item) {
+     return player.setPlaylist(player.conf.playlist.concat([item]));
+   };
+
+   player.removePlaylistItem = function(idx) {
+     var pl = player.conf.playlist;
+     return player.setPlaylist(pl.slice(0, idx).concat(pl.slice(idx+1)));
+   };
+
+   bean.on(root, 'click', '.fp-next', player.next);
+   bean.on(root, 'click', '.fp-prev', player.prev);
+
+   if (conf.advance) {
+      player.off("finish.pl").on("finish.pl", function(e, player) {
+         // clip looping
+         if (player.video.loop) return player.seek(0, function() { player.resume(); });
+         // next clip is found or loop
+         var next = player.video.index >= 0 ? player.video.index + 1 : undefined;
+         if (next < player.conf.playlist.length || conf.loop) {
+            next = next === player.conf.playlist.length ? 0 : next;
+            rootClasses.remove('is-finished');
+            setTimeout(function() { // Let other finish callbacks fire first
+               player.play(next);
+            });
+
+         // stop to last clip, play button starts from 1:st clip
+         } else {
+
+            // If we have multiple items in playlist, start from first
+            if (player.conf.playlist.length > 1) player.one("resume.fromfirst", function() {
+               player.play(0);
+               return false;
+            });
+         }
+      });
+   }
+
+   function generatePlaylist() {
+      var plEl = common.find('.fp-playlist', root)[0];
+      if (!plEl) {
+         plEl = common.createElement('div', {className: 'fp-playlist'});
+         var cntrls = common.find('.fp-next,.fp-prev', root);
+         if (!cntrls.length) common.insertAfter(root, common.find('video', root)[0], plEl);
+         else cntrls[0].parentElement.insertBefore(plEl, cntrls[0]);
+      }
+      plEl.innerHTML = '';
+      if (player.conf.playlist[0].length) { // FP5 style playlist
+        player.conf.playlist = player.conf.playlist.map(function(itm) {
+          if (typeof itm === 'string') {
+            var type = itm.split(Resolve.TYPE_RE)[1];
+            return {
+              sources: [{
+                type: type.toLowerCase() === 'm3u8' ? 'application/x-mpegurl' : 'video/' + type,
+                src: itm
+              }]
+            };
+          }
+          return {
+            sources: itm.map(function(src) {
+              var s = {};
+              Object.keys(src).forEach(function(k) {
+                s.type = /mpegurl/i.test(k) ? 'application/x-mpegurl' : 'video/' + k;
+                s.src = src[k];
+              });
+              return s;
+            })
+          };
+        });
+      }
+      player.conf.playlist.forEach(function(item, i) {
+         var href = item.sources[0].src;
+         plEl.appendChild(common.createElement('a', {
+            href: href,
+            'data-index': i
+         }));
+      });
+   }
+
+   var playlistInitialized = false;
+   if (player.conf.playlist.length) { // playlist configured by javascript, generate playlist
+      playlistInitialized = true;
+      generatePlaylist();
+      if (!player.conf.clip || !player.conf.clip.sources.length) {
+        player.conf.clip = player.conf.playlist[player.conf.startIndex || 0];
+      }
+   }
+
+   if (els().length && !playlistInitialized) { //generate playlist from existing elements
+       player.conf.playlist = [];
+       delete player.conf.startIndex;
+       els().forEach(function(el) {
+          var src = el.href;
+          el.setAttribute('data-index', player.conf.playlist.length);
+          var itm = resolver.resolve(src, player.conf.clip.sources);
+          if ($) {
+            extend(itm, $(el).data());
+          }
+          player.conf.playlist.push(itm);
+       });
+    }
+
+    /* click -> play */
+    bean.on(externalRe.test(conf.query) ? document : root, "click", conf.query, function(e) {
+       e.preventDefault();
+       var el = e.currentTarget;
+       var toPlay = Number(el.getAttribute('data-index'));
+       if (toPlay != -1) {
+          player.play(toPlay);
+       }
+    });
+
+    // highlight
+    function videoIndex(video) {
+      if (typeof video.index !== 'undefined') return video.index;
+      if (typeof player.video.index !== 'undefined') return player.video.index;
+      return player.conf.startIndex || 0;
+    }
+    player.on("load", function(e, api, video) {
+       if (!player.conf.playlist.length) return;
+       var prev = active()[0],
+          prevIndex = prev && prev.getAttribute('data-index'),
+          index = video.index = videoIndex(video),
+          el = common.find(conf.query +'[data-index="' + index + '"]', queryRoot())[0],
+          is_last = index == player.conf.playlist.length - 1;
+       if (prev) ClassList(prev).remove(klass);
+       if (el) ClassList(el).add(klass);
+       // index
+       rootClasses.remove("video" + prevIndex);
+       rootClasses.add("video" + index);
+       common.toggleClass(root, "last-video", is_last);
+
+       // video properties
+       video.index = api.video.index = index;
+       video.is_last = api.video.is_last = is_last;
+
+    // without namespace callback called only once. unknown rason.
+    }).on("unload.pl", function() {
+       if (!player.conf.playlist.length) return;
+       active().forEach(function(el) {
+         ClassList(el).toggle(klass);
+       });
+       player.conf.playlist.forEach(function(itm, i) {
+         rootClasses.remove('video' + i);
+       });
+    });
+
+   if (player.conf.playlist.length) {
+      // disable single clip looping
+      player.conf.loop = false;
+   }
+
+
+});
+
+},{"../common":1,"../flowplayer":18,"./resolve":13,"bean":20,"class-list":22,"extend-object":26}],13:[function(_dereq_,module,exports){
+'use strict';
+var TYPE_RE = /\.(\w{3,4})(\?.*)?$/i,
+    extend = _dereq_('extend-object');
+
+function parseSource(el) {
+
+   var src = el.attr("src"),
+      type = el.attr("type") || "",
+      suffix = src.split(TYPE_RE)[1];
+   type = type.toLowerCase();
+   return extend(el.data(), { src: src, suffix: suffix || type, type: type || suffix });
+}
+
+function getType(typ) {
+  if (/mpegurl/i.test(typ)) return 'application/x-mpegurl';
+  return 'video/' + typ;
+}
+
+/* Resolves video object from initial configuration and from load() method */
+module.exports = function URLResolver() {
+  var self = this;
+
+  self.sourcesFromVideoTag = function(videoTag, $) {
+    /* global $ */
+    var sources = [];
+    // initial sources
+    $("source", videoTag).each(function() {
+      sources.push(parseSource($(this)));
+    });
+
+    if (!sources.length && videoTag.length) sources.push(parseSource(videoTag));
+
+    return sources;
+  };
+
+
+  self.resolve = function(video, sources) {
+    if (!video) return { sources: sources };
+
+    if (typeof video == 'string') {
+      video = { src: video, sources: [] };
+      video.sources = (sources || []).map(function(source) {
+        var suffix = source.src.split(TYPE_RE)[1];
+        return {type: source.type, src: video.src.replace(TYPE_RE, '.' + suffix + "$2")};
+      });
+    }
+
+    if (video instanceof Array) {
+      video = {
+        sources: video.map(function(src) {
+          if (src.type && src.src) return src;
+          return Object.keys(src).reduce(function(m, typ) {
+            return extend(m, {
+              type: getType(typ),
+              src: src[typ]
+            });
+          }, {});
+        })
+      };
+    }
+
+    return video;
+  };
+};
+
+module.exports.TYPE_RE = TYPE_RE;
+
+},{"extend-object":26}],14:[function(_dereq_,module,exports){
+'use strict';
+// skip IE policies
+// document.ondragstart = function () { return false; };
+//
+var ClassList = _dereq_('class-list'),
+    bean = _dereq_('bean'),
+    common = _dereq_('../common');
+
+
+// execute function every <delay> ms
+var throttle = function(fn, delay) {
+   var locked;
+
+   return function () {
+      if (!locked) {
+         fn.apply(this, arguments);
+         locked = 1;
+         setTimeout(function () { locked = 0; }, delay);
+      }
+   };
+};
+
+
+var slider = function(root, rtl) {
+  var IS_IPAD = /iPad/.test(navigator.userAgent) && !/CriOS/.test(navigator.userAgent);
+
+  var progress = common.lastChild(root),
+      rootClasses = ClassList(root),
+      progressClasses = ClassList(progress),
+      disabled,
+      offset,
+      width,
+      height,
+      vertical,
+      size,
+      maxValue,
+      max,
+      skipAnimation = false,
+
+      /* private */
+      calc = function() {
+         offset = common.offset(root);
+         width = common.width(root);
+         height = common.height(root);
+
+         /* exit from fullscreen can mess this up.*/
+         // vertical = height > width;
+
+         size = vertical ? height : width;
+         max = toDelta(maxValue);
+      },
+
+      fire = function(value) {
+         if (!disabled && value != api.value && (!maxValue || value < maxValue)) {
+            bean.fire(root, 'slide', [ value ]);
+            api.value = value;
+         }
+      },
+
+      mousemove = function(e) {
+         var pageX = e.pageX || e.clientX;
+         if (!pageX && e.originalEvent && e.originalEvent.touches && e.originalEvent.touches.length) {
+            pageX = e.originalEvent.touches[0].pageX;
+         }
+         var delta = vertical ? e.pageY - offset.top : pageX - offset.left;
+         delta = Math.max(0, Math.min(max || size, delta));
+
+         var value = delta / size;
+         if (vertical) value = 1 - value;
+         if (rtl) value = 1 - value;
+         return move(value, 0, true);
+      },
+
+      move = function(value, speed) {
+         if (speed === undefined) { speed = 0; }
+         if (value > 1) value = 1;
+
+         var to = (Math.round(value * 1000) / 10) + "%";
+
+         if (!maxValue || value <= maxValue) {
+           progressClasses.remove('animated');
+            if (skipAnimation) {
+              progressClasses.remove('animated');
+            } else {
+              progressClasses.add('animated');
+              common.css(progress, 'transition-duration', (speed || 0) + 'ms');
+            }
+            common.css(progress, 'width', to);
+         }
+
+         return value;
+      },
+
+      toDelta = function(value) {
+         return Math.max(0, Math.min(size, vertical ? (1 - value) * height : value * width));
+      },
+
+      /* public */
+      api = {
+
+         max: function(value) {
+            maxValue = value;
+         },
+
+         disable: function(flag) {
+            disabled = flag;
+         },
+
+         slide: function(value, speed, fireEvent) {
+            calc();
+            if (fireEvent) fire(value);
+            move(value, speed);
+         },
+
+         // Should animation be handled via css
+         disableAnimation: function(value, alsoCssAnimations) {
+            skipAnimation = value !== false;
+            common.toggleClass(root, 'no-animation', !!alsoCssAnimations);
+         }
+
+      };
+
+  calc();
+
+  // bound dragging into document
+  bean.on(root, 'mousedown.sld touchstart', function(e) {
+    e.preventDefault();
+
+    if (!disabled) {
+      // begin --> recalculate. allows dynamic resizing of the slider
+      var delayedFire = throttle(fire, 100);
+      calc();
+      api.dragging = true;
+      rootClasses.add('is-dragging');
+      fire(mousemove(e));
+
+      bean.on(document, 'mousemove.sld touchmove.sld', function(e) {
+        e.preventDefault();
+        delayedFire(mousemove(e));
+
+      });
+      bean.one(document, 'mouseup touchend', function() {
+         api.dragging = false;
+         rootClasses.remove('is-dragging');
+         bean.off(document, 'mousemove.sld touchmove.sld');
+      });
+
+     }
+
+  });
+  return api;
+};
+
+module.exports = slider;
+
+},{"../common":1,"bean":20,"class-list":22}],15:[function(_dereq_,module,exports){
+'use strict';
+var flowplayer = _dereq_('../flowplayer'),
+    common = _dereq_('../common'),
+    bean = _dereq_('bean'),
+    ClassList = _dereq_('class-list');
+
+flowplayer.defaults.subtitleParser = function(txt) {
+  var TIMECODE_RE = /^(([0-9]{2}:){1,2}[0-9]{2}[,.][0-9]{3}) --\> (([0-9]{2}:){1,2}[0-9]{2}[,.][0-9]{3})(.*)/;
+
+  function seconds(timecode) {
+     var els = timecode.split(':');
+     if (els.length == 2) els.unshift(0);
+     return els[0] * 60 * 60 + els[1] * 60 + parseFloat(els[2].replace(',','.'));
+  }
+
+  var entries = [];
+  for (var i = 0, lines = txt.split("\n"), len = lines.length, entry = {}, title, timecode, text, cue; i < len; i++) {
+    timecode = TIMECODE_RE.exec(lines[i]);
+
+    if (timecode) {
+
+      // title
+      title = lines[i - 1];
+
+      // text
+      text = "<p>" + lines[++i] + "</p><br/>";
+      while (typeof lines[++i] === 'string' && lines[i].trim() && i < lines.length) text +=  "<p>" + lines[i] + "</p><br/>";
+
+      // entry
+      entry = {
+        title: title,
+        startTime: seconds(timecode[1]),
+        endTime: seconds(timecode[3]),
+        text: text
+      };
+      entries.push(entry);
+    }
+  }
+  return entries;
+};
+
+flowplayer(function(p, root) {
+  var wrapClasses, currentPoint, wrap,
+      rootClasses = ClassList(root),
+      subtitleControl;
+
+  var createSubtitleControl = function() {
+    subtitleControl = common.createElement('a', {className: 'fp-menu'});
+    var menu = common.createElement('ul', {className: 'fp-dropdown fp-dropup'});
+    menu.appendChild(common.createElement('li', {'data-subtitle-index': -1}, 'No subtitles'));
+    (p.video.subtitles || []).forEach(function(st, i) {
+      var srcLang = st.srclang || 'en',
+          label = st.label || 'Default (' + srcLang + ')';
+      var item = common.createElement('li', {'data-subtitle-index': i}, label);
+      menu.appendChild(item);
+    });
+    subtitleControl.appendChild(menu);
+    common.find('.fp-controls', root)[0].appendChild(subtitleControl);
+    return subtitleControl;
+  };
+
+  bean.on(root, 'click', '.fp-menu', function(ev) {
+    ClassList(subtitleControl).toggle('dropdown-open');
+  });
+
+  bean.on(root, 'click', '.fp-menu li[data-subtitle-index]', function(ev) {
+    var idx = ev.target.getAttribute('data-subtitle-index');
+    if (idx === '-1') return p.disableSubtitles();
+    p.loadSubtitles(idx);
+  });
+
+  var createUIElements = function() {
+    var playerEl = common.find('.fp-player', root)[0];
+    wrap = common.find('.fp-subtitle', root)[0];
+    wrap = wrap || common.appendTo(common.createElement('div', {'class': 'fp-subtitle'}), playerEl);
+    Array.prototype.forEach.call(wrap.children, common.removeNode);
+    wrapClasses = ClassList(wrap);
+    common.find('.fp-menu', root).forEach(common.removeNode);
+    createSubtitleControl();
+  };
+
+
+  p.on('ready',  function(ev, player, video) {
+    var conf = player.conf;
+    if (flowplayer.support.subtitles && conf.nativesubtitles && player.engine.engineName == 'html5') {
+      var setMode = function(mode) {
+        var tracks = common.find('video', root)[0].textTracks;
+        if (!tracks.length) return;
+        tracks[0].mode = mode;
+      };
+      if (!video.subtitles || !video.subtitles.length) return;
+      var videoTag = common.find('video.fp-engine', root)[0];
+      if (video.subtitles.some(function(st) { return !common.isSameDomain(st.src); })) common.attr(videoTag, 'crossorigin', 'anonymous');
+      videoTag.textTracks.addEventListener('addtrack', function() {
+        setMode('disabled');
+        setMode('showing');
+      });
+      video.subtitles.forEach(function(st) {
+        videoTag.appendChild(common.createElement('track', {
+          kind: 'subtitles',
+          srclang: st.srclang || 'en',
+          label: st.label || 'en',
+          src: st.src,
+          'default': st['default']
+        }));
+      });
+      return;
+    }
+
+    player.subtitles = [];
+
+    createUIElements();
+
+    rootClasses.remove('has-menu');
+
+    p.disableSubtitles();
+
+    if (!video.subtitles || !video.subtitles.length) return;
+
+    rootClasses.add('has-menu');
+    var defaultSubtitle = video.subtitles.filter(function(one) {
+      return one['default'];
+    })[0];
+    if (defaultSubtitle) player.loadSubtitles(video.subtitles.indexOf(defaultSubtitle));
+  });
+
+  p.bind("cuepoint", function(e, api, cue) {
+    if (cue.subtitle) {
+       currentPoint = cue.index;
+       common.html(wrap, cue.subtitle.text);
+       wrapClasses.add('fp-active');
+    } else if (cue.subtitleEnd) {
+       wrapClasses.remove('fp-active');
+       currentPoint = cue.index;
+    }
+  });
+
+  p.bind("seek", function(e, api, time) {
+    // Clear future subtitles if seeking backwards
+    if (currentPoint && p.cuepoints[currentPoint] && p.cuepoints[currentPoint].time > time) {
+       wrapClasses.remove('fp-active');
+       currentPoint = null;
+    }
+    (p.cuepoints || []).forEach(function(cue) {
+      var entry = cue.subtitle;
+      //Trigger cuepoint if start time before seek position and end time nonexistent or in the future
+      if (entry && currentPoint != cue.index) {
+        if (time >= cue.time && (!entry.endTime || time <= entry.endTime)) p.trigger("cuepoint", [p, cue]);
+      } // Also handle cuepoints that act as the removal trigger
+      else if (cue.subtitleEnd && time >= cue.time && cue.index == currentPoint + 1) p.trigger("cuepoint", [p, cue]);
+    });
+
+  });
+
+  var setActiveSubtitleClass = function(idx) {
+    common.toggleClass(common.find('li.active', root)[0], 'active');
+    common.toggleClass(common.find('li[data-subtitle-index="' + idx + '"]', root)[0], 'active');
+  };
+
+  p.disableSubtitles = function() {
+    p.subtitles = [];
+    (p.cuepoints || []).forEach(function(c) {
+      if (c.subtitle || c.subtitleEnd) p.removeCuepoint(c);
+    });
+    if (wrap) Array.prototype.forEach.call(wrap.children, common.removeNode);
+    setActiveSubtitleClass(-1);
+    return p;
+  };
+
+  p.loadSubtitles = function(i) {
+    //First remove possible old subtitles
+    p.disableSubtitles();
+
+    var st = p.video.subtitles[i];
+
+    var url = st.src;
+    if (!url) return;
+    setActiveSubtitleClass(i);
+    common.xhrGet(url, function(txt) {
+      var entries = p.conf.subtitleParser(txt);
+      entries.forEach(function(entry) {
+        var cue = { time: entry.startTime, subtitle: entry, visible: false };
+        p.subtitles.push(entry);
+        p.addCuepoint(cue);
+        p.addCuepoint({ time: entry.endTime, subtitleEnd: entry.title, visible: false });
+
+        // initial cuepoint
+        if (entry.startTime === 0 && !p.video.time) {
+          p.trigger("cuepoint", [p, cue]);
+        }
+      });
+    }, function() {
+      p.trigger("error", {code: 8, url: url });
+      return false;
+    });
+    return p;
+  };
+});
+
+
+},{"../common":1,"../flowplayer":18,"bean":20,"class-list":22}],16:[function(_dereq_,module,exports){
+'use strict';
+/* global ActiveXObject */
+var flowplayer = _dereq_('../flowplayer'),
+    extend = _dereq_('extend-object');
+(function() {
+
+   var parseIpadVersion = function(UA) {
+      var e = /Version\/(\d\.\d)/.exec(UA);
+      if (e && e.length > 1) {
+         return parseFloat(e[1], 10);
+      }
+      return 0;
+   };
+
+   var createVideoTag = function() {
+     var videoTag = document.createElement('video');
+     videoTag.loop = true;
+     videoTag.autoplay = true;
+     videoTag.preload = true;
+     return videoTag;
+   };
+
+    var b = {},
+      ua = navigator.userAgent.toLowerCase(),
+      match = /(chrome)[ \/]([\w.]+)/.exec(ua) ||
+      /(safari)[ \/]([\w.]+)/.exec(ua) ||
+      /(webkit)[ \/]([\w.]+)/.exec(ua) ||
+      /(opera)(?:.*version|)[ \/]([\w.]+)/.exec(ua) ||
+      /(msie) ([\w.]+)/.exec(ua) ||
+      ua.indexOf("compatible") < 0 && /(mozilla)(?:.*? rv:([\w.]+)|)/.exec(ua) || [];
+
+   if (match[1]) {
+      b[match[1]] = true;
+      b.version = match[2] || "0";
+   }
+
+   var video = createVideoTag(),
+      UA = navigator.userAgent,
+      IS_IE = b.msie || /Trident\/7/.test(UA),
+      IS_IPAD = /iPad|MeeGo/.test(UA) && !/CriOS/.test(UA),
+      IS_IPAD_CHROME = /iPad/.test(UA) && /CriOS/.test(UA),
+      IS_IPHONE = /iP(hone|od)/i.test(UA) && !/iPad/.test(UA) && !/IEMobile/i.test(UA),
+      IS_ANDROID = /Android/.test(UA) && !/Firefox/.test(UA),
+      IS_ANDROID_FIREFOX = /Android/.test(UA) && /Firefox/.test(UA),
+      IS_SILK = /Silk/.test(UA),
+      IS_WP = /IEMobile/.test(UA),
+      WP_VER = IS_WP ? parseFloat(/Windows\ Phone\ (\d+\.\d+)/.exec(UA)[1], 10) : 0,
+      IE_MOBILE_VER = IS_WP ? parseFloat(/IEMobile\/(\d+\.\d+)/.exec(UA)[1], 10) : 0,
+      IPAD_VER = IS_IPAD ? parseIpadVersion(UA) : 0,
+      ANDROID_VER = IS_ANDROID ? parseFloat(/Android\ (\d\.\d)/.exec(UA)[1], 10) : 0,
+      s = extend(flowplayer.support, {
+
+        browser: b,
+        subtitles: !!video.addTextTrack,
+        fullscreen: typeof document.webkitCancelFullScreen == 'function' && !/Mac OS X 10_5.+Version\/5\.0\.\d Safari/.test(UA) ||
+              document.mozFullScreenEnabled ||
+              typeof document.exitFullscreen == 'function' ||
+              typeof document.msExitFullscreen == 'function',
+        inlineBlock: !(IS_IE && b.version < 8),
+        touch: ('ontouchstart' in window),
+        dataload: !IS_IPAD && !IS_IPHONE && !IS_WP,
+        zeropreload: !IS_IE && !IS_ANDROID, // IE supports only preload=metadata
+        volume: !IS_IPAD && !IS_ANDROID && !IS_IPHONE && !IS_SILK && !IS_IPAD_CHROME,
+        cachedVideoTag: !IS_IPAD && !IS_IPHONE && !IS_IPAD_CHROME && !IS_WP,
+        firstframe: !IS_IPHONE && !IS_IPAD && !IS_ANDROID && !IS_SILK && !IS_IPAD_CHROME && !IS_WP && !IS_ANDROID_FIREFOX,
+        inlineVideo: !IS_IPHONE && (!IS_WP || (WP_VER >= 8.1 && IE_MOBILE_VER >= 11)) && (!IS_ANDROID || ANDROID_VER >= 3),
+        hlsDuration: !IS_ANDROID && (!b.safari || IS_IPAD || IS_IPHONE || IS_IPAD_CHROME),
+        seekable: !IS_IPAD && !IS_IPAD_CHROME
+    });
+
+   // flashVideo
+   try {
+      var plugin = navigator.plugins["Shockwave Flash"],
+          ver = IS_IE ? new ActiveXObject("ShockwaveFlash.ShockwaveFlash").GetVariable('$version') : plugin.description;
+      if (!IS_IE && !plugin[0].enabledPlugin) s.flashVideo = false;
+      else {
+
+         ver = ver.split(/\D+/);
+         if (ver.length && !ver[0]) ver = ver.slice(1);
+
+         s.flashVideo = ver[0] > 9 || ver[0] == 9 && ver[3] >= 115;
+      }
+
+   } catch (ignored) {}
+   try {
+      s.video = !!video.canPlayType;
+      if (s.video) video.canPlayType('video/mp4');
+   } catch (e) {
+      s.video = false;
+   }
+
+   // animation
+   s.animation = (function() {
+      var vendors = ['','Webkit','Moz','O','ms','Khtml'], el = document.createElement('p');
+
+      for (var i = 0; i < vendors.length; i++) {
+         if (typeof el.style[vendors[i] + 'AnimationName'] !== 'undefined') return true;
+      }
+   })();
+
+
+
+})();
+
+
+},{"../flowplayer":18,"extend-object":26}],17:[function(_dereq_,module,exports){
+'use strict';
+var flowplayer = _dereq_('../flowplayer'),
+    common = _dereq_('../common'),
+    ClassList = _dereq_('class-list'),
+    bean = _dereq_('bean'),
+    slider = _dereq_('./slider');
+
+function zeropad(val) {
+   val = parseInt(val, 10);
+   return val >= 10 ? val : "0" + val;
+}
+
+// display seconds in hh:mm:ss format
+function format(sec) {
+
+   sec = sec || 0;
+
+   var h = Math.floor(sec / 3600),
+       min = Math.floor(sec / 60);
+
+   sec = sec - (min * 60);
+
+   if (h >= 1) {
+      min -= h * 60;
+      return h + ":" + zeropad(min) + ":" + zeropad(sec);
+   }
+
+   return zeropad(min) + ":" + zeropad(sec);
+}
+
+flowplayer(function(api, root) {
+
+   var conf = api.conf,
+      support = flowplayer.support,
+      hovertimer,
+      rootClasses = ClassList(root);
+   common.find('.fp-ratio,.fp-ui', root).forEach(common.removeNode);
+   rootClasses.add('flowplayer');
+   root.appendChild(common.createElement('div', {className: 'fp-ratio'}));
+   var ui = common.createElement('div', {className: 'fp-ui'}, '\
+         <div class="waiting"><em></em><em></em><em></em></div>\
+         <a class="fullscreen"></a>\
+         <a class="unload"></a>\
+         <p class="speed"></p>\
+         <div class="controls">\
+            <a class="play"></a>\
+            <div class="timeline">\
+               <div class="buffer"></div>\
+               <div class="progress"></div>\
+            </div>\
+            <div class="timeline-tooltip fp-tooltip"></div>\
+            <div class="volume">\
+               <a class="mute"></a>\
+               <div class="volumeslider">\
+                  <div class="volumelevel"></div>\
+               </div>\
+            </div>\
+         </div>\
+         <div class="time">\
+            <em class="elapsed">00:00</em>\
+            <em class="remaining"></em>\
+            <em class="duration">00:00</em>\
+         </div>\
+         <div class="message"><h2></h2><p></p></div>'.replace(/class="/g, 'class="fp-'));
+   root.appendChild(ui);
+   function find(klass) {
+     return common.find(".fp-" + klass, root)[0];
+   }
+
+   // widgets
+   var progress = find("progress"),
+      buffer = find("buffer"),
+      elapsed = find("elapsed"),
+      remaining = find("remaining"),
+      waiting = find("waiting"),
+      ratio = find("ratio"),
+      speed = find("speed"),
+      speedClasses = ClassList(speed),
+      durationEl = find("duration"),
+      controls = find('controls'),
+      timelineTooltip = find('timeline-tooltip'),
+      origRatio = common.css(ratio, 'padding-top'),
+
+      // sliders
+      timeline = find("timeline"),
+      timelineApi = slider(timeline, api.rtl),
+
+      volume = find("volume"),
+      fullscreen = find("fullscreen"),
+      volumeSlider = find("volumeslider"),
+      volumeApi = slider(volumeSlider, api.rtl),
+      noToggle = rootClasses.contains('fixed-controls') || rootClasses.contains('no-toggle');
+
+   timelineApi.disableAnimation(rootClasses.contains('is-touch'));
+   api.sliders = api.sliders || {};
+   api.sliders.timeline = timelineApi;
+   api.sliders.volume = volumeApi;
+
+   // aspect ratio
+   function setRatio(val) {
+     common.css(ratio, 'padding-top', val * 100 + "%");
+     if (!support.inlineBlock) common.height(common.find('object', root)[0], common.height(root));
+   }
+
+   function hover(flag) {
+     if (flag) {
+       rootClasses.add('is-mouseover');
+       rootClasses.remove('is-mouseout');
+     } else {
+       rootClasses.add('is-mouseout');
+       rootClasses.remove('is-mouseover');
+     }
+   }
+
+   // loading...
+   if (!support.animation) common.html(waiting, "<p>loading &hellip;</p>");
+
+   if (conf.ratio) setRatio(conf.ratio);
+
+   // no fullscreen in IFRAME
+   try {
+      if (!conf.fullscreen) common.removeNode(fullscreen);
+
+   } catch (e) {
+      common.removeNode(fullscreen);
+   }
+
+   api.on("ready", function(ev, api, video) {
+
+      var duration = api.video.duration;
+
+      timelineApi.disable(api.disabled || !duration);
+
+      if (conf.adaptiveRatio && !isNaN(video.height / video.width)) setRatio(video.height / video.width, true);
+
+      // initial time & volume
+      common.html([durationEl, remaining], format(duration));
+
+      // do we need additional space for showing hour
+      common.toggleClass(root, 'is-long', duration >= 3600);
+      volumeApi.slide(api.volumeLevel);
+
+      if (api.engine.engineName === 'flash') timelineApi.disableAnimation(true, true);
+      else timelineApi.disableAnimation(false);
+      common.find('.fp-title', ui).forEach(common.removeNode);
+      if (video.title) {
+        common.prepend(ui, common.createElement('div', {
+          className: 'fp-title'
+        }, video.title));
+      }
+
+
+   }).on("unload", function() {
+     if (!origRatio && !conf.splash) common.css(ratio, "paddingTop", "");
+     timelineApi.slide(0);
+
+   // buffer
+   }).on("buffer", function() {
+      var video = api.video,
+         max = video.buffer / video.duration;
+
+      if (!video.seekable && support.seekable) timelineApi.max(max);
+      if (max < 1) common.css(buffer, "width", (max * 100) + "%");
+      else common.css(buffer, 'width', '100%');
+
+   }).on("speed", function(e, api, val) {
+     common.text(speed, val + "x");
+     speedClasses.add('fp-hilite');
+     setTimeout(function() { speedClasses.remove('fp-hilite'); }, 1000);
+
+   }).on("buffered", function() {
+     common.css(buffer, 'width', '100%');
+      timelineApi.max(1);
+
+   // progress
+   }).on("progress", function() {
+
+      var time = api.video.time,
+         duration = api.video.duration;
+
+      if (!timelineApi.dragging) {
+        timelineApi.slide(time / duration, api.seeking ? 0 : 250);
+      }
+
+      common.html(elapsed, format(time));
+      common.html(remaining, '-' + format(duration - time));
+
+   }).on("finish resume seek", function(e) {
+      common.toggleClass(root, "is-finished", e.type == "finish");
+
+   }).on("stop", function() {
+      common.html(elapsed, format(0));
+      timelineApi.slide(0, 100);
+
+   }).on("finish", function() {
+      common.html(elapsed, format(api.video.duration));
+      timelineApi.slide(1, 100);
+      rootClasses.remove('is-seeking');
+
+   // misc
+   }).on("beforeseek", function() {
+      //TODO FIXME
+      //progress.stop();
+
+   }).on("volume", function() {
+      volumeApi.slide(api.volumeLevel);
+
+
+   }).on("disable", function() {
+      var flag = api.disabled;
+      timelineApi.disable(flag);
+      volumeApi.disable(flag);
+      common.toggleClass(root, 'is-disabled', api.disabled);
+
+   }).on("mute", function(e, api, flag) {
+      common.toggleClass(root, 'is-muted', flag);
+
+   }).on("error", function(e, api, error) {
+      common.removeClass(root, 'is-loading');
+      common.removeClass(root, 'is-seeking');
+      common.addClass(root, 'is-error');
+      if (error) {
+         error.message = conf.errors[error.code];
+         api.error = true;
+
+         var el = common.find('.fp-message', root)[0],
+             video = error.video || api.video;
+         common.find('h2', el)[0].innerHTML = (api.engine && api.engine.engineName || 'html5') + ": " + error.message;
+         common.find('p', el)[0].innerHTML = error.url || video.url || video.src || conf.errorUrls[error.code];
+         api.off("mouseenter click");
+         rootClasses.remove('is-mouseover');
+      }
+
+
+   // hover
+   });
+   //Interaction events
+   bean.on(root, "mouseenter mouseleave", function(e) {
+     if (noToggle) return;
+
+      var is_over = e.type == "mouseover",
+         lastMove;
+
+      // is-mouseover/out
+      hover(is_over);
+
+      if (is_over) {
+
+         var reg = function() {
+            hover(true);
+            lastMove = new Date();
+         };
+         api.on("pause.x volume.x", reg);
+         bean.on(root, 'mousemove.x', reg);
+
+         hovertimer = setInterval(function() {
+            if (new Date() - lastMove > conf.mouseoutTimeout) {
+               hover(false);
+               lastMove = new Date();
+            }
+         }, 100);
+
+      } else {
+         bean.off(root, 'mousemove.x');
+         api.off("pause.x volume.x");
+         clearInterval(hovertimer);
+      }
+
+
+   // allow dragging over the player edge
+   });
+   bean.on(root, "mouseleave", function() {
+
+     if (timelineApi.dragging || volumeApi.dragging) {
+       rootClasses.add('is-mouseover');
+       rootClasses.remove('is-mouseout');
+     }
+
+   // click
+   });
+   bean.on(root, "click.player", function(e) {
+     if (api.disabled) return;
+     var kls = ClassList(e.target);
+      if (kls.contains('fp-ui') || kls.contains('fp-engine') || e.flash) {
+         if (e.preventDefault) e.preventDefault();
+         return api.toggle();
+      }
+   });
+
+   bean.on(root, 'mousemove', '.fp-timeline', function(ev) {
+     var x = ev.pageX || ev.clientX,
+         delta = x - common.offset(timeline).left,
+         percentage = delta / common.width(timeline),
+         seconds = percentage * api.video.duration;
+     if (percentage < 0) return;
+     common.html(timelineTooltip, format(seconds));
+     common.css(timelineTooltip, 'left', (x - common.offset(controls).left - common.width(timelineTooltip) / 2) + 'px');
+   });
+
+   bean.on(root, 'contextmenu', function(ev) {
+      var o = common.offset(common.find('.fp-player', root)[0]),
+          w = window,
+          left = ev.clientX - (o.left + w.scrollX),
+          t = ev.clientY - (o.top + w.scrollY);
+      if (rootClasses.contains('is-flash-disabled')) return;
+      var menu = common.find('.fp-context-menu', root)[0];
+      if (!menu) return;
+      ev.preventDefault();
+      common.css(menu,
+      {left: left + 'px',
+         top: t + 'px',
+         display: 'block'
+      });
+      bean.on(root, 'click', '.fp-context-menu', function(ev) {
+         ev.stopPropagation();
+      });
+      bean.on(document, 'click.outsidemenu', function(ev) {
+         common.css(menu, 'display', 'none');
+         bean.off(document, 'click.outsidemenu');
+      });
+   });
+   api.on('flashdisabled', function() {
+     rootClasses.add('is-flash-disabled');
+     api.one('ready progress', function() {
+       rootClasses.remove('is-flash-disabled');
+       common.find('.fp-flash-disabled', root).forEach(common.removeNode);
+     });
+     root.appendChild(common.createElement('div', {className: "fp-flash-disabled"}, 'Adobe Flash is disabled for this page, click player area to enable'));
+   });
+
+   // poster -> background image
+   if (conf.poster) common.css(root, 'background-image', "url(" + conf.poster + ")");
+
+   var bc = common.css(root, 'background-color'),
+      has_bg = common.css(root, 'background-image') != "none" || bc && bc != "rgba(0, 0, 0, 0)" && bc != "transparent";
+
+   // is-poster class
+   if (has_bg && !conf.splash) {
+      if (!conf.poster) conf.poster = true;
+
+      api.on("ready stop", function() {
+        rootClasses.add("is-poster");
+        api.poster = true;
+        api.one("progress", function() {
+          rootClasses.remove("is-poster");
+          api.poster = false;
+        });
+      });
+
+   }
+
+   if (typeof conf.splash === 'string') {
+     common.css(root, 'background-image', "url('" + conf.splash + "')");
+   }
+
+   // default background color if not present
+   if (!has_bg && api.forcedSplash) {
+      common.css(root, "background-color", "#555");
+   }
+
+   bean.on(root, 'click', '.fp-toggle, .fp-play', function() {
+     if (api.disabled) return;
+     api.toggle();
+   });
+
+   /* controlbar elements */
+   bean.on(root, 'click', '.fp-mute', function() { api.mute(); });
+   bean.on(root, 'click', '.fp-fullscreen', function() { api.fullscreen(); });
+   bean.on(root, 'click', '.fp-unload', function() { api.unload(); });
+
+   bean.on(timeline, 'slide', function(val) {
+     api.seeking = true;
+     api.seek(val * api.video.duration);
+   });
+
+   bean.on(volumeSlider, 'slide', function(val) {
+      api.volume(val);
+   });
+
+   // times
+
+   var time = find('time');
+   bean.on(root, 'click', '.fp-time', function() {
+     ClassList(time).toggle('is-inverted');
+   });
+
+   hover(noToggle);
+
+   api.on('shutdown', function() {
+     bean.off(timeline);
+     bean.off(volumeSlider);
+   });
+
+});
+
+
+module.exports.format = format;
+
+},{"../common":1,"../flowplayer":18,"./slider":14,"bean":20,"class-list":22}],18:[function(_dereq_,module,exports){
+'use strict';
+var extend = _dereq_('extend-object'),
+    isFunction = _dereq_('is-function'),
+    ClassList = _dereq_('class-list'),
+    bean = _dereq_('bean'),
+    common = _dereq_('./common'),
+    events = _dereq_('./ext/events');
+
+var instances = [],
+   extensions = [],
+   UA = window.navigator.userAgent;
+
+
+var oldHandler = window.onbeforeunload;
+window.onbeforeunload = function(ev) {
+  instances.forEach(function(api) {
+    if (api.conf.splash) {
+      api.unload();
+    } else {
+      api.bind("error", function () {
+        common.find('.flowplayer.is-error .fp-message').forEach(common.removeNode);
+      });
+    }
+  });
+  if (oldHandler) return oldHandler(ev);
+};
+
+var supportLocalStorage = false;
+try {
+  if (typeof window.localStorage == "object") {
+    window.localStorage.flowplayerTestStorage = "test";
+    supportLocalStorage = true;
+  }
+} catch (ignored) {}
+
+var isSafari = /Safari/.exec(navigator.userAgent) && !/Chrome/.exec(navigator.userAgent),
+    m = /(\d+\.\d+) Safari/.exec(navigator.userAgent),
+    safariVersion = m ? Number(m[1]) : 100;
+
+/* flowplayer()  */
+var flowplayer = module.exports = function(fn, opts, callback) {
+  if (isFunction(fn)) return extensions.push(fn);
+  if (typeof fn == 'number' || typeof fn === 'undefined') return instances[fn || 0];
+  if (fn.nodeType) { // Is an element
+    if (fn.getAttribute('data-flowplayer-instance-id') !== null) { // Already flowplayer instance
+      return instances[fn.getAttribute('data-flowplayer-instance-id')];
+    }
+    if (!opts) return; // Can't initialize without data
+    return initializePlayer(fn, opts, callback);
+  }
+  if (fn.jquery) return flowplayer(fn[0], opts, callback);
+  if (typeof fn === 'string') {
+    var el = common.find(fn)[0];
+    return el && flowplayer(el, opts, callback);
+  }
+};
+
+extend(flowplayer, {
+
+   version: '6.0.5',
+
+   engines: [],
+
+   conf: {},
+
+   set: function(key, value) {
+      if (typeof key === 'string') flowplayer.conf[key] = value;
+      else extend(flowplayer.conf, key);
+   },
+
+   support: {},
+
+   defaults: {
+
+      debug: supportLocalStorage ? !!localStorage.flowplayerDebug : false,
+
+      // true = forced playback
+      disabled: false,
+
+      fullscreen: window == window.top,
+
+      // keyboard shortcuts
+      keyboard: true,
+
+      // default aspect ratio
+      ratio: 9 / 16,
+
+      adaptiveRatio: false,
+
+      rtmp: 0,
+
+      proxy: 'best',
+
+      splash: false,
+
+      live: false,
+
+      swf: "//releases.flowplayer.org/6.0.5/flowplayer.swf",
+      swfHls: "//releases.flowplayer.org/6.0.5/flowplayerhls.swf",
+
+      speeds: [0.25, 0.5, 1, 1.5, 2],
+
+      tooltip: true,
+
+      mouseoutTimeout: 5000,
+
+      // initial volume level
+      volume: !supportLocalStorage ? 1 : localStorage.muted == "true" ? 0 : !isNaN(localStorage.volume) ? localStorage.volume || 1 : 1,
+
+      // http://www.whatwg.org/specs/web-apps/current-work/multipage/the-video-element.html#error-codes
+      errors: [
+
+         // video exceptions
+         '',
+         'Video loading aborted',
+         'Network error',
+         'Video not properly encoded',
+         'Video file not found',
+
+         // player exceptions
+         'Unsupported video',
+         'Skin not found',
+         'SWF file not found',
+         'Subtitles not found',
+         'Invalid RTMP URL',
+         'Unsupported video format. Try installing Adobe Flash.'
+      ],
+      errorUrls: ['','','','','','','','','','',
+         'http://get.adobe.com/flashplayer/'
+      ],
+      playlist: [],
+
+      hlsFix: isSafari && safariVersion < 8
+
+   },
+   // Expose utilities for plugins
+   bean: bean,
+   common: common,
+   extend: extend
+
+
+
+});
+
+// keep track of players
+var playerCount = 0;
+
+var URLResolver = _dereq_('./ext/resolve');
+
+
+
+if (typeof window.jQuery !== 'undefined') {
+  var $ = window.jQuery;
+  // auto-install (any video tag with parent .flowplayer)
+  $(function() {
+     if (typeof $.fn.flowplayer == 'function') {
+        $('.flowplayer:has(video,script[type="application/json"])').flowplayer();
+     }
+  });
+
+  // jQuery plugin
+  var videoTagConfig = function(videoTag) {
+    if (!videoTag.length) return {};
+    var clip = videoTag.data() || {}, conf = {};
+    $.each(['autoplay', 'loop', 'preload', 'poster'], function(i, key) {
+      var val = videoTag.attr(key);
+      if (val !== undefined && ['autoplay', 'poster'].indexOf(key) !== -1) conf[key] = val ? val : true;
+      else if (val !== undefined) clip[key] = val ? val : true;
+    });
+    clip.subtitles = videoTag.find('track').map(function() {
+      var tr = $(this);
+      return {
+        src: tr.attr('src'),
+        kind: tr.attr('kind'),
+        label: tr.attr('label'),
+        srclang: tr.attr('srclang'),
+        'default': tr.prop('default')
+      };
+    }).get();
+
+    clip.sources = (new URLResolver()).sourcesFromVideoTag(videoTag, $);
+    return extend(conf, {clip: clip});
+  };
+  $.fn.flowplayer = function(opts, callback) {
+    return this.each(function() {
+      if (typeof opts == 'string') opts = { swf: opts };
+      if (isFunction(opts)) { callback = opts; opts = {}; }
+      var root = $(this),
+          scriptConf = root.find('script[type="application/json"]'),
+          confObject = scriptConf.length ? JSON.parse(scriptConf.text()) : videoTagConfig(root.find('video')),
+          conf = $.extend({}, opts || {}, confObject, root.data());
+      var api = initializePlayer(this, conf, callback);
+      events.EVENTS.forEach(function(evName) {
+        api.on(evName + '.jquery', function(ev) {
+          root.trigger.call(root, ev.type, ev.detail && ev.detail.args);
+        });
+      });
+      root.data('flowplayer', api);
+    });
+  };
+}
+
+function initializePlayer(element, opts, callback) {
+  if (opts && opts.embed) opts.embed = extend({}, flowplayer.defaults.embed, opts.embed);
+
+  var root = element,
+      rootClasses = ClassList(root),
+      conf = extend({}, flowplayer.defaults, flowplayer.conf, opts),
+      storage = {},
+      lastSeekPosition,
+      engine,
+      url,
+      urlResolver = new URLResolver();
+
+      rootClasses.add('is-loading');
+
+      try {
+         storage = supportLocalStorage ? window.localStorage : storage;
+      } catch(e) {}
+
+      var isRTL = (root.currentStyle && root.currentStyle.direction === 'rtl') ||
+        (window.getComputedStyle && window.getComputedStyle(root, null) !== null && window.getComputedStyle(root, null).getPropertyValue('direction') === 'rtl');
+
+      if (isRTL) rootClasses.add('is-rtl');
+
+      /*** API ***/
+      var api = {
+
+         // properties
+         conf: conf,
+         currentSpeed: 1,
+         volumeLevel: conf.muted ? 0 : typeof conf.volume === "undefined" ? storage.volume * 1 : conf.volume,
+         video: {},
+
+         // states
+         disabled: false,
+         finished: false,
+         loading: false,
+         muted: storage.muted == "true" || conf.muted,
+         paused: false,
+         playing: false,
+         ready: false,
+         splash: false,
+         rtl: isRTL,
+
+         // methods
+         load: function(video, callback) {
+
+            if (api.error || api.loading) return;
+            api.video = {};
+
+            api.finished = false;
+
+            video = video || conf.clip;
+
+            // resolve URL
+            video = extend({}, urlResolver.resolve(video, conf.clip.sources));
+            if (api.playing || api.engine) video.autoplay = true;
+            var engineImpl = selectEngine(video);
+            if (!engineImpl) return api.trigger("error", [api, { code: flowplayer.support.flashVideo ? 5 : 10 }]);
+            if (!engineImpl.engineName) throw new Error('engineName property of factory should be exposed');
+            if (!api.engine || engineImpl.engineName !== api.engine.engineName) {
+              api.ready = false;
+              if (api.engine) {
+                api.engine.unload();
+                api.conf.autoplay = true;
+              }
+              engine = api.engine = engineImpl(api, root);
+              api.one('ready', function() {
+                engine.volume(api.volumeLevel);
+              });
+            }
+
+            extend(video, engine.pick(video.sources.filter(function(source) { // Filter out sources explicitely configured for some other engine
+              if (!source.engine) return true;
+              return source.engine === engine.engineName;
+            })));
+
+            if (video.src) {
+               var e = api.trigger('load', [api, video, engine], true);
+               if (!e.defaultPrevented) {
+                  engine.load(video);
+
+                  // callback
+                  if (isFunction(video)) callback = video;
+                  if (callback) api.one("ready", callback);
+               } else {
+                  api.loading = false;
+               }
+            }
+
+            return api;
+         },
+
+         pause: function(fn) {
+            if (api.ready && !api.seeking && !api.loading) {
+               engine.pause();
+               api.one("pause", fn);
+            }
+            return api;
+         },
+
+         resume: function() {
+
+            if (api.ready && api.paused) {
+               engine.resume();
+
+               // Firefox (+others?) does not fire "resume" after finish
+               if (api.finished) {
+                  api.trigger("resume", [api]);
+                  api.finished = false;
+               }
+            }
+
+            return api;
+         },
+
+         toggle: function() {
+            return api.ready ? api.paused ? api.resume() : api.pause() : api.load();
+         },
+
+         /*
+            seek(1.4)   -> 1.4s time
+            seek(true)  -> 10% forward
+            seek(false) -> 10% backward
+         */
+         seek: function(time, callback) {
+            if (api.ready && !api.live) {
+
+               if (typeof time == "boolean") {
+                  var delta = api.video.duration * 0.1;
+                  time = api.video.time + (time ? delta : -delta);
+               }
+               time = lastSeekPosition = Math.min(Math.max(time, 0), api.video.duration - 0.1).toFixed(1);
+               var ev = api.trigger('beforeseek', [api, time], true);
+               if (!ev.defaultPrevented) {
+                  engine.seek(time);
+                  if (isFunction(callback)) api.one("seek", callback);
+               } else {
+                  api.seeking = false;
+                  common.toggleClass(root, 'is-seeking', api.seeking); // remove loading indicator
+               }
+            }
+            return api;
+         },
+
+         /*
+            seekTo(1) -> 10%
+            seekTo(2) -> 20%
+            seekTo(3) -> 30%
+            ...
+            seekTo()  -> last position
+         */
+         seekTo: function(position, fn) {
+            var time = position === undefined ? lastSeekPosition : api.video.duration * 0.1 * position;
+            return api.seek(time, fn);
+         },
+
+         mute: function(flag, skipStore) {
+           if (flag === undefined) flag = !api.muted;
+           if (!skipStore) {
+             storage.muted = api.muted = flag;
+             storage.volume = !isNaN(storage.volume) ? storage.volume : conf.volume; // make sure storage has volume
+           }
+           api.volume(flag ? 0 : storage.volume, true);
+           api.trigger("mute", [api, flag]);
+           return api;
+         },
+
+         volume: function(level, skipStore) {
+            if (api.ready) {
+              level = Math.min(Math.max(level, 0), 1);
+              if (!skipStore) storage.volume = level;
+              engine.volume(level);
+            }
+
+            return api;
+         },
+
+         speed: function(val, callback) {
+
+            if (api.ready) {
+
+               // increase / decrease
+               if (typeof val == "boolean") {
+                  val = conf.speeds[conf.speeds.indexOf(api.currentSpeed) + (val ? 1 : -1)] || api.currentSpeed;
+               }
+
+               engine.speed(val);
+               if (callback) root.one("speed", callback);
+            }
+
+            return api;
+         },
+
+
+         stop: function() {
+            if (api.ready) {
+               api.pause();
+               api.seek(0, function() {
+                  api.trigger("stop", [api]);
+               });
+            }
+            return api;
+         },
+
+         unload: function() {
+            if (!rootClasses.contains("is-embedding")) {
+
+               if (conf.splash) {
+                  api.trigger("unload", [api]);
+                  if (engine) {
+                    engine.unload();
+                    api.engine = engine = 0;
+                  }
+               } else {
+                  api.stop();
+               }
+            }
+            return api;
+         },
+
+         shutdown: function() {
+           api.unload();
+           api.trigger('shutdown', [api]);
+           bean.off(root);
+           delete instances[root.getAttribute('data-flowplayer-instance-id')];
+           root.removeAttribute('data-flowplayer-instance-id');
+         },
+
+         disable: function(flag) {
+            if (flag === undefined) flag = !api.disabled;
+
+            if (flag != api.disabled) {
+               api.disabled = flag;
+               api.trigger("disable", flag);
+            }
+            return api;
+         }
+
+      };
+
+      api.conf = extend(api.conf, conf);
+
+      /* event binding / unbinding */
+      events(api);
+
+      var selectEngine = function(clip) {
+        var engine;
+        var engines = flowplayer.engines;
+        if (conf.engine) {
+          var eng = engines.filter(function(e) { return e.engineName === conf.engine; })[0];
+          if (eng && clip.sources.some(function(source) {
+            if (source.engine && source.engine !== eng.engineName) return false;
+            return eng.canPlay(source.type, api.conf);
+          })) return eng;
+        }
+        if (conf.enginePreference) engines = flowplayer.engines.filter(function(one) { return conf.enginePreference.indexOf(one.engineName) > -1; }).sort(function(a, b) {
+          return conf.enginePreference.indexOf(a.engineName) - conf.enginePreference.indexOf(b.engineName);
+        });
+        clip.sources.some(function(source) {
+          var eng = engines.filter(function(engine) {
+            if (source.engine && source.engine !== engine.engineName) return false;
+            return engine.canPlay(source.type, api.conf);
+          }).shift();
+          if (eng) engine = eng;
+          return !!eng;
+        });
+        return engine;
+      };
+
+      /*** Behaviour ***/
+      if (!root.getAttribute('data-flowplayer-instance-id')) { // Only bind once
+         root.setAttribute('data-flowplayer-instance-id', playerCount++);
+
+
+         api.on('boot', function() {
+
+            // splash
+            if (conf.splash || rootClasses.contains("is-splash") || !flowplayer.support.firstframe) {
+               api.forcedSplash = !conf.splash && !rootClasses.contains("is-splash");
+               api.splash = conf.autoplay = true;
+               if (!conf.splash) conf.splash = true;
+               rootClasses.add("is-splash");
+            }
+
+            if (conf.splash) common.find('video', root).forEach(common.removeNode);
+
+            if (conf.live || rootClasses.contains('is-live')) {
+               api.live = conf.live = true;
+               rootClasses.add('is-live');
+            }
+
+            // extensions
+            extensions.forEach(function(e) {
+               e(api, root);
+            });
+
+            // instances
+            instances.push(api);
+
+            // start
+            if (conf.splash) api.unload(); else api.load();
+
+            // disabled
+            if (conf.disabled) api.disable();
+
+            // initial callback
+            api.one("ready", callback);
+
+
+         }).on("load", function(e, api, video) {
+
+            // unload others
+            if (conf.splash) {
+              common.find('.flowplayer.is-ready,.flowplayer.is-loading').forEach(function(el) {
+                var playerId = el.getAttribute('data-flowplayer-instance-id');
+                if (playerId === root.getAttribute('data-flowplayer-instance-id')) return;
+                var a = instances[Number(playerId)];
+                if (a && a.conf.splash) a.unload();
+              });
+
+            }
+
+            // loading
+            rootClasses.add("is-loading");
+            api.loading = true;
+
+            if (typeof video.live !== 'undefined') {
+              common.toggleClass(root, 'is-live', video.live);
+              api.live = video.live;
+            }
+
+
+         }).on("ready", function(e, api, video) {
+            video.time = 0;
+            api.video = video;
+
+            rootClasses.remove("is-loading");
+            api.loading = false;
+
+            // saved state
+            if (api.muted) api.mute(true, true);
+            else api.volume(api.volumeLevel);
+
+            // see https://github.com/flowplayer/flowplayer/issues/479
+
+            var hlsFix = api.conf.hlsFix && /mpegurl/i.exec(video.type);
+            common.toggleClass(root, 'hls-fix', !!hlsFix);
+
+         }).on("unload", function(e) {
+            rootClasses.remove("is-loading");
+            api.loading = false;
+
+
+         }).on("ready unload", function(e) {
+           var is_ready = e.type == "ready";
+           common.toggleClass(root, 'is-splash', !is_ready);
+           common.toggleClass(root, 'is-ready', is_ready);
+           api.ready = is_ready;
+           api.splash = !is_ready;
+
+
+         }).on("progress", function(e, api, time) {
+            api.video.time = time;
+
+
+         }).on("speed", function(e, api, val) {
+            api.currentSpeed = val;
+
+         }).on("volume", function(e, api, level) {
+            api.volumeLevel = Math.round(level * 100) / 100;
+            if (!api.muted) storage.volume = level;
+            else if (level) api.mute(false);
+
+
+         }).on("beforeseek seek", function(e) {
+            api.seeking = e.type == "beforeseek";
+            common.toggleClass(root, 'is-seeking', api.seeking);
+
+         }).on("ready pause resume unload finish stop", function(e, _api, video) {
+
+            // PAUSED: pause / finish
+            api.paused = /pause|finish|unload|stop/.test(e.type);
+            api.paused = api.paused || e.type === 'ready' && !conf.autoplay && !api.playing;
+
+            // the opposite
+            api.playing = !api.paused;
+
+            // CSS classes
+            common.toggleClass(root, 'is-paused', api.paused);
+            common.toggleClass(root, 'is-playing', api.playing);
+
+            // sanity check
+            if (!api.load.ed) api.pause();
+
+         }).on("finish", function(e) {
+            api.finished = true;
+
+         }).on("error", function() {
+         });
+      }
+
+      // boot
+      api.trigger('boot', [api, root]);
+  return api;
+}
+
+},{"./common":1,"./ext/events":8,"./ext/resolve":13,"bean":20,"class-list":22,"extend-object":26,"is-function":27}],19:[function(_dereq_,module,exports){
+//Flowplayer with extensions
+
+_dereq_('es5-shim');
+
+var flowplayer = module.exports = _dereq_('./flowplayer');
+//
+
+//Support needed before engines
+_dereq_('./ext/support');
+
+//Engines
+_dereq_('./engine/embed');
+_dereq_('./engine/html5');
+_dereq_('./engine/flash');
+
+//Extensions
+//require('./ext/slider'); //TODO enable
+_dereq_('./ext/ui');
+_dereq_('./ext/keyboard');
+_dereq_('./ext/playlist');
+_dereq_('./ext/cuepoint');
+_dereq_('./ext/subtitle');
+_dereq_('./ext/analytics');
+_dereq_('./ext/embed');
+//Have to add fullscreen last
+_dereq_('./ext/fullscreen');
+
+_dereq_('./ext/mobile');
+flowplayer(function(e,o){function a(e){var o=document.createElement("a");return o.href=e,t.hostname(o.hostname)}var n=function(e,o){var a=e.className.split(" ");-1===a.indexOf(o)&&(e.className+=" "+o)},r=function(e){return"none"!==window.getComputedStyle(e).display},l=e.conf,t=flowplayer.common,i=t.createElement,d=l.swf.indexOf("flowplayer.org")&&l.e&&o.getAttribute("data-origin"),p=d?a(d):t.hostname(),s=(document,l.key);"file:"==location.protocol&&(p="localhost"),e.load.ed=1,l.hostname=p,l.origin=d||location.href,d&&n(o,"is-embedded"),"string"==typeof s&&(s=s.split(/,\s*/));var f=function(e,a){var n=i("a",{href:a,className:"fp-brand"});n.innerHTML=e,t.find(".fp-controls",o)[0].appendChild(n)};if(s&&"function"==typeof key_check&&key_check(s,p)){if(l.logo){var c=t.find(".fp-player",o)[0],h=i("a",{className:"fp-logo"});d&&(h.href=d),l.embed&&l.embed.popup&&(h.target="_blank");var y=i("img",{src:l.logo});h.appendChild(y),(c||o).appendChild(h)}l.brand&&d||l.brand&&l.brand.showOnOrigin?f(l.brand.text||l.brand,d||location.href):t.addClass(o,"no-brand")}else{f("flowplayer","http://flowplayer.org");var h=i("a",{href:"http://flowplayer.org"});o.appendChild(h);var u=i("div",{className:"fp-context-menu"},'<ul><li class="copyright">&copy; 2015</li><li><a href="http://flowplayer.org">About Flowplayer</a></li><li><a href="http://flowplayer.org/license">GPL based license</a></li></ul>'),g=window.location.href.indexOf("localhost"),c=t.find(".fp-player",o)[0];7!==g&&(c||o).appendChild(u),e.on("pause resume finish unload ready",function(e,a){t.removeClass(o,"no-brand");var n=-1;if(a.video.src)for(var l=[["org","flowplayer","drive"],["org","flowplayer","my"],["org","flowplayer","cdn"]],i=0;i<l.length&&(n=a.video.src.indexOf("://"+l[i].reverse().join(".")),-1===n);i++);if((4===n||5===n)&&t.addClass(o,"no-brand"),/pause|resume/.test(e.type)&&"flash"!=a.engine.engineName&&4!=n&&5!=n){var d={display:"block",position:"absolute",left:"16px",bottom:"46px",zIndex:99999,width:"100px",height:"20px",backgroundImage:"url("+[".png","logo","/",".net",".cloudfront","d32wqyuo10o653","//"].reverse().join("")+")"};for(var p in d)d.hasOwnProperty(p)&&(h.style[p]=d[p]);a.load.ed=r(h)&&(7===g||u.parentNode==o||u.parentNode==c)&&!t.hasClass(o,"no-brand"),a.load.ed||a.pause()}else h.style.display="none"})}});
+
+
+},{"./engine/embed":2,"./engine/flash":3,"./engine/html5":4,"./ext/analytics":5,"./ext/cuepoint":6,"./ext/embed":7,"./ext/fullscreen":9,"./ext/keyboard":10,"./ext/mobile":11,"./ext/playlist":12,"./ext/subtitle":15,"./ext/support":16,"./ext/ui":17,"./flowplayer":18,"es5-shim":25}],20:[function(_dereq_,module,exports){
+/*!
   * Bean - copyright (c) Jacob Thornton 2011-2012
   * https://github.com/fat/bean
   * MIT license
   */
-!function(t,r,o){void 0!==n&&n.exports?n.exports=o():"function"==typeof e&&e.amd?e(o):r.bean=o()}(0,this,function(e,t){e=e||"bean",t=t||this;var n,r=window,o=t[e],i=/[^\.]*(?=\..*)\.|.*/,a=/\..*/,s="addEventListener",l=document||{},c=l.documentElement||{},u=c[s],f=u?s:"attachEvent",d={},p=Array.prototype.slice,h=function(e,t){return e.split(t||" ")},v=function(e){return"string"==typeof e},m=function(e){return"function"==typeof e},g=function(e,t,n){for(n=0;n<t.length;n++)t[n]&&(e[t[n]]=1);return e}({},h("click dblclick mouseup mousedown contextmenu mousewheel mousemultiwheel DOMMouseScroll mouseover mouseout mousemove selectstart selectend keydown keypress keyup orientationchange focus blur change reset select submit load unload beforeunload resize move DOMContentLoaded readystatechange message error abort scroll "+(u?"show input invalid touchstart touchmove touchend touchcancel gesturestart gesturechange gestureend textinput readystatechange pageshow pagehide popstate hashchange offline online afterprint beforeprint dragstart dragenter dragover dragleave drag drop dragend loadstart progress suspend emptied stalled loadmetadata loadeddata canplay canplaythrough playing waiting seeking seeked ended durationchange timeupdate play pause ratechange volumechange cuechange checking noupdate downloading cached updateready obsolete ":""))),y=function(){var e="compareDocumentPosition"in c?function(e,t){return t.compareDocumentPosition&&16==(16&t.compareDocumentPosition(e))}:"contains"in c?function(e,t){return(t=9===t.nodeType||t===window?c:t)!==e&&t.contains(e)}:function(e,t){for(;e=e.parentNode;)if(e===t)return 1;return 0},t=function(t){var n=t.relatedTarget;return n?n!==this&&"xul"!==n.prefix&&!/document/.test(this.toString())&&!e(n,this):null==n};return{mouseenter:{base:"mouseover",condition:t},mouseleave:{base:"mouseout",condition:t},mousewheel:{base:/Firefox/.test(navigator.userAgent)?"DOMMouseScroll":"mousewheel"}}}(),b=function(){var e=h("altKey attrChange attrName bubbles cancelable ctrlKey currentTarget detail eventPhase getModifierState isTrusted metaKey relatedNode relatedTarget shiftKey srcElement target timeStamp type view which propertyName"),t=e.concat(h("button buttons clientX clientY dataTransfer fromElement offsetX offsetY pageX pageY screenX screenY toElement")),n=t.concat(h("wheelDelta wheelDeltaX wheelDeltaY wheelDeltaZ axis")),o=e.concat(h("char charCode key keyCode keyIdentifier keyLocation location")),i=e.concat(h("data")),a=e.concat(h("touches targetTouches changedTouches scale rotation")),s=e.concat(h("data origin source")),u=e.concat(h("state")),f=/over|out/,d=[{reg:/key/i,fix:function(e,t){return t.keyCode=e.keyCode||e.which,o}},{reg:/click|mouse(?!(.*wheel|scroll))|menu|drag|drop/i,fix:function(e,n,r){return n.rightClick=3===e.which||2===e.button,n.pos={x:0,y:0},e.pageX||e.pageY?(n.clientX=e.pageX,n.clientY=e.pageY):(e.clientX||e.clientY)&&(n.clientX=e.clientX+l.body.scrollLeft+c.scrollLeft,n.clientY=e.clientY+l.body.scrollTop+c.scrollTop),f.test(r)&&(n.relatedTarget=e.relatedTarget||e[("mouseover"==r?"from":"to")+"Element"]),t}},{reg:/mouse.*(wheel|scroll)/i,fix:function(){return n}},{reg:/^text/i,fix:function(){return i}},{reg:/^touch|^gesture/i,fix:function(){return a}},{reg:/^message$/i,fix:function(){return s}},{reg:/^popstate$/i,fix:function(){return u}},{reg:/.*/,fix:function(){return e}}],p={},v=function(e,t,n){if(arguments.length&&(e=e||((t.ownerDocument||t.document||t).parentWindow||r).event,this.originalEvent=e,this.isNative=n,this.isBean=!0,e)){var o,i,a,s,l,c=e.type,u=e.target||e.srcElement;if(this.target=u&&3===u.nodeType?u.parentNode:u,n){if(!(l=p[c]))for(o=0,i=d.length;o<i;o++)if(d[o].reg.test(c)){p[c]=l=d[o].fix;break}for(s=l(e,this,c),o=s.length;o--;)!((a=s[o])in this)&&a in e&&(this[a]=e[a])}}};return v.prototype.preventDefault=function(){this.originalEvent.preventDefault?this.originalEvent.preventDefault():this.originalEvent.returnValue=!1},v.prototype.stopPropagation=function(){this.originalEvent.stopPropagation?this.originalEvent.stopPropagation():this.originalEvent.cancelBubble=!0},v.prototype.stop=function(){this.preventDefault(),this.stopPropagation(),this.stopped=!0},v.prototype.stopImmediatePropagation=function(){this.originalEvent.stopImmediatePropagation&&this.originalEvent.stopImmediatePropagation(),this.isImmediatePropagationStopped=function(){return!0}},v.prototype.isImmediatePropagationStopped=function(){return this.originalEvent.isImmediatePropagationStopped&&this.originalEvent.isImmediatePropagationStopped()},v.prototype.clone=function(e){var t=new v(this,this.element,this.isNative);return t.currentTarget=e,t},v}(),w=function(e,t){return u||t||e!==l&&e!==r?e:c},x=function(){var e=function(e,t,n,r){var o=function(n,o){return t.apply(e,r?p.call(o,n?0:1).concat(r):o)},i=function(n,r){return t.__beanDel?t.__beanDel.ft(n.target,e):r},a=n?function(e){var t=i(e,this);if(n.apply(t,arguments))return e&&(e.currentTarget=t),o(e,arguments)}:function(e){return t.__beanDel&&(e=e.clone(i(e))),o(e,arguments)};return a.__beanDel=t.__beanDel,a},t=function(t,n,r,o,i,a,s){var l,c=y[n];"unload"==n&&(r=C(O,t,n,r,o)),c&&(c.condition&&(r=e(t,r,c.condition,a)),n=c.base||n),this.isNative=l=g[n]&&!!t[f],this.customType=!u&&!l&&n,this.element=t,this.type=n,this.original=o,this.namespaces=i,this.eventType=u||l?n:"propertychange",this.target=w(t,l),this[f]=!!this.target[f],this.root=s,this.handler=e(t,r,null,a)};return t.prototype.inNamespaces=function(e){var t,n,r=0;if(!e)return!0;if(!this.namespaces)return!1;for(t=e.length;t--;)for(n=this.namespaces.length;n--;)e[t]==this.namespaces[n]&&r++;return e.length===r},t.prototype.matches=function(e,t,n){return!(this.element!==e||t&&this.original!==t||n&&this.handler!==n)},t}(),E=function(){var e={},t=function(n,r,o,i,a,s){var l=a?"r":"$";if(r&&"*"!=r){var c,u=0,f=e[l+r],d="*"==n;if(!f)return;for(c=f.length;u<c;u++)if((d||f[u].matches(n,o,i))&&!s(f[u],f,u,r))return}else for(var p in e)p.charAt(0)==l&&t(n,p.substr(1),o,i,a,s)};return{has:function(t,n,r,o){var i,a=e[(o?"r":"$")+n];if(a)for(i=a.length;i--;)if(!a[i].root&&a[i].matches(t,r,null))return!0;return!1},get:function(e,n,r,o){var i=[];return t(e,n,r,null,o,function(e){return i.push(e)}),i},put:function(t){var n=!t.root&&!this.has(t.element,t.type,null,!1),r=(t.root?"r":"$")+t.type;return(e[r]||(e[r]=[])).push(t),n},del:function(n){t(n.element,n.type,null,n.handler,n.root,function(t,n,r){return n.splice(r,1),t.removed=!0,0===n.length&&delete e[(t.root?"r":"$")+t.type],!1})},entries:function(){var t,n=[];for(t in e)"$"==t.charAt(0)&&(n=n.concat(e[t]));return n}}}(),k=function(e){n=arguments.length?e:l.querySelectorAll?function(e,t){return t.querySelectorAll(e)}:function(){throw new Error("Bean: No selector engine installed")}},T=function(e,t){if(u||!t||!e||e.propertyName=="_on"+t){var n=E.get(this,t||e.type,null,!1),r=n.length,o=0;for(e=new b(e,this,!0),t&&(e.type=t);o<r&&!e.isImmediatePropagationStopped();o++)n[o].removed||n[o].handler.call(this,e)}},S=u?function(e,t,n){e[n?s:"removeEventListener"](t,T,!1)}:function(e,t,n,r){var o;n?(E.put(o=new x(e,r||t,function(t){T.call(e,t,r)},T,null,null,!0)),r&&null==e["_on"+r]&&(e["_on"+r]=0),o.target.attachEvent("on"+o.eventType,o.handler)):(o=E.get(e,r||t,T,!0)[0])&&(o.target.detachEvent("on"+o.eventType,o.handler),E.del(o))},C=function(e,t,n,r,o){return function(){r.apply(this,arguments),e(t,n,o)}},O=function(e,t,n,r){var o,i,s=t&&t.replace(a,""),l=E.get(e,s,null,!1),c={};for(o=0,i=l.length;o<i;o++)n&&l[o].original!==n||!l[o].inNamespaces(r)||(E.del(l[o]),!c[l[o].eventType]&&l[o][f]&&(c[l[o].eventType]={t:l[o].eventType,c:l[o].type}));for(o in c)E.has(e,c[o].t,null,!1)||S(e,c[o].t,!1,c[o].c)},N=function(e,t){var r=function(t,r){for(var o,i=v(e)?n(e,r):e;t&&t!==r;t=t.parentNode)for(o=i.length;o--;)if(i[o]===t)return t},o=function(e){var n=r(e.target,this);n&&t.apply(n,arguments)};return o.__beanDel={ft:r,selector:e},o},j=u?function(e,t,n){var o=l.createEvent(e?"HTMLEvents":"UIEvents");o[e?"initEvent":"initUIEvent"](t,!0,!0,r,1),n.dispatchEvent(o)}:function(e,t,n){n=w(n,e),e?n.fireEvent("on"+t,l.createEventObject()):n["_on"+t]++},P=function(e,t,n){var r,o,s,l,c=v(t);if(c&&t.indexOf(" ")>0){for(t=h(t),l=t.length;l--;)P(e,t[l],n);return e}if(o=c&&t.replace(a,""),o&&y[o]&&(o=y[o].base),!t||c)(s=c&&t.replace(i,""))&&(s=h(s,".")),O(e,o,n,s);else if(m(t))O(e,null,t);else for(r in t)t.hasOwnProperty(r)&&P(e,r,t[r]);return e},_=function(e,t,n,r){var o,s,l,c,u,v,g;{if(void 0!==n||"object"!=typeof t){for(m(n)?(u=p.call(arguments,3),r=o=n):(o=r,u=p.call(arguments,4),r=N(n,o)),l=h(t),this===d&&(r=C(P,e,t,r,o)),c=l.length;c--;)g=E.put(v=new x(e,l[c].replace(a,""),r,o,h(l[c].replace(i,""),"."),u,!1)),v[f]&&g&&S(e,v.eventType,!0,v.customType);return e}for(s in t)t.hasOwnProperty(s)&&_.call(this,e,s,t[s])}},D=function(e,t,n,r){return _.apply(null,v(n)?[e,n,t,r].concat(arguments.length>3?p.call(arguments,5):[]):p.call(arguments))},A=function(){return _.apply(d,arguments)},I=function(e,t,n){var r,o,s,l,c,u=h(t);for(r=u.length;r--;)if(t=u[r].replace(a,""),(l=u[r].replace(i,""))&&(l=h(l,".")),l||n||!e[f])for(c=E.get(e,t,null,!1),n=[!1].concat(n),o=0,s=c.length;o<s;o++)c[o].inNamespaces(l)&&c[o].handler.apply(e,n);else j(g[t],t,e);return e},M=function(e,t,n){for(var r,o,i=E.get(t,n,null,!1),a=i.length,s=0;s<a;s++)i[s].original&&(r=[e,i[s].type],(o=i[s].handler.__beanDel)&&r.push(o.selector),r.push(i[s].original),_.apply(null,r));return e},L={on:_,add:D,one:A,off:P,remove:P,clone:M,fire:I,Event:b,setSelectorEngine:k,noConflict:function(){return t[e]=o,this}};if(r.attachEvent){var F=function(){var e,t=E.entries();for(e in t)t[e].type&&"unload"!==t[e].type&&P(t[e].element,t[e].type);r.detachEvent("onunload",F),r.CollectGarbage&&r.CollectGarbage()};r.attachEvent("onunload",F)}return k(),L})},{}],21:[function(n,r,o){(function(t){!function(n){function i(e){throw RangeError(I[e])}function a(e,t){for(var n=e.length;n--;)e[n]=t(e[n]);return e}function s(e,t){return a(e.split(A),t).join(".")}function l(e){for(var t,n,r=[],o=0,i=e.length;o<i;)t=e.charCodeAt(o++),t>=55296&&t<=56319&&o<i?(n=e.charCodeAt(o++),56320==(64512&n)?r.push(((1023&t)<<10)+(1023&n)+65536):(r.push(t),o--)):r.push(t);return r}function c(e){return a(e,function(e){var t="";return e>65535&&(e-=65536,t+=F(e>>>10&1023|55296),e=56320|1023&e),t+=F(e)}).join("")}function u(e){return e-48<10?e-22:e-65<26?e-65:e-97<26?e-97:k}function f(e,t){return e+22+75*(e<26)-((0!=t)<<5)}function d(e,t,n){var r=0;for(e=n?L(e/O):e>>1,e+=L(e/t);e>M*S>>1;r+=k)e=L(e/M);return L(r+(M+1)*e/(e+C))}function p(e){var t,n,r,o,a,s,l,f,p,h,v=[],m=e.length,g=0,y=j,b=N;for(n=e.lastIndexOf(P),n<0&&(n=0),r=0;r<n;++r)e.charCodeAt(r)>=128&&i("not-basic"),v.push(e.charCodeAt(r));for(o=n>0?n+1:0;o<m;){for(a=g,s=1,l=k;o>=m&&i("invalid-input"),f=u(e.charCodeAt(o++)),(f>=k||f>L((E-g)/s))&&i("overflow"),g+=f*s,p=l<=b?T:l>=b+S?S:l-b,!(f<p);l+=k)h=k-p,s>L(E/h)&&i("overflow"),s*=h;t=v.length+1,b=d(g-a,t,0==a),L(g/t)>E-y&&i("overflow"),y+=L(g/t),g%=t,v.splice(g++,0,y)}return c(v)}function h(e){var t,n,r,o,a,s,c,u,p,h,v,m,g,y,b,w=[];for(e=l(e),m=e.length,t=j,n=0,a=N,s=0;s<m;++s)(v=e[s])<128&&w.push(F(v));for(r=o=w.length,o&&w.push(P);r<m;){for(c=E,s=0;s<m;++s)(v=e[s])>=t&&v<c&&(c=v);for(g=r+1,c-t>L((E-n)/g)&&i("overflow"),n+=(c-t)*g,t=c,s=0;s<m;++s)if(v=e[s],v<t&&++n>E&&i("overflow"),v==t){for(u=n,p=k;h=p<=a?T:p>=a+S?S:p-a,!(u<h);p+=k)b=u-h,y=k-h,w.push(F(f(h+b%y,0))),u=L(b/y);w.push(F(f(u,0))),a=d(n,g,r==o),n=0,++r}++n,++t}return w.join("")}function v(e){return s(e,function(e){return _.test(e)?p(e.slice(4).toLowerCase()):e})}function m(e){return s(e,function(e){return D.test(e)?"xn--"+h(e):e})}var g="object"==typeof o&&o,y="object"==typeof r&&r&&r.exports==g&&r,b="object"==typeof t&&t;b.global!==b&&b.window!==b||(n=b);var w,x,E=2147483647,k=36,T=1,S=26,C=38,O=700,N=72,j=128,P="-",_=/^xn--/,D=/[^ -~]/,A=/\x2E|\u3002|\uFF0E|\uFF61/g,I={overflow:"Overflow: input needs wider integers to process","not-basic":"Illegal input >= 0x80 (not a basic code point)","invalid-input":"Invalid input"},M=k-T,L=Math.floor,F=String.fromCharCode;if(w={version:"1.2.4",ucs2:{decode:l,encode:c},decode:p,encode:h,toASCII:m,toUnicode:v},"function"==typeof e&&"object"==typeof e.amd&&e.amd)e("punycode",function(){return w});else if(g&&!g.nodeType)if(y)y.exports=w;else for(x in w)w.hasOwnProperty(x)&&(g[x]=w[x]);else n.punycode=w}(this)}).call(this,void 0!==t?t:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{}],22:[function(e,t,n){function r(e){function t(e){var t=u();a(t,e)>-1||(t.push(e),f(t))}function n(e){var t=u(),n=a(t,e);-1!==n&&(t.splice(n,1),f(t))}function r(e){return a(u(),e)>-1}function s(e){return r(e)?(n(e),!1):(t(e),!0)}function l(){return e.className}function c(e){return u()[e]||null}function u(){return o(e.className.split(" "),i)}function f(t){var n=t.length;e.className=t.join(" "),p.length=n;for(var r=0;r<t.length;r++)p[r]=t[r];delete t[n]}var d=e.classList;if(d)return d;var p={add:t,remove:n,contains:r,toggle:s,toString:l,length:0,item:c};return p}function o(e,t){for(var n=[],r=0;r<e.length;r++)t(e[r])&&n.push(e[r]);return n}function i(e){return!!e}var a=e("indexof");t.exports=r},{indexof:23}],23:[function(e,t,n){var r=[].indexOf;t.exports=function(e,t){if(r)return e.indexOf(t);for(var n=0;n<e.length;++n)if(e[n]===t)return n;return-1}},{}],24:[function(e,t,n){function r(e,t,n,r){if(n=window.getComputedStyle,r=n?n(e):e.currentStyle)return r[t.replace(/-(\w)/gi,function(e,t){return t.toUpperCase()})]}t.exports=r},{}],25:[function(t,n,r){!function(t,o){"use strict";"function"==typeof e&&e.amd?e(o):"object"==typeof r?n.exports=o():t.returnExports=o()}(this,function(){var e,t=Array,n=t.prototype,r=Object,o=r.prototype,i=Function.prototype,a=String,s=a.prototype,l=Number,c=l.prototype,u=n.slice,f=n.splice,d=n.push,p=n.unshift,h=n.concat,v=i.call,m=Math.max,g=Math.min,y=o.toString,b="function"==typeof Symbol&&"symbol"==typeof Symbol.toStringTag,w=Function.prototype.toString,x=function(e){try{return w.call(e),!0}catch(e){return!1}};e=function(e){if("function"!=typeof e)return!1;if(b)return x(e);var t=y.call(e);return"[object Function]"===t||"[object GeneratorFunction]"===t};var E,k=RegExp.prototype.exec,T=function(e){try{return k.call(e),!0}catch(e){return!1}};E=function(e){return"object"==typeof e&&(b?T(e):"[object RegExp]"===y.call(e))};var S,C=String.prototype.valueOf,O=function(e){try{return C.call(e),!0}catch(e){return!1}};S=function(e){return"string"==typeof e||"object"==typeof e&&(b?O(e):"[object String]"===y.call(e))};var N=function(e){var t,n=r.defineProperty&&function(){try{var e={};r.defineProperty(e,"x",{enumerable:!1,value:e});for(var t in e)return!1;return e.x===e}catch(e){return!1}}();return t=n?function(e,t,n,o){!o&&t in e||r.defineProperty(e,t,{configurable:!0,enumerable:!1,writable:!0,value:n})}:function(e,t,n,r){!r&&t in e||(e[t]=n)},function(n,r,o){for(var i in r)e.call(r,i)&&t(n,i,r[i],o)}}(o.hasOwnProperty),j=function(e){var t=typeof e;return null===e||"object"!==t&&"function"!==t},P=l.isNaN||function(e){return e!==e},_={ToInteger:function(e){var t=+e;return P(t)?t=0:0!==t&&t!==1/0&&t!==-1/0&&(t=(t>0||-1)*Math.floor(Math.abs(t))),t},ToPrimitive:function(t){var n,r,o;if(j(t))return t;if(r=t.valueOf,e(r)&&(n=r.call(t),j(n)))return n;if(o=t.toString,e(o)&&(n=o.call(t),j(n)))return n;throw new TypeError},ToObject:function(e){if(null==e)throw new TypeError("can't convert "+e+" to object");return r(e)},ToUint32:function(e){return e>>>0}},D=function(){};N(i,{bind:function(t){var n=this;if(!e(n))throw new TypeError("Function.prototype.bind called on incompatible "+n);for(var o,i=u.call(arguments,1),a=function(){if(this instanceof o){var e=n.apply(this,h.call(i,u.call(arguments)));return r(e)===e?e:this}return n.apply(t,h.call(i,u.call(arguments)))},s=m(0,n.length-i.length),l=[],c=0;c<s;c++)d.call(l,"$"+c);return o=Function("binder","return function ("+l.join(",")+"){ return binder.apply(this, arguments); }")(a),n.prototype&&(D.prototype=n.prototype,o.prototype=new D,D.prototype=null),o}});var A=v.bind(o.hasOwnProperty),I=v.bind(o.toString),M=v.bind(s.slice),L=v.bind(s.split),F=v.bind(s.indexOf),$=v.bind(d),R=t.isArray||function(e){return"[object Array]"===I(e)},U=1!==[].unshift(0);N(n,{unshift:function(){return p.apply(this,arguments),this.length}},U),N(t,{isArray:R});var z=r("a"),V="a"!==z[0]||!(0 in z),H=function(e){var t=!0,n=!0;return e&&(e.call("foo",function(e,n,r){"object"!=typeof r&&(t=!1)}),e.call([1],function(){"use strict";n="string"==typeof this},"x")),!!e&&t&&n};N(n,{forEach:function(t){var n,r=_.ToObject(this),o=V&&S(this)?L(this,""):r,i=-1,a=_.ToUint32(o.length);if(arguments.length>1&&(n=arguments[1]),!e(t))throw new TypeError("Array.prototype.forEach callback must be a function");for(;++i<a;)i in o&&(void 0===n?t(o[i],i,r):t.call(n,o[i],i,r))}},!H(n.forEach)),N(n,{map:function(n){var r,o=_.ToObject(this),i=V&&S(this)?L(this,""):o,a=_.ToUint32(i.length),s=t(a);if(arguments.length>1&&(r=arguments[1]),!e(n))throw new TypeError("Array.prototype.map callback must be a function");for(var l=0;l<a;l++)l in i&&(s[l]=void 0===r?n(i[l],l,o):n.call(r,i[l],l,o));return s}},!H(n.map)),N(n,{filter:function(t){var n,r,o=_.ToObject(this),i=V&&S(this)?L(this,""):o,a=_.ToUint32(i.length),s=[];if(arguments.length>1&&(r=arguments[1]),!e(t))throw new TypeError("Array.prototype.filter callback must be a function");for(var l=0;l<a;l++)l in i&&(n=i[l],(void 0===r?t(n,l,o):t.call(r,n,l,o))&&$(s,n));return s}},!H(n.filter)),N(n,{every:function(t){var n,r=_.ToObject(this),o=V&&S(this)?L(this,""):r,i=_.ToUint32(o.length);if(arguments.length>1&&(n=arguments[1]),!e(t))throw new TypeError("Array.prototype.every callback must be a function");for(var a=0;a<i;a++)if(a in o&&!(void 0===n?t(o[a],a,r):t.call(n,o[a],a,r)))return!1;return!0}},!H(n.every)),N(n,{some:function(t){var n,r=_.ToObject(this),o=V&&S(this)?L(this,""):r,i=_.ToUint32(o.length);if(arguments.length>1&&(n=arguments[1]),!e(t))throw new TypeError("Array.prototype.some callback must be a function");for(var a=0;a<i;a++)if(a in o&&(void 0===n?t(o[a],a,r):t.call(n,o[a],a,r)))return!0;return!1}},!H(n.some));var B=!1;n.reduce&&(B="object"==typeof n.reduce.call("es5",function(e,t,n,r){return r})),N(n,{reduce:function(t){var n=_.ToObject(this),r=V&&S(this)?L(this,""):n,o=_.ToUint32(r.length);if(!e(t))throw new TypeError("Array.prototype.reduce callback must be a function");if(0===o&&1===arguments.length)throw new TypeError("reduce of empty array with no initial value");var i,a=0;if(arguments.length>=2)i=arguments[1];else for(;;){if(a in r){i=r[a++];break}if(++a>=o)throw new TypeError("reduce of empty array with no initial value")}for(;a<o;a++)a in r&&(i=t(i,r[a],a,n));return i}},!B);var X=!1;n.reduceRight&&(X="object"==typeof n.reduceRight.call("es5",function(e,t,n,r){return r})),N(n,{reduceRight:function(t){var n=_.ToObject(this),r=V&&S(this)?L(this,""):n,o=_.ToUint32(r.length);if(!e(t))throw new TypeError("Array.prototype.reduceRight callback must be a function");if(0===o&&1===arguments.length)throw new TypeError("reduceRight of empty array with no initial value");var i,a=o-1;if(arguments.length>=2)i=arguments[1];else for(;;){if(a in r){i=r[a--];break}if(--a<0)throw new TypeError("reduceRight of empty array with no initial value")}if(a<0)return i;do{a in r&&(i=t(i,r[a],a,n))}while(a--);return i}},!X);var q=n.indexOf&&-1!==[0,1].indexOf(1,2);N(n,{indexOf:function(e){var t=V&&S(this)?L(this,""):_.ToObject(this),n=_.ToUint32(t.length);if(0===n)return-1;var r=0;for(arguments.length>1&&(r=_.ToInteger(arguments[1])),r=r>=0?r:m(0,n+r);r<n;r++)if(r in t&&t[r]===e)return r;return-1}},q);var W=n.lastIndexOf&&-1!==[0,1].lastIndexOf(0,-3);N(n,{lastIndexOf:function(e){var t=V&&S(this)?L(this,""):_.ToObject(this),n=_.ToUint32(t.length);if(0===n)return-1;var r=n-1;for(arguments.length>1&&(r=g(r,_.ToInteger(arguments[1]))),r=r>=0?r:n-Math.abs(r);r>=0;r--)if(r in t&&e===t[r])return r;return-1}},W);var Y=function(){var e=[1,2],t=e.splice();return 2===e.length&&R(t)&&0===t.length}();N(n,{splice:function(e,t){return 0===arguments.length?[]:f.apply(this,arguments)}},!Y);var K=function(){var e={};return n.splice.call(e,0,0,1),1===e.length}();N(n,{splice:function(e,t){if(0===arguments.length)return[];var n=arguments;return this.length=m(_.ToInteger(this.length),0),arguments.length>0&&"number"!=typeof t&&(n=u.call(arguments),n.length<2?$(n,this.length-e):n[1]=_.ToInteger(t)),f.apply(this,n)}},!K);var J=function(){var e=new t(1e5);return e[8]="x",e.splice(1,1),7===e.indexOf("x")}(),Z=function(){var e=[];return e[256]="a",e.splice(257,0,"b"),"a"===e[256]}();N(n,{splice:function(e,t){for(var n,r=_.ToObject(this),o=[],i=_.ToUint32(r.length),s=_.ToInteger(e),l=s<0?m(i+s,0):g(s,i),c=g(m(_.ToInteger(t),0),i-l),f=0;f<c;)n=a(l+f),A(r,n)&&(o[f]=r[n]),f+=1;var d,p=u.call(arguments,2),h=p.length;if(h<c){for(f=l;f<i-c;)n=a(f+c),d=a(f+h),A(r,n)?r[d]=r[n]:delete r[d],f+=1;for(f=i;f>i-c+h;)delete r[f-1],f-=1}else if(h>c)for(f=i-c;f>l;)n=a(f+c-1),d=a(f+h-1),A(r,n)?r[d]=r[n]:delete r[d],f-=1;f=l;for(var v=0;v<p.length;++v)r[f]=p[v],f+=1;return r.length=i-c+h,o}},!J||!Z);var G="1,2"!==[1,2].join(void 0),Q=n.join;N(n,{join:function(e){return Q.call(this,void 0===e?",":e)}},G);var ee=function(e){for(var t=_.ToObject(this),n=_.ToUint32(t.length),r=0;r<arguments.length;)t[n+r]=arguments[r],r+=1;return t.length=n+r,n+r},te=function(){var e={};return 1!==Array.prototype.push.call(e,void 0)||1!==e.length||void 0!==e[0]||!A(e,0)}();N(n,{push:function(e){return R(this)?d.apply(this,arguments):ee.apply(this,arguments)}},te);var ne=function(){var e=[];return 1!==e.push(void 0)||1!==e.length||void 0!==e[0]||!A(e,0)}();N(n,{push:ee},ne);var re=!{toString:null}.propertyIsEnumerable("toString"),oe=function(){}.propertyIsEnumerable("prototype"),ie=!A("x","0"),ae=function(e){var t=e.constructor;return t&&t.prototype===e},se={$window:!0,$console:!0,$parent:!0,$self:!0,$frame:!0,$frames:!0,$frameElement:!0,$webkitIndexedDB:!0,$webkitStorageInfo:!0},le=function(){if("undefined"==typeof window)return!1;for(var e in window)try{!se["$"+e]&&A(window,e)&&null!==window[e]&&"object"==typeof window[e]&&ae(window[e])}catch(e){return!0}return!1}(),ce=function(e){if("undefined"==typeof window||!le)return ae(e);try{return ae(e)}catch(e){return!1}},ue=["toString","toLocaleString","valueOf","hasOwnProperty","isPrototypeOf","propertyIsEnumerable","constructor"],fe=ue.length,de=function(e){return"[object Arguments]"===I(e)},pe=function(t){return null!==t&&"object"==typeof t&&"number"==typeof t.length&&t.length>=0&&!R(t)&&e(t.callee)},he=de(arguments)?de:pe;N(r,{keys:function(t){var n=e(t),r=he(t),o=null!==t&&"object"==typeof t,i=o&&S(t);if(!o&&!n&&!r)throw new TypeError("Object.keys called on a non-object");var s=[],l=oe&&n;if(i&&ie||r)for(var c=0;c<t.length;++c)$(s,a(c));if(!r)for(var u in t)l&&"prototype"===u||!A(t,u)||$(s,a(u));if(re)for(var f=ce(t),d=0;d<fe;d++){var p=ue[d];f&&"constructor"===p||!A(t,p)||$(s,p)}return s}});var ve=r.keys&&function(){return 2===r.keys(arguments).length}(1,2),me=r.keys&&function(){var e=r.keys(arguments);return 1!==arguments.length||1!==e.length||1!==e[0]}(1),ge=r.keys;N(r,{keys:function(e){return ge(he(e)?u.call(e):e)}},!ve||me);var ye=Date.prototype.toISOString&&-1===new Date(-621987552e5).toISOString().indexOf("-000001"),be=Date.prototype.toISOString&&"1969-12-31T23:59:59.999Z"!==new Date(-1).toISOString();N(Date.prototype,{toISOString:function(){var e,t,n,r,o;if(!isFinite(this))throw new RangeError("Date.prototype.toISOString called on non-finite value.");for(r=this.getUTCFullYear(),o=this.getUTCMonth(),r+=Math.floor(o/12),o=(o%12+12)%12,e=[o+1,this.getUTCDate(),this.getUTCHours(),this.getUTCMinutes(),this.getUTCSeconds()],r=(r<0?"-":r>9999?"+":"")+M("00000"+Math.abs(r),0<=r&&r<=9999?-4:-6),t=e.length;t--;)(n=e[t])<10&&(e[t]="0"+n);return r+"-"+u.call(e,0,2).join("-")+"T"+u.call(e,2).join(":")+"."+M("000"+this.getUTCMilliseconds(),-3)+"Z"}},ye||be),function(){try{return Date.prototype.toJSON&&null===new Date(NaN).toJSON()&&-1!==new Date(-621987552e5).toJSON().indexOf("-000001")&&Date.prototype.toJSON.call({toISOString:function(){return!0}})}catch(e){return!1}}()||(Date.prototype.toJSON=function(t){var n=r(this),o=_.ToPrimitive(n);if("number"==typeof o&&!isFinite(o))return null;var i=n.toISOString;if(!e(i))throw new TypeError("toISOString property is not callable");return i.call(n)});var we=1e15===Date.parse("+033658-09-27T01:46:40.000Z"),xe=!isNaN(Date.parse("2012-04-04T24:00:00.500Z"))||!isNaN(Date.parse("2012-11-31T23:59:59.000Z"))||!isNaN(Date.parse("2012-12-31T23:59:60.000Z"));if(isNaN(Date.parse("2000-01-01T00:00:00.000Z"))||xe||!we){var Ee=Math.pow(2,31)-1,ke=(Math.floor(Ee/1e3),P(new Date(1970,0,1,0,0,0,Ee+1).getTime()));Date=function(e){var t=function(n,r,o,i,s,l,c){var u,f=arguments.length;if(this instanceof e){var d=l,p=c;if(ke&&f>=7&&c>Ee){var h=Math.floor(c/Ee)*Ee,v=Math.floor(h/1e3);d+=v,p-=1e3*v}u=1===f&&a(n)===n?new e(t.parse(n)):f>=7?new e(n,r,o,i,s,d,p):f>=6?new e(n,r,o,i,s,d):f>=5?new e(n,r,o,i,s):f>=4?new e(n,r,o,i):f>=3?new e(n,r,o):f>=2?new e(n,r):f>=1?new e(n):new e}else u=e.apply(this,arguments);return j(u)||N(u,{constructor:t},!0),u},n=new RegExp("^(\\d{4}|[+-]\\d{6})(?:-(\\d{2})(?:-(\\d{2})(?:T(\\d{2}):(\\d{2})(?::(\\d{2})(?:(\\.\\d{1,}))?)?(Z|(?:([-+])(\\d{2}):(\\d{2})))?)?)?)?$"),r=[0,31,59,90,120,151,181,212,243,273,304,334,365],o=function(e,t){var n=t>1?1:0;return r[t]+Math.floor((e-1969+n)/4)-Math.floor((e-1901+n)/100)+Math.floor((e-1601+n)/400)+365*(e-1970)},i=function(t){var n=0,r=t;if(ke&&r>Ee){var o=Math.floor(r/Ee)*Ee,i=Math.floor(o/1e3);n+=i,r-=1e3*i}return l(new e(1970,0,1,0,0,n,r))};for(var s in e)A(e,s)&&(t[s]=e[s]);return N(t,{now:e.now,UTC:e.UTC},!0),t.prototype=e.prototype,N(t.prototype,{constructor:t},!0),N(t,{parse:function(t){var r=n.exec(t);if(r){var a,s=l(r[1]),c=l(r[2]||1)-1,u=l(r[3]||1)-1,f=l(r[4]||0),d=l(r[5]||0),p=l(r[6]||0),h=Math.floor(1e3*l(r[7]||0)),v=Boolean(r[4]&&!r[8]),m="-"===r[9]?1:-1,g=l(r[10]||0),y=l(r[11]||0);return f<(d>0||p>0||h>0?24:25)&&d<60&&p<60&&h<1e3&&c>-1&&c<12&&g<24&&y<60&&u>-1&&u<o(s,c+1)-o(s,c)&&(a=60*(24*(o(s,c)+u)+f+g*m),a=1e3*(60*(a+d+y*m)+p)+h,v&&(a=i(a)),-864e13<=a&&a<=864e13)?a:NaN}return e.parse.apply(this,arguments)}}),t}(Date)}Date.now||(Date.now=function(){return(new Date).getTime()});var Te=c.toFixed&&("0.000"!==8e-5.toFixed(3)||"1"!==.9.toFixed(0)||"1.25"!==1.255.toFixed(2)||"1000000000000000128"!==(0xde0b6b3a7640080).toFixed(0)),Se={base:1e7,size:6,data:[0,0,0,0,0,0],multiply:function(e,t){for(var n=-1,r=t;++n<Se.size;)r+=e*Se.data[n],Se.data[n]=r%Se.base,r=Math.floor(r/Se.base)},divide:function(e){for(var t=Se.size,n=0;--t>=0;)n+=Se.data[t],Se.data[t]=Math.floor(n/e),n=n%e*Se.base},numToString:function(){for(var e=Se.size,t="";--e>=0;)if(""!==t||0===e||0!==Se.data[e]){var n=a(Se.data[e]);""===t?t=n:t+=M("0000000",0,7-n.length)+n}return t},pow:function e(t,n,r){return 0===n?r:n%2==1?e(t,n-1,r*t):e(t*t,n/2,r)},log:function(e){for(var t=0,n=e;n>=4096;)t+=12,n/=4096;for(;n>=2;)t+=1,n/=2;return t}};N(c,{toFixed:function(e){var t,n,r,o,i,s,c,u;if(t=l(e),(t=P(t)?0:Math.floor(t))<0||t>20)throw new RangeError("Number.toFixed called with invalid number of decimals");if(n=l(this),P(n))return"NaN";if(n<=-1e21||n>=1e21)return a(n);if(r="",n<0&&(r="-",n=-n),o="0",n>1e-21)if(i=Se.log(n*Se.pow(2,69,1))-69,s=i<0?n*Se.pow(2,-i,1):n/Se.pow(2,i,1),s*=4503599627370496,(i=52-i)>0){for(Se.multiply(0,s),c=t;c>=7;)Se.multiply(1e7,0),c-=7;for(Se.multiply(Se.pow(10,c,1),0),c=i-1;c>=23;)Se.divide(1<<23),c-=23;Se.divide(1<<c),Se.multiply(1,1),Se.divide(2),o=Se.numToString()}else Se.multiply(0,s),Se.multiply(1<<-i,0),o=Se.numToString()+M("0.00000000000000000000",2,2+t);return t>0?(u=o.length,o=u<=t?r+M("0.0000000000000000000",0,t-u+2)+o:r+M(o,0,u-t)+"."+M(o,u-t)):o=r+o,o}},Te);var Ce=function(){try{return"1"===1..toPrecision(void 0)}catch(e){return!0}}(),Oe=c.toPrecision;N(c,{toPrecision:function(e){return void 0===e?Oe.call(this):Oe.call(this,e)}},Ce),2!=="ab".split(/(?:ab)*/).length||4!==".".split(/(.?)(.?)/).length||"t"==="tesst".split(/(s)*/)[1]||4!=="test".split(/(?:)/,-1).length||"".split(/.?/).length||".".split(/()()/).length>1?function(){var e=void 0===/()??/.exec("")[1],t=Math.pow(2,32)-1;s.split=function(n,r){var o=this;if(void 0===n&&0===r)return[];if(!E(n))return L(this,n,r);var i,a,s,l,c=[],f=(n.ignoreCase?"i":"")+(n.multiline?"m":"")+(n.unicode?"u":"")+(n.sticky?"y":""),p=0,h=new RegExp(n.source,f+"g");o+="",e||(i=new RegExp("^"+h.source+"$(?!\\s)",f));var v=void 0===r?t:_.ToUint32(r);for(a=h.exec(o);a&&!((s=a.index+a[0].length)>p&&($(c,M(o,p,a.index)),!e&&a.length>1&&a[0].replace(i,function(){for(var e=1;e<arguments.length-2;e++)void 0===arguments[e]&&(a[e]=void 0)}),a.length>1&&a.index<o.length&&d.apply(c,u.call(a,1)),l=a[0].length,p=s,c.length>=v));)h.lastIndex===a.index&&h.lastIndex++,a=h.exec(o);return p===o.length?!l&&h.test("")||$(c,""):$(c,M(o,p)),c.length>v?M(c,0,v):c}}():"0".split(void 0,0).length&&(s.split=function(e,t){return void 0===e&&0===t?[]:L(this,e,t)});var Ne=s.replace;(function(){var e=[];return"x".replace(/x(.)?/g,function(t,n){$(e,n)}),1===e.length&&void 0===e[0]})()||(s.replace=function(t,n){var r=e(n),o=E(t)&&/\)[*?]/.test(t.source);if(r&&o){var i=function(e){var r=arguments.length,o=t.lastIndex;t.lastIndex=0;var i=t.exec(e)||[];return t.lastIndex=o,$(i,arguments[r-2],arguments[r-1]),n.apply(this,i)};return Ne.call(this,t,i)}return Ne.call(this,t,n)});var je=s.substr,Pe="".substr&&"b"!=="0b".substr(-1);N(s,{substr:function(e,t){var n=e;return e<0&&(n=m(this.length+e,0)),je.call(this,n,t)}},Pe);var _e="\t\n\v\f\r   ᠎             　\u2028\u2029\ufeff",De="​",Ae="["+_e+"]",Ie=new RegExp("^"+Ae+Ae+"*"),Me=new RegExp(Ae+Ae+"*$"),Le=s.trim&&(_e.trim()||!De.trim());N(s,{trim:function(){if(void 0===this||null===this)throw new TypeError("can't convert "+this+" to object");return a(this).replace(Ie,"").replace(Me,"")}},Le);var Fe=s.lastIndexOf&&-1!=="abcあい".lastIndexOf("あい",2);N(s,{lastIndexOf:function(e){if(void 0===this||null===this)throw new TypeError("can't convert "+this+" to object");for(var t=a(this),n=a(e),r=arguments.length>1?l(arguments[1]):NaN,o=P(r)?1/0:_.ToInteger(r),i=g(m(o,0),t.length),s=n.length,c=i+s;c>0;){c=m(0,c-s);var u=F(M(t,c,i+s),n);if(-1!==u)return c+u}return-1}},Fe);var $e=s.lastIndexOf;if(N(s,{lastIndexOf:function(e){return $e.apply(this,arguments)}},1!==s.lastIndexOf.length),8===parseInt(_e+"08")&&22===parseInt(_e+"0x16")||(parseInt=function(e){var t=/^[\-+]?0[xX]/;return function(n,r){var o=a(n).trim(),i=l(r)||(t.test(o)?16:10);return e(o,i)}}(parseInt)),"RangeError: test"!==String(new RangeError("test"))){var Re=(Error.prototype.toString,function(){if(void 0===this||null===this)throw new TypeError("can't convert "+this+" to object");var e=this.name;void 0===e?e="Error":"string"!=typeof e&&(e=a(e));var t=this.message;return void 0===t?t="":"string"!=typeof t&&(t=a(t)),e?t?e+": "+t:e:t});Error.prototype.toString=Re}})},{}],26:[function(e,t,n){var r=[],o=r.forEach,i=r.slice;t.exports=function(e){return o.call(i.call(arguments,1),function(t){if(t)for(var n in t)e[n]=t[n]}),e}},{}],27:[function(e,t,n){function r(e){var t=o.call(e);return"[object Function]"===t||"function"==typeof e&&"[object RegExp]"!==t||"undefined"!=typeof window&&(e===window.setTimeout||e===window.alert||e===window.confirm||e===window.prompt)}t.exports=r;var o=Object.prototype.toString},{}],28:[function(e,t,n){"use strict";t.exports=function(e){return"object"==typeof e&&null!==e}},{}],29:[function(t,n,r){/*!
+(function (name, context, definition) {
+  if (typeof module != 'undefined' && module.exports) module.exports = definition()
+  else if (typeof define == 'function' && define.amd) define(definition)
+  else context[name] = definition()
+})('bean', this, function (name, context) {
+  name    = name    || 'bean'
+  context = context || this
+
+  var win            = window
+    , old            = context[name]
+    , namespaceRegex = /[^\.]*(?=\..*)\.|.*/
+    , nameRegex      = /\..*/
+    , addEvent       = 'addEventListener'
+    , removeEvent    = 'removeEventListener'
+    , doc            = document || {}
+    , root           = doc.documentElement || {}
+    , W3C_MODEL      = root[addEvent]
+    , eventSupport   = W3C_MODEL ? addEvent : 'attachEvent'
+    , ONE            = {} // singleton for quick matching making add() do one()
+
+    , slice          = Array.prototype.slice
+    , str2arr        = function (s, d) { return s.split(d || ' ') }
+    , isString       = function (o) { return typeof o == 'string' }
+    , isFunction     = function (o) { return typeof o == 'function' }
+
+      // events that we consider to be 'native', anything not in this list will
+      // be treated as a custom event
+    , standardNativeEvents =
+        'click dblclick mouseup mousedown contextmenu '                  + // mouse buttons
+        'mousewheel mousemultiwheel DOMMouseScroll '                     + // mouse wheel
+        'mouseover mouseout mousemove selectstart selectend '            + // mouse movement
+        'keydown keypress keyup '                                        + // keyboard
+        'orientationchange '                                             + // mobile
+        'focus blur change reset select submit '                         + // form elements
+        'load unload beforeunload resize move DOMContentLoaded '         + // window
+        'readystatechange message '                                      + // window
+        'error abort scroll '                                              // misc
+      // element.fireEvent('onXYZ'... is not forgiving if we try to fire an event
+      // that doesn't actually exist, so make sure we only do these on newer browsers
+    , w3cNativeEvents =
+        'show '                                                          + // mouse buttons
+        'input invalid '                                                 + // form elements
+        'touchstart touchmove touchend touchcancel '                     + // touch
+        'gesturestart gesturechange gestureend '                         + // gesture
+        'textinput '                                                     + // TextEvent
+        'readystatechange pageshow pagehide popstate '                   + // window
+        'hashchange offline online '                                     + // window
+        'afterprint beforeprint '                                        + // printing
+        'dragstart dragenter dragover dragleave drag drop dragend '      + // dnd
+        'loadstart progress suspend emptied stalled loadmetadata '       + // media
+        'loadeddata canplay canplaythrough playing waiting seeking '     + // media
+        'seeked ended durationchange timeupdate play pause ratechange '  + // media
+        'volumechange cuechange '                                        + // media
+        'checking noupdate downloading cached updateready obsolete '       // appcache
+
+      // convert to a hash for quick lookups
+    , nativeEvents = (function (hash, events, i) {
+        for (i = 0; i < events.length; i++) events[i] && (hash[events[i]] = 1)
+        return hash
+      }({}, str2arr(standardNativeEvents + (W3C_MODEL ? w3cNativeEvents : ''))))
+
+      // custom events are events that we *fake*, they are not provided natively but
+      // we can use native events to generate them
+    , customEvents = (function () {
+        var isAncestor = 'compareDocumentPosition' in root
+              ? function (element, container) {
+                  return container.compareDocumentPosition && (container.compareDocumentPosition(element) & 16) === 16
+                }
+              : 'contains' in root
+                ? function (element, container) {
+                    container = container.nodeType === 9 || container === window ? root : container
+                    return container !== element && container.contains(element)
+                  }
+                : function (element, container) {
+                    while (element = element.parentNode) if (element === container) return 1
+                    return 0
+                  }
+          , check = function (event) {
+              var related = event.relatedTarget
+              return !related
+                ? related == null
+                : (related !== this && related.prefix !== 'xul' && !/document/.test(this.toString())
+                    && !isAncestor(related, this))
+            }
+
+        return {
+            mouseenter: { base: 'mouseover', condition: check }
+          , mouseleave: { base: 'mouseout', condition: check }
+          , mousewheel: { base: /Firefox/.test(navigator.userAgent) ? 'DOMMouseScroll' : 'mousewheel' }
+        }
+      }())
+
+      // we provide a consistent Event object across browsers by taking the actual DOM
+      // event object and generating a new one from its properties.
+    , Event = (function () {
+            // a whitelist of properties (for different event types) tells us what to check for and copy
+        var commonProps  = str2arr('altKey attrChange attrName bubbles cancelable ctrlKey currentTarget ' +
+              'detail eventPhase getModifierState isTrusted metaKey relatedNode relatedTarget shiftKey '  +
+              'srcElement target timeStamp type view which propertyName')
+          , mouseProps   = commonProps.concat(str2arr('button buttons clientX clientY dataTransfer '      +
+              'fromElement offsetX offsetY pageX pageY screenX screenY toElement'))
+          , mouseWheelProps = mouseProps.concat(str2arr('wheelDelta wheelDeltaX wheelDeltaY wheelDeltaZ ' +
+              'axis')) // 'axis' is FF specific
+          , keyProps     = commonProps.concat(str2arr('char charCode key keyCode keyIdentifier '          +
+              'keyLocation location'))
+          , textProps    = commonProps.concat(str2arr('data'))
+          , touchProps   = commonProps.concat(str2arr('touches targetTouches changedTouches scale rotation'))
+          , messageProps = commonProps.concat(str2arr('data origin source'))
+          , stateProps   = commonProps.concat(str2arr('state'))
+          , overOutRegex = /over|out/
+            // some event types need special handling and some need special properties, do that all here
+          , typeFixers   = [
+                { // key events
+                    reg: /key/i
+                  , fix: function (event, newEvent) {
+                      newEvent.keyCode = event.keyCode || event.which
+                      return keyProps
+                    }
+                }
+              , { // mouse events
+                    reg: /click|mouse(?!(.*wheel|scroll))|menu|drag|drop/i
+                  , fix: function (event, newEvent, type) {
+                      newEvent.rightClick = event.which === 3 || event.button === 2
+                      newEvent.pos = { x: 0, y: 0 }
+                      if (event.pageX || event.pageY) {
+                        newEvent.clientX = event.pageX
+                        newEvent.clientY = event.pageY
+                      } else if (event.clientX || event.clientY) {
+                        newEvent.clientX = event.clientX + doc.body.scrollLeft + root.scrollLeft
+                        newEvent.clientY = event.clientY + doc.body.scrollTop + root.scrollTop
+                      }
+                      if (overOutRegex.test(type)) {
+                        newEvent.relatedTarget = event.relatedTarget
+                          || event[(type == 'mouseover' ? 'from' : 'to') + 'Element']
+                      }
+                      return mouseProps
+                    }
+                }
+              , { // mouse wheel events
+                    reg: /mouse.*(wheel|scroll)/i
+                  , fix: function () { return mouseWheelProps }
+                }
+              , { // TextEvent
+                    reg: /^text/i
+                  , fix: function () { return textProps }
+                }
+              , { // touch and gesture events
+                    reg: /^touch|^gesture/i
+                  , fix: function () { return touchProps }
+                }
+              , { // message events
+                    reg: /^message$/i
+                  , fix: function () { return messageProps }
+                }
+              , { // popstate events
+                    reg: /^popstate$/i
+                  , fix: function () { return stateProps }
+                }
+              , { // everything else
+                    reg: /.*/
+                  , fix: function () { return commonProps }
+                }
+            ]
+          , typeFixerMap = {} // used to map event types to fixer functions (above), a basic cache mechanism
+
+          , Event = function (event, element, isNative) {
+              if (!arguments.length) return
+              event = event || ((element.ownerDocument || element.document || element).parentWindow || win).event
+              this.originalEvent = event
+              this.isNative       = isNative
+              this.isBean         = true
+
+              if (!event) return
+
+              var type   = event.type
+                , target = event.target || event.srcElement
+                , i, l, p, props, fixer
+
+              this.target = target && target.nodeType === 3 ? target.parentNode : target
+
+              if (isNative) { // we only need basic augmentation on custom events, the rest expensive & pointless
+                fixer = typeFixerMap[type]
+                if (!fixer) { // haven't encountered this event type before, map a fixer function for it
+                  for (i = 0, l = typeFixers.length; i < l; i++) {
+                    if (typeFixers[i].reg.test(type)) { // guaranteed to match at least one, last is .*
+                      typeFixerMap[type] = fixer = typeFixers[i].fix
+                      break
+                    }
+                  }
+                }
+
+                props = fixer(event, this, type)
+                for (i = props.length; i--;) {
+                  if (!((p = props[i]) in this) && p in event) this[p] = event[p]
+                }
+              }
+            }
+
+        // preventDefault() and stopPropagation() are a consistent interface to those functions
+        // on the DOM, stop() is an alias for both of them together
+        Event.prototype.preventDefault = function () {
+          if (this.originalEvent.preventDefault) this.originalEvent.preventDefault()
+          else this.originalEvent.returnValue = false
+        }
+        Event.prototype.stopPropagation = function () {
+          if (this.originalEvent.stopPropagation) this.originalEvent.stopPropagation()
+          else this.originalEvent.cancelBubble = true
+        }
+        Event.prototype.stop = function () {
+          this.preventDefault()
+          this.stopPropagation()
+          this.stopped = true
+        }
+        // stopImmediatePropagation() has to be handled internally because we manage the event list for
+        // each element
+        // note that originalElement may be a Bean#Event object in some situations
+        Event.prototype.stopImmediatePropagation = function () {
+          if (this.originalEvent.stopImmediatePropagation) this.originalEvent.stopImmediatePropagation()
+          this.isImmediatePropagationStopped = function () { return true }
+        }
+        Event.prototype.isImmediatePropagationStopped = function () {
+          return this.originalEvent.isImmediatePropagationStopped && this.originalEvent.isImmediatePropagationStopped()
+        }
+        Event.prototype.clone = function (currentTarget) {
+          //TODO: this is ripe for optimisation, new events are *expensive*
+          // improving this will speed up delegated events
+          var ne = new Event(this, this.element, this.isNative)
+          ne.currentTarget = currentTarget
+          return ne
+        }
+
+        return Event
+      }())
+
+      // if we're in old IE we can't do onpropertychange on doc or win so we use doc.documentElement for both
+    , targetElement = function (element, isNative) {
+        return !W3C_MODEL && !isNative && (element === doc || element === win) ? root : element
+      }
+
+      /**
+        * Bean maintains an internal registry for event listeners. We don't touch elements, objects
+        * or functions to identify them, instead we store everything in the registry.
+        * Each event listener has a RegEntry object, we have one 'registry' for the whole instance.
+        */
+    , RegEntry = (function () {
+        // each handler is wrapped so we can handle delegation and custom events
+        var wrappedHandler = function (element, fn, condition, args) {
+            var call = function (event, eargs) {
+                  return fn.apply(element, args ? slice.call(eargs, event ? 0 : 1).concat(args) : eargs)
+                }
+              , findTarget = function (event, eventElement) {
+                  return fn.__beanDel ? fn.__beanDel.ft(event.target, element) : eventElement
+                }
+              , handler = condition
+                  ? function (event) {
+                      var target = findTarget(event, this) // deleated event
+                      if (condition.apply(target, arguments)) {
+                        if (event) event.currentTarget = target
+                        return call(event, arguments)
+                      }
+                    }
+                  : function (event) {
+                      if (fn.__beanDel) event = event.clone(findTarget(event)) // delegated event, fix the fix
+                      return call(event, arguments)
+                    }
+            handler.__beanDel = fn.__beanDel
+            return handler
+          }
+
+        , RegEntry = function (element, type, handler, original, namespaces, args, root) {
+            var customType     = customEvents[type]
+              , isNative
+
+            if (type == 'unload') {
+              // self clean-up
+              handler = once(removeListener, element, type, handler, original)
+            }
+
+            if (customType) {
+              if (customType.condition) {
+                handler = wrappedHandler(element, handler, customType.condition, args)
+              }
+              type = customType.base || type
+            }
+
+            this.isNative      = isNative = nativeEvents[type] && !!element[eventSupport]
+            this.customType    = !W3C_MODEL && !isNative && type
+            this.element       = element
+            this.type          = type
+            this.original      = original
+            this.namespaces    = namespaces
+            this.eventType     = W3C_MODEL || isNative ? type : 'propertychange'
+            this.target        = targetElement(element, isNative)
+            this[eventSupport] = !!this.target[eventSupport]
+            this.root          = root
+            this.handler       = wrappedHandler(element, handler, null, args)
+          }
+
+        // given a list of namespaces, is our entry in any of them?
+        RegEntry.prototype.inNamespaces = function (checkNamespaces) {
+          var i, j, c = 0
+          if (!checkNamespaces) return true
+          if (!this.namespaces) return false
+          for (i = checkNamespaces.length; i--;) {
+            for (j = this.namespaces.length; j--;) {
+              if (checkNamespaces[i] == this.namespaces[j]) c++
+            }
+          }
+          return checkNamespaces.length === c
+        }
+
+        // match by element, original fn (opt), handler fn (opt)
+        RegEntry.prototype.matches = function (checkElement, checkOriginal, checkHandler) {
+          return this.element === checkElement &&
+            (!checkOriginal || this.original === checkOriginal) &&
+            (!checkHandler || this.handler === checkHandler)
+        }
+
+        return RegEntry
+      }())
+
+    , registry = (function () {
+        // our map stores arrays by event type, just because it's better than storing
+        // everything in a single array.
+        // uses '$' as a prefix for the keys for safety and 'r' as a special prefix for
+        // rootListeners so we can look them up fast
+        var map = {}
+
+          // generic functional search of our registry for matching listeners,
+          // `fn` returns false to break out of the loop
+          , forAll = function (element, type, original, handler, root, fn) {
+              var pfx = root ? 'r' : '$'
+              if (!type || type == '*') {
+                // search the whole registry
+                for (var t in map) {
+                  if (t.charAt(0) == pfx) {
+                    forAll(element, t.substr(1), original, handler, root, fn)
+                  }
+                }
+              } else {
+                var i = 0, l, list = map[pfx + type], all = element == '*'
+                if (!list) return
+                for (l = list.length; i < l; i++) {
+                  if ((all || list[i].matches(element, original, handler)) && !fn(list[i], list, i, type)) return
+                }
+              }
+            }
+
+          , has = function (element, type, original, root) {
+              // we're not using forAll here simply because it's a bit slower and this
+              // needs to be fast
+              var i, list = map[(root ? 'r' : '$') + type]
+              if (list) {
+                for (i = list.length; i--;) {
+                  if (!list[i].root && list[i].matches(element, original, null)) return true
+                }
+              }
+              return false
+            }
+
+          , get = function (element, type, original, root) {
+              var entries = []
+              forAll(element, type, original, null, root, function (entry) {
+                return entries.push(entry)
+              })
+              return entries
+            }
+
+          , put = function (entry) {
+              var has = !entry.root && !this.has(entry.element, entry.type, null, false)
+                , key = (entry.root ? 'r' : '$') + entry.type
+              ;(map[key] || (map[key] = [])).push(entry)
+              return has
+            }
+
+          , del = function (entry) {
+              forAll(entry.element, entry.type, null, entry.handler, entry.root, function (entry, list, i) {
+                list.splice(i, 1)
+                entry.removed = true
+                if (list.length === 0) delete map[(entry.root ? 'r' : '$') + entry.type]
+                return false
+              })
+            }
+
+            // dump all entries, used for onunload
+          , entries = function () {
+              var t, entries = []
+              for (t in map) {
+                if (t.charAt(0) == '$') entries = entries.concat(map[t])
+              }
+              return entries
+            }
+
+        return { has: has, get: get, put: put, del: del, entries: entries }
+      }())
+
+      // we need a selector engine for delegated events, use querySelectorAll if it exists
+      // but for older browsers we need Qwery, Sizzle or similar
+    , selectorEngine
+    , setSelectorEngine = function (e) {
+        if (!arguments.length) {
+          selectorEngine = doc.querySelectorAll
+            ? function (s, r) {
+                return r.querySelectorAll(s)
+              }
+            : function () {
+                throw new Error('Bean: No selector engine installed') // eeek
+              }
+        } else {
+          selectorEngine = e
+        }
+      }
+
+      // we attach this listener to each DOM event that we need to listen to, only once
+      // per event type per DOM element
+    , rootListener = function (event, type) {
+        if (!W3C_MODEL && type && event && event.propertyName != '_on' + type) return
+
+        var listeners = registry.get(this, type || event.type, null, false)
+          , l = listeners.length
+          , i = 0
+
+        event = new Event(event, this, true)
+        if (type) event.type = type
+
+        // iterate through all handlers registered for this type, calling them unless they have
+        // been removed by a previous handler or stopImmediatePropagation() has been called
+        for (; i < l && !event.isImmediatePropagationStopped(); i++) {
+          if (!listeners[i].removed) listeners[i].handler.call(this, event)
+        }
+      }
+
+      // add and remove listeners to DOM elements
+    , listener = W3C_MODEL
+        ? function (element, type, add) {
+            // new browsers
+            element[add ? addEvent : removeEvent](type, rootListener, false)
+          }
+        : function (element, type, add, custom) {
+            // IE8 and below, use attachEvent/detachEvent and we have to piggy-back propertychange events
+            // to simulate event bubbling etc.
+            var entry
+            if (add) {
+              registry.put(entry = new RegEntry(
+                  element
+                , custom || type
+                , function (event) { // handler
+                    rootListener.call(element, event, custom)
+                  }
+                , rootListener
+                , null
+                , null
+                , true // is root
+              ))
+              if (custom && element['_on' + custom] == null) element['_on' + custom] = 0
+              entry.target.attachEvent('on' + entry.eventType, entry.handler)
+            } else {
+              entry = registry.get(element, custom || type, rootListener, true)[0]
+              if (entry) {
+                entry.target.detachEvent('on' + entry.eventType, entry.handler)
+                registry.del(entry)
+              }
+            }
+          }
+
+    , once = function (rm, element, type, fn, originalFn) {
+        // wrap the handler in a handler that does a remove as well
+        return function () {
+          fn.apply(this, arguments)
+          rm(element, type, originalFn)
+        }
+      }
+
+    , removeListener = function (element, orgType, handler, namespaces) {
+        var type     = orgType && orgType.replace(nameRegex, '')
+          , handlers = registry.get(element, type, null, false)
+          , removed  = {}
+          , i, l
+
+        for (i = 0, l = handlers.length; i < l; i++) {
+          if ((!handler || handlers[i].original === handler) && handlers[i].inNamespaces(namespaces)) {
+            // TODO: this is problematic, we have a registry.get() and registry.del() that
+            // both do registry searches so we waste cycles doing this. Needs to be rolled into
+            // a single registry.forAll(fn) that removes while finding, but the catch is that
+            // we'll be splicing the arrays that we're iterating over. Needs extra tests to
+            // make sure we don't screw it up. @rvagg
+            registry.del(handlers[i])
+            if (!removed[handlers[i].eventType] && handlers[i][eventSupport])
+              removed[handlers[i].eventType] = { t: handlers[i].eventType, c: handlers[i].type }
+          }
+        }
+        // check each type/element for removed listeners and remove the rootListener where it's no longer needed
+        for (i in removed) {
+          if (!registry.has(element, removed[i].t, null, false)) {
+            // last listener of this type, remove the rootListener
+            listener(element, removed[i].t, false, removed[i].c)
+          }
+        }
+      }
+
+      // set up a delegate helper using the given selector, wrap the handler function
+    , delegate = function (selector, fn) {
+        //TODO: findTarget (therefore $) is called twice, once for match and once for
+        // setting e.currentTarget, fix this so it's only needed once
+        var findTarget = function (target, root) {
+              var i, array = isString(selector) ? selectorEngine(selector, root) : selector
+              for (; target && target !== root; target = target.parentNode) {
+                for (i = array.length; i--;) {
+                  if (array[i] === target) return target
+                }
+              }
+            }
+          , handler = function (e) {
+              var match = findTarget(e.target, this)
+              if (match) fn.apply(match, arguments)
+            }
+
+        // __beanDel isn't pleasant but it's a private function, not exposed outside of Bean
+        handler.__beanDel = {
+            ft       : findTarget // attach it here for customEvents to use too
+          , selector : selector
+        }
+        return handler
+      }
+
+    , fireListener = W3C_MODEL ? function (isNative, type, element) {
+        // modern browsers, do a proper dispatchEvent()
+        var evt = doc.createEvent(isNative ? 'HTMLEvents' : 'UIEvents')
+        evt[isNative ? 'initEvent' : 'initUIEvent'](type, true, true, win, 1)
+        element.dispatchEvent(evt)
+      } : function (isNative, type, element) {
+        // old browser use onpropertychange, just increment a custom property to trigger the event
+        element = targetElement(element, isNative)
+        isNative ? element.fireEvent('on' + type, doc.createEventObject()) : element['_on' + type]++
+      }
+
+      /**
+        * Public API: off(), on(), add(), (remove()), one(), fire(), clone()
+        */
+
+      /**
+        * off(element[, eventType(s)[, handler ]])
+        */
+    , off = function (element, typeSpec, fn) {
+        var isTypeStr = isString(typeSpec)
+          , k, type, namespaces, i
+
+        if (isTypeStr && typeSpec.indexOf(' ') > 0) {
+          // off(el, 't1 t2 t3', fn) or off(el, 't1 t2 t3')
+          typeSpec = str2arr(typeSpec)
+          for (i = typeSpec.length; i--;)
+            off(element, typeSpec[i], fn)
+          return element
+        }
+
+        type = isTypeStr && typeSpec.replace(nameRegex, '')
+        if (type && customEvents[type]) type = customEvents[type].base
+
+        if (!typeSpec || isTypeStr) {
+          // off(el) or off(el, t1.ns) or off(el, .ns) or off(el, .ns1.ns2.ns3)
+          if (namespaces = isTypeStr && typeSpec.replace(namespaceRegex, '')) namespaces = str2arr(namespaces, '.')
+          removeListener(element, type, fn, namespaces)
+        } else if (isFunction(typeSpec)) {
+          // off(el, fn)
+          removeListener(element, null, typeSpec)
+        } else {
+          // off(el, { t1: fn1, t2, fn2 })
+          for (k in typeSpec) {
+            if (typeSpec.hasOwnProperty(k)) off(element, k, typeSpec[k])
+          }
+        }
+
+        return element
+      }
+
+      /**
+        * on(element, eventType(s)[, selector], handler[, args ])
+        */
+    , on = function(element, events, selector, fn) {
+        var originalFn, type, types, i, args, entry, first
+
+        //TODO: the undefined check means you can't pass an 'args' argument, fix this perhaps?
+        if (selector === undefined && typeof events == 'object') {
+          //TODO: this can't handle delegated events
+          for (type in events) {
+            if (events.hasOwnProperty(type)) {
+              on.call(this, element, type, events[type])
+            }
+          }
+          return
+        }
+
+        if (!isFunction(selector)) {
+          // delegated event
+          originalFn = fn
+          args       = slice.call(arguments, 4)
+          fn         = delegate(selector, originalFn, selectorEngine)
+        } else {
+          args       = slice.call(arguments, 3)
+          fn         = originalFn = selector
+        }
+
+        types = str2arr(events)
+
+        // special case for one(), wrap in a self-removing handler
+        if (this === ONE) {
+          fn = once(off, element, events, fn, originalFn)
+        }
+
+        for (i = types.length; i--;) {
+          // add new handler to the registry and check if it's the first for this element/type
+          first = registry.put(entry = new RegEntry(
+              element
+            , types[i].replace(nameRegex, '') // event type
+            , fn
+            , originalFn
+            , str2arr(types[i].replace(namespaceRegex, ''), '.') // namespaces
+            , args
+            , false // not root
+          ))
+          if (entry[eventSupport] && first) {
+            // first event of this type on this element, add root listener
+            listener(element, entry.eventType, true, entry.customType)
+          }
+        }
+
+        return element
+      }
+
+      /**
+        * add(element[, selector], eventType(s), handler[, args ])
+        *
+        * Deprecated: kept (for now) for backward-compatibility
+        */
+    , add = function (element, events, fn, delfn) {
+        return on.apply(
+            null
+          , !isString(fn)
+              ? slice.call(arguments)
+              : [ element, fn, events, delfn ].concat(arguments.length > 3 ? slice.call(arguments, 5) : [])
+        )
+      }
+
+      /**
+        * one(element, eventType(s)[, selector], handler[, args ])
+        */
+    , one = function () {
+        return on.apply(ONE, arguments)
+      }
+
+      /**
+        * fire(element, eventType(s)[, args ])
+        *
+        * The optional 'args' argument must be an array, if no 'args' argument is provided
+        * then we can use the browser's DOM event system, otherwise we trigger handlers manually
+        */
+    , fire = function (element, type, args) {
+        var types = str2arr(type)
+          , i, j, l, names, handlers
+
+        for (i = types.length; i--;) {
+          type = types[i].replace(nameRegex, '')
+          if (names = types[i].replace(namespaceRegex, '')) names = str2arr(names, '.')
+          if (!names && !args && element[eventSupport]) {
+            fireListener(nativeEvents[type], type, element)
+          } else {
+            // non-native event, either because of a namespace, arguments or a non DOM element
+            // iterate over all listeners and manually 'fire'
+            handlers = registry.get(element, type, null, false)
+            args = [false].concat(args)
+            for (j = 0, l = handlers.length; j < l; j++) {
+              if (handlers[j].inNamespaces(names)) {
+                handlers[j].handler.apply(element, args)
+              }
+            }
+          }
+        }
+        return element
+      }
+
+      /**
+        * clone(dstElement, srcElement[, eventType ])
+        *
+        * TODO: perhaps for consistency we should allow the same flexibility in type specifiers?
+        */
+    , clone = function (element, from, type) {
+        var handlers = registry.get(from, type, null, false)
+          , l = handlers.length
+          , i = 0
+          , args, beanDel
+
+        for (; i < l; i++) {
+          if (handlers[i].original) {
+            args = [ element, handlers[i].type ]
+            if (beanDel = handlers[i].handler.__beanDel) args.push(beanDel.selector)
+            args.push(handlers[i].original)
+            on.apply(null, args)
+          }
+        }
+        return element
+      }
+
+    , bean = {
+          'on'                : on
+        , 'add'               : add
+        , 'one'               : one
+        , 'off'               : off
+        , 'remove'            : off
+        , 'clone'             : clone
+        , 'fire'              : fire
+        , 'Event'             : Event
+        , 'setSelectorEngine' : setSelectorEngine
+        , 'noConflict'        : function () {
+            context[name] = old
+            return this
+          }
+      }
+
+  // for IE, clean up on unload to avoid leaks
+  if (win.attachEvent) {
+    var cleanup = function () {
+      var i, entries = registry.entries()
+      for (i in entries) {
+        if (entries[i].type && entries[i].type !== 'unload') off(entries[i].element, entries[i].type)
+      }
+      win.detachEvent('onunload', cleanup)
+      win.CollectGarbage && win.CollectGarbage()
+    }
+    win.attachEvent('onunload', cleanup)
+  }
+
+  // initialize selector engine to internal default (qSA or throw Error)
+  setSelectorEngine()
+
+  return bean
+});
+
+},{}],21:[function(_dereq_,module,exports){
+(function (global){
+/*! http://mths.be/punycode v1.2.4 by @mathias */
+;(function(root) {
+
+	/** Detect free variables */
+	var freeExports = typeof exports == 'object' && exports;
+	var freeModule = typeof module == 'object' && module &&
+		module.exports == freeExports && module;
+	var freeGlobal = typeof global == 'object' && global;
+	if (freeGlobal.global === freeGlobal || freeGlobal.window === freeGlobal) {
+		root = freeGlobal;
+	}
+
+	/**
+	 * The `punycode` object.
+	 * @name punycode
+	 * @type Object
+	 */
+	var punycode,
+
+	/** Highest positive signed 32-bit float value */
+	maxInt = 2147483647, // aka. 0x7FFFFFFF or 2^31-1
+
+	/** Bootstring parameters */
+	base = 36,
+	tMin = 1,
+	tMax = 26,
+	skew = 38,
+	damp = 700,
+	initialBias = 72,
+	initialN = 128, // 0x80
+	delimiter = '-', // '\x2D'
+
+	/** Regular expressions */
+	regexPunycode = /^xn--/,
+	regexNonASCII = /[^ -~]/, // unprintable ASCII chars + non-ASCII chars
+	regexSeparators = /\x2E|\u3002|\uFF0E|\uFF61/g, // RFC 3490 separators
+
+	/** Error messages */
+	errors = {
+		'overflow': 'Overflow: input needs wider integers to process',
+		'not-basic': 'Illegal input >= 0x80 (not a basic code point)',
+		'invalid-input': 'Invalid input'
+	},
+
+	/** Convenience shortcuts */
+	baseMinusTMin = base - tMin,
+	floor = Math.floor,
+	stringFromCharCode = String.fromCharCode,
+
+	/** Temporary variable */
+	key;
+
+	/*--------------------------------------------------------------------------*/
+
+	/**
+	 * A generic error utility function.
+	 * @private
+	 * @param {String} type The error type.
+	 * @returns {Error} Throws a `RangeError` with the applicable error message.
+	 */
+	function error(type) {
+		throw RangeError(errors[type]);
+	}
+
+	/**
+	 * A generic `Array#map` utility function.
+	 * @private
+	 * @param {Array} array The array to iterate over.
+	 * @param {Function} callback The function that gets called for every array
+	 * item.
+	 * @returns {Array} A new array of values returned by the callback function.
+	 */
+	function map(array, fn) {
+		var length = array.length;
+		while (length--) {
+			array[length] = fn(array[length]);
+		}
+		return array;
+	}
+
+	/**
+	 * A simple `Array#map`-like wrapper to work with domain name strings.
+	 * @private
+	 * @param {String} domain The domain name.
+	 * @param {Function} callback The function that gets called for every
+	 * character.
+	 * @returns {Array} A new string of characters returned by the callback
+	 * function.
+	 */
+	function mapDomain(string, fn) {
+		return map(string.split(regexSeparators), fn).join('.');
+	}
+
+	/**
+	 * Creates an array containing the numeric code points of each Unicode
+	 * character in the string. While JavaScript uses UCS-2 internally,
+	 * this function will convert a pair of surrogate halves (each of which
+	 * UCS-2 exposes as separate characters) into a single code point,
+	 * matching UTF-16.
+	 * @see `punycode.ucs2.encode`
+	 * @see <http://mathiasbynens.be/notes/javascript-encoding>
+	 * @memberOf punycode.ucs2
+	 * @name decode
+	 * @param {String} string The Unicode input string (UCS-2).
+	 * @returns {Array} The new array of code points.
+	 */
+	function ucs2decode(string) {
+		var output = [],
+		    counter = 0,
+		    length = string.length,
+		    value,
+		    extra;
+		while (counter < length) {
+			value = string.charCodeAt(counter++);
+			if (value >= 0xD800 && value <= 0xDBFF && counter < length) {
+				// high surrogate, and there is a next character
+				extra = string.charCodeAt(counter++);
+				if ((extra & 0xFC00) == 0xDC00) { // low surrogate
+					output.push(((value & 0x3FF) << 10) + (extra & 0x3FF) + 0x10000);
+				} else {
+					// unmatched surrogate; only append this code unit, in case the next
+					// code unit is the high surrogate of a surrogate pair
+					output.push(value);
+					counter--;
+				}
+			} else {
+				output.push(value);
+			}
+		}
+		return output;
+	}
+
+	/**
+	 * Creates a string based on an array of numeric code points.
+	 * @see `punycode.ucs2.decode`
+	 * @memberOf punycode.ucs2
+	 * @name encode
+	 * @param {Array} codePoints The array of numeric code points.
+	 * @returns {String} The new Unicode string (UCS-2).
+	 */
+	function ucs2encode(array) {
+		return map(array, function(value) {
+			var output = '';
+			if (value > 0xFFFF) {
+				value -= 0x10000;
+				output += stringFromCharCode(value >>> 10 & 0x3FF | 0xD800);
+				value = 0xDC00 | value & 0x3FF;
+			}
+			output += stringFromCharCode(value);
+			return output;
+		}).join('');
+	}
+
+	/**
+	 * Converts a basic code point into a digit/integer.
+	 * @see `digitToBasic()`
+	 * @private
+	 * @param {Number} codePoint The basic numeric code point value.
+	 * @returns {Number} The numeric value of a basic code point (for use in
+	 * representing integers) in the range `0` to `base - 1`, or `base` if
+	 * the code point does not represent a value.
+	 */
+	function basicToDigit(codePoint) {
+		if (codePoint - 48 < 10) {
+			return codePoint - 22;
+		}
+		if (codePoint - 65 < 26) {
+			return codePoint - 65;
+		}
+		if (codePoint - 97 < 26) {
+			return codePoint - 97;
+		}
+		return base;
+	}
+
+	/**
+	 * Converts a digit/integer into a basic code point.
+	 * @see `basicToDigit()`
+	 * @private
+	 * @param {Number} digit The numeric value of a basic code point.
+	 * @returns {Number} The basic code point whose value (when used for
+	 * representing integers) is `digit`, which needs to be in the range
+	 * `0` to `base - 1`. If `flag` is non-zero, the uppercase form is
+	 * used; else, the lowercase form is used. The behavior is undefined
+	 * if `flag` is non-zero and `digit` has no uppercase form.
+	 */
+	function digitToBasic(digit, flag) {
+		//  0..25 map to ASCII a..z or A..Z
+		// 26..35 map to ASCII 0..9
+		return digit + 22 + 75 * (digit < 26) - ((flag != 0) << 5);
+	}
+
+	/**
+	 * Bias adaptation function as per section 3.4 of RFC 3492.
+	 * http://tools.ietf.org/html/rfc3492#section-3.4
+	 * @private
+	 */
+	function adapt(delta, numPoints, firstTime) {
+		var k = 0;
+		delta = firstTime ? floor(delta / damp) : delta >> 1;
+		delta += floor(delta / numPoints);
+		for (/* no initialization */; delta > baseMinusTMin * tMax >> 1; k += base) {
+			delta = floor(delta / baseMinusTMin);
+		}
+		return floor(k + (baseMinusTMin + 1) * delta / (delta + skew));
+	}
+
+	/**
+	 * Converts a Punycode string of ASCII-only symbols to a string of Unicode
+	 * symbols.
+	 * @memberOf punycode
+	 * @param {String} input The Punycode string of ASCII-only symbols.
+	 * @returns {String} The resulting string of Unicode symbols.
+	 */
+	function decode(input) {
+		// Don't use UCS-2
+		var output = [],
+		    inputLength = input.length,
+		    out,
+		    i = 0,
+		    n = initialN,
+		    bias = initialBias,
+		    basic,
+		    j,
+		    index,
+		    oldi,
+		    w,
+		    k,
+		    digit,
+		    t,
+		    /** Cached calculation results */
+		    baseMinusT;
+
+		// Handle the basic code points: let `basic` be the number of input code
+		// points before the last delimiter, or `0` if there is none, then copy
+		// the first basic code points to the output.
+
+		basic = input.lastIndexOf(delimiter);
+		if (basic < 0) {
+			basic = 0;
+		}
+
+		for (j = 0; j < basic; ++j) {
+			// if it's not a basic code point
+			if (input.charCodeAt(j) >= 0x80) {
+				error('not-basic');
+			}
+			output.push(input.charCodeAt(j));
+		}
+
+		// Main decoding loop: start just after the last delimiter if any basic code
+		// points were copied; start at the beginning otherwise.
+
+		for (index = basic > 0 ? basic + 1 : 0; index < inputLength; /* no final expression */) {
+
+			// `index` is the index of the next character to be consumed.
+			// Decode a generalized variable-length integer into `delta`,
+			// which gets added to `i`. The overflow checking is easier
+			// if we increase `i` as we go, then subtract off its starting
+			// value at the end to obtain `delta`.
+			for (oldi = i, w = 1, k = base; /* no condition */; k += base) {
+
+				if (index >= inputLength) {
+					error('invalid-input');
+				}
+
+				digit = basicToDigit(input.charCodeAt(index++));
+
+				if (digit >= base || digit > floor((maxInt - i) / w)) {
+					error('overflow');
+				}
+
+				i += digit * w;
+				t = k <= bias ? tMin : (k >= bias + tMax ? tMax : k - bias);
+
+				if (digit < t) {
+					break;
+				}
+
+				baseMinusT = base - t;
+				if (w > floor(maxInt / baseMinusT)) {
+					error('overflow');
+				}
+
+				w *= baseMinusT;
+
+			}
+
+			out = output.length + 1;
+			bias = adapt(i - oldi, out, oldi == 0);
+
+			// `i` was supposed to wrap around from `out` to `0`,
+			// incrementing `n` each time, so we'll fix that now:
+			if (floor(i / out) > maxInt - n) {
+				error('overflow');
+			}
+
+			n += floor(i / out);
+			i %= out;
+
+			// Insert `n` at position `i` of the output
+			output.splice(i++, 0, n);
+
+		}
+
+		return ucs2encode(output);
+	}
+
+	/**
+	 * Converts a string of Unicode symbols to a Punycode string of ASCII-only
+	 * symbols.
+	 * @memberOf punycode
+	 * @param {String} input The string of Unicode symbols.
+	 * @returns {String} The resulting Punycode string of ASCII-only symbols.
+	 */
+	function encode(input) {
+		var n,
+		    delta,
+		    handledCPCount,
+		    basicLength,
+		    bias,
+		    j,
+		    m,
+		    q,
+		    k,
+		    t,
+		    currentValue,
+		    output = [],
+		    /** `inputLength` will hold the number of code points in `input`. */
+		    inputLength,
+		    /** Cached calculation results */
+		    handledCPCountPlusOne,
+		    baseMinusT,
+		    qMinusT;
+
+		// Convert the input in UCS-2 to Unicode
+		input = ucs2decode(input);
+
+		// Cache the length
+		inputLength = input.length;
+
+		// Initialize the state
+		n = initialN;
+		delta = 0;
+		bias = initialBias;
+
+		// Handle the basic code points
+		for (j = 0; j < inputLength; ++j) {
+			currentValue = input[j];
+			if (currentValue < 0x80) {
+				output.push(stringFromCharCode(currentValue));
+			}
+		}
+
+		handledCPCount = basicLength = output.length;
+
+		// `handledCPCount` is the number of code points that have been handled;
+		// `basicLength` is the number of basic code points.
+
+		// Finish the basic string - if it is not empty - with a delimiter
+		if (basicLength) {
+			output.push(delimiter);
+		}
+
+		// Main encoding loop:
+		while (handledCPCount < inputLength) {
+
+			// All non-basic code points < n have been handled already. Find the next
+			// larger one:
+			for (m = maxInt, j = 0; j < inputLength; ++j) {
+				currentValue = input[j];
+				if (currentValue >= n && currentValue < m) {
+					m = currentValue;
+				}
+			}
+
+			// Increase `delta` enough to advance the decoder's <n,i> state to <m,0>,
+			// but guard against overflow
+			handledCPCountPlusOne = handledCPCount + 1;
+			if (m - n > floor((maxInt - delta) / handledCPCountPlusOne)) {
+				error('overflow');
+			}
+
+			delta += (m - n) * handledCPCountPlusOne;
+			n = m;
+
+			for (j = 0; j < inputLength; ++j) {
+				currentValue = input[j];
+
+				if (currentValue < n && ++delta > maxInt) {
+					error('overflow');
+				}
+
+				if (currentValue == n) {
+					// Represent delta as a generalized variable-length integer
+					for (q = delta, k = base; /* no condition */; k += base) {
+						t = k <= bias ? tMin : (k >= bias + tMax ? tMax : k - bias);
+						if (q < t) {
+							break;
+						}
+						qMinusT = q - t;
+						baseMinusT = base - t;
+						output.push(
+							stringFromCharCode(digitToBasic(t + qMinusT % baseMinusT, 0))
+						);
+						q = floor(qMinusT / baseMinusT);
+					}
+
+					output.push(stringFromCharCode(digitToBasic(q, 0)));
+					bias = adapt(delta, handledCPCountPlusOne, handledCPCount == basicLength);
+					delta = 0;
+					++handledCPCount;
+				}
+			}
+
+			++delta;
+			++n;
+
+		}
+		return output.join('');
+	}
+
+	/**
+	 * Converts a Punycode string representing a domain name to Unicode. Only the
+	 * Punycoded parts of the domain name will be converted, i.e. it doesn't
+	 * matter if you call it on a string that has already been converted to
+	 * Unicode.
+	 * @memberOf punycode
+	 * @param {String} domain The Punycode domain name to convert to Unicode.
+	 * @returns {String} The Unicode representation of the given Punycode
+	 * string.
+	 */
+	function toUnicode(domain) {
+		return mapDomain(domain, function(string) {
+			return regexPunycode.test(string)
+				? decode(string.slice(4).toLowerCase())
+				: string;
+		});
+	}
+
+	/**
+	 * Converts a Unicode string representing a domain name to Punycode. Only the
+	 * non-ASCII parts of the domain name will be converted, i.e. it doesn't
+	 * matter if you call it with a domain that's already in ASCII.
+	 * @memberOf punycode
+	 * @param {String} domain The domain name to convert, as a Unicode string.
+	 * @returns {String} The Punycode representation of the given domain name.
+	 */
+	function toASCII(domain) {
+		return mapDomain(domain, function(string) {
+			return regexNonASCII.test(string)
+				? 'xn--' + encode(string)
+				: string;
+		});
+	}
+
+	/*--------------------------------------------------------------------------*/
+
+	/** Define the public API */
+	punycode = {
+		/**
+		 * A string representing the current Punycode.js version number.
+		 * @memberOf punycode
+		 * @type String
+		 */
+		'version': '1.2.4',
+		/**
+		 * An object of methods to convert from JavaScript's internal character
+		 * representation (UCS-2) to Unicode code points, and back.
+		 * @see <http://mathiasbynens.be/notes/javascript-encoding>
+		 * @memberOf punycode
+		 * @type Object
+		 */
+		'ucs2': {
+			'decode': ucs2decode,
+			'encode': ucs2encode
+		},
+		'decode': decode,
+		'encode': encode,
+		'toASCII': toASCII,
+		'toUnicode': toUnicode
+	};
+
+	/** Expose `punycode` */
+	// Some AMD build optimizers, like r.js, check for specific condition patterns
+	// like the following:
+	if (
+		typeof define == 'function' &&
+		typeof define.amd == 'object' &&
+		define.amd
+	) {
+		define('punycode', function() {
+			return punycode;
+		});
+	} else if (freeExports && !freeExports.nodeType) {
+		if (freeModule) { // in Node.js or RingoJS v0.8.0+
+			freeModule.exports = punycode;
+		} else { // in Narwhal or RingoJS v0.7.0-
+			for (key in punycode) {
+				punycode.hasOwnProperty(key) && (freeExports[key] = punycode[key]);
+			}
+		}
+	} else { // in Rhino or a web browser
+		root.punycode = punycode;
+	}
+
+}(this));
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],22:[function(_dereq_,module,exports){
+// contains, add, remove, toggle
+var indexof = _dereq_('indexof')
+
+module.exports = ClassList
+
+function ClassList(elem) {
+    var cl = elem.classList
+
+    if (cl) {
+        return cl
+    }
+
+    var classList = {
+        add: add
+        , remove: remove
+        , contains: contains
+        , toggle: toggle
+        , toString: $toString
+        , length: 0
+        , item: item
+    }
+
+    return classList
+
+    function add(token) {
+        var list = getTokens()
+        if (indexof(list, token) > -1) {
+            return
+        }
+        list.push(token)
+        setTokens(list)
+    }
+
+    function remove(token) {
+        var list = getTokens()
+            , index = indexof(list, token)
+
+        if (index === -1) {
+            return
+        }
+
+        list.splice(index, 1)
+        setTokens(list)
+    }
+
+    function contains(token) {
+        return indexof(getTokens(), token) > -1
+    }
+
+    function toggle(token) {
+        if (contains(token)) {
+            remove(token)
+            return false
+        } else {
+            add(token)
+            return true
+        }
+    }
+
+    function $toString() {
+        return elem.className
+    }
+
+    function item(index) {
+        var tokens = getTokens()
+        return tokens[index] || null
+    }
+
+    function getTokens() {
+        var className = elem.className
+
+        return filter(className.split(" "), isTruthy)
+    }
+
+    function setTokens(list) {
+        var length = list.length
+
+        elem.className = list.join(" ")
+        classList.length = length
+
+        for (var i = 0; i < list.length; i++) {
+            classList[i] = list[i]
+        }
+
+        delete list[length]
+    }
+}
+
+function filter (arr, fn) {
+    var ret = []
+    for (var i = 0; i < arr.length; i++) {
+        if (fn(arr[i])) ret.push(arr[i])
+    }
+    return ret
+}
+
+function isTruthy(value) {
+    return !!value
+}
+
+},{"indexof":23}],23:[function(_dereq_,module,exports){
+
+var indexOf = [].indexOf;
+
+module.exports = function(arr, obj){
+  if (indexOf) return arr.indexOf(obj);
+  for (var i = 0; i < arr.length; ++i) {
+    if (arr[i] === obj) return i;
+  }
+  return -1;
+};
+},{}],24:[function(_dereq_,module,exports){
+// DEV: We don't use var but favor parameters since these play nicer with minification
+function computedStyle(el, prop, getComputedStyle, style) {
+  getComputedStyle = window.getComputedStyle;
+  style =
+      // If we have getComputedStyle
+      getComputedStyle ?
+        // Query it
+        // TODO: From CSS-Query notes, we might need (node, null) for FF
+        getComputedStyle(el) :
+
+      // Otherwise, we are in IE and use currentStyle
+        el.currentStyle;
+  if (style) {
+    return style
+    [
+      // Switch to camelCase for CSSOM
+      // DEV: Grabbed from jQuery
+      // https://github.com/jquery/jquery/blob/1.9-stable/src/css.js#L191-L194
+      // https://github.com/jquery/jquery/blob/1.9-stable/src/core.js#L593-L597
+      prop.replace(/-(\w)/gi, function (word, letter) {
+        return letter.toUpperCase();
+      })
+    ];
+  }
+}
+
+module.exports = computedStyle;
+
+},{}],25:[function(_dereq_,module,exports){
+/*!
+ * https://github.com/es-shims/es5-shim
+ * @license es5-shim Copyright 2009-2015 by contributors, MIT License
+ * see https://github.com/es-shims/es5-shim/blob/master/LICENSE
+ */
+
+// vim: ts=4 sts=4 sw=4 expandtab
+
+// Add semicolon to prevent IIFE from being passed as argument to concatenated code.
+;
+
+// UMD (Universal Module Definition)
+// see https://github.com/umdjs/umd/blob/master/returnExports.js
+(function (root, factory) {
+    'use strict';
+
+    /* global define, exports, module */
+    if (typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        define(factory);
+    } else if (typeof exports === 'object') {
+        // Node. Does not work with strict CommonJS, but
+        // only CommonJS-like enviroments that support module.exports,
+        // like Node.
+        module.exports = factory();
+    } else {
+        // Browser globals (root is window)
+        root.returnExports = factory();
+    }
+}(this, function () {
+
+/**
+ * Brings an environment as close to ECMAScript 5 compliance
+ * as is possible with the facilities of erstwhile engines.
+ *
+ * Annotated ES5: http://es5.github.com/ (specific links below)
+ * ES5 Spec: http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf
+ * Required reading: http://javascriptweblog.wordpress.com/2011/12/05/extending-javascript-natives/
+ */
+
+// Shortcut to an often accessed properties, in order to avoid multiple
+// dereference that costs universally. This also holds a reference to known-good
+// functions.
+var $Array = Array;
+var ArrayPrototype = $Array.prototype;
+var $Object = Object;
+var ObjectPrototype = $Object.prototype;
+var FunctionPrototype = Function.prototype;
+var $String = String;
+var StringPrototype = $String.prototype;
+var $Number = Number;
+var NumberPrototype = $Number.prototype;
+var array_slice = ArrayPrototype.slice;
+var array_splice = ArrayPrototype.splice;
+var array_push = ArrayPrototype.push;
+var array_unshift = ArrayPrototype.unshift;
+var array_concat = ArrayPrototype.concat;
+var call = FunctionPrototype.call;
+var max = Math.max;
+var min = Math.min;
+
+// Having a toString local variable name breaks in Opera so use to_string.
+var to_string = ObjectPrototype.toString;
+
+var hasToStringTag = typeof Symbol === 'function' && typeof Symbol.toStringTag === 'symbol';
+var isCallable; /* inlined from https://npmjs.com/is-callable */ var fnToStr = Function.prototype.toString, tryFunctionObject = function tryFunctionObject(value) { try { fnToStr.call(value); return true; } catch (e) { return false; } }, fnClass = '[object Function]', genClass = '[object GeneratorFunction]'; isCallable = function isCallable(value) { if (typeof value !== 'function') { return false; } if (hasToStringTag) { return tryFunctionObject(value); } var strClass = to_string.call(value); return strClass === fnClass || strClass === genClass; };
+var isRegex; /* inlined from https://npmjs.com/is-regex */ var regexExec = RegExp.prototype.exec, tryRegexExec = function tryRegexExec(value) { try { regexExec.call(value); return true; } catch (e) { return false; } }, regexClass = '[object RegExp]'; isRegex = function isRegex(value) { if (typeof value !== 'object') { return false; } return hasToStringTag ? tryRegexExec(value) : to_string.call(value) === regexClass; };
+var isString; /* inlined from https://npmjs.com/is-string */ var strValue = String.prototype.valueOf, tryStringObject = function tryStringObject(value) { try { strValue.call(value); return true; } catch (e) { return false; } }, stringClass = '[object String]'; isString = function isString(value) { if (typeof value === 'string') { return true; } if (typeof value !== 'object') { return false; } return hasToStringTag ? tryStringObject(value) : to_string.call(value) === stringClass; };
+
+/* inlined from http://npmjs.com/define-properties */
+var defineProperties = (function (has) {
+  var supportsDescriptors = $Object.defineProperty && (function () {
+      try {
+          var obj = {};
+          $Object.defineProperty(obj, 'x', { enumerable: false, value: obj });
+          for (var _ in obj) { return false; }
+          return obj.x === obj;
+      } catch (e) { /* this is ES3 */
+          return false;
+      }
+  }());
+
+  // Define configurable, writable and non-enumerable props
+  // if they don't exist.
+  var defineProperty;
+  if (supportsDescriptors) {
+      defineProperty = function (object, name, method, forceAssign) {
+          if (!forceAssign && (name in object)) { return; }
+          $Object.defineProperty(object, name, {
+              configurable: true,
+              enumerable: false,
+              writable: true,
+              value: method
+          });
+      };
+  } else {
+      defineProperty = function (object, name, method, forceAssign) {
+          if (!forceAssign && (name in object)) { return; }
+          object[name] = method;
+      };
+  }
+  return function defineProperties(object, map, forceAssign) {
+      for (var name in map) {
+          if (has.call(map, name)) {
+            defineProperty(object, name, map[name], forceAssign);
+          }
+      }
+  };
+}(ObjectPrototype.hasOwnProperty));
+
+//
+// Util
+// ======
+//
+
+/* replaceable with https://npmjs.com/package/es-abstract /helpers/isPrimitive */
+var isPrimitive = function isPrimitive(input) {
+    var type = typeof input;
+    return input === null || (type !== 'object' && type !== 'function');
+};
+
+var isActualNaN = $Number.isNaN || function (x) { return x !== x; };
+
+var ES = {
+    // ES5 9.4
+    // http://es5.github.com/#x9.4
+    // http://jsperf.com/to-integer
+    /* replaceable with https://npmjs.com/package/es-abstract ES5.ToInteger */
+    ToInteger: function ToInteger(num) {
+        var n = +num;
+        if (isActualNaN(n)) {
+            n = 0;
+        } else if (n !== 0 && n !== (1 / 0) && n !== -(1 / 0)) {
+            n = (n > 0 || -1) * Math.floor(Math.abs(n));
+        }
+        return n;
+    },
+
+    /* replaceable with https://npmjs.com/package/es-abstract ES5.ToPrimitive */
+    ToPrimitive: function ToPrimitive(input) {
+        var val, valueOf, toStr;
+        if (isPrimitive(input)) {
+            return input;
+        }
+        valueOf = input.valueOf;
+        if (isCallable(valueOf)) {
+            val = valueOf.call(input);
+            if (isPrimitive(val)) {
+                return val;
+            }
+        }
+        toStr = input.toString;
+        if (isCallable(toStr)) {
+            val = toStr.call(input);
+            if (isPrimitive(val)) {
+                return val;
+            }
+        }
+        throw new TypeError();
+    },
+
+    // ES5 9.9
+    // http://es5.github.com/#x9.9
+    /* replaceable with https://npmjs.com/package/es-abstract ES5.ToObject */
+    ToObject: function (o) {
+        /* jshint eqnull: true */
+        if (o == null) { // this matches both null and undefined
+            throw new TypeError("can't convert " + o + ' to object');
+        }
+        return $Object(o);
+    },
+
+    /* replaceable with https://npmjs.com/package/es-abstract ES5.ToUint32 */
+    ToUint32: function ToUint32(x) {
+        return x >>> 0;
+    }
+};
+
+//
+// Function
+// ========
+//
+
+// ES-5 15.3.4.5
+// http://es5.github.com/#x15.3.4.5
+
+var Empty = function Empty() {};
+
+defineProperties(FunctionPrototype, {
+    bind: function bind(that) { // .length is 1
+        // 1. Let Target be the this value.
+        var target = this;
+        // 2. If IsCallable(Target) is false, throw a TypeError exception.
+        if (!isCallable(target)) {
+            throw new TypeError('Function.prototype.bind called on incompatible ' + target);
+        }
+        // 3. Let A be a new (possibly empty) internal list of all of the
+        //   argument values provided after thisArg (arg1, arg2 etc), in order.
+        // XXX slicedArgs will stand in for "A" if used
+        var args = array_slice.call(arguments, 1); // for normal call
+        // 4. Let F be a new native ECMAScript object.
+        // 11. Set the [[Prototype]] internal property of F to the standard
+        //   built-in Function prototype object as specified in 15.3.3.1.
+        // 12. Set the [[Call]] internal property of F as described in
+        //   15.3.4.5.1.
+        // 13. Set the [[Construct]] internal property of F as described in
+        //   15.3.4.5.2.
+        // 14. Set the [[HasInstance]] internal property of F as described in
+        //   15.3.4.5.3.
+        var bound;
+        var binder = function () {
+
+            if (this instanceof bound) {
+                // 15.3.4.5.2 [[Construct]]
+                // When the [[Construct]] internal method of a function object,
+                // F that was created using the bind function is called with a
+                // list of arguments ExtraArgs, the following steps are taken:
+                // 1. Let target be the value of F's [[TargetFunction]]
+                //   internal property.
+                // 2. If target has no [[Construct]] internal method, a
+                //   TypeError exception is thrown.
+                // 3. Let boundArgs be the value of F's [[BoundArgs]] internal
+                //   property.
+                // 4. Let args be a new list containing the same values as the
+                //   list boundArgs in the same order followed by the same
+                //   values as the list ExtraArgs in the same order.
+                // 5. Return the result of calling the [[Construct]] internal
+                //   method of target providing args as the arguments.
+
+                var result = target.apply(
+                    this,
+                    array_concat.call(args, array_slice.call(arguments))
+                );
+                if ($Object(result) === result) {
+                    return result;
+                }
+                return this;
+
+            } else {
+                // 15.3.4.5.1 [[Call]]
+                // When the [[Call]] internal method of a function object, F,
+                // which was created using the bind function is called with a
+                // this value and a list of arguments ExtraArgs, the following
+                // steps are taken:
+                // 1. Let boundArgs be the value of F's [[BoundArgs]] internal
+                //   property.
+                // 2. Let boundThis be the value of F's [[BoundThis]] internal
+                //   property.
+                // 3. Let target be the value of F's [[TargetFunction]] internal
+                //   property.
+                // 4. Let args be a new list containing the same values as the
+                //   list boundArgs in the same order followed by the same
+                //   values as the list ExtraArgs in the same order.
+                // 5. Return the result of calling the [[Call]] internal method
+                //   of target providing boundThis as the this value and
+                //   providing args as the arguments.
+
+                // equiv: target.call(this, ...boundArgs, ...args)
+                return target.apply(
+                    that,
+                    array_concat.call(args, array_slice.call(arguments))
+                );
+
+            }
+
+        };
+
+        // 15. If the [[Class]] internal property of Target is "Function", then
+        //     a. Let L be the length property of Target minus the length of A.
+        //     b. Set the length own property of F to either 0 or L, whichever is
+        //       larger.
+        // 16. Else set the length own property of F to 0.
+
+        var boundLength = max(0, target.length - args.length);
+
+        // 17. Set the attributes of the length own property of F to the values
+        //   specified in 15.3.5.1.
+        var boundArgs = [];
+        for (var i = 0; i < boundLength; i++) {
+            array_push.call(boundArgs, '$' + i);
+        }
+
+        // XXX Build a dynamic function with desired amount of arguments is the only
+        // way to set the length property of a function.
+        // In environments where Content Security Policies enabled (Chrome extensions,
+        // for ex.) all use of eval or Function costructor throws an exception.
+        // However in all of these environments Function.prototype.bind exists
+        // and so this code will never be executed.
+        bound = Function('binder', 'return function (' + boundArgs.join(',') + '){ return binder.apply(this, arguments); }')(binder);
+
+        if (target.prototype) {
+            Empty.prototype = target.prototype;
+            bound.prototype = new Empty();
+            // Clean up dangling references.
+            Empty.prototype = null;
+        }
+
+        // TODO
+        // 18. Set the [[Extensible]] internal property of F to true.
+
+        // TODO
+        // 19. Let thrower be the [[ThrowTypeError]] function Object (13.2.3).
+        // 20. Call the [[DefineOwnProperty]] internal method of F with
+        //   arguments "caller", PropertyDescriptor {[[Get]]: thrower, [[Set]]:
+        //   thrower, [[Enumerable]]: false, [[Configurable]]: false}, and
+        //   false.
+        // 21. Call the [[DefineOwnProperty]] internal method of F with
+        //   arguments "arguments", PropertyDescriptor {[[Get]]: thrower,
+        //   [[Set]]: thrower, [[Enumerable]]: false, [[Configurable]]: false},
+        //   and false.
+
+        // TODO
+        // NOTE Function objects created using Function.prototype.bind do not
+        // have a prototype property or the [[Code]], [[FormalParameters]], and
+        // [[Scope]] internal properties.
+        // XXX can't delete prototype in pure-js.
+
+        // 22. Return F.
+        return bound;
+    }
+});
+
+// _Please note: Shortcuts are defined after `Function.prototype.bind` as we
+// us it in defining shortcuts.
+var owns = call.bind(ObjectPrototype.hasOwnProperty);
+var toStr = call.bind(ObjectPrototype.toString);
+var strSlice = call.bind(StringPrototype.slice);
+var strSplit = call.bind(StringPrototype.split);
+var strIndexOf = call.bind(StringPrototype.indexOf);
+var push = call.bind(array_push);
+
+//
+// Array
+// =====
+//
+
+var isArray = $Array.isArray || function isArray(obj) {
+    return toStr(obj) === '[object Array]';
+};
+
+// ES5 15.4.4.12
+// http://es5.github.com/#x15.4.4.13
+// Return len+argCount.
+// [bugfix, ielt8]
+// IE < 8 bug: [].unshift(0) === undefined but should be "1"
+var hasUnshiftReturnValueBug = [].unshift(0) !== 1;
+defineProperties(ArrayPrototype, {
+    unshift: function () {
+        array_unshift.apply(this, arguments);
+        return this.length;
+    }
+}, hasUnshiftReturnValueBug);
+
+// ES5 15.4.3.2
+// http://es5.github.com/#x15.4.3.2
+// https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/isArray
+defineProperties($Array, { isArray: isArray });
+
+// The IsCallable() check in the Array functions
+// has been replaced with a strict check on the
+// internal class of the object to trap cases where
+// the provided function was actually a regular
+// expression literal, which in V8 and
+// JavaScriptCore is a typeof "function".  Only in
+// V8 are regular expression literals permitted as
+// reduce parameters, so it is desirable in the
+// general case for the shim to match the more
+// strict and common behavior of rejecting regular
+// expressions.
+
+// ES5 15.4.4.18
+// http://es5.github.com/#x15.4.4.18
+// https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/forEach
+
+// Check failure of by-index access of string characters (IE < 9)
+// and failure of `0 in boxedString` (Rhino)
+var boxedString = $Object('a');
+var splitString = boxedString[0] !== 'a' || !(0 in boxedString);
+
+var properlyBoxesContext = function properlyBoxed(method) {
+    // Check node 0.6.21 bug where third parameter is not boxed
+    var properlyBoxesNonStrict = true;
+    var properlyBoxesStrict = true;
+    if (method) {
+        method.call('foo', function (_, __, context) {
+            if (typeof context !== 'object') { properlyBoxesNonStrict = false; }
+        });
+
+        method.call([1], function () {
+            'use strict';
+
+            properlyBoxesStrict = typeof this === 'string';
+        }, 'x');
+    }
+    return !!method && properlyBoxesNonStrict && properlyBoxesStrict;
+};
+
+defineProperties(ArrayPrototype, {
+    forEach: function forEach(callbackfn/*, thisArg*/) {
+        var object = ES.ToObject(this);
+        var self = splitString && isString(this) ? strSplit(this, '') : object;
+        var i = -1;
+        var length = ES.ToUint32(self.length);
+        var T;
+        if (arguments.length > 1) {
+          T = arguments[1];
+        }
+
+        // If no callback function or if callback is not a callable function
+        if (!isCallable(callbackfn)) {
+            throw new TypeError('Array.prototype.forEach callback must be a function');
+        }
+
+        while (++i < length) {
+            if (i in self) {
+                // Invoke the callback function with call, passing arguments:
+                // context, property value, property key, thisArg object
+                if (typeof T === 'undefined') {
+                    callbackfn(self[i], i, object);
+                } else {
+                    callbackfn.call(T, self[i], i, object);
+                }
+            }
+        }
+    }
+}, !properlyBoxesContext(ArrayPrototype.forEach));
+
+// ES5 15.4.4.19
+// http://es5.github.com/#x15.4.4.19
+// https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Objects/Array/map
+defineProperties(ArrayPrototype, {
+    map: function map(callbackfn/*, thisArg*/) {
+        var object = ES.ToObject(this);
+        var self = splitString && isString(this) ? strSplit(this, '') : object;
+        var length = ES.ToUint32(self.length);
+        var result = $Array(length);
+        var T;
+        if (arguments.length > 1) {
+            T = arguments[1];
+        }
+
+        // If no callback function or if callback is not a callable function
+        if (!isCallable(callbackfn)) {
+            throw new TypeError('Array.prototype.map callback must be a function');
+        }
+
+        for (var i = 0; i < length; i++) {
+            if (i in self) {
+                if (typeof T === 'undefined') {
+                    result[i] = callbackfn(self[i], i, object);
+                } else {
+                    result[i] = callbackfn.call(T, self[i], i, object);
+                }
+            }
+        }
+        return result;
+    }
+}, !properlyBoxesContext(ArrayPrototype.map));
+
+// ES5 15.4.4.20
+// http://es5.github.com/#x15.4.4.20
+// https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Objects/Array/filter
+defineProperties(ArrayPrototype, {
+    filter: function filter(callbackfn/*, thisArg*/) {
+        var object = ES.ToObject(this);
+        var self = splitString && isString(this) ? strSplit(this, '') : object;
+        var length = ES.ToUint32(self.length);
+        var result = [];
+        var value;
+        var T;
+        if (arguments.length > 1) {
+            T = arguments[1];
+        }
+
+        // If no callback function or if callback is not a callable function
+        if (!isCallable(callbackfn)) {
+            throw new TypeError('Array.prototype.filter callback must be a function');
+        }
+
+        for (var i = 0; i < length; i++) {
+            if (i in self) {
+                value = self[i];
+                if (typeof T === 'undefined' ? callbackfn(value, i, object) : callbackfn.call(T, value, i, object)) {
+                    push(result, value);
+                }
+            }
+        }
+        return result;
+    }
+}, !properlyBoxesContext(ArrayPrototype.filter));
+
+// ES5 15.4.4.16
+// http://es5.github.com/#x15.4.4.16
+// https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/every
+defineProperties(ArrayPrototype, {
+    every: function every(callbackfn/*, thisArg*/) {
+        var object = ES.ToObject(this);
+        var self = splitString && isString(this) ? strSplit(this, '') : object;
+        var length = ES.ToUint32(self.length);
+        var T;
+        if (arguments.length > 1) {
+            T = arguments[1];
+        }
+
+        // If no callback function or if callback is not a callable function
+        if (!isCallable(callbackfn)) {
+            throw new TypeError('Array.prototype.every callback must be a function');
+        }
+
+        for (var i = 0; i < length; i++) {
+            if (i in self && !(typeof T === 'undefined' ? callbackfn(self[i], i, object) : callbackfn.call(T, self[i], i, object))) {
+                return false;
+            }
+        }
+        return true;
+    }
+}, !properlyBoxesContext(ArrayPrototype.every));
+
+// ES5 15.4.4.17
+// http://es5.github.com/#x15.4.4.17
+// https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/some
+defineProperties(ArrayPrototype, {
+    some: function some(callbackfn/*, thisArg */) {
+        var object = ES.ToObject(this);
+        var self = splitString && isString(this) ? strSplit(this, '') : object;
+        var length = ES.ToUint32(self.length);
+        var T;
+        if (arguments.length > 1) {
+            T = arguments[1];
+        }
+
+        // If no callback function or if callback is not a callable function
+        if (!isCallable(callbackfn)) {
+            throw new TypeError('Array.prototype.some callback must be a function');
+        }
+
+        for (var i = 0; i < length; i++) {
+            if (i in self && (typeof T === 'undefined' ? callbackfn(self[i], i, object) : callbackfn.call(T, self[i], i, object))) {
+                return true;
+            }
+        }
+        return false;
+    }
+}, !properlyBoxesContext(ArrayPrototype.some));
+
+// ES5 15.4.4.21
+// http://es5.github.com/#x15.4.4.21
+// https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Objects/Array/reduce
+var reduceCoercesToObject = false;
+if (ArrayPrototype.reduce) {
+    reduceCoercesToObject = typeof ArrayPrototype.reduce.call('es5', function (_, __, ___, list) { return list; }) === 'object';
+}
+defineProperties(ArrayPrototype, {
+    reduce: function reduce(callbackfn/*, initialValue*/) {
+        var object = ES.ToObject(this);
+        var self = splitString && isString(this) ? strSplit(this, '') : object;
+        var length = ES.ToUint32(self.length);
+
+        // If no callback function or if callback is not a callable function
+        if (!isCallable(callbackfn)) {
+            throw new TypeError('Array.prototype.reduce callback must be a function');
+        }
+
+        // no value to return if no initial value and an empty array
+        if (length === 0 && arguments.length === 1) {
+            throw new TypeError('reduce of empty array with no initial value');
+        }
+
+        var i = 0;
+        var result;
+        if (arguments.length >= 2) {
+            result = arguments[1];
+        } else {
+            do {
+                if (i in self) {
+                    result = self[i++];
+                    break;
+                }
+
+                // if array contains no values, no initial value to return
+                if (++i >= length) {
+                    throw new TypeError('reduce of empty array with no initial value');
+                }
+            } while (true);
+        }
+
+        for (; i < length; i++) {
+            if (i in self) {
+                result = callbackfn(result, self[i], i, object);
+            }
+        }
+
+        return result;
+    }
+}, !reduceCoercesToObject);
+
+// ES5 15.4.4.22
+// http://es5.github.com/#x15.4.4.22
+// https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Objects/Array/reduceRight
+var reduceRightCoercesToObject = false;
+if (ArrayPrototype.reduceRight) {
+    reduceRightCoercesToObject = typeof ArrayPrototype.reduceRight.call('es5', function (_, __, ___, list) { return list; }) === 'object';
+}
+defineProperties(ArrayPrototype, {
+    reduceRight: function reduceRight(callbackfn/*, initial*/) {
+        var object = ES.ToObject(this);
+        var self = splitString && isString(this) ? strSplit(this, '') : object;
+        var length = ES.ToUint32(self.length);
+
+        // If no callback function or if callback is not a callable function
+        if (!isCallable(callbackfn)) {
+            throw new TypeError('Array.prototype.reduceRight callback must be a function');
+        }
+
+        // no value to return if no initial value, empty array
+        if (length === 0 && arguments.length === 1) {
+            throw new TypeError('reduceRight of empty array with no initial value');
+        }
+
+        var result;
+        var i = length - 1;
+        if (arguments.length >= 2) {
+            result = arguments[1];
+        } else {
+            do {
+                if (i in self) {
+                    result = self[i--];
+                    break;
+                }
+
+                // if array contains no values, no initial value to return
+                if (--i < 0) {
+                    throw new TypeError('reduceRight of empty array with no initial value');
+                }
+            } while (true);
+        }
+
+        if (i < 0) {
+            return result;
+        }
+
+        do {
+            if (i in self) {
+                result = callbackfn(result, self[i], i, object);
+            }
+        } while (i--);
+
+        return result;
+    }
+}, !reduceRightCoercesToObject);
+
+// ES5 15.4.4.14
+// http://es5.github.com/#x15.4.4.14
+// https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/indexOf
+var hasFirefox2IndexOfBug = ArrayPrototype.indexOf && [0, 1].indexOf(1, 2) !== -1;
+defineProperties(ArrayPrototype, {
+    indexOf: function indexOf(searchElement/*, fromIndex */) {
+        var self = splitString && isString(this) ? strSplit(this, '') : ES.ToObject(this);
+        var length = ES.ToUint32(self.length);
+
+        if (length === 0) {
+            return -1;
+        }
+
+        var i = 0;
+        if (arguments.length > 1) {
+            i = ES.ToInteger(arguments[1]);
+        }
+
+        // handle negative indices
+        i = i >= 0 ? i : max(0, length + i);
+        for (; i < length; i++) {
+            if (i in self && self[i] === searchElement) {
+                return i;
+            }
+        }
+        return -1;
+    }
+}, hasFirefox2IndexOfBug);
+
+// ES5 15.4.4.15
+// http://es5.github.com/#x15.4.4.15
+// https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/lastIndexOf
+var hasFirefox2LastIndexOfBug = ArrayPrototype.lastIndexOf && [0, 1].lastIndexOf(0, -3) !== -1;
+defineProperties(ArrayPrototype, {
+    lastIndexOf: function lastIndexOf(searchElement/*, fromIndex */) {
+        var self = splitString && isString(this) ? strSplit(this, '') : ES.ToObject(this);
+        var length = ES.ToUint32(self.length);
+
+        if (length === 0) {
+            return -1;
+        }
+        var i = length - 1;
+        if (arguments.length > 1) {
+            i = min(i, ES.ToInteger(arguments[1]));
+        }
+        // handle negative indices
+        i = i >= 0 ? i : length - Math.abs(i);
+        for (; i >= 0; i--) {
+            if (i in self && searchElement === self[i]) {
+                return i;
+            }
+        }
+        return -1;
+    }
+}, hasFirefox2LastIndexOfBug);
+
+// ES5 15.4.4.12
+// http://es5.github.com/#x15.4.4.12
+var spliceNoopReturnsEmptyArray = (function () {
+    var a = [1, 2];
+    var result = a.splice();
+    return a.length === 2 && isArray(result) && result.length === 0;
+}());
+defineProperties(ArrayPrototype, {
+    // Safari 5.0 bug where .splice() returns undefined
+    splice: function splice(start, deleteCount) {
+        if (arguments.length === 0) {
+            return [];
+        } else {
+            return array_splice.apply(this, arguments);
+        }
+    }
+}, !spliceNoopReturnsEmptyArray);
+
+var spliceWorksWithEmptyObject = (function () {
+    var obj = {};
+    ArrayPrototype.splice.call(obj, 0, 0, 1);
+    return obj.length === 1;
+}());
+defineProperties(ArrayPrototype, {
+    splice: function splice(start, deleteCount) {
+        if (arguments.length === 0) { return []; }
+        var args = arguments;
+        this.length = max(ES.ToInteger(this.length), 0);
+        if (arguments.length > 0 && typeof deleteCount !== 'number') {
+            args = array_slice.call(arguments);
+            if (args.length < 2) {
+                push(args, this.length - start);
+            } else {
+                args[1] = ES.ToInteger(deleteCount);
+            }
+        }
+        return array_splice.apply(this, args);
+    }
+}, !spliceWorksWithEmptyObject);
+var spliceWorksWithLargeSparseArrays = (function () {
+    // Per https://github.com/es-shims/es5-shim/issues/295
+    // Safari 7/8 breaks with sparse arrays of size 1e5 or greater
+    var arr = new $Array(1e5);
+    // note: the index MUST be 8 or larger or the test will false pass
+    arr[8] = 'x';
+    arr.splice(1, 1);
+    // note: this test must be defined *after* the indexOf shim
+    // per https://github.com/es-shims/es5-shim/issues/313
+    return arr.indexOf('x') === 7;
+}());
+var spliceWorksWithSmallSparseArrays = (function () {
+    // Per https://github.com/es-shims/es5-shim/issues/295
+    // Opera 12.15 breaks on this, no idea why.
+    var n = 256;
+    var arr = [];
+    arr[n] = 'a';
+    arr.splice(n + 1, 0, 'b');
+    return arr[n] === 'a';
+}());
+defineProperties(ArrayPrototype, {
+    splice: function splice(start, deleteCount) {
+        var O = ES.ToObject(this);
+        var A = [];
+        var len = ES.ToUint32(O.length);
+        var relativeStart = ES.ToInteger(start);
+        var actualStart = relativeStart < 0 ? max((len + relativeStart), 0) : min(relativeStart, len);
+        var actualDeleteCount = min(max(ES.ToInteger(deleteCount), 0), len - actualStart);
+
+        var k = 0;
+        var from;
+        while (k < actualDeleteCount) {
+            from = $String(actualStart + k);
+            if (owns(O, from)) {
+                A[k] = O[from];
+            }
+            k += 1;
+        }
+
+        var items = array_slice.call(arguments, 2);
+        var itemCount = items.length;
+        var to;
+        if (itemCount < actualDeleteCount) {
+            k = actualStart;
+            while (k < (len - actualDeleteCount)) {
+                from = $String(k + actualDeleteCount);
+                to = $String(k + itemCount);
+                if (owns(O, from)) {
+                    O[to] = O[from];
+                } else {
+                    delete O[to];
+                }
+                k += 1;
+            }
+            k = len;
+            while (k > (len - actualDeleteCount + itemCount)) {
+                delete O[k - 1];
+                k -= 1;
+            }
+        } else if (itemCount > actualDeleteCount) {
+            k = len - actualDeleteCount;
+            while (k > actualStart) {
+                from = $String(k + actualDeleteCount - 1);
+                to = $String(k + itemCount - 1);
+                if (owns(O, from)) {
+                    O[to] = O[from];
+                } else {
+                    delete O[to];
+                }
+                k -= 1;
+            }
+        }
+        k = actualStart;
+        for (var i = 0; i < items.length; ++i) {
+            O[k] = items[i];
+            k += 1;
+        }
+        O.length = len - actualDeleteCount + itemCount;
+
+        return A;
+    }
+}, !spliceWorksWithLargeSparseArrays || !spliceWorksWithSmallSparseArrays);
+
+var hasJoinUndefinedBug = [1, 2].join(undefined) !== '1,2';
+var originalJoin = ArrayPrototype.join;
+defineProperties(ArrayPrototype, {
+    join: function join(separator) {
+        return originalJoin.call(this, typeof separator === 'undefined' ? ',' : separator);
+    }
+}, hasJoinUndefinedBug);
+
+var pushShim = function push(item) {
+    var O = ES.ToObject(this);
+    var n = ES.ToUint32(O.length);
+    var i = 0;
+    while (i < arguments.length) {
+        O[n + i] = arguments[i];
+        i += 1;
+    }
+    O.length = n + i;
+    return n + i;
+};
+
+var pushIsNotGeneric = (function () {
+    var obj = {};
+    var result = Array.prototype.push.call(obj, undefined);
+    return result !== 1 || obj.length !== 1 || typeof obj[0] !== 'undefined' || !owns(obj, 0);
+}());
+defineProperties(ArrayPrototype, {
+    push: function push(item) {
+        if (isArray(this)) {
+            return array_push.apply(this, arguments);
+        }
+        return pushShim.apply(this, arguments);
+    }
+}, pushIsNotGeneric);
+
+// This fixes a very weird bug in Opera 10.6 when pushing `undefined
+var pushUndefinedIsWeird = (function () {
+    var arr = [];
+    var result = arr.push(undefined);
+    return result !== 1 || arr.length !== 1 || typeof arr[0] !== 'undefined' || !owns(arr, 0);
+}());
+defineProperties(ArrayPrototype, { push: pushShim }, pushUndefinedIsWeird);
+
+//
+// Object
+// ======
+//
+
+// ES5 15.2.3.14
+// http://es5.github.com/#x15.2.3.14
+
+// http://whattheheadsaid.com/2010/10/a-safer-object-keys-compatibility-implementation
+var hasDontEnumBug = !({ 'toString': null }).propertyIsEnumerable('toString');
+var hasProtoEnumBug = function () {}.propertyIsEnumerable('prototype');
+var hasStringEnumBug = !owns('x', '0');
+var equalsConstructorPrototype = function (o) {
+    var ctor = o.constructor;
+    return ctor && ctor.prototype === o;
+};
+var blacklistedKeys = {
+    $window: true,
+    $console: true,
+    $parent: true,
+    $self: true,
+    $frame: true,
+    $frames: true,
+    $frameElement: true,
+    $webkitIndexedDB: true,
+    $webkitStorageInfo: true
+};
+var hasAutomationEqualityBug = (function () {
+    /* globals window */
+    if (typeof window === 'undefined') { return false; }
+    for (var k in window) {
+        try {
+            if (!blacklistedKeys['$' + k] && owns(window, k) && window[k] !== null && typeof window[k] === 'object') {
+                equalsConstructorPrototype(window[k]);
+            }
+        } catch (e) {
+            return true;
+        }
+    }
+    return false;
+}());
+var equalsConstructorPrototypeIfNotBuggy = function (object) {
+    if (typeof window === 'undefined' || !hasAutomationEqualityBug) { return equalsConstructorPrototype(object); }
+    try {
+        return equalsConstructorPrototype(object);
+    } catch (e) {
+        return false;
+    }
+};
+var dontEnums = [
+    'toString',
+    'toLocaleString',
+    'valueOf',
+    'hasOwnProperty',
+    'isPrototypeOf',
+    'propertyIsEnumerable',
+    'constructor'
+];
+var dontEnumsLength = dontEnums.length;
+
+// taken directly from https://github.com/ljharb/is-arguments/blob/master/index.js
+// can be replaced with require('is-arguments') if we ever use a build process instead
+var isStandardArguments = function isArguments(value) {
+    return toStr(value) === '[object Arguments]';
+};
+var isLegacyArguments = function isArguments(value) {
+    return value !== null &&
+        typeof value === 'object' &&
+        typeof value.length === 'number' &&
+        value.length >= 0 &&
+        !isArray(value) &&
+        isCallable(value.callee);
+};
+var isArguments = isStandardArguments(arguments) ? isStandardArguments : isLegacyArguments;
+
+defineProperties($Object, {
+    keys: function keys(object) {
+        var isFn = isCallable(object);
+        var isArgs = isArguments(object);
+        var isObject = object !== null && typeof object === 'object';
+        var isStr = isObject && isString(object);
+
+        if (!isObject && !isFn && !isArgs) {
+            throw new TypeError('Object.keys called on a non-object');
+        }
+
+        var theKeys = [];
+        var skipProto = hasProtoEnumBug && isFn;
+        if ((isStr && hasStringEnumBug) || isArgs) {
+            for (var i = 0; i < object.length; ++i) {
+                push(theKeys, $String(i));
+            }
+        }
+
+        if (!isArgs) {
+            for (var name in object) {
+                if (!(skipProto && name === 'prototype') && owns(object, name)) {
+                    push(theKeys, $String(name));
+                }
+            }
+        }
+
+        if (hasDontEnumBug) {
+            var skipConstructor = equalsConstructorPrototypeIfNotBuggy(object);
+            for (var j = 0; j < dontEnumsLength; j++) {
+                var dontEnum = dontEnums[j];
+                if (!(skipConstructor && dontEnum === 'constructor') && owns(object, dontEnum)) {
+                    push(theKeys, dontEnum);
+                }
+            }
+        }
+        return theKeys;
+    }
+});
+
+var keysWorksWithArguments = $Object.keys && (function () {
+    // Safari 5.0 bug
+    return $Object.keys(arguments).length === 2;
+}(1, 2));
+var keysHasArgumentsLengthBug = $Object.keys && (function () {
+    var argKeys = $Object.keys(arguments);
+    return arguments.length !== 1 || argKeys.length !== 1 || argKeys[0] !== 1;
+}(1));
+var originalKeys = $Object.keys;
+defineProperties($Object, {
+    keys: function keys(object) {
+        if (isArguments(object)) {
+            return originalKeys(array_slice.call(object));
+        } else {
+            return originalKeys(object);
+        }
+    }
+}, !keysWorksWithArguments || keysHasArgumentsLengthBug);
+
+//
+// Date
+// ====
+//
+
+// ES5 15.9.5.43
+// http://es5.github.com/#x15.9.5.43
+// This function returns a String value represent the instance in time
+// represented by this Date object. The format of the String is the Date Time
+// string format defined in 15.9.1.15. All fields are present in the String.
+// The time zone is always UTC, denoted by the suffix Z. If the time value of
+// this object is not a finite Number a RangeError exception is thrown.
+var negativeDate = -62198755200000;
+var negativeYearString = '-000001';
+var hasNegativeDateBug = Date.prototype.toISOString && new Date(negativeDate).toISOString().indexOf(negativeYearString) === -1;
+var hasSafari51DateBug = Date.prototype.toISOString && new Date(-1).toISOString() !== '1969-12-31T23:59:59.999Z';
+
+defineProperties(Date.prototype, {
+    toISOString: function toISOString() {
+        var result, length, value, year, month;
+        if (!isFinite(this)) {
+            throw new RangeError('Date.prototype.toISOString called on non-finite value.');
+        }
+
+        year = this.getUTCFullYear();
+
+        month = this.getUTCMonth();
+        // see https://github.com/es-shims/es5-shim/issues/111
+        year += Math.floor(month / 12);
+        month = (month % 12 + 12) % 12;
+
+        // the date time string format is specified in 15.9.1.15.
+        result = [month + 1, this.getUTCDate(), this.getUTCHours(), this.getUTCMinutes(), this.getUTCSeconds()];
+        year = (
+            (year < 0 ? '-' : (year > 9999 ? '+' : '')) +
+            strSlice('00000' + Math.abs(year), (0 <= year && year <= 9999) ? -4 : -6)
+        );
+
+        length = result.length;
+        while (length--) {
+            value = result[length];
+            // pad months, days, hours, minutes, and seconds to have two
+            // digits.
+            if (value < 10) {
+                result[length] = '0' + value;
+            }
+        }
+        // pad milliseconds to have three digits.
+        return (
+            year + '-' + array_slice.call(result, 0, 2).join('-') +
+            'T' + array_slice.call(result, 2).join(':') + '.' +
+            strSlice('000' + this.getUTCMilliseconds(), -3) + 'Z'
+        );
+    }
+}, hasNegativeDateBug || hasSafari51DateBug);
+
+// ES5 15.9.5.44
+// http://es5.github.com/#x15.9.5.44
+// This function provides a String representation of a Date object for use by
+// JSON.stringify (15.12.3).
+var dateToJSONIsSupported = (function () {
+    try {
+        return Date.prototype.toJSON &&
+            new Date(NaN).toJSON() === null &&
+            new Date(negativeDate).toJSON().indexOf(negativeYearString) !== -1 &&
+            Date.prototype.toJSON.call({ // generic
+                toISOString: function () { return true; }
+            });
+    } catch (e) {
+        return false;
+    }
+}());
+if (!dateToJSONIsSupported) {
+    Date.prototype.toJSON = function toJSON(key) {
+        // When the toJSON method is called with argument key, the following
+        // steps are taken:
+
+        // 1.  Let O be the result of calling ToObject, giving it the this
+        // value as its argument.
+        // 2. Let tv be ES.ToPrimitive(O, hint Number).
+        var O = $Object(this);
+        var tv = ES.ToPrimitive(O);
+        // 3. If tv is a Number and is not finite, return null.
+        if (typeof tv === 'number' && !isFinite(tv)) {
+            return null;
+        }
+        // 4. Let toISO be the result of calling the [[Get]] internal method of
+        // O with argument "toISOString".
+        var toISO = O.toISOString;
+        // 5. If IsCallable(toISO) is false, throw a TypeError exception.
+        if (!isCallable(toISO)) {
+            throw new TypeError('toISOString property is not callable');
+        }
+        // 6. Return the result of calling the [[Call]] internal method of
+        //  toISO with O as the this value and an empty argument list.
+        return toISO.call(O);
+
+        // NOTE 1 The argument is ignored.
+
+        // NOTE 2 The toJSON function is intentionally generic; it does not
+        // require that its this value be a Date object. Therefore, it can be
+        // transferred to other kinds of objects for use as a method. However,
+        // it does require that any such object have a toISOString method. An
+        // object is free to use the argument key to filter its
+        // stringification.
+    };
+}
+
+// ES5 15.9.4.2
+// http://es5.github.com/#x15.9.4.2
+// based on work shared by Daniel Friesen (dantman)
+// http://gist.github.com/303249
+var supportsExtendedYears = Date.parse('+033658-09-27T01:46:40.000Z') === 1e15;
+var acceptsInvalidDates = !isNaN(Date.parse('2012-04-04T24:00:00.500Z')) || !isNaN(Date.parse('2012-11-31T23:59:59.000Z')) || !isNaN(Date.parse('2012-12-31T23:59:60.000Z'));
+var doesNotParseY2KNewYear = isNaN(Date.parse('2000-01-01T00:00:00.000Z'));
+if (doesNotParseY2KNewYear || acceptsInvalidDates || !supportsExtendedYears) {
+    // XXX global assignment won't work in embeddings that use
+    // an alternate object for the context.
+    /* global Date: true */
+    /* eslint-disable no-undef */
+    var maxSafeUnsigned32Bit = Math.pow(2, 31) - 1;
+    var secondsWithinMaxSafeUnsigned32Bit = Math.floor(maxSafeUnsigned32Bit / 1e3);
+    var hasSafariSignedIntBug = isActualNaN(new Date(1970, 0, 1, 0, 0, 0, maxSafeUnsigned32Bit + 1).getTime());
+    Date = (function (NativeDate) {
+    /* eslint-enable no-undef */
+        // Date.length === 7
+        var DateShim = function Date(Y, M, D, h, m, s, ms) {
+            var length = arguments.length;
+            var date;
+            if (this instanceof NativeDate) {
+                var seconds = s;
+                var millis = ms;
+                if (hasSafariSignedIntBug && length >= 7 && ms > maxSafeUnsigned32Bit) {
+                    // work around a Safari 8/9 bug where it treats the seconds as signed
+                    var msToShift = Math.floor(ms / maxSafeUnsigned32Bit) * maxSafeUnsigned32Bit;
+                    var sToShift = Math.floor(msToShift / 1e3);
+                    seconds += sToShift;
+                    millis -= sToShift * 1e3;
+                }
+                date = length === 1 && $String(Y) === Y ? // isString(Y)
+                    // We explicitly pass it through parse:
+                    new NativeDate(DateShim.parse(Y)) :
+                    // We have to manually make calls depending on argument
+                    // length here
+                    length >= 7 ? new NativeDate(Y, M, D, h, m, seconds, millis) :
+                    length >= 6 ? new NativeDate(Y, M, D, h, m, seconds) :
+                    length >= 5 ? new NativeDate(Y, M, D, h, m) :
+                    length >= 4 ? new NativeDate(Y, M, D, h) :
+                    length >= 3 ? new NativeDate(Y, M, D) :
+                    length >= 2 ? new NativeDate(Y, M) :
+                    length >= 1 ? new NativeDate(Y) :
+                                  new NativeDate();
+            } else {
+                date = NativeDate.apply(this, arguments);
+            }
+            if (!isPrimitive(date)) {
+              // Prevent mixups with unfixed Date object
+              defineProperties(date, { constructor: DateShim }, true);
+            }
+            return date;
+        };
+
+        // 15.9.1.15 Date Time String Format.
+        var isoDateExpression = new RegExp('^' +
+            '(\\d{4}|[+-]\\d{6})' + // four-digit year capture or sign +
+                                      // 6-digit extended year
+            '(?:-(\\d{2})' + // optional month capture
+            '(?:-(\\d{2})' + // optional day capture
+            '(?:' + // capture hours:minutes:seconds.milliseconds
+                'T(\\d{2})' + // hours capture
+                ':(\\d{2})' + // minutes capture
+                '(?:' + // optional :seconds.milliseconds
+                    ':(\\d{2})' + // seconds capture
+                    '(?:(\\.\\d{1,}))?' + // milliseconds capture
+                ')?' +
+            '(' + // capture UTC offset component
+                'Z|' + // UTC capture
+                '(?:' + // offset specifier +/-hours:minutes
+                    '([-+])' + // sign capture
+                    '(\\d{2})' + // hours offset capture
+                    ':(\\d{2})' + // minutes offset capture
+                ')' +
+            ')?)?)?)?' +
+        '$');
+
+        var months = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365];
+
+        var dayFromMonth = function dayFromMonth(year, month) {
+            var t = month > 1 ? 1 : 0;
+            return (
+                months[month] +
+                Math.floor((year - 1969 + t) / 4) -
+                Math.floor((year - 1901 + t) / 100) +
+                Math.floor((year - 1601 + t) / 400) +
+                365 * (year - 1970)
+            );
+        };
+
+        var toUTC = function toUTC(t) {
+            var s = 0;
+            var ms = t;
+            if (hasSafariSignedIntBug && ms > maxSafeUnsigned32Bit) {
+                // work around a Safari 8/9 bug where it treats the seconds as signed
+                var msToShift = Math.floor(ms / maxSafeUnsigned32Bit) * maxSafeUnsigned32Bit;
+                var sToShift = Math.floor(msToShift / 1e3);
+                s += sToShift;
+                ms -= sToShift * 1e3;
+            }
+            return $Number(new NativeDate(1970, 0, 1, 0, 0, s, ms));
+        };
+
+        // Copy any custom methods a 3rd party library may have added
+        for (var key in NativeDate) {
+            if (owns(NativeDate, key)) {
+                DateShim[key] = NativeDate[key];
+            }
+        }
+
+        // Copy "native" methods explicitly; they may be non-enumerable
+        defineProperties(DateShim, {
+            now: NativeDate.now,
+            UTC: NativeDate.UTC
+        }, true);
+        DateShim.prototype = NativeDate.prototype;
+        defineProperties(DateShim.prototype, {
+            constructor: DateShim
+        }, true);
+
+        // Upgrade Date.parse to handle simplified ISO 8601 strings
+        var parseShim = function parse(string) {
+            var match = isoDateExpression.exec(string);
+            if (match) {
+                // parse months, days, hours, minutes, seconds, and milliseconds
+                // provide default values if necessary
+                // parse the UTC offset component
+                var year = $Number(match[1]),
+                    month = $Number(match[2] || 1) - 1,
+                    day = $Number(match[3] || 1) - 1,
+                    hour = $Number(match[4] || 0),
+                    minute = $Number(match[5] || 0),
+                    second = $Number(match[6] || 0),
+                    millisecond = Math.floor($Number(match[7] || 0) * 1000),
+                    // When time zone is missed, local offset should be used
+                    // (ES 5.1 bug)
+                    // see https://bugs.ecmascript.org/show_bug.cgi?id=112
+                    isLocalTime = Boolean(match[4] && !match[8]),
+                    signOffset = match[9] === '-' ? 1 : -1,
+                    hourOffset = $Number(match[10] || 0),
+                    minuteOffset = $Number(match[11] || 0),
+                    result;
+                var hasMinutesOrSecondsOrMilliseconds = minute > 0 || second > 0 || millisecond > 0;
+                if (
+                    hour < (hasMinutesOrSecondsOrMilliseconds ? 24 : 25) &&
+                    minute < 60 && second < 60 && millisecond < 1000 &&
+                    month > -1 && month < 12 && hourOffset < 24 &&
+                    minuteOffset < 60 && // detect invalid offsets
+                    day > -1 &&
+                    day < (dayFromMonth(year, month + 1) - dayFromMonth(year, month))
+                ) {
+                    result = (
+                        (dayFromMonth(year, month) + day) * 24 +
+                        hour +
+                        hourOffset * signOffset
+                    ) * 60;
+                    result = (
+                        (result + minute + minuteOffset * signOffset) * 60 +
+                        second
+                    ) * 1000 + millisecond;
+                    if (isLocalTime) {
+                        result = toUTC(result);
+                    }
+                    if (-8.64e15 <= result && result <= 8.64e15) {
+                        return result;
+                    }
+                }
+                return NaN;
+            }
+            return NativeDate.parse.apply(this, arguments);
+        };
+        defineProperties(DateShim, { parse: parseShim });
+
+        return DateShim;
+    }(Date));
+    /* global Date: false */
+}
+
+// ES5 15.9.4.4
+// http://es5.github.com/#x15.9.4.4
+if (!Date.now) {
+    Date.now = function now() {
+        return new Date().getTime();
+    };
+}
+
+//
+// Number
+// ======
+//
+
+// ES5.1 15.7.4.5
+// http://es5.github.com/#x15.7.4.5
+var hasToFixedBugs = NumberPrototype.toFixed && (
+  (0.00008).toFixed(3) !== '0.000' ||
+  (0.9).toFixed(0) !== '1' ||
+  (1.255).toFixed(2) !== '1.25' ||
+  (1000000000000000128).toFixed(0) !== '1000000000000000128'
+);
+
+var toFixedHelpers = {
+  base: 1e7,
+  size: 6,
+  data: [0, 0, 0, 0, 0, 0],
+  multiply: function multiply(n, c) {
+      var i = -1;
+      var c2 = c;
+      while (++i < toFixedHelpers.size) {
+          c2 += n * toFixedHelpers.data[i];
+          toFixedHelpers.data[i] = c2 % toFixedHelpers.base;
+          c2 = Math.floor(c2 / toFixedHelpers.base);
+      }
+  },
+  divide: function divide(n) {
+      var i = toFixedHelpers.size, c = 0;
+      while (--i >= 0) {
+          c += toFixedHelpers.data[i];
+          toFixedHelpers.data[i] = Math.floor(c / n);
+          c = (c % n) * toFixedHelpers.base;
+      }
+  },
+  numToString: function numToString() {
+      var i = toFixedHelpers.size;
+      var s = '';
+      while (--i >= 0) {
+          if (s !== '' || i === 0 || toFixedHelpers.data[i] !== 0) {
+              var t = $String(toFixedHelpers.data[i]);
+              if (s === '') {
+                  s = t;
+              } else {
+                  s += strSlice('0000000', 0, 7 - t.length) + t;
+              }
+          }
+      }
+      return s;
+  },
+  pow: function pow(x, n, acc) {
+      return (n === 0 ? acc : (n % 2 === 1 ? pow(x, n - 1, acc * x) : pow(x * x, n / 2, acc)));
+  },
+  log: function log(x) {
+      var n = 0;
+      var x2 = x;
+      while (x2 >= 4096) {
+          n += 12;
+          x2 /= 4096;
+      }
+      while (x2 >= 2) {
+          n += 1;
+          x2 /= 2;
+      }
+      return n;
+  }
+};
+
+var toFixedShim = function toFixed(fractionDigits) {
+    var f, x, s, m, e, z, j, k;
+
+    // Test for NaN and round fractionDigits down
+    f = $Number(fractionDigits);
+    f = isActualNaN(f) ? 0 : Math.floor(f);
+
+    if (f < 0 || f > 20) {
+        throw new RangeError('Number.toFixed called with invalid number of decimals');
+    }
+
+    x = $Number(this);
+
+    if (isActualNaN(x)) {
+        return 'NaN';
+    }
+
+    // If it is too big or small, return the string value of the number
+    if (x <= -1e21 || x >= 1e21) {
+        return $String(x);
+    }
+
+    s = '';
+
+    if (x < 0) {
+        s = '-';
+        x = -x;
+    }
+
+    m = '0';
+
+    if (x > 1e-21) {
+        // 1e-21 < x < 1e21
+        // -70 < log2(x) < 70
+        e = toFixedHelpers.log(x * toFixedHelpers.pow(2, 69, 1)) - 69;
+        z = (e < 0 ? x * toFixedHelpers.pow(2, -e, 1) : x / toFixedHelpers.pow(2, e, 1));
+        z *= 0x10000000000000; // Math.pow(2, 52);
+        e = 52 - e;
+
+        // -18 < e < 122
+        // x = z / 2 ^ e
+        if (e > 0) {
+            toFixedHelpers.multiply(0, z);
+            j = f;
+
+            while (j >= 7) {
+                toFixedHelpers.multiply(1e7, 0);
+                j -= 7;
+            }
+
+            toFixedHelpers.multiply(toFixedHelpers.pow(10, j, 1), 0);
+            j = e - 1;
+
+            while (j >= 23) {
+                toFixedHelpers.divide(1 << 23);
+                j -= 23;
+            }
+
+            toFixedHelpers.divide(1 << j);
+            toFixedHelpers.multiply(1, 1);
+            toFixedHelpers.divide(2);
+            m = toFixedHelpers.numToString();
+        } else {
+            toFixedHelpers.multiply(0, z);
+            toFixedHelpers.multiply(1 << (-e), 0);
+            m = toFixedHelpers.numToString() + strSlice('0.00000000000000000000', 2, 2 + f);
+        }
+    }
+
+    if (f > 0) {
+        k = m.length;
+
+        if (k <= f) {
+            m = s + strSlice('0.0000000000000000000', 0, f - k + 2) + m;
+        } else {
+            m = s + strSlice(m, 0, k - f) + '.' + strSlice(m, k - f);
+        }
+    } else {
+        m = s + m;
+    }
+
+    return m;
+};
+defineProperties(NumberPrototype, { toFixed: toFixedShim }, hasToFixedBugs);
+
+var hasToPrecisionUndefinedBug = (function () {
+    try {
+        return 1.0.toPrecision(undefined) === '1';
+    } catch (e) {
+        return true;
+    }
+}());
+var originalToPrecision = NumberPrototype.toPrecision;
+defineProperties(NumberPrototype, {
+    toPrecision: function toPrecision(precision) {
+        return typeof precision === 'undefined' ? originalToPrecision.call(this) : originalToPrecision.call(this, precision);
+    }
+}, hasToPrecisionUndefinedBug);
+
+//
+// String
+// ======
+//
+
+// ES5 15.5.4.14
+// http://es5.github.com/#x15.5.4.14
+
+// [bugfix, IE lt 9, firefox 4, Konqueror, Opera, obscure browsers]
+// Many browsers do not split properly with regular expressions or they
+// do not perform the split correctly under obscure conditions.
+// See http://blog.stevenlevithan.com/archives/cross-browser-split
+// I've tested in many browsers and this seems to cover the deviant ones:
+//    'ab'.split(/(?:ab)*/) should be ["", ""], not [""]
+//    '.'.split(/(.?)(.?)/) should be ["", ".", "", ""], not ["", ""]
+//    'tesst'.split(/(s)*/) should be ["t", undefined, "e", "s", "t"], not
+//       [undefined, "t", undefined, "e", ...]
+//    ''.split(/.?/) should be [], not [""]
+//    '.'.split(/()()/) should be ["."], not ["", "", "."]
+
+if (
+    'ab'.split(/(?:ab)*/).length !== 2 ||
+    '.'.split(/(.?)(.?)/).length !== 4 ||
+    'tesst'.split(/(s)*/)[1] === 't' ||
+    'test'.split(/(?:)/, -1).length !== 4 ||
+    ''.split(/.?/).length ||
+    '.'.split(/()()/).length > 1
+) {
+    (function () {
+        var compliantExecNpcg = typeof (/()??/).exec('')[1] === 'undefined'; // NPCG: nonparticipating capturing group
+        var maxSafe32BitInt = Math.pow(2, 32) - 1;
+
+        StringPrototype.split = function (separator, limit) {
+            var string = this;
+            if (typeof separator === 'undefined' && limit === 0) {
+                return [];
+            }
+
+            // If `separator` is not a regex, use native split
+            if (!isRegex(separator)) {
+                return strSplit(this, separator, limit);
+            }
+
+            var output = [];
+            var flags = (separator.ignoreCase ? 'i' : '') +
+                        (separator.multiline ? 'm' : '') +
+                        (separator.unicode ? 'u' : '') + // in ES6
+                        (separator.sticky ? 'y' : ''), // Firefox 3+ and ES6
+                lastLastIndex = 0,
+                // Make `global` and avoid `lastIndex` issues by working with a copy
+                separator2, match, lastIndex, lastLength;
+            var separatorCopy = new RegExp(separator.source, flags + 'g');
+            string += ''; // Type-convert
+            if (!compliantExecNpcg) {
+                // Doesn't need flags gy, but they don't hurt
+                separator2 = new RegExp('^' + separatorCopy.source + '$(?!\\s)', flags);
+            }
+            /* Values for `limit`, per the spec:
+             * If undefined: 4294967295 // maxSafe32BitInt
+             * If 0, Infinity, or NaN: 0
+             * If positive number: limit = Math.floor(limit); if (limit > 4294967295) limit -= 4294967296;
+             * If negative number: 4294967296 - Math.floor(Math.abs(limit))
+             * If other: Type-convert, then use the above rules
+             */
+            var splitLimit = typeof limit === 'undefined' ? maxSafe32BitInt : ES.ToUint32(limit);
+            match = separatorCopy.exec(string);
+            while (match) {
+                // `separatorCopy.lastIndex` is not reliable cross-browser
+                lastIndex = match.index + match[0].length;
+                if (lastIndex > lastLastIndex) {
+                    push(output, strSlice(string, lastLastIndex, match.index));
+                    // Fix browsers whose `exec` methods don't consistently return `undefined` for
+                    // nonparticipating capturing groups
+                    if (!compliantExecNpcg && match.length > 1) {
+                        /* eslint-disable no-loop-func */
+                        match[0].replace(separator2, function () {
+                            for (var i = 1; i < arguments.length - 2; i++) {
+                                if (typeof arguments[i] === 'undefined') {
+                                    match[i] = void 0;
+                                }
+                            }
+                        });
+                        /* eslint-enable no-loop-func */
+                    }
+                    if (match.length > 1 && match.index < string.length) {
+                        array_push.apply(output, array_slice.call(match, 1));
+                    }
+                    lastLength = match[0].length;
+                    lastLastIndex = lastIndex;
+                    if (output.length >= splitLimit) {
+                        break;
+                    }
+                }
+                if (separatorCopy.lastIndex === match.index) {
+                    separatorCopy.lastIndex++; // Avoid an infinite loop
+                }
+                match = separatorCopy.exec(string);
+            }
+            if (lastLastIndex === string.length) {
+                if (lastLength || !separatorCopy.test('')) {
+                    push(output, '');
+                }
+            } else {
+                push(output, strSlice(string, lastLastIndex));
+            }
+            return output.length > splitLimit ? strSlice(output, 0, splitLimit) : output;
+        };
+    }());
+
+// [bugfix, chrome]
+// If separator is undefined, then the result array contains just one String,
+// which is the this value (converted to a String). If limit is not undefined,
+// then the output array is truncated so that it contains no more than limit
+// elements.
+// "0".split(undefined, 0) -> []
+} else if ('0'.split(void 0, 0).length) {
+    StringPrototype.split = function split(separator, limit) {
+        if (typeof separator === 'undefined' && limit === 0) { return []; }
+        return strSplit(this, separator, limit);
+    };
+}
+
+var str_replace = StringPrototype.replace;
+var replaceReportsGroupsCorrectly = (function () {
+    var groups = [];
+    'x'.replace(/x(.)?/g, function (match, group) {
+        push(groups, group);
+    });
+    return groups.length === 1 && typeof groups[0] === 'undefined';
+}());
+
+if (!replaceReportsGroupsCorrectly) {
+    StringPrototype.replace = function replace(searchValue, replaceValue) {
+        var isFn = isCallable(replaceValue);
+        var hasCapturingGroups = isRegex(searchValue) && (/\)[*?]/).test(searchValue.source);
+        if (!isFn || !hasCapturingGroups) {
+            return str_replace.call(this, searchValue, replaceValue);
+        } else {
+            var wrappedReplaceValue = function (match) {
+                var length = arguments.length;
+                var originalLastIndex = searchValue.lastIndex;
+                searchValue.lastIndex = 0;
+                var args = searchValue.exec(match) || [];
+                searchValue.lastIndex = originalLastIndex;
+                push(args, arguments[length - 2], arguments[length - 1]);
+                return replaceValue.apply(this, args);
+            };
+            return str_replace.call(this, searchValue, wrappedReplaceValue);
+        }
+    };
+}
+
+// ECMA-262, 3rd B.2.3
+// Not an ECMAScript standard, although ECMAScript 3rd Edition has a
+// non-normative section suggesting uniform semantics and it should be
+// normalized across all browsers
+// [bugfix, IE lt 9] IE < 9 substr() with negative value not working in IE
+var string_substr = StringPrototype.substr;
+var hasNegativeSubstrBug = ''.substr && '0b'.substr(-1) !== 'b';
+defineProperties(StringPrototype, {
+    substr: function substr(start, length) {
+        var normalizedStart = start;
+        if (start < 0) {
+            normalizedStart = max(this.length + start, 0);
+        }
+        return string_substr.call(this, normalizedStart, length);
+    }
+}, hasNegativeSubstrBug);
+
+// ES5 15.5.4.20
+// whitespace from: http://es5.github.io/#x15.5.4.20
+var ws = '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u2003' +
+    '\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028' +
+    '\u2029\uFEFF';
+var zeroWidth = '\u200b';
+var wsRegexChars = '[' + ws + ']';
+var trimBeginRegexp = new RegExp('^' + wsRegexChars + wsRegexChars + '*');
+var trimEndRegexp = new RegExp(wsRegexChars + wsRegexChars + '*$');
+var hasTrimWhitespaceBug = StringPrototype.trim && (ws.trim() || !zeroWidth.trim());
+defineProperties(StringPrototype, {
+    // http://blog.stevenlevithan.com/archives/faster-trim-javascript
+    // http://perfectionkills.com/whitespace-deviations/
+    trim: function trim() {
+        if (typeof this === 'undefined' || this === null) {
+            throw new TypeError("can't convert " + this + ' to object');
+        }
+        return $String(this).replace(trimBeginRegexp, '').replace(trimEndRegexp, '');
+    }
+}, hasTrimWhitespaceBug);
+
+var hasLastIndexBug = StringPrototype.lastIndexOf && 'abcあい'.lastIndexOf('あい', 2) !== -1;
+defineProperties(StringPrototype, {
+    lastIndexOf: function lastIndexOf(searchString) {
+        if (typeof this === 'undefined' || this === null) {
+            throw new TypeError("can't convert " + this + ' to object');
+        }
+        var S = $String(this);
+        var searchStr = $String(searchString);
+        var numPos = arguments.length > 1 ? $Number(arguments[1]) : NaN;
+        var pos = isActualNaN(numPos) ? Infinity : ES.ToInteger(numPos);
+        var start = min(max(pos, 0), S.length);
+        var searchLen = searchStr.length;
+        var k = start + searchLen;
+        while (k > 0) {
+            k = max(0, k - searchLen);
+            var index = strIndexOf(strSlice(S, k, start + searchLen), searchStr);
+            if (index !== -1) {
+                return k + index;
+            }
+        }
+        return -1;
+    }
+}, hasLastIndexBug);
+
+var originalLastIndexOf = StringPrototype.lastIndexOf;
+defineProperties(StringPrototype, {
+    lastIndexOf: function lastIndexOf(searchString) {
+        return originalLastIndexOf.apply(this, arguments);
+    }
+}, StringPrototype.lastIndexOf.length !== 1);
+
+// ES-5 15.1.2.2
+/* eslint-disable radix */
+if (parseInt(ws + '08') !== 8 || parseInt(ws + '0x16') !== 22) {
+/* eslint-enable radix */
+    /* global parseInt: true */
+    parseInt = (function (origParseInt) {
+        var hexRegex = /^[\-+]?0[xX]/;
+        return function parseInt(str, radix) {
+            var string = $String(str).trim();
+            var defaultedRadix = $Number(radix) || (hexRegex.test(string) ? 16 : 10);
+            return origParseInt(string, defaultedRadix);
+        };
+    }(parseInt));
+}
+
+if (String(new RangeError('test')) !== 'RangeError: test') {
+    var originalErrorToString = Error.prototype.toString;
+    var errorToStringShim = function toString() {
+        if (typeof this === 'undefined' || this === null) {
+            throw new TypeError("can't convert " + this + ' to object');
+        }
+        var name = this.name;
+        if (typeof name === 'undefined') {
+            name = 'Error';
+        } else if (typeof name !== 'string') {
+            name = $String(name);
+        }
+        var msg = this.message;
+        if (typeof msg === 'undefined') {
+            msg = '';
+        } else if (typeof msg !== 'string') {
+            msg = $String(msg);
+        }
+        if (!name) {
+            return msg;
+        }
+        if (!msg) {
+            return name;
+        }
+        return name + ': ' + msg;
+    };
+    // can't use defineProperties here because of toString enumeration issue in IE <= 8
+    Error.prototype.toString = errorToStringShim;
+}
+
+}));
+
+},{}],26:[function(_dereq_,module,exports){
+var arr = [];
+var each = arr.forEach;
+var slice = arr.slice;
+
+
+module.exports = function(obj) {
+    each.call(slice.call(arguments, 1), function(source) {
+        if (source) {
+            for (var prop in source) {
+                obj[prop] = source[prop];
+            }
+        }
+    });
+    return obj;
+};
+
+},{}],27:[function(_dereq_,module,exports){
+module.exports = isFunction
+
+var toString = Object.prototype.toString
+
+function isFunction (fn) {
+  var string = toString.call(fn)
+  return string === '[object Function]' ||
+    (typeof fn === 'function' && string !== '[object RegExp]') ||
+    (typeof window !== 'undefined' &&
+     // IE8 and below
+     (fn === window.setTimeout ||
+      fn === window.alert ||
+      fn === window.confirm ||
+      fn === window.prompt))
+};
+
+},{}],28:[function(_dereq_,module,exports){
+"use strict";
+
+module.exports = function isObject(x) {
+	return typeof x === "object" && x !== null;
+};
+
+},{}],29:[function(_dereq_,module,exports){
+/*!
   * $script.js JS loader & dependency manager
   * https://github.com/ded/script.js
   * (c) Dustin Diaz 2014 | License MIT
   */
-!function(t,r){void 0!==n&&n.exports?n.exports=r():"function"==typeof e&&e.amd?e(r):this.$script=r()}(0,function(){function e(e,t){for(var n=0,r=e.length;n<r;++n)if(!t(e[n]))return l;return 1}function t(t,n){e(t,function(e){return!n(e)})}function n(i,a,s){function l(e){return e.call?e():d[e]}function u(){if(!--y){d[g]=1,m&&m();for(var n in h)e(n.split("|"),l)&&!t(h[n],l)&&(h[n]=[])}}i=i[c]?i:[i];var f=a&&a.call,m=f?a:s,g=f?i.join(""):a,y=i.length;return setTimeout(function(){t(i,function e(t,n){return null===t?u():(n||/^https?:\/\//.test(t)||!o||(t=-1===t.indexOf(".js")?o+t+".js":o+t),v[t]?(g&&(p[g]=1),2==v[t]?u():setTimeout(function(){e(t,!0)},0)):(v[t]=1,g&&(p[g]=1),void r(t,u)))})},0),n}function r(e,t){var n,r=a.createElement("script");r.onload=r.onerror=r[f]=function(){r[u]&&!/^c|loade/.test(r[u])||n||(r.onload=r[f]=null,n=1,v[e]=2,t())},r.async=1,r.src=i?e+(-1===e.indexOf("?")?"?":"&")+i:e,s.insertBefore(r,s.lastChild)}var o,i,a=document,s=a.getElementsByTagName("head")[0],l=!1,c="push",u="readyState",f="onreadystatechange",d={},p={},h={},v={};return n.get=r,n.order=function(e,t,r){!function o(i){i=e.shift(),e.length?n(i,o):n(i,t,r)}()},n.path=function(e){o=e},n.urlArgs=function(e){i=e},n.ready=function(r,o,i){r=r[c]?r:[r];var a=[];return!t(r,function(e){d[e]||a[c](e)})&&e(r,function(e){return d[e]})?o():function(e){h[e]=h[e]||[],h[e][c](o),i&&i(a)}(r.join("|")),n},n.done=function(e){n([null],e)},n})},{}]},{},[19])(19)})}).call(t,n(2))},26:function(module,exports){module.exports=function(obj){var __t,__p="",__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,"")};with(obj||{})__p+='<div  id="embed-video" class="flowplayer functional">\n\n</div>';return __p}},4:function(e,t,n){var r=n(0),o=function(){function e(e){var t=this;if(e||(e={}),e.target&&(this.$embedResource=e.target),e.container)this.$embedContainer=e.container;else{var n=document.getElementsByTagName("body");this.$embedContainer=n[0]}void 0!==e.resizeCallback&&(this.resizeCallback=e.resizeCallback),!0===e.resizeOnWindowChange&&window.addEventListener("resize",r.debounce(function(){t.onResizeWindow(window.innerWidth,window.innerHeight)},300),!1),this.defaultWidth=120,this.defaultHeight=120}return e.prototype.setContainerDimensions=function(e){this.containerDimensions=e},e.prototype.setTargetDimensions=function(e){this.targetDimensions=e},e.prototype.onResizeWindow=function(e,t){this.setContainerDimensions({width:e,height:t}),this.resize()},e.prototype.resize=function(){var e=this.containerDimensions.width,t=this.containerDimensions.height,n=this.targetDimensions.width,r=this.targetDimensions.height,o=this.targetDimensions.height/this.targetDimensions.width,i=n,a=r;n>r?(i>e&&(i=e,a=e*o),a>t&&(i=t/o,a=t)):a>t&&(i=t/o,a=t),null===i&&null===a&&(i=this.defaultWidth,a=this.defaultHeight),i=Math.floor(i),a=Math.floor(a);var s=0;this.containerDimensions.height>a&&(s=(this.containerDimensions.height-a)/2),this.$embedResource.style.width=i+"px",this.$embedResource.style.height=a+"px",this.$embedContainer.style.width=i+"px",this.$embedContainer.style.height=a+"px",this.$embedContainer.style["margin-top"]=s+"px",void 0!==this.resizeCallback&&this.resizeCallback.apply(this,[{width:i,height:a,"margin-top":s}])},e}();t.default=o}},[24]);
+
+(function (name, definition) {
+  if (typeof module != 'undefined' && module.exports) module.exports = definition()
+  else if (typeof define == 'function' && define.amd) define(definition)
+  else this[name] = definition()
+})('$script', function () {
+  var doc = document
+    , head = doc.getElementsByTagName('head')[0]
+    , s = 'string'
+    , f = false
+    , push = 'push'
+    , readyState = 'readyState'
+    , onreadystatechange = 'onreadystatechange'
+    , list = {}
+    , ids = {}
+    , delay = {}
+    , scripts = {}
+    , scriptpath
+    , urlArgs
+
+  function every(ar, fn) {
+    for (var i = 0, j = ar.length; i < j; ++i) if (!fn(ar[i])) return f
+    return 1
+  }
+  function each(ar, fn) {
+    every(ar, function (el) {
+      return !fn(el)
+    })
+  }
+
+  function $script(paths, idOrDone, optDone) {
+    paths = paths[push] ? paths : [paths]
+    var idOrDoneIsDone = idOrDone && idOrDone.call
+      , done = idOrDoneIsDone ? idOrDone : optDone
+      , id = idOrDoneIsDone ? paths.join('') : idOrDone
+      , queue = paths.length
+    function loopFn(item) {
+      return item.call ? item() : list[item]
+    }
+    function callback() {
+      if (!--queue) {
+        list[id] = 1
+        done && done()
+        for (var dset in delay) {
+          every(dset.split('|'), loopFn) && !each(delay[dset], loopFn) && (delay[dset] = [])
+        }
+      }
+    }
+    setTimeout(function () {
+      each(paths, function loading(path, force) {
+        if (path === null) return callback()
+        
+        if (!force && !/^https?:\/\//.test(path) && scriptpath) {
+          path = (path.indexOf('.js') === -1) ? scriptpath + path + '.js' : scriptpath + path;
+        }
+        
+        if (scripts[path]) {
+          if (id) ids[id] = 1
+          return (scripts[path] == 2) ? callback() : setTimeout(function () { loading(path, true) }, 0)
+        }
+
+        scripts[path] = 1
+        if (id) ids[id] = 1
+        create(path, callback)
+      })
+    }, 0)
+    return $script
+  }
+
+  function create(path, fn) {
+    var el = doc.createElement('script'), loaded
+    el.onload = el.onerror = el[onreadystatechange] = function () {
+      if ((el[readyState] && !(/^c|loade/.test(el[readyState]))) || loaded) return;
+      el.onload = el[onreadystatechange] = null
+      loaded = 1
+      scripts[path] = 2
+      fn()
+    }
+    el.async = 1
+    el.src = urlArgs ? path + (path.indexOf('?') === -1 ? '?' : '&') + urlArgs : path;
+    head.insertBefore(el, head.lastChild)
+  }
+
+  $script.get = create
+
+  $script.order = function (scripts, id, done) {
+    (function callback(s) {
+      s = scripts.shift()
+      !scripts.length ? $script(s, id, done) : $script(s, callback)
+    }())
+  }
+
+  $script.path = function (p) {
+    scriptpath = p
+  }
+  $script.urlArgs = function (str) {
+    urlArgs = str;
+  }
+  $script.ready = function (deps, ready, req) {
+    deps = deps[push] ? deps : [deps]
+    var missing = [];
+    !each(deps, function (dep) {
+      list[dep] || missing[push](dep);
+    }) && every(deps, function (dep) {return list[dep]}) ?
+      ready() : !function (key) {
+      delay[key] = delay[key] || []
+      delay[key][push](ready)
+      req && req(missing)
+    }(deps.join('|'))
+    return $script
+  }
+
+  $script.done = function (idOrDone) {
+    $script([null], idOrDone)
+  }
+
+  return $script
+});
+
+},{}]},{},[19])(19)
+});
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+
+/***/ }),
+
+/***/ 26:
+/***/ (function(module, exports) {
+
+module.exports = function(obj){
+var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+with(obj||{}){
+__p+='<div  id="embed-video" class="flowplayer functional">\n\n</div>';
+}
+return __p;
+};
+
+/***/ }),
+
+/***/ 4:
+/***/ (function(module, exports, __webpack_require__) {
+
+var _ = __webpack_require__(0);
+var ResizeEl = function () {
+    function ResizeEl(options) {
+        var _this = this;
+        if (!options) {
+            options = {};
+        }
+        if (options.target) {
+            this.$embedResource = options.target;
+        }
+        if (options.container) {
+            this.$embedContainer = options.container;
+        } else {
+            var containers = document.getElementsByTagName('body');
+            this.$embedContainer = containers[0];
+        }
+        if (options.resizeCallback !== undefined) {
+            this.resizeCallback = options.resizeCallback;
+        }
+        if (options.resizeOnWindowChange === true) {
+            window.addEventListener('resize', _.debounce(function () {
+                _this.onResizeWindow(window.innerWidth, window.innerHeight);
+            }, 300), false);
+        }
+        this.defaultWidth = 120;
+        this.defaultHeight = 120;
+    }
+    ResizeEl.prototype.setContainerDimensions = function (dimensions) {
+        this.containerDimensions = dimensions;
+    };
+    ResizeEl.prototype.setTargetDimensions = function (dimensions) {
+        this.targetDimensions = dimensions;
+    };
+    ResizeEl.prototype.onResizeWindow = function (width, height) {
+        this.setContainerDimensions({
+            width: width,
+            height: height
+        });
+        this.resize();
+    };
+    ResizeEl.prototype.resize = function () {
+        // get original size
+        var resized = false,
+            maxWidth = this.containerDimensions.width,
+            maxHeight = this.containerDimensions.height,
+            resourceWidth = this.targetDimensions.width,
+            resourceHeight = this.targetDimensions.height,
+            resourceRatio = this.targetDimensions.height / this.targetDimensions.width;
+        var resizeW = resourceWidth,
+            resizeH = resourceHeight;
+        // pass 1 make height ok:
+        if (resourceWidth > resourceHeight) {
+            // if width still too large:
+            if (resizeW > maxWidth) {
+                resizeW = maxWidth;
+                resizeH = maxWidth * resourceRatio;
+            }
+            if (resizeH > maxHeight) {
+                resizeW = maxHeight / resourceRatio;
+                resizeH = maxHeight;
+            }
+        } else {
+            if (resizeH > maxHeight) {
+                resizeW = maxHeight / resourceRatio;
+                resizeH = maxHeight;
+            }
+        }
+        if (resizeW === null && resizeH === null) {
+            resizeW = this.defaultWidth;
+            resizeH = this.defaultHeight;
+        }
+        resizeW = Math.floor(resizeW);
+        resizeH = Math.floor(resizeH);
+        // add top margin:
+        var marginTop = 0;
+        if (this.containerDimensions.height > resizeH) {
+            marginTop = (this.containerDimensions.height - resizeH) / 2;
+        }
+        this.$embedResource.style.width = resizeW + 'px';
+        this.$embedResource.style.height = resizeH + 'px';
+        this.$embedContainer.style.width = resizeW + 'px';
+        this.$embedContainer.style.height = resizeH + 'px';
+        this.$embedContainer.style['margin-top'] = marginTop + 'px';
+        if (this.resizeCallback !== undefined) {
+            this.resizeCallback.apply(this, [{ width: resizeW, height: resizeH, 'margin-top': marginTop }]);
+        }
+    };
+    return ResizeEl;
+}();
+exports.default = ResizeEl;
+
+/***/ })
+
+},[24]);
+//# sourceMappingURL=video_flowplayer.js.map

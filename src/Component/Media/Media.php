@@ -86,7 +86,7 @@ class Media extends AbstractDelivery
 
                 $embedMedia['track'] = $this->getAvailableVideoTextTracks($information);
 
-
+                $embedMedia['currentTime'] = $this->getAvailableVideoCurrentTime($information);
 
                 $embedMedia['dimensions'] = $this->getDimensions($subdef);
 
@@ -303,6 +303,26 @@ class Media extends AbstractDelivery
         }
 
         return $videoTextTrack;
+    }
+
+    public function getAvailableVideoCurrentTime(MediaInformation $media)
+    {
+        $record = $media->getResource()->get_record();
+        $currentTime = 0;
+        if ($record->getType() === 'video') {
+            $embedConfig = $this->getEmbedConfiguration();
+            if (array_key_exists('video_message_start', $embedConfig['video'])) {
+                $videoMessageStart = $embedConfig['video']['video_message_start'];
+                foreach ($record->get_caption()->get_fields(null, true) as $field) {
+                    if ($videoMessageStart == $field->get_name()) {
+                        foreach ($field->get_values() as $value) {
+                            $currentTime = $value->getValue();
+                        }
+                    }
+                }
+            }
+        }
+        return $currentTime;
     }
 
     private function getEmbedConfiguration()
