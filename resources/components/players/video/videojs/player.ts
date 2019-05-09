@@ -80,7 +80,7 @@ export default class VideoPlayer {
                 this.initResizer();
             }
         }
-        this.resizer.resize();
+
         this.setupVideo();
     }
 
@@ -156,7 +156,7 @@ export default class VideoPlayer {
                             width: videoWidth,
                             height: videoHeight
                         });
-                        this.resizer.resize();
+                       /* this.resizer.resize();*/
                     }
                     /*set currentTime to play video */
                     if( this.$currentTime !== null ) {
