@@ -1332,6 +1332,10 @@ var ResizeEl = function () {
             width: width,
             height: height
         });
+        this.setTargetDimensions({
+            width: width,
+            height: height
+        });
         this.resize();
     };
     ResizeEl.prototype.resize = function () {

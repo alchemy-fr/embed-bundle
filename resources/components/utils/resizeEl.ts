@@ -57,6 +57,10 @@ class ResizeEl {
             width:  width,
             height: height
         });
+        this.setTargetDimensions({
+            width: width,
+            height: height
+        });
         this.resize();
     }
 

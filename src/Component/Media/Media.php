@@ -311,8 +311,8 @@ class Media extends AbstractDelivery
         $currentTime = 0;
         if ($record->getType() === 'video') {
             $embedConfig = $this->getEmbedConfiguration();
-            if (array_key_exists('video_message_start', $embedConfig['video'])) {
-                $videoMessageStart = $embedConfig['video']['video_message_start'];
+            if (array_key_exists('message_start', $embedConfig['video'])) {
+                $videoMessageStart = $embedConfig['video']['message_start'];
                 foreach ($record->get_caption()->get_fields(null, true) as $field) {
                     if ($videoMessageStart == $field->get_name()) {
                         foreach ($field->get_values() as $value) {
