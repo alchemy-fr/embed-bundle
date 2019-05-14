@@ -52,14 +52,6 @@ export default class VideoPlayer {
                 this.$playerContainer.style.height = dimensions.height + 'px';
             }
         });
-        this.resizer.setContainerDimensions({
-            width:  <any>window.innerWidth,
-            height: <any>window.innerHeight
-        });
-        this.resizer.setTargetDimensions({
-            width:  this.resourceOriginalWidth,
-            height: this.resourceOriginalHeight
-        });
 
         if( this.configService.get('isStandalone') === true ) {
             this.initResizer();
