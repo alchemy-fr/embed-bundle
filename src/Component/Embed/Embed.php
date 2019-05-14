@@ -14,14 +14,14 @@ class Embed
           'video' => [
             'autoplay' => false,
             'options' => [],
-            'available-speeds' => [],
+            'available_speeds' => [],
             'player' => 'videojs',
 
           ],
           'audio' => [
             'player' => 'videojs',
             'options' => [],
-            'available-speeds' => [],
+            'available_speeds' => [],
           ],
           'document' => [
             'enable-pdfjs' => true,
@@ -66,7 +66,7 @@ class Embed
             $config['video']['autoplay'] = $embedConfig['video_autoplay'];
         }
         if (array_key_exists('video_available_speeds', $embedConfig)) {
-            $config['video']['available-speeds'] = $embedConfig['video_available_speeds'];
+            $config['video']['available_speeds'] = $embedConfig['video_available_speeds'];
         }
         if (array_key_exists('audio_player', $embedConfig)) {
             $config['audio']['player'] = $embedConfig['audio_player'];
@@ -75,7 +75,7 @@ class Embed
             $config['audio']['autoplay'] = $embedConfig['audio_autoplay'];
         }
         if (array_key_exists('audio_available_speeds', $embedConfig)) {
-            $config['audio']['available-speeds'] = $embedConfig['audio_available_speeds'];
+            $config['audio']['available_speeds'] = $embedConfig['audio_available_speeds'];
         }
         if (array_key_exists('enable_pdfjs', $embedConfig['document'])) {
             $config['document']['enable-pdfjs'] = $embedConfig['document']['enable_pdfjs'];

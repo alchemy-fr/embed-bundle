@@ -6,15 +6,12 @@ Installation
 ------------
 Add embed bundle to Phraseanet:
 
-`composer require alchemy/embed-bundle:^0.5.0`
+`composer require alchemy/embed-bundle:^2.0.0`
 
-Add embed players to Phraseanet:
-
-`npm install alchemy-embed-medias@^0.5.0`
 
 Deploy embed players in Phraseanet assets path:
 
-`gulp build-alchemy-embed-medias`
+`gulp build-alchemy-embed`
 
 
 Configuration
@@ -29,7 +26,7 @@ video.player | string | active player, embed bundle ship with `videojs` and `flo
 video.autoplay | boolean | autoplay as default behavior
 video.message_start | string | StartOfMessage as default behavior , where 'StartOfMessage' is a field created from Phraseanet admin   
 video. coverSubdef | string | define a subdefinition for video cover, default is ```thumbnail```
-video.available-speeds | number[] | playback available speeds
+video.available_speeds | number[] | playback available speeds
 audio.player | string | active video player, embed bundle ship with `videojs`
 audio.autoplay | boolean | autoplay as default behavior
 document.enable_pdfjs | boolean | use pdfjs instead of flexbox for pdf only
@@ -44,7 +41,7 @@ embed_bundle:
         autoplay: false
         message_start: StartOfMessage
         coverSubdef: previewx4
-        available-speeds:
+        available_speeds:
           - 1
           - '1.5'
           - 3

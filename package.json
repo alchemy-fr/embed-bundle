@@ -1,6 +1,6 @@
 {
   "name": "alchemy-embed-medias",
-  "version": "0.5.4",
+  "version": "2.0.0-dev",
   "description": "",
   "scripts": {
     "dist": "node_modules/.bin/gulp deploy;",
