@@ -28,7 +28,7 @@
                     fitIn: true, // force video to downScale / upscale
                     aspectRatio: '{{ embedMedia.dimensions.width }}:{{ embedMedia.dimensions.height }}',
                     coverUrl: "{{ embedMedia.coverUrl }}",
-                    playbackRates: {{ audio['available-speeds']|json_encode|raw }},
+                    playbackRates: {{ audio['available_speeds']|json_encode|raw }},
                     sources: [{% for source in  embedMedia.source %}{
                         url: "{{ source.url }}",
                         type: "{{ source.type }}"

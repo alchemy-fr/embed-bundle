@@ -28,7 +28,7 @@ configuration options for phraseanet in `config/configuration.yml`
 video.player | string | active player, embed bundle ship with `videojs` and `flowplayer`
 video.autoplay | boolean | autoplay as default behavior
 video. coverSubdef | string | define a subdefinition for video cover, default is ```thumbnail```
-video.available-speeds | number[] | playback available speeds
+video.available_speeds | number[] | playback available speeds
 video.message_start | number | Current time to play video
 audio.player | string | active video player, embed bundle ship with `videojs`
 audio.autoplay | boolean | autoplay as default behavior
@@ -44,7 +44,7 @@ embed_bundle:
         autoplay: false
         message_start: StartOfMessage
         coverSubdef: previewx4
-        available-speeds:
+        available_speeds:
           - 1
           - '1.5'
           - 3
