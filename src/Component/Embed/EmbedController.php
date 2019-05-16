@@ -45,6 +45,9 @@ class EmbedController
         // is autoplay active?
         $metaData['options']['autoplay'] = $request->get('autoplay') == '1' ? true : false;
 
+        // get the url t parameter if it exist
+        $metaData['options']['t'] = ($request->get('t') == '') ? null : intval($request->get('t'));
+
         return $this->renderEmbed($media, $metaData);
     }
 
@@ -83,6 +86,13 @@ class EmbedController
                 if ($metaData['options']['autoplay'] === true) {
                     $embedConfig['video']['autoplay'] = true;
                 }
+
+                // if the url t parameter is set,
+                // use it and override the currentTime
+                if (isset($metaData['options']['t']) && $metaData['options']['t'] !== null) {
+                    $metaData['embedMedia']['currentTime'] = $metaData['options']['t'];
+                }
+
                 $template = 'video.html.twig';
                 break;
             case 'flexpaper':
