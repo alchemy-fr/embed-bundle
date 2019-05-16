@@ -236,7 +236,7 @@ class Media extends AbstractDelivery
     }
 
     /**
-     * list available video text tracks (only metadatas)
+     * list available video text tracks (only metadatas -)
      * @param MediaInformation $media
      * @return array
      */
@@ -245,7 +245,7 @@ class Media extends AbstractDelivery
         $record = $media->getResource()->get_record();
         $videoTextTrack = [];
 
-        if ($record->getType() === 'video') {
+        if ($record->getType() == 'video') {
             $databox = $record->getDatabox();
             $vttIds = [];
             $vttMetadata = [];
@@ -314,8 +314,8 @@ class Media extends AbstractDelivery
         if ($record->getType() === 'video') {
 
             $embedConfig = $this->getEmbedConfiguration();
-            if (array_key_exists('video_message_start', $embedConfig['video'])) {
-                $videoMessageStart = $embedConfig['video']['video_message_start'];
+            if (array_key_exists('message_start', $embedConfig['video'])) {
+                $videoMessageStart = $embedConfig['video']['message_start'];
 
                 foreach ($record->get_caption()->get_fields(null, true) as $field) {
                     if ($videoMessageStart == $field->get_name()) {
