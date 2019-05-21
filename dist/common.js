@@ -152,7 +152,7 @@
 /************************************************************************/
 /******/ ({
 
-/***/ 18:
+/***/ 17:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __extends = this && this.__extends || function (d, b) {
@@ -193,7 +193,7 @@ exports.default = ConfigService;
 /***/ 218:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(8);
+module.exports = __webpack_require__(9);
 
 
 /***/ }),
@@ -226,7 +226,155 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 8:
+/***/ 84:
+/***/ (function(module, exports, __webpack_require__) {
+
+var instance = null;
+var _ = __webpack_require__(9);
+var ApplicationConfigService = function () {
+    function ApplicationConfigService(config) {
+        // if( !instance ) {
+        //     instance = this;
+        // }
+        this.configuration = config;
+        // return instance;
+    }
+    ApplicationConfigService.prototype.get = function (configKey) {
+        if (configKey !== undefined) {
+            var foundValue = this._findKeyValue(configKey || this.configuration);
+            switch (typeof foundValue) {
+                case 'string':
+                    return foundValue;
+                default:
+                    return foundValue ? foundValue : null;
+            }
+        }
+        return this.configuration;
+    };
+    ApplicationConfigService.prototype.set = function (configKey, value) {
+        if (configKey !== undefined) {
+            this.configuration[configKey] = value;
+        }
+    };
+    // @TODO cast
+    ApplicationConfigService.prototype._findKeyValue = function (configName) {
+        if (!configName) {
+            return undefined;
+        }
+        var isStr = _.isString(configName),
+            name = isStr ? configName : configName.name,
+            path = configName.indexOf('.') > 0 ? true : false;
+        if (path) {
+            return this._search(this.configuration, name);
+        }
+        var state = this.configuration[name];
+        if (state && (isStr || !isStr && state === configName)) {
+            return state;
+        } else if (isStr) {
+            return state;
+        }
+        return undefined;
+    };
+    // @TODO cast
+    ApplicationConfigService.prototype._search = function (obj, path) {
+        if (_.isNumber(path)) {
+            path = [path];
+        }
+        if (_.isEmpty(path)) {
+            return obj;
+        }
+        if (_.isEmpty(obj)) {
+            return null;
+        }
+        if (_.isString(path)) {
+            return this._search(obj, path.split('.'));
+        }
+        var currentPath = path[0];
+        if (path.length === 1) {
+            if (obj[currentPath] === void 0) {
+                return null;
+            }
+            return obj[currentPath];
+        }
+        return this._search(obj[currentPath], path.slice(1));
+    };
+    return ApplicationConfigService;
+}();
+exports.default = ApplicationConfigService;
+;
+
+/***/ }),
+
+/***/ 85:
+/***/ (function(module, exports) {
+
+module.exports = function(module) {
+	if(!module.webpackPolyfill) {
+		module.deprecate = function() {};
+		module.paths = [];
+		// module.parent = undefined by default
+		if(!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function() {
+				return module.i;
+			}
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
+
+
+/***/ }),
+
+/***/ 86:
+/***/ (function(module, exports, __webpack_require__) {
+
+var _ = __webpack_require__(9);
+var config = {
+    assetsPath: '/plugins/web-gallery/assets',
+    api: {
+        baseUrl: '/web-gallery',
+        basePath: '',
+        ajaxSetup: {
+            accept: 'application/json',
+            contentType: 'application/json',
+            async: true,
+            cache: false,
+            dataType: 'json',
+            complete: function () {
+                // console.log('complete')
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                // override default phraseanet behavior
+                console.log('ajax failed', jqXHR, textStatus, errorThrown);
+                var res,
+                    ct = jqXHR.getResponseHeader('content-type') || '';
+                if (ct.indexOf('json') > -1) {
+                    res = $.parseJSON(jqXHR.responseText);
+                }
+                return res;
+            }
+        }
+    }
+};
+// config can be overridden by local environment:
+var envConfiguration = window.envConfiguration;
+if (envConfiguration !== undefined) {
+    config = _.extend(config, envConfiguration);
+}
+exports.default = config;
+
+/***/ }),
+
+/***/ 9:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//     Underscore.js 1.9.1
@@ -1924,154 +2072,6 @@ module.exports = g;
 }());
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(85)(module)))
-
-/***/ }),
-
-/***/ 84:
-/***/ (function(module, exports, __webpack_require__) {
-
-var instance = null;
-var _ = __webpack_require__(8);
-var ApplicationConfigService = function () {
-    function ApplicationConfigService(config) {
-        // if( !instance ) {
-        //     instance = this;
-        // }
-        this.configuration = config;
-        // return instance;
-    }
-    ApplicationConfigService.prototype.get = function (configKey) {
-        if (configKey !== undefined) {
-            var foundValue = this._findKeyValue(configKey || this.configuration);
-            switch (typeof foundValue) {
-                case 'string':
-                    return foundValue;
-                default:
-                    return foundValue ? foundValue : null;
-            }
-        }
-        return this.configuration;
-    };
-    ApplicationConfigService.prototype.set = function (configKey, value) {
-        if (configKey !== undefined) {
-            this.configuration[configKey] = value;
-        }
-    };
-    // @TODO cast
-    ApplicationConfigService.prototype._findKeyValue = function (configName) {
-        if (!configName) {
-            return undefined;
-        }
-        var isStr = _.isString(configName),
-            name = isStr ? configName : configName.name,
-            path = configName.indexOf('.') > 0 ? true : false;
-        if (path) {
-            return this._search(this.configuration, name);
-        }
-        var state = this.configuration[name];
-        if (state && (isStr || !isStr && state === configName)) {
-            return state;
-        } else if (isStr) {
-            return state;
-        }
-        return undefined;
-    };
-    // @TODO cast
-    ApplicationConfigService.prototype._search = function (obj, path) {
-        if (_.isNumber(path)) {
-            path = [path];
-        }
-        if (_.isEmpty(path)) {
-            return obj;
-        }
-        if (_.isEmpty(obj)) {
-            return null;
-        }
-        if (_.isString(path)) {
-            return this._search(obj, path.split('.'));
-        }
-        var currentPath = path[0];
-        if (path.length === 1) {
-            if (obj[currentPath] === void 0) {
-                return null;
-            }
-            return obj[currentPath];
-        }
-        return this._search(obj[currentPath], path.slice(1));
-    };
-    return ApplicationConfigService;
-}();
-exports.default = ApplicationConfigService;
-;
-
-/***/ }),
-
-/***/ 85:
-/***/ (function(module, exports) {
-
-module.exports = function(module) {
-	if(!module.webpackPolyfill) {
-		module.deprecate = function() {};
-		module.paths = [];
-		// module.parent = undefined by default
-		if(!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
-			get: function() {
-				return module.i;
-			}
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
-};
-
-
-/***/ }),
-
-/***/ 86:
-/***/ (function(module, exports, __webpack_require__) {
-
-var _ = __webpack_require__(8);
-var config = {
-    assetsPath: '/plugins/web-gallery/assets',
-    api: {
-        baseUrl: '/web-gallery',
-        basePath: '',
-        ajaxSetup: {
-            accept: 'application/json',
-            contentType: 'application/json',
-            async: true,
-            cache: false,
-            dataType: 'json',
-            complete: function () {
-                // console.log('complete')
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                // override default phraseanet behavior
-                console.log('ajax failed', jqXHR, textStatus, errorThrown);
-                var res,
-                    ct = jqXHR.getResponseHeader('content-type') || '';
-                if (ct.indexOf('json') > -1) {
-                    res = $.parseJSON(jqXHR.responseText);
-                }
-                return res;
-            }
-        }
-    }
-};
-// config can be overridden by local environment:
-var envConfiguration = window.envConfiguration;
-if (envConfiguration !== undefined) {
-    config = _.extend(config, envConfiguration);
-}
-exports.default = config;
 
 /***/ })
 

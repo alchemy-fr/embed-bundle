@@ -20,7 +20,7 @@ export default class AudioPlayer {
     private resourceOriginalHeight;
     private $embedContainer;
     private $embedResource;
-    private resizer;
+    //private resizer;
     private $playerContainer;
     private pymChild;
     constructor() {
@@ -37,12 +37,14 @@ export default class AudioPlayer {
         this.resourceOriginalHeight = this.configService.get('resource.height');
 
         if( this.configService.get('isStandalone') === true ) {
-            this.initResizer();
+           // this.initResizer();
         } else {
             this.pymChild = new (<any>pym).Child({id: 'phraseanet-embed-frame', renderCallback: function(windowWidth) {
                 //let ratio = that.resourceOriginalHeight / that.resourceOriginalWidth;
                 // send video calculated height
                 //that.$embedContainer.style.height = windowWidth * ratio + 'px';
+                that.$embedContainer.style.height = '240px';
+                that.$embedContainer.style.width = '240px';
             }});
 
             window.addEventListener('resize', _.debounce(() => {
@@ -51,16 +53,16 @@ export default class AudioPlayer {
                 }
             }, 200), false);
 
-            if (this.pymChild.parentUrl === '') {
+            /*if (this.pymChild.parentUrl === '') {
                 // no parent pym:
                 this.initResizer();
-            }
+            }*/
         }
 
         this.setupVideo();
     }
 
-    initResizer() {
+/*    initResizer() {
         this.resizer = new ResizeEl({
             target: this.$embedResource,
             container: this.$embedContainer,
@@ -82,7 +84,7 @@ export default class AudioPlayer {
             height: this.resourceOriginalHeight
         });
         this.resizer.resize();
-    }
+    }*/
 
     setupVideo() {
         let aspectRatio = this.configService.get('resource.aspectRatio'),

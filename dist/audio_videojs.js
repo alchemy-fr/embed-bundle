@@ -1132,106 +1132,6 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! pym.js - v
 /***/ 16:
 /***/ (function(module, exports, __webpack_require__) {
 
-var _ = __webpack_require__(8);
-var ResizeEl = function () {
-    function ResizeEl(options) {
-        var _this = this;
-        if (!options) {
-            options = {};
-        }
-        if (options.target) {
-            this.$embedResource = options.target;
-        }
-        if (options.container) {
-            this.$embedContainer = options.container;
-        } else {
-            var containers = document.getElementsByTagName('body');
-            this.$embedContainer = containers[0];
-        }
-        if (options.resizeCallback !== undefined) {
-            this.resizeCallback = options.resizeCallback;
-        }
-        if (options.resizeOnWindowChange === true) {
-            window.addEventListener('resize', _.debounce(function () {
-                _this.onResizeWindow(window.innerWidth, window.innerHeight);
-            }, 300), false);
-        }
-        this.defaultWidth = 120;
-        this.defaultHeight = 120;
-    }
-    ResizeEl.prototype.setContainerDimensions = function (dimensions) {
-        this.containerDimensions = dimensions;
-    };
-    ResizeEl.prototype.setTargetDimensions = function (dimensions) {
-        this.targetDimensions = dimensions;
-    };
-    ResizeEl.prototype.onResizeWindow = function (width, height) {
-        this.setContainerDimensions({
-            width: width,
-            height: height
-        });
-        this.setTargetDimensions({
-            width: width,
-            height: height
-        });
-        this.resize();
-    };
-    ResizeEl.prototype.resize = function () {
-        // get original size
-        var resized = false,
-            maxWidth = this.containerDimensions.width,
-            maxHeight = this.containerDimensions.height,
-            resourceWidth = this.targetDimensions.width,
-            resourceHeight = this.targetDimensions.height,
-            resourceRatio = this.targetDimensions.height / this.targetDimensions.width;
-        var resizeW = resourceWidth,
-            resizeH = resourceHeight;
-        // pass 1 make height ok:
-        if (resourceWidth > resourceHeight) {
-            // if width still too large:
-            if (resizeW > maxWidth) {
-                resizeW = maxWidth;
-                resizeH = maxWidth * resourceRatio;
-            }
-            if (resizeH > maxHeight) {
-                resizeW = maxHeight / resourceRatio;
-                resizeH = maxHeight;
-            }
-        } else {
-            if (resizeH > maxHeight) {
-                resizeW = maxHeight / resourceRatio;
-                resizeH = maxHeight;
-            }
-        }
-        if (resizeW === null && resizeH === null) {
-            resizeW = this.defaultWidth;
-            resizeH = this.defaultHeight;
-        }
-        resizeW = Math.floor(resizeW);
-        resizeH = Math.floor(resizeH);
-        // add top margin:
-        var marginTop = 0;
-        if (this.containerDimensions.height > resizeH) {
-            marginTop = (this.containerDimensions.height - resizeH) / 2;
-        }
-        this.$embedResource.style.width = resizeW + 'px';
-        this.$embedResource.style.height = resizeH + 'px';
-        this.$embedContainer.style.width = resizeW + 'px';
-        this.$embedContainer.style.height = resizeH + 'px';
-        this.$embedContainer.style['margin-top'] = marginTop + 'px';
-        if (this.resizeCallback !== undefined) {
-            this.resizeCallback.apply(this, [{ width: resizeW, height: resizeH, 'margin-top': marginTop }]);
-        }
-    };
-    return ResizeEl;
-}();
-exports.default = ResizeEl;
-
-/***/ }),
-
-/***/ 17:
-/***/ (function(module, exports, __webpack_require__) {
-
 /* WEBPACK VAR INJECTION */(function(global) {var win;
 
 if (typeof window !== "undefined") {
@@ -1260,9 +1160,8 @@ module.exports = win;
 // require('html5shiv');
 window.HELP_IMPROVE_VIDEOJS = false;
 var videojs = __webpack_require__(33);
-var _ = __webpack_require__(8);
-var service_1 = __webpack_require__(18);
-var resizeEl_1 = __webpack_require__(16);
+var _ = __webpack_require__(9);
+var service_1 = __webpack_require__(17);
 var playerTemplate = __webpack_require__(201);
 var pym = __webpack_require__(15);
 var AudioPlayer = function () {
@@ -1277,49 +1176,45 @@ var AudioPlayer = function () {
         this.$embedResource = document.getElementById('embed-audio');
         this.resourceOriginalWidth = this.configService.get('resource.width');
         this.resourceOriginalHeight = this.configService.get('resource.height');
-        if (this.configService.get('isStandalone') === true) {
-            this.initResizer();
-        } else {
+        if (this.configService.get('isStandalone') === true) {} else {
             this.pymChild = new pym.Child({ id: 'phraseanet-embed-frame', renderCallback: function (windowWidth) {
                     //let ratio = that.resourceOriginalHeight / that.resourceOriginalWidth;
                     // send video calculated height
                     //that.$embedContainer.style.height = windowWidth * ratio + 'px';
+                    that.$embedContainer.style.height = '240px';
+                    that.$embedContainer.style.width = '240px';
                 } });
             window.addEventListener('resize', _.debounce(function () {
                 if (_this.pymChild !== undefined) {
                     _this.pymChild.sendHeight();
                 }
             }, 200), false);
-            if (this.pymChild.parentUrl === '') {
-                // no parent pym:
-                this.initResizer();
-            }
         }
         this.setupVideo();
     }
-    AudioPlayer.prototype.initResizer = function () {
-        var _this = this;
-        this.resizer = new resizeEl_1.default({
-            target: this.$embedResource,
-            container: this.$embedContainer,
-            resizeOnWindowChange: this.configService.get('resource.fitIn') === true ? true : false,
-            resizeCallback: function (dimensions) {
-                _this.$playerContainer.style.width = dimensions.width + 'px';
-                _this.$playerContainer.style.height = dimensions.height + 'px';
-                _this.$playerContainer.firstChild.style.width = dimensions.width + 'px';
-                _this.$playerContainer.firstChild.style.height = dimensions.height + 'px';
-            }
-        });
-        this.resizer.setContainerDimensions({
-            width: window.innerWidth,
-            height: window.innerHeight
-        });
-        this.resizer.setTargetDimensions({
-            width: this.resourceOriginalWidth,
-            height: this.resourceOriginalHeight
-        });
-        this.resizer.resize();
-    };
+    /*    initResizer() {
+            this.resizer = new ResizeEl({
+                target: this.$embedResource,
+                container: this.$embedContainer,
+                resizeOnWindowChange: this.configService.get('resource.fitIn') === true ? true : false,
+                resizeCallback: (dimensions) => {
+                    this.$playerContainer.style.width = dimensions.width + 'px';
+                    this.$playerContainer.style.height = dimensions.height + 'px';
+    
+                    this.$playerContainer.firstChild.style.width = dimensions.width + 'px';
+                    this.$playerContainer.firstChild.style.height = dimensions.height + 'px';
+                }
+            });
+            this.resizer.setContainerDimensions({
+                width:  <any>window.innerWidth,
+                height: <any>window.innerHeight
+            });
+            this.resizer.setTargetDimensions({
+                width:  this.resourceOriginalWidth,
+                height: this.resourceOriginalHeight
+            });
+            this.resizer.resize();
+        }*/
     AudioPlayer.prototype.setupVideo = function () {
         var aspectRatio = this.configService.get('resource.aspectRatio'),
             options = {
@@ -1380,7 +1275,7 @@ __p+='\n</audio>';
 }
 return __p;
 };
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
 
 /***/ }),
 
@@ -1425,7 +1320,7 @@ module.exports = doccy;
  */
 
 (function (global, factory) {
-   true ? module.exports = factory(__webpack_require__(17), __webpack_require__(27)) :
+   true ? module.exports = factory(__webpack_require__(16), __webpack_require__(27)) :
   typeof define === 'function' && define.amd ? define(['global/window', 'global/document'], factory) :
   (global = global || self, global.videojs = factory(global.window, global.document));
 }(this, function (window$1, document) {

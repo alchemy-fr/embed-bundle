@@ -1129,10 +1129,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! pym.js - v
 
 /***/ }),
 
-/***/ 16:
+/***/ 21:
 /***/ (function(module, exports, __webpack_require__) {
 
-var _ = __webpack_require__(8);
+var _ = __webpack_require__(9);
 var ResizeEl = function () {
     function ResizeEl(options) {
         var _this = this;
@@ -1239,8 +1239,8 @@ exports.default = ResizeEl;
 // require('html5shiv');
 //import _ = require('underscore');
 var pym = __webpack_require__(15);
-var service_1 = __webpack_require__(18);
-var resizeEl_1 = __webpack_require__(16);
+var service_1 = __webpack_require__(17);
+var resizeEl_1 = __webpack_require__(21);
 var Embed = function () {
     function Embed() {
         var that = this;

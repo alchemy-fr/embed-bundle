@@ -9,7 +9,7 @@ webpackJsonp([6],{
  */
 // require('html5shiv');
 var swfobject = __webpack_require__(203);
-var service_1 = __webpack_require__(18);
+var service_1 = __webpack_require__(17);
 var playerTemplate = __webpack_require__(204);
 var DocumentPlayer = function () {
     function DocumentPlayer() {
