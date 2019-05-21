@@ -6,6 +6,7 @@
 // require('html5shiv');
 (<any>window).HELP_IMPROVE_VIDEOJS = false;
 let videojs = require('../../../../../node_modules/video.js/dist/video.js');
+require('../../../../../node_modules/videojs-flash/dist/videojs-flash.js');
 
 let chapters = require('../../../../../node_modules/videojs-chapter-thumbnails/dist/videojs.chapter-thumbnails.js');
 
@@ -118,7 +119,7 @@ export default class VideoPlayer {
             options.playbackRates = this.configService.get('resource.playbackRates');
         }
 
-        options.techOrder = ['html5', 'flash'];
+        options.techOrder = ['flash', 'html5' ];
 
         (<any>options).flash = {
             swf: '/assets/vendors/alchemy-embed-medias/players/videojs/video-js.swf'

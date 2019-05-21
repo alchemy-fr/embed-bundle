@@ -1,67 +1,6 @@
 webpackJsonp([5],{
 
-/***/ 17:
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
- * Entry point for Embed Images
- */
-/// <reference path="./embed.d.ts" />
-// require('html5shiv');
-//import _ = require('underscore');
-var pym = __webpack_require__(3);
-var service_1 = __webpack_require__(5);
-var resizeEl_1 = __webpack_require__(4);
-var Embed = function () {
-    function Embed() {
-        var that = this;
-        this.configService = new service_1.default();
-        this.$embedContainer = document.getElementById('embed-content');
-        this.$embedResource = document.getElementById('embed-image');
-        this.resourceOriginalWidth = this.configService.get('resource.width');
-        this.resourceOriginalHeight = this.configService.get('resource.height');
-        if (this.configService.get('isStandalone') === true) {
-            this.initResizer();
-        } else {
-            this.$embedResource.style.width = '100%';
-            this.$embedResource.style.height = 'auto';
-            this.pymChild = new pym.Child({ id: 'phraseanet-embed-frame', renderCallback: function (windowWidth) {
-                    var ratio = that.resourceOriginalHeight / that.resourceOriginalWidth;
-                    that.$embedResource.style.width = '100%';
-                    that.$embedResource.style.height = 'auto';
-                    // send image calculated height
-                    that.$embedContainer.style.height = windowWidth * ratio + 'px';
-                } });
-            if (this.pymChild.parentUrl === '') {
-                // no parent pym:
-                this.initResizer();
-            }
-        }
-    }
-    Embed.prototype.initResizer = function () {
-        this.resizer = new resizeEl_1.default({
-            target: this.$embedResource,
-            container: this.$embedContainer,
-            resizeOnWindowChange: this.configService.get('resource.fitIn') === true ? true : false
-        });
-        this.resizer.setContainerDimensions({
-            width: window.innerWidth,
-            height: window.innerHeight
-        });
-        this.resizer.setTargetDimensions({
-            width: this.resourceOriginalWidth,
-            height: this.resourceOriginalHeight
-        });
-        this.resizer.resize();
-    };
-    return Embed;
-}();
-exports.default = Embed;
-window.embedPlugin = new Embed();
-
-/***/ }),
-
-/***/ 3:
+/***/ 15:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! pym.js - v1.3.2 - 2018-02-13 */
@@ -1190,10 +1129,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! pym.js - v
 
 /***/ }),
 
-/***/ 4:
+/***/ 16:
 /***/ (function(module, exports, __webpack_require__) {
 
-var _ = __webpack_require__(0);
+var _ = __webpack_require__(8);
 var ResizeEl = function () {
     function ResizeEl(options) {
         var _this = this;
@@ -1288,7 +1227,68 @@ var ResizeEl = function () {
 }();
 exports.default = ResizeEl;
 
+/***/ }),
+
+/***/ 83:
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Entry point for Embed Images
+ */
+/// <reference path="./embed.d.ts" />
+// require('html5shiv');
+//import _ = require('underscore');
+var pym = __webpack_require__(15);
+var service_1 = __webpack_require__(18);
+var resizeEl_1 = __webpack_require__(16);
+var Embed = function () {
+    function Embed() {
+        var that = this;
+        this.configService = new service_1.default();
+        this.$embedContainer = document.getElementById('embed-content');
+        this.$embedResource = document.getElementById('embed-image');
+        this.resourceOriginalWidth = this.configService.get('resource.width');
+        this.resourceOriginalHeight = this.configService.get('resource.height');
+        if (this.configService.get('isStandalone') === true) {
+            this.initResizer();
+        } else {
+            this.$embedResource.style.width = '100%';
+            this.$embedResource.style.height = 'auto';
+            this.pymChild = new pym.Child({ id: 'phraseanet-embed-frame', renderCallback: function (windowWidth) {
+                    var ratio = that.resourceOriginalHeight / that.resourceOriginalWidth;
+                    that.$embedResource.style.width = '100%';
+                    that.$embedResource.style.height = 'auto';
+                    // send image calculated height
+                    that.$embedContainer.style.height = windowWidth * ratio + 'px';
+                } });
+            if (this.pymChild.parentUrl === '') {
+                // no parent pym:
+                this.initResizer();
+            }
+        }
+    }
+    Embed.prototype.initResizer = function () {
+        this.resizer = new resizeEl_1.default({
+            target: this.$embedResource,
+            container: this.$embedContainer,
+            resizeOnWindowChange: this.configService.get('resource.fitIn') === true ? true : false
+        });
+        this.resizer.setContainerDimensions({
+            width: window.innerWidth,
+            height: window.innerHeight
+        });
+        this.resizer.setTargetDimensions({
+            width: this.resourceOriginalWidth,
+            height: this.resourceOriginalHeight
+        });
+        this.resizer.resize();
+    };
+    return Embed;
+}();
+exports.default = Embed;
+window.embedPlugin = new Embed();
+
 /***/ })
 
-},[17]);
+},[83]);
 //# sourceMappingURL=image.js.map

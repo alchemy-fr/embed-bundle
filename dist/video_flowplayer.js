@@ -1,34 +1,106 @@
 webpackJsonp([4],{
 
-/***/ 2:
-/***/ (function(module, exports) {
+/***/ 16:
+/***/ (function(module, exports, __webpack_require__) {
 
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
+var _ = __webpack_require__(8);
+var ResizeEl = function () {
+    function ResizeEl(options) {
+        var _this = this;
+        if (!options) {
+            options = {};
+        }
+        if (options.target) {
+            this.$embedResource = options.target;
+        }
+        if (options.container) {
+            this.$embedContainer = options.container;
+        } else {
+            var containers = document.getElementsByTagName('body');
+            this.$embedContainer = containers[0];
+        }
+        if (options.resizeCallback !== undefined) {
+            this.resizeCallback = options.resizeCallback;
+        }
+        if (options.resizeOnWindowChange === true) {
+            window.addEventListener('resize', _.debounce(function () {
+                _this.onResizeWindow(window.innerWidth, window.innerHeight);
+            }, 300), false);
+        }
+        this.defaultWidth = 120;
+        this.defaultHeight = 120;
+    }
+    ResizeEl.prototype.setContainerDimensions = function (dimensions) {
+        this.containerDimensions = dimensions;
+    };
+    ResizeEl.prototype.setTargetDimensions = function (dimensions) {
+        this.targetDimensions = dimensions;
+    };
+    ResizeEl.prototype.onResizeWindow = function (width, height) {
+        this.setContainerDimensions({
+            width: width,
+            height: height
+        });
+        this.setTargetDimensions({
+            width: width,
+            height: height
+        });
+        this.resize();
+    };
+    ResizeEl.prototype.resize = function () {
+        // get original size
+        var resized = false,
+            maxWidth = this.containerDimensions.width,
+            maxHeight = this.containerDimensions.height,
+            resourceWidth = this.targetDimensions.width,
+            resourceHeight = this.targetDimensions.height,
+            resourceRatio = this.targetDimensions.height / this.targetDimensions.width;
+        var resizeW = resourceWidth,
+            resizeH = resourceHeight;
+        // pass 1 make height ok:
+        if (resourceWidth > resourceHeight) {
+            // if width still too large:
+            if (resizeW > maxWidth) {
+                resizeW = maxWidth;
+                resizeH = maxWidth * resourceRatio;
+            }
+            if (resizeH > maxHeight) {
+                resizeW = maxHeight / resourceRatio;
+                resizeH = maxHeight;
+            }
+        } else {
+            if (resizeH > maxHeight) {
+                resizeW = maxHeight / resourceRatio;
+                resizeH = maxHeight;
+            }
+        }
+        if (resizeW === null && resizeH === null) {
+            resizeW = this.defaultWidth;
+            resizeH = this.defaultHeight;
+        }
+        resizeW = Math.floor(resizeW);
+        resizeH = Math.floor(resizeH);
+        // add top margin:
+        var marginTop = 0;
+        if (this.containerDimensions.height > resizeH) {
+            marginTop = (this.containerDimensions.height - resizeH) / 2;
+        }
+        this.$embedResource.style.width = resizeW + 'px';
+        this.$embedResource.style.height = resizeH + 'px';
+        this.$embedContainer.style.width = resizeW + 'px';
+        this.$embedContainer.style.height = resizeH + 'px';
+        this.$embedContainer.style['margin-top'] = marginTop + 'px';
+        if (this.resizeCallback !== undefined) {
+            this.resizeCallback.apply(this, [{ width: resizeW, height: resizeH, 'margin-top': marginTop }]);
+        }
+    };
+    return ResizeEl;
+}();
+exports.default = ResizeEl;
 
 /***/ }),
 
-/***/ 24:
+/***/ 197:
 /***/ (function(module, exports, __webpack_require__) {
 
 /// <reference path="../../../../embed/embed.d.ts" />
@@ -37,11 +109,11 @@ module.exports = g;
  */
 // require('html5shiv');
 window.HELP_IMPROVE_VIDEOJS = false;
-var flowplayer = __webpack_require__(25);
-var _ = __webpack_require__(0);
-var service_1 = __webpack_require__(5);
-var resizeEl_1 = __webpack_require__(4);
-var playerTemplate = __webpack_require__(26);
+var flowplayer = __webpack_require__(198);
+var _ = __webpack_require__(8);
+var service_1 = __webpack_require__(18);
+var resizeEl_1 = __webpack_require__(16);
+var playerTemplate = __webpack_require__(199);
 var VideoPlayer = function () {
     function VideoPlayer() {
         this.configService = new service_1.default();
@@ -115,7 +187,7 @@ window.embedPlugin = new VideoPlayer();
 
 /***/ }),
 
-/***/ 25:
+/***/ 198:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var require;var require;/*!
@@ -7031,11 +7103,11 @@ module.exports = function isObject(x) {
 },{}]},{},[19])(19)
 });
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
 
-/***/ 26:
+/***/ 199:
 /***/ (function(module, exports) {
 
 module.exports = function(obj){
@@ -7046,107 +7118,7 @@ __p+='<div  id="embed-video" class="flowplayer functional">\n\n</div>';
 return __p;
 };
 
-/***/ }),
-
-/***/ 4:
-/***/ (function(module, exports, __webpack_require__) {
-
-var _ = __webpack_require__(0);
-var ResizeEl = function () {
-    function ResizeEl(options) {
-        var _this = this;
-        if (!options) {
-            options = {};
-        }
-        if (options.target) {
-            this.$embedResource = options.target;
-        }
-        if (options.container) {
-            this.$embedContainer = options.container;
-        } else {
-            var containers = document.getElementsByTagName('body');
-            this.$embedContainer = containers[0];
-        }
-        if (options.resizeCallback !== undefined) {
-            this.resizeCallback = options.resizeCallback;
-        }
-        if (options.resizeOnWindowChange === true) {
-            window.addEventListener('resize', _.debounce(function () {
-                _this.onResizeWindow(window.innerWidth, window.innerHeight);
-            }, 300), false);
-        }
-        this.defaultWidth = 120;
-        this.defaultHeight = 120;
-    }
-    ResizeEl.prototype.setContainerDimensions = function (dimensions) {
-        this.containerDimensions = dimensions;
-    };
-    ResizeEl.prototype.setTargetDimensions = function (dimensions) {
-        this.targetDimensions = dimensions;
-    };
-    ResizeEl.prototype.onResizeWindow = function (width, height) {
-        this.setContainerDimensions({
-            width: width,
-            height: height
-        });
-        this.setTargetDimensions({
-            width: width,
-            height: height
-        });
-        this.resize();
-    };
-    ResizeEl.prototype.resize = function () {
-        // get original size
-        var resized = false,
-            maxWidth = this.containerDimensions.width,
-            maxHeight = this.containerDimensions.height,
-            resourceWidth = this.targetDimensions.width,
-            resourceHeight = this.targetDimensions.height,
-            resourceRatio = this.targetDimensions.height / this.targetDimensions.width;
-        var resizeW = resourceWidth,
-            resizeH = resourceHeight;
-        // pass 1 make height ok:
-        if (resourceWidth > resourceHeight) {
-            // if width still too large:
-            if (resizeW > maxWidth) {
-                resizeW = maxWidth;
-                resizeH = maxWidth * resourceRatio;
-            }
-            if (resizeH > maxHeight) {
-                resizeW = maxHeight / resourceRatio;
-                resizeH = maxHeight;
-            }
-        } else {
-            if (resizeH > maxHeight) {
-                resizeW = maxHeight / resourceRatio;
-                resizeH = maxHeight;
-            }
-        }
-        if (resizeW === null && resizeH === null) {
-            resizeW = this.defaultWidth;
-            resizeH = this.defaultHeight;
-        }
-        resizeW = Math.floor(resizeW);
-        resizeH = Math.floor(resizeH);
-        // add top margin:
-        var marginTop = 0;
-        if (this.containerDimensions.height > resizeH) {
-            marginTop = (this.containerDimensions.height - resizeH) / 2;
-        }
-        this.$embedResource.style.width = resizeW + 'px';
-        this.$embedResource.style.height = resizeH + 'px';
-        this.$embedContainer.style.width = resizeW + 'px';
-        this.$embedContainer.style.height = resizeH + 'px';
-        this.$embedContainer.style['margin-top'] = marginTop + 'px';
-        if (this.resizeCallback !== undefined) {
-            this.resizeCallback.apply(this, [{ width: resizeW, height: resizeH, 'margin-top': marginTop }]);
-        }
-    };
-    return ResizeEl;
-}();
-exports.default = ResizeEl;
-
 /***/ })
 
-},[24]);
+},[197]);
 //# sourceMappingURL=video_flowplayer.js.map
