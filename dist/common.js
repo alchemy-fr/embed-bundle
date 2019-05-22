@@ -91,7 +91,7 @@
 /******/ 		if (__webpack_require__.nc) {
 /******/ 			script.setAttribute("nonce", __webpack_require__.nc);
 /******/ 		}
-/******/ 		script.src = __webpack_require__.p + "" + {"0":"a63336c257f743172354"}[chunkId] + ".js";
+/******/ 		script.src = __webpack_require__.p + "" + {"0":"9b950183d465675dcdb5"}[chunkId] + ".js";
 /******/ 		var timeout = setTimeout(onScriptComplete, 120000);
 /******/ 		script.onerror = script.onload = onScriptComplete;
 /******/ 		function onScriptComplete() {
@@ -147,234 +147,12 @@
 /******/ 	__webpack_require__.oe = function(err) { console.error(err); throw err; };
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 218);
+/******/ 	return __webpack_require__(__webpack_require__.s = 115);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 17:
-/***/ (function(module, exports, __webpack_require__) {
-
-var __extends = this && this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() {
-        this.constructor = d;
-    }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
-var applicationConfigService_1 = __webpack_require__(84);
-//import radioChannels from '../../core/radioChannels';
-var config_1 = __webpack_require__(86);
-var instance = null;
-var ConfigService = function (_super) {
-    __extends(ConfigService, _super);
-    function ConfigService() {
-        if (!instance) {
-            instance = this;
-        }
-        _super.call(this, config_1.default);
-        /*        // register listeners:
-                radioChannels().get('config').reply('service', () => {
-                    return instance;
-                });
-                radioChannels().get('config').reply('get', (configKey) => {
-                    return this.get(configKey);
-                });*/
-        return instance;
-    }
-    return ConfigService;
-}(applicationConfigService_1.default);
-;
-exports.default = ConfigService;
-
-/***/ }),
-
-/***/ 218:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(9);
-
-
-/***/ }),
-
-/***/ 5:
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-
-/***/ 84:
-/***/ (function(module, exports, __webpack_require__) {
-
-var instance = null;
-var _ = __webpack_require__(9);
-var ApplicationConfigService = function () {
-    function ApplicationConfigService(config) {
-        // if( !instance ) {
-        //     instance = this;
-        // }
-        this.configuration = config;
-        // return instance;
-    }
-    ApplicationConfigService.prototype.get = function (configKey) {
-        if (configKey !== undefined) {
-            var foundValue = this._findKeyValue(configKey || this.configuration);
-            switch (typeof foundValue) {
-                case 'string':
-                    return foundValue;
-                default:
-                    return foundValue ? foundValue : null;
-            }
-        }
-        return this.configuration;
-    };
-    ApplicationConfigService.prototype.set = function (configKey, value) {
-        if (configKey !== undefined) {
-            this.configuration[configKey] = value;
-        }
-    };
-    // @TODO cast
-    ApplicationConfigService.prototype._findKeyValue = function (configName) {
-        if (!configName) {
-            return undefined;
-        }
-        var isStr = _.isString(configName),
-            name = isStr ? configName : configName.name,
-            path = configName.indexOf('.') > 0 ? true : false;
-        if (path) {
-            return this._search(this.configuration, name);
-        }
-        var state = this.configuration[name];
-        if (state && (isStr || !isStr && state === configName)) {
-            return state;
-        } else if (isStr) {
-            return state;
-        }
-        return undefined;
-    };
-    // @TODO cast
-    ApplicationConfigService.prototype._search = function (obj, path) {
-        if (_.isNumber(path)) {
-            path = [path];
-        }
-        if (_.isEmpty(path)) {
-            return obj;
-        }
-        if (_.isEmpty(obj)) {
-            return null;
-        }
-        if (_.isString(path)) {
-            return this._search(obj, path.split('.'));
-        }
-        var currentPath = path[0];
-        if (path.length === 1) {
-            if (obj[currentPath] === void 0) {
-                return null;
-            }
-            return obj[currentPath];
-        }
-        return this._search(obj[currentPath], path.slice(1));
-    };
-    return ApplicationConfigService;
-}();
-exports.default = ApplicationConfigService;
-;
-
-/***/ }),
-
-/***/ 85:
-/***/ (function(module, exports) {
-
-module.exports = function(module) {
-	if(!module.webpackPolyfill) {
-		module.deprecate = function() {};
-		module.paths = [];
-		// module.parent = undefined by default
-		if(!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
-			get: function() {
-				return module.i;
-			}
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
-};
-
-
-/***/ }),
-
-/***/ 86:
-/***/ (function(module, exports, __webpack_require__) {
-
-var _ = __webpack_require__(9);
-var config = {
-    assetsPath: '/plugins/web-gallery/assets',
-    api: {
-        baseUrl: '/web-gallery',
-        basePath: '',
-        ajaxSetup: {
-            accept: 'application/json',
-            contentType: 'application/json',
-            async: true,
-            cache: false,
-            dataType: 'json',
-            complete: function () {
-                // console.log('complete')
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                // override default phraseanet behavior
-                console.log('ajax failed', jqXHR, textStatus, errorThrown);
-                var res,
-                    ct = jqXHR.getResponseHeader('content-type') || '';
-                if (ct.indexOf('json') > -1) {
-                    res = $.parseJSON(jqXHR.responseText);
-                }
-                return res;
-            }
-        }
-    }
-};
-// config can be overridden by local environment:
-var envConfiguration = window.envConfiguration;
-if (envConfiguration !== undefined) {
-    config = _.extend(config, envConfiguration);
-}
-exports.default = config;
-
-/***/ }),
-
-/***/ 9:
+/***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//     Underscore.js 1.9.1
@@ -2071,7 +1849,229 @@ exports.default = config;
   }
 }());
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(85)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(37)(module)))
+
+/***/ }),
+
+/***/ 115:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(0);
+
+
+/***/ }),
+
+/***/ 2:
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+
+/***/ 36:
+/***/ (function(module, exports, __webpack_require__) {
+
+var instance = null;
+var _ = __webpack_require__(0);
+var ApplicationConfigService = function () {
+    function ApplicationConfigService(config) {
+        // if( !instance ) {
+        //     instance = this;
+        // }
+        this.configuration = config;
+        // return instance;
+    }
+    ApplicationConfigService.prototype.get = function (configKey) {
+        if (configKey !== undefined) {
+            var foundValue = this._findKeyValue(configKey || this.configuration);
+            switch (typeof foundValue) {
+                case 'string':
+                    return foundValue;
+                default:
+                    return foundValue ? foundValue : null;
+            }
+        }
+        return this.configuration;
+    };
+    ApplicationConfigService.prototype.set = function (configKey, value) {
+        if (configKey !== undefined) {
+            this.configuration[configKey] = value;
+        }
+    };
+    // @TODO cast
+    ApplicationConfigService.prototype._findKeyValue = function (configName) {
+        if (!configName) {
+            return undefined;
+        }
+        var isStr = _.isString(configName),
+            name = isStr ? configName : configName.name,
+            path = configName.indexOf('.') > 0 ? true : false;
+        if (path) {
+            return this._search(this.configuration, name);
+        }
+        var state = this.configuration[name];
+        if (state && (isStr || !isStr && state === configName)) {
+            return state;
+        } else if (isStr) {
+            return state;
+        }
+        return undefined;
+    };
+    // @TODO cast
+    ApplicationConfigService.prototype._search = function (obj, path) {
+        if (_.isNumber(path)) {
+            path = [path];
+        }
+        if (_.isEmpty(path)) {
+            return obj;
+        }
+        if (_.isEmpty(obj)) {
+            return null;
+        }
+        if (_.isString(path)) {
+            return this._search(obj, path.split('.'));
+        }
+        var currentPath = path[0];
+        if (path.length === 1) {
+            if (obj[currentPath] === void 0) {
+                return null;
+            }
+            return obj[currentPath];
+        }
+        return this._search(obj[currentPath], path.slice(1));
+    };
+    return ApplicationConfigService;
+}();
+exports.default = ApplicationConfigService;
+;
+
+/***/ }),
+
+/***/ 37:
+/***/ (function(module, exports) {
+
+module.exports = function(module) {
+	if(!module.webpackPolyfill) {
+		module.deprecate = function() {};
+		module.paths = [];
+		// module.parent = undefined by default
+		if(!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function() {
+				return module.i;
+			}
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
+
+
+/***/ }),
+
+/***/ 38:
+/***/ (function(module, exports, __webpack_require__) {
+
+var _ = __webpack_require__(0);
+var config = {
+    assetsPath: '/plugins/web-gallery/assets',
+    api: {
+        baseUrl: '/web-gallery',
+        basePath: '',
+        ajaxSetup: {
+            accept: 'application/json',
+            contentType: 'application/json',
+            async: true,
+            cache: false,
+            dataType: 'json',
+            complete: function () {
+                // console.log('complete')
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                // override default phraseanet behavior
+                console.log('ajax failed', jqXHR, textStatus, errorThrown);
+                var res,
+                    ct = jqXHR.getResponseHeader('content-type') || '';
+                if (ct.indexOf('json') > -1) {
+                    res = $.parseJSON(jqXHR.responseText);
+                }
+                return res;
+            }
+        }
+    }
+};
+// config can be overridden by local environment:
+var envConfiguration = window.envConfiguration;
+if (envConfiguration !== undefined) {
+    config = _.extend(config, envConfiguration);
+}
+exports.default = config;
+
+/***/ }),
+
+/***/ 5:
+/***/ (function(module, exports, __webpack_require__) {
+
+var __extends = this && this.__extends || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() {
+        this.constructor = d;
+    }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var applicationConfigService_1 = __webpack_require__(36);
+//import radioChannels from '../../core/radioChannels';
+var config_1 = __webpack_require__(38);
+var instance = null;
+var ConfigService = function (_super) {
+    __extends(ConfigService, _super);
+    function ConfigService() {
+        if (!instance) {
+            instance = this;
+        }
+        _super.call(this, config_1.default);
+        /*        // register listeners:
+                radioChannels().get('config').reply('service', () => {
+                    return instance;
+                });
+                radioChannels().get('config').reply('get', (configKey) => {
+                    return this.get(configKey);
+                });*/
+        return instance;
+    }
+    return ConfigService;
+}(applicationConfigService_1.default);
+;
+exports.default = ConfigService;
 
 /***/ })
 
