@@ -27,7 +27,7 @@ exports.warn = exports.utf8StringToString = exports.stringToUTF8String = exports
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-__webpack_require__(39);
+__webpack_require__(40);
 
 var globalScope = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : undefined;
 var FONT_IDENTITY_MATRIX = [0.001, 0, 0, 0.001, 0, 0];
@@ -1110,37 +1110,10 @@ exports.stringToPDFString = stringToPDFString;
 exports.stringToUTF8String = stringToUTF8String;
 exports.utf8StringToString = utf8StringToString;
 exports.warn = warn;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(9)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(9)))
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! pym.js - v1.3.2 - 2018-02-13 */
@@ -2268,9 +2241,9 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! pym.js - v
 
 
 /***/ }),
+/* 3 */,
 /* 4 */,
-/* 5 */,
-/* 6 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2564,6 +2537,7 @@ exports.DOMCanvasFactory = DOMCanvasFactory;
 exports.DOMCMapReaderFactory = DOMCMapReaderFactory;
 
 /***/ }),
+/* 6 */,
 /* 7 */,
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -12350,11 +12324,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var _util = __webpack_require__(1);
 
-var _dom_utils = __webpack_require__(6);
+var _dom_utils = __webpack_require__(5);
 
-var _font_loader = __webpack_require__(41);
+var _font_loader = __webpack_require__(42);
 
-var _canvas = __webpack_require__(42);
+var _canvas = __webpack_require__(43);
 
 var _metadata = __webpack_require__(13);
 
@@ -12384,7 +12358,7 @@ if (typeof __pdfjsdev_webpack__ === 'undefined') {
   fakeWorkerFilesLoader = useRequireEnsure ? function (callback) {
     __webpack_require__.e/* require.ensure */(0).then((function () {
       var worker;
-      worker = __webpack_require__(46);
+      worker = __webpack_require__(47);
       callback(worker.WorkerMessageHandler);
     }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
   } : dynamicLoaderSupported ? function (callback) {
@@ -13782,7 +13756,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.WebGLUtils = undefined;
 
-var _dom_utils = __webpack_require__(6);
+var _dom_utils = __webpack_require__(5);
 
 var _util = __webpack_require__(1);
 
@@ -14261,7 +14235,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.AnnotationLayer = undefined;
 
-var _dom_utils = __webpack_require__(6);
+var _dom_utils = __webpack_require__(5);
 
 var _util = __webpack_require__(1);
 
@@ -14931,7 +14905,7 @@ exports.renderTextLayer = undefined;
 
 var _util = __webpack_require__(1);
 
-var _dom_utils = __webpack_require__(6);
+var _dom_utils = __webpack_require__(5);
 
 var renderTextLayer = function renderTextLayerClosure() {
   var MAX_TEXT_DIVS_TO_RENDER = 100000;
@@ -16405,7 +16379,8 @@ exports.SVGGraphics = SVGGraphics;
 /* 29 */,
 /* 30 */,
 /* 31 */,
-/* 32 */
+/* 32 */,
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /// <reference path="../../../../embed/embed.d.ts" />
@@ -16413,18 +16388,18 @@ exports.SVGGraphics = SVGGraphics;
  * FlexPaper Player for Embed Document
  */
 //require('html5shiv');
-__webpack_require__(33);
-__webpack_require__(34); // should be loaded first
+__webpack_require__(34);
+__webpack_require__(35); // should be loaded first
 __webpack_require__(8);
 // Webpack returns a string to the url because we configured the url-loader.
 window.PDFJS.workerSrc = __webpack_require__(10);
-var pdfview = __webpack_require__(35);
-var ui_utils = __webpack_require__(36);
+var pdfview = __webpack_require__(36);
+var ui_utils = __webpack_require__(37);
 //import * as $ from 'jquery';
 var _ = __webpack_require__(0);
-var service_1 = __webpack_require__(5);
-var playerTemplate = __webpack_require__(44);
-var pym = __webpack_require__(3);
+var service_1 = __webpack_require__(3);
+var playerTemplate = __webpack_require__(45);
+var pym = __webpack_require__(2);
 var FindStates = {
     FIND_FOUND: 0,
     FIND_NOTFOUND: 1,
@@ -16730,7 +16705,7 @@ exports.default = DocumentPlayer;
 window.embedPlugin = new DocumentPlayer();
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17944,7 +17919,7 @@ if (window._ === undefined) {
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* Copyright 2017 Mozilla Foundation
@@ -19571,7 +19546,7 @@ __webpack_require__(0);
 //# sourceMappingURL=compatibility.js.map
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* Copyright 2017 Mozilla Foundation
@@ -23100,7 +23075,7 @@ exports.PDFJS = PDFJS;
 //# sourceMappingURL=pdf_viewer.js.map
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23125,7 +23100,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.localized = exports.animationStarted = exports.normalizeWheelEventDelta = exports.binarySearchFirstItem = exports.watchScroll = exports.scrollIntoView = exports.getOutputScale = exports.approximateFraction = exports.roundToDivide = exports.getVisibleElements = exports.parseQueryString = exports.noContextMenuHandler = exports.getPDFFileNameFromURL = exports.ProgressBar = exports.EventBus = exports.mozL10n = exports.RendererType = exports.cloneObj = exports.VERTICAL_PADDING = exports.SCROLLBAR_PADDING = exports.MAX_AUTO_SCALE = exports.UNKNOWN_SCALE = exports.MAX_SCALE = exports.MIN_SCALE = exports.DEFAULT_SCALE = exports.DEFAULT_SCALE_VALUE = exports.CSS_UNITS = undefined;
 
-var _pdfjs = __webpack_require__(37);
+var _pdfjs = __webpack_require__(38);
 
 var CSS_UNITS = 96.0 / 72.0;
 var DEFAULT_SCALE_VALUE = 'auto';
@@ -23544,7 +23519,7 @@ exports.animationStarted = animationStarted;
 exports.localized = localized;
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23570,7 +23545,7 @@ exports.localized = localized;
     if (typeof window !== 'undefined' && window['pdfjs-dist/build/pdf']) {
       pdfjsLib = window['pdfjs-dist/build/pdf'];
     } else if (true) {
-      pdfjsLib = __webpack_require__(38);
+      pdfjsLib = __webpack_require__(39);
     } else {
       throw new Error('Neither `require` nor `window` found');
     }
@@ -23579,7 +23554,7 @@ exports.localized = localized;
 }
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23602,11 +23577,11 @@ exports.localized = localized;
 var pdfjsVersion = '1.8.366';
 var pdfjsBuild = '32bb0e8c';
 var pdfjsSharedUtil = __webpack_require__(1);
-var pdfjsDisplayGlobal = __webpack_require__(40);
+var pdfjsDisplayGlobal = __webpack_require__(41);
 var pdfjsDisplayAPI = __webpack_require__(11);
 var pdfjsDisplayTextLayer = __webpack_require__(15);
 var pdfjsDisplayAnnotationLayer = __webpack_require__(14);
-var pdfjsDisplayDOMUtils = __webpack_require__(6);
+var pdfjsDisplayDOMUtils = __webpack_require__(5);
 var pdfjsDisplaySVG = __webpack_require__(16);
 exports.PDFJS = pdfjsDisplayGlobal.PDFJS;
 exports.build = pdfjsDisplayAPI.build;
@@ -23638,7 +23613,7 @@ exports.getFilenameFromUrl = pdfjsDisplayDOMUtils.getFilenameFromUrl;
 exports.addLinkAttributes = pdfjsDisplayDOMUtils.addLinkAttributes;
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25145,10 +25120,10 @@ if (typeof PDFJS === 'undefined' || !PDFJS.compatibilityChecked) {
     globalScope.URL = JURL;
   })();
 }
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25175,7 +25150,7 @@ exports.PDFJS = exports.isWorker = exports.globalScope = undefined;
 
 var _api = __webpack_require__(11);
 
-var _dom_utils = __webpack_require__(6);
+var _dom_utils = __webpack_require__(5);
 
 var _util = __webpack_require__(1);
 
@@ -25301,7 +25276,7 @@ exports.isWorker = isWorker;
 exports.PDFJS = PDFJS;
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25612,7 +25587,7 @@ exports.FontFaceObject = FontFaceObject;
 exports.FontLoader = FontLoader;
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25639,7 +25614,7 @@ exports.CanvasGraphics = undefined;
 
 var _util = __webpack_require__(1);
 
-var _pattern_helper = __webpack_require__(43);
+var _pattern_helper = __webpack_require__(44);
 
 var _webgl = __webpack_require__(12);
 
@@ -27345,7 +27320,7 @@ var CanvasGraphics = function CanvasGraphicsClosure() {
 exports.CanvasGraphics = CanvasGraphics;
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27732,7 +27707,7 @@ exports.getShadingPatternFromIR = getShadingPatternFromIR;
 exports.TilingPattern = TilingPattern;
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports) {
 
 module.exports = function(obj){
@@ -27744,5 +27719,5 @@ return __p;
 };
 
 /***/ })
-],[32]);
+],[33]);
 //# sourceMappingURL=document_pdfjs.js.map

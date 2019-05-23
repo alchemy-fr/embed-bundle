@@ -1,34 +1,6 @@
-webpackJsonp([4],{
+webpackJsonp([3],{
 
-/***/ 2:
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-
-/***/ 24:
+/***/ 25:
 /***/ (function(module, exports, __webpack_require__) {
 
 /// <reference path="../../../../embed/embed.d.ts" />
@@ -37,11 +9,11 @@ module.exports = g;
  */
 // require('html5shiv');
 window.HELP_IMPROVE_VIDEOJS = false;
-var flowplayer = __webpack_require__(25);
+var flowplayer = __webpack_require__(26);
 var _ = __webpack_require__(0);
-var service_1 = __webpack_require__(5);
-var resizeEl_1 = __webpack_require__(4);
-var playerTemplate = __webpack_require__(26);
+var service_1 = __webpack_require__(3);
+var resizeEl_1 = __webpack_require__(6);
+var playerTemplate = __webpack_require__(27);
 var VideoPlayer = function () {
     function VideoPlayer() {
         this.configService = new service_1.default();
@@ -115,7 +87,7 @@ window.embedPlugin = new VideoPlayer();
 
 /***/ }),
 
-/***/ 25:
+/***/ 26:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var require;var require;/*!
@@ -7031,11 +7003,11 @@ module.exports = function isObject(x) {
 },{}]},{},[19])(19)
 });
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ }),
 
-/***/ 26:
+/***/ 27:
 /***/ (function(module, exports) {
 
 module.exports = function(obj){
@@ -7048,7 +7020,7 @@ return __p;
 
 /***/ }),
 
-/***/ 4:
+/***/ 6:
 /***/ (function(module, exports, __webpack_require__) {
 
 var _ = __webpack_require__(0);
@@ -7148,5 +7120,5 @@ exports.default = ResizeEl;
 
 /***/ })
 
-},[24]);
+},[25]);
 //# sourceMappingURL=video_flowplayer.js.map

@@ -66,8 +66,8 @@ class Media extends AbstractDelivery
 
                 // if user config has custom subdef specified:
                 if (array_key_exists('video', $embedConfig)) {
-                    if (array_key_exists('coverSubdef', $embedConfig['video'])) {
-                        $customCoverName = $embedConfig['video']['coverSubdef'];
+                    if (array_key_exists('cover_subdef', $embedConfig['video'])) {
+                        $customCoverName = $embedConfig['video']['cover_subdef'];
                         try {
                             $customCover = $record->get_subdef($customCoverName);
                             $coverUrl = $baseUrl.$customCover->get_url();

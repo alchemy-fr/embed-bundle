@@ -106,7 +106,7 @@ class EmbedController
                 if ($mediaInformation->getResource()->get_name() == 'preview' &&
                     $mediaInformation->getResource()->get_mime() == 'application/pdf' &&
                     !$ie8OrLess) {
-                    if ($embedConfig['document']['enable-pdfjs'] === true) {
+                    if ($embedConfig['document']['enable_pdfjs'] === true) {
                         if ($record->has_subdef('preview')) {
                             $subdef = $record->get_subdef('preview');
                             $embedConfig['document']['player'] = 'pdfjs';
@@ -114,7 +114,7 @@ class EmbedController
                         }
                     }
                 } elseif ($record->getMimeType() == 'application/pdf' && !$ie8OrLess) {
-                    if ($embedConfig['document']['enable-pdfjs'] === true) {
+                    if ($embedConfig['document']['enable_pdfjs'] === true) {
                         if ($record->has_subdef('document')) {
                             $subdef = $record->get_subdef('document');
                             $embedConfig['document']['player'] = 'pdfjs';
@@ -136,7 +136,7 @@ class EmbedController
                 if ($mediaInformation->getResource()->get_name() == 'preview' &&
                     $mediaInformation->getResource()->get_mime() == 'application/pdf' &&
                     !$ie8OrLess) {
-                    if ($embedConfig['document']['enable-pdfjs'] === true) {
+                    if ($embedConfig['document']['enable_pdfjs'] === true) {
                         if ($record->has_subdef('preview')) {
                             $subdef = $record->get_subdef('preview');
                             $embedConfig['document']['player'] = 'pdfjs';

@@ -1,168 +1,6 @@
-webpackJsonp([3],{
+webpackJsonp([4],{
 
 /***/ 2:
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-
-/***/ 27:
-/***/ (function(module, exports, __webpack_require__) {
-
-/// <reference path="../../../../embed/embed.d.ts" />
-/**
- * VideoJS Player for Embed Audio
- */
-// require('html5shiv');
-window.HELP_IMPROVE_VIDEOJS = false;
-var videojs = __webpack_require__(7);
-var _ = __webpack_require__(0);
-var service_1 = __webpack_require__(5);
-var resizeEl_1 = __webpack_require__(4);
-var playerTemplate = __webpack_require__(28);
-var pym = __webpack_require__(3);
-var AudioPlayer = function () {
-    function AudioPlayer() {
-        var _this = this;
-        var that = this;
-        this.configService = new service_1.default();
-        var audioContainers = document.getElementsByClassName('audio-player'); //$('.video-player');
-        this.$playerContainer = audioContainers[0];
-        this.$playerContainer.insertAdjacentHTML('afterbegin', playerTemplate(this.configService.get('resource')));
-        this.$embedContainer = document.getElementById('embed-content');
-        this.$embedResource = document.getElementById('embed-audio');
-        this.resourceOriginalWidth = this.configService.get('resource.width');
-        this.resourceOriginalHeight = this.configService.get('resource.height');
-        if (this.configService.get('isStandalone') === true) {
-            this.initResizer();
-        } else {
-            this.pymChild = new pym.Child({ id: 'phraseanet-embed-frame', renderCallback: function (windowWidth) {
-                    //let ratio = that.resourceOriginalHeight / that.resourceOriginalWidth;
-                    // send video calculated height
-                    //that.$embedContainer.style.height = windowWidth * ratio + 'px';
-                } });
-            window.addEventListener('resize', _.debounce(function () {
-                if (_this.pymChild !== undefined) {
-                    _this.pymChild.sendHeight();
-                }
-            }, 200), false);
-            if (this.pymChild.parentUrl === '') {
-                // no parent pym:
-                this.initResizer();
-            }
-        }
-        this.setupVideo();
-    }
-    AudioPlayer.prototype.initResizer = function () {
-        var _this = this;
-        this.resizer = new resizeEl_1.default({
-            target: this.$embedResource,
-            container: this.$embedContainer,
-            resizeOnWindowChange: this.configService.get('resource.fitIn') === true ? true : false,
-            resizeCallback: function (dimensions) {
-                _this.$playerContainer.style.width = dimensions.width + 'px';
-                _this.$playerContainer.style.height = dimensions.height + 'px';
-                _this.$playerContainer.firstChild.style.width = dimensions.width + 'px';
-                _this.$playerContainer.firstChild.style.height = dimensions.height + 'px';
-            }
-        });
-        this.resizer.setContainerDimensions({
-            width: window.innerWidth,
-            height: window.innerHeight
-        });
-        this.resizer.setTargetDimensions({
-            width: this.resourceOriginalWidth,
-            height: this.resourceOriginalHeight
-        });
-        this.resizer.resize();
-    };
-    AudioPlayer.prototype.setupVideo = function () {
-        var aspectRatio = this.configService.get('resource.aspectRatio'),
-            options = {
-            fluid: true,
-            inactivityTimeout: 0 // force control to be alway active
-        };
-        if (this.configService.get('resource.aspectRatio') !== null) {
-            options.aspectRatio = this.configService.get('resource.aspectRatio');
-        }
-        if (this.configService.get('resource.autoplay') !== null) {
-            options.autoplay = this.configService.get('resource.autoplay');
-        }
-        /*if( this.configService.get('resource.playbackRates') !== null ) {
-            options.playbackRates = this.configService.get('resource.playbackRates');
-        }*/
-        options.techOrder = ['html5', 'flash'];
-        options.flash = {
-            swf: '/assets/vendors/alchemy-embed-medias/players/videojs/video-js.swf'
-        };
-        var player = this.initVideo('embed-audio', options, function () {
-            // if( this.configService.get('resource.autoplay') === true) {
-            // this.play();
-            // }
-            // this.on('ended', function() {});
-        });
-    };
-    AudioPlayer.prototype.initVideo = function () {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i - 0] = arguments[_i];
-        }
-        return videojs.apply(this, args);
-    };
-    return AudioPlayer;
-}();
-exports.default = AudioPlayer;
-window.embedPlugin = new AudioPlayer();
-
-/***/ }),
-
-/***/ 28:
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
-var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-with(obj||{}){
-__p+='<audio id="embed-audio" class="embed-resource video-js vjs-default-skin vjs-big-play-centered" controls\n       preload="auto" width="100%" height="100%" poster="'+
-((__t=( coverUrl ))==null?'':__t)+
-'">\n    ';
- _.each( sources, function( s ){ 
-__p+='\n    <source src="'+
-((__t=( s.url ))==null?'':__t)+
-'" type="'+
-((__t=( s.type ))==null?'':__t)+
-'">\n    ';
- }); 
-__p+='\n</audio>';
-}
-return __p;
-};
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-
-/***/ 3:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! pym.js - v1.3.2 - 2018-02-13 */
@@ -1291,103 +1129,132 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! pym.js - v
 
 /***/ }),
 
-/***/ 4:
+/***/ 28:
 /***/ (function(module, exports, __webpack_require__) {
 
+/// <reference path="../../../../embed/embed.d.ts" />
+/**
+ * VideoJS Player for Embed Audio
+ */
+// require('html5shiv');
+window.HELP_IMPROVE_VIDEOJS = false;
+var videojs = __webpack_require__(7);
 var _ = __webpack_require__(0);
-var ResizeEl = function () {
-    function ResizeEl(options) {
+var service_1 = __webpack_require__(3);
+var playerTemplate = __webpack_require__(29);
+var pym = __webpack_require__(2);
+var AudioPlayer = function () {
+    function AudioPlayer() {
         var _this = this;
-        if (!options) {
-            options = {};
-        }
-        if (options.target) {
-            this.$embedResource = options.target;
-        }
-        if (options.container) {
-            this.$embedContainer = options.container;
-        } else {
-            var containers = document.getElementsByTagName('body');
-            this.$embedContainer = containers[0];
-        }
-        if (options.resizeCallback !== undefined) {
-            this.resizeCallback = options.resizeCallback;
-        }
-        if (options.resizeOnWindowChange === true) {
+        var that = this;
+        this.configService = new service_1.default();
+        var audioContainers = document.getElementsByClassName('audio-player'); //$('.video-player');
+        this.$playerContainer = audioContainers[0];
+        this.$playerContainer.insertAdjacentHTML('afterbegin', playerTemplate(this.configService.get('resource')));
+        this.$embedContainer = document.getElementById('embed-content');
+        this.$embedResource = document.getElementById('embed-audio');
+        this.resourceOriginalWidth = this.configService.get('resource.width');
+        this.resourceOriginalHeight = this.configService.get('resource.height');
+        if (this.configService.get('isStandalone') === true) {} else {
+            this.pymChild = new pym.Child({ id: 'phraseanet-embed-frame', renderCallback: function (windowWidth) {
+                    //let ratio = that.resourceOriginalHeight / that.resourceOriginalWidth;
+                    // send video calculated height
+                    //that.$embedContainer.style.height = windowWidth * ratio + 'px';
+                    that.$embedContainer.style.height = '240px';
+                    that.$embedContainer.style.width = '240px';
+                } });
             window.addEventListener('resize', _.debounce(function () {
-                _this.onResizeWindow(window.innerWidth, window.innerHeight);
-            }, 300), false);
+                if (_this.pymChild !== undefined) {
+                    _this.pymChild.sendHeight();
+                }
+            }, 200), false);
         }
-        this.defaultWidth = 120;
-        this.defaultHeight = 120;
+        this.setupVideo();
     }
-    ResizeEl.prototype.setContainerDimensions = function (dimensions) {
-        this.containerDimensions = dimensions;
-    };
-    ResizeEl.prototype.setTargetDimensions = function (dimensions) {
-        this.targetDimensions = dimensions;
-    };
-    ResizeEl.prototype.onResizeWindow = function (width, height) {
-        this.setContainerDimensions({
-            width: width,
-            height: height
+    /*    initResizer() {
+            this.resizer = new ResizeEl({
+                target: this.$embedResource,
+                container: this.$embedContainer,
+                resizeOnWindowChange: this.configService.get('resource.fitIn') === true ? true : false,
+                resizeCallback: (dimensions) => {
+                    this.$playerContainer.style.width = dimensions.width + 'px';
+                    this.$playerContainer.style.height = dimensions.height + 'px';
+    
+                    this.$playerContainer.firstChild.style.width = dimensions.width + 'px';
+                    this.$playerContainer.firstChild.style.height = dimensions.height + 'px';
+                }
+            });
+            this.resizer.setContainerDimensions({
+                width:  <any>window.innerWidth,
+                height: <any>window.innerHeight
+            });
+            this.resizer.setTargetDimensions({
+                width:  this.resourceOriginalWidth,
+                height: this.resourceOriginalHeight
+            });
+            this.resizer.resize();
+        }*/
+    AudioPlayer.prototype.setupVideo = function () {
+        var aspectRatio = this.configService.get('resource.aspectRatio'),
+            options = {
+            fluid: true,
+            inactivityTimeout: 0 // force control to be alway active
+        };
+        if (this.configService.get('resource.aspectRatio') !== null) {
+            options.aspectRatio = this.configService.get('resource.aspectRatio');
+        }
+        if (this.configService.get('resource.autoplay') !== null) {
+            options.autoplay = this.configService.get('resource.autoplay');
+        }
+        /*if( this.configService.get('resource.playbackRates') !== null ) {
+            options.playbackRates = this.configService.get('resource.playbackRates');
+        }*/
+        options.techOrder = ['html5', 'flash'];
+        options.flash = {
+            swf: '/assets/vendors/alchemy-embed-medias/players/videojs/video-js.swf'
+        };
+        var player = this.initVideo('embed-audio', options, function () {
+            // if( this.configService.get('resource.autoplay') === true) {
+            // this.play();
+            // }
+            // this.on('ended', function() {});
         });
-        this.setTargetDimensions({
-            width: width,
-            height: height
-        });
-        this.resize();
     };
-    ResizeEl.prototype.resize = function () {
-        // get original size
-        var resized = false,
-            maxWidth = this.containerDimensions.width,
-            maxHeight = this.containerDimensions.height,
-            resourceWidth = this.targetDimensions.width,
-            resourceHeight = this.targetDimensions.height,
-            resourceRatio = this.targetDimensions.height / this.targetDimensions.width;
-        var resizeW = resourceWidth,
-            resizeH = resourceHeight;
-        // pass 1 make height ok:
-        if (resourceWidth > resourceHeight) {
-            // if width still too large:
-            if (resizeW > maxWidth) {
-                resizeW = maxWidth;
-                resizeH = maxWidth * resourceRatio;
-            }
-            if (resizeH > maxHeight) {
-                resizeW = maxHeight / resourceRatio;
-                resizeH = maxHeight;
-            }
-        } else {
-            if (resizeH > maxHeight) {
-                resizeW = maxHeight / resourceRatio;
-                resizeH = maxHeight;
-            }
+    AudioPlayer.prototype.initVideo = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i - 0] = arguments[_i];
         }
-        if (resizeW === null && resizeH === null) {
-            resizeW = this.defaultWidth;
-            resizeH = this.defaultHeight;
-        }
-        resizeW = Math.floor(resizeW);
-        resizeH = Math.floor(resizeH);
-        // add top margin:
-        var marginTop = 0;
-        if (this.containerDimensions.height > resizeH) {
-            marginTop = (this.containerDimensions.height - resizeH) / 2;
-        }
-        this.$embedResource.style.width = resizeW + 'px';
-        this.$embedResource.style.height = resizeH + 'px';
-        this.$embedContainer.style.width = resizeW + 'px';
-        this.$embedContainer.style.height = resizeH + 'px';
-        this.$embedContainer.style['margin-top'] = marginTop + 'px';
-        if (this.resizeCallback !== undefined) {
-            this.resizeCallback.apply(this, [{ width: resizeW, height: resizeH, 'margin-top': marginTop }]);
-        }
+        return videojs.apply(this, args);
     };
-    return ResizeEl;
+    return AudioPlayer;
 }();
-exports.default = ResizeEl;
+exports.default = AudioPlayer;
+window.embedPlugin = new AudioPlayer();
+
+/***/ }),
+
+/***/ 29:
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
+var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+with(obj||{}){
+__p+='<audio id="embed-audio" class="embed-resource video-js vjs-default-skin vjs-big-play-centered" controls\n       preload="auto" width="100%" height="100%" poster="'+
+((__t=( coverUrl ))==null?'':__t)+
+'">\n    ';
+ _.each( sources, function( s ){ 
+__p+='\n    <source src="'+
+((__t=( s.url ))==null?'':__t)+
+'" type="'+
+((__t=( s.type ))==null?'':__t)+
+'">\n    ';
+ }); 
+__p+='\n</audio>';
+}
+return __p;
+};
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
 
@@ -23057,9 +22924,9 @@ module.exports = exports['default'];
 
 }(this, (this.vttjs || {})));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ })
 
-},[27]);
+},[28]);
 //# sourceMappingURL=audio_videojs.js.map

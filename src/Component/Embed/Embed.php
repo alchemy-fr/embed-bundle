@@ -24,7 +24,7 @@ class Embed
             'available_speeds' => [],
           ],
           'document' => [
-            'enable-pdfjs' => true,
+            'enable_pdfjs' => true,
             'player' => 'flexpaper',
           ]
         ];
@@ -78,7 +78,7 @@ class Embed
             $config['audio']['available_speeds'] = $embedConfig['audio_available_speeds'];
         }
         if (array_key_exists('enable_pdfjs', $embedConfig['document'])) {
-            $config['document']['enable-pdfjs'] = $embedConfig['document']['enable_pdfjs'];
+            $config['document']['enable_pdfjs'] = $embedConfig['document']['enable_pdfjs'];
         }
 
         return $config;

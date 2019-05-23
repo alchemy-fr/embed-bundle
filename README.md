@@ -25,7 +25,7 @@ configuration options for phraseanet in `config/configuration.yml`
 video.player | string | active player, embed bundle ship with `videojs` and `flowplayer`
 video.autoplay | boolean | autoplay as default behavior
 video.message_start | string | StartOfMessage as default behavior , where 'StartOfMessage' is a field created from Phraseanet admin   
-video. coverSubdef | string | define a subdefinition for video cover, default is ```thumbnail```
+video.cover_subdef | string | define a subdefinition for video cover, default is ```thumbnail```
 video.available_speeds | number[] | playback available speeds
 audio.player | string | active video player, embed bundle ship with `videojs`
 audio.autoplay | boolean | autoplay as default behavior
@@ -40,7 +40,7 @@ embed_bundle:
         player: videojs
         autoplay: false
         message_start: StartOfMessage
-        coverSubdef: previewx4
+        cover_subdef: previewx4
         available_speeds:
           - 1
           - '1.5'
@@ -50,7 +50,7 @@ embed_bundle:
         autoplay: false
     document:
         player: flexpaper
-        enable-pdfjs: true
+        enable_pdfjs: true
 ```
 
 Field mapping

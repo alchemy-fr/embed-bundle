@@ -118,7 +118,7 @@ export default class VideoPlayer {
             options.playbackRates = this.configService.get('resource.playbackRates');
         }
 
-        options.techOrder = ['html5', 'flash'];
+        options.techOrder = ['flash', 'html5' ];
 
         (<any>options).flash = {
             swf: '/assets/vendors/alchemy-embed-medias/players/videojs/video-js.swf'

@@ -1,34 +1,6 @@
-webpackJsonp([2],[
-/* 0 */,
-/* 1 */,
-/* 2 */
-/***/ (function(module, exports) {
+webpackJsonp([2],{
 
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 3 */
+/***/ 2:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! pym.js - v1.3.2 - 2018-02-13 */
@@ -1156,7 +1128,886 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! pym.js - v
 
 
 /***/ }),
-/* 4 */
+
+/***/ 21:
+/***/ (function(module, exports, __webpack_require__) {
+
+/// <reference path="../../../../embed/embed.d.ts" />
+/**
+ * VideoJS Player for Embed Videos
+ */
+// require('html5shiv');
+window.HELP_IMPROVE_VIDEOJS = false;
+var videojs = __webpack_require__(7);
+var chapters = __webpack_require__(22);
+var _ = __webpack_require__(0);
+var service_1 = __webpack_require__(3);
+var resizeEl_1 = __webpack_require__(6);
+var playerTemplate = __webpack_require__(23);
+var chaptersTemplate = __webpack_require__(24);
+var pym = __webpack_require__(2);
+var VideoPlayer = function () {
+    function VideoPlayer() {
+        var _this = this;
+        var that = this;
+        this.configService = new service_1.default();
+        var videoContainers = document.getElementsByClassName('video-player'); //$('.video-player');
+        this.$playerContainer = videoContainers[0];
+        this.$playerContainer.insertAdjacentHTML('afterbegin', playerTemplate(this.configService.get('resource')));
+        this.$embedContainer = document.getElementById('embed-content'); //$('#embed-content');
+        this.$embedVideoResource = document.getElementById('embed-video'); //$('#embed-video');
+        this.$currentTime = this.configService.get('resource.currentTime'); // current time to start video
+        this.resourceOriginalWidth = this.configService.get('resource.width');
+        this.resourceOriginalHeight = this.configService.get('resource.height');
+        /*add resizer*/
+        this.resizer = new resizeEl_1.default({
+            target: this.$embedContainer,
+            container: this.$embedContainer,
+            resizeOnWindowChange: this.configService.get('resource.fitIn') === true ? true : false,
+            resizeCallback: function (dimensions) {
+                _this.$playerContainer.style.width = dimensions.width + 'px';
+                _this.$playerContainer.style.height = dimensions.height + 'px';
+            }
+        });
+        if (this.configService.get('isStandalone') === true) {
+            this.initResizer();
+        } else {
+            this.pymChild = new pym.Child({ id: 'phraseanet-embed-frame', renderCallback: function (windowWidth) {
+                    //let ratio = that.resourceOriginalHeight / that.resourceOriginalWidth;
+                    // send video calculated height
+                    //that.$embedContainer.style.height = windowWidth * ratio + 'px';
+                } });
+            window.addEventListener('resize', _.debounce(function () {
+                if (_this.pymChild !== undefined) {
+                    _this.pymChild.sendHeight();
+                }
+            }, 200), false);
+            if (this.pymChild.parentUrl === '') {
+                // no parent pym:
+                this.initResizer();
+            }
+        }
+        this.setupVideo();
+    }
+    VideoPlayer.prototype.initResizer = function () {
+        var _this = this;
+        this.resizer = new resizeEl_1.default({
+            target: this.$embedContainer,
+            container: this.$embedContainer,
+            resizeOnWindowChange: this.configService.get('resource.fitIn') === true ? true : false,
+            resizeCallback: function (dimensions) {
+                _this.$playerContainer.style.width = dimensions.width + 'px';
+                _this.$playerContainer.style.height = dimensions.height + 'px';
+            }
+        });
+        this.resizer.setContainerDimensions({
+            width: window.innerWidth,
+            height: window.innerHeight
+        });
+        this.resizer.setTargetDimensions({
+            width: this.resourceOriginalWidth,
+            height: this.resourceOriginalHeight
+        });
+        this.resizer.resize();
+    };
+    VideoPlayer.prototype.setupVideo = function () {
+        var _this = this;
+        var aspectRatio = this.configService.get('resource.aspectRatio'),
+            options = {
+            playbackRates: [],
+            fluid: true
+        };
+        if (this.configService.get('resource.aspectRatio') !== null) {
+            options.aspectRatio = this.configService.get('resource.aspectRatio');
+        }
+        if (this.configService.get('resource.autoplay') !== null) {
+            options.autoplay = this.configService.get('resource.autoplay');
+        }
+        if (this.configService.get('resource.playbackRates') !== null) {
+            options.playbackRates = this.configService.get('resource.playbackRates');
+        }
+        options.techOrder = ['flash', 'html5'];
+        options.flash = {
+            swf: '/assets/vendors/alchemy-embed-medias/players/videojs/video-js.swf'
+        };
+        var chapterTrack = null,
+            tracks = this.configService.get('resource.tracks');
+        if (tracks !== null) {
+            // search for chapter track:
+            _.each(tracks, function (track, i) {
+                if (track.kind === 'chapters') {
+                    chapterTrack = track;
+                }
+            });
+        }
+        var player = this.initVideo('embed-video', options, function () {
+            var metadatas = player.on('loadedmetadata', function () {
+                var videoWidth = _this.$embedVideoResource.videoWidth,
+                    videoHeight = _this.$embedVideoResource.videoHeight;
+                if (videoWidth > 0 && videoHeight > 0) {
+                    if (_this.resizer !== null) {
+                        _this.resizer.setTargetDimensions({
+                            width: videoWidth,
+                            height: videoHeight
+                        });
+                    }
+                    /*set currentTime to play video */
+                    if (_this.$currentTime !== null) {
+                        player.currentTime(parseInt(_this.$currentTime));
+                    }
+                }
+            });
+            player.on('ready', function () {
+                if (_this.pymChild !== undefined) {
+                    _this.pymChild.sendMessage('childReady', { type: 'video' });
+                }
+            });
+        });
+        if (chapterTrack !== null) {
+            player.ready(function () {
+                player.chapter_thumbnails(chapterTrack, { template: chaptersTemplate });
+            });
+        }
+        if (this.pymChild !== undefined) {
+            if (this.pymChild.parentUrl !== '') {
+                // listen for parent events:
+                // note: message are never received if there no message content with the subject
+                this.pymChild.onMessage('play', function () {
+                    player.play();
+                });
+                this.pymChild.onMessage('pause', function () {
+                    player.pause();
+                });
+                this.pymChild.onMessage('dispose', function () {
+                    player.dispose();
+                });
+            }
+        }
+    };
+    VideoPlayer.prototype.initVideo = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i - 0] = arguments[_i];
+        }
+        return videojs.apply(this, args);
+    };
+    return VideoPlayer;
+}();
+exports.default = VideoPlayer;
+window.embedPlugin = new VideoPlayer();
+
+/***/ }),
+
+/***/ 22:
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(videojs) {/**
+ * videojs-chapter-thumbnails v1.1.2
+ * 
+ * @author: Carey Hinoki <carey.hinoki@gmail.com>
+ * @date: 2015-12-10
+ */
+
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId])
+/******/ 			return installedModules[moduleId].exports;
+
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			exports: {},
+/******/ 			id: moduleId,
+/******/ 			loaded: false
+/******/ 		};
+
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+
+/******/ 		// Flag the module as loaded
+/******/ 		module.loaded = true;
+
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+
+
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	__webpack_require__(1);
+
+	var _menuChapterThumbnailMenuButton = __webpack_require__(5);
+
+	var _trackTextTrack = __webpack_require__(9);
+
+	/**
+	 * @name Chapters Plugin
+	 * @description
+	 * Define chapters plugin by specifying a WebVTT spec.
+	 * http://dev.w3.org/html5/webvtt/
+	 *
+	 * Abide by the following:
+	 *
+	 * @example
+	 * WEBVTT
+	 *
+	 * 00:00:00.000 --> 00:10:00.000
+	 * {
+	 *     "title":"Introduction",
+	 *     "image":"http://www.example.com/example.jpg"
+	 * }
+	 *
+	 * @example
+	 * videojs('player_id', {
+	 *     plugins: {
+	 *         chapter_thumbnails: {
+	 *             label:    'English',
+	 *             language: 'en',
+	 *             src:      'chapters.vtt'
+	 *         }
+	 *     }
+	 * });
+	 *
+	 * videojs('player_id').chapter_thumbnails({
+	 *     label:    'English',
+	 *     language: 'en',
+	 *     src:      'chapters.vtt'
+	 * });
+	 *
+	 * @param {Object} player VideoJS player
+	 * @param {Object} options={}
+	 * @param {Object} [options.label=English]
+	 * @param {Object} [options.language=en]
+	 * @param {Object} options.src
+	 * @param {Object} [options.template]
+	 */
+
+	var ChapterThumbnails = (function () {
+	    function ChapterThumbnails(player) {
+	        var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+	        _classCallCheck(this, ChapterThumbnails);
+
+	        var defaults = {
+	            label: 'English',
+	            language: 'en'
+	        };
+
+	        this.player = player;
+
+	        this.text_track = videojs.mergeOptions(defaults, options, {
+	            'default': true,
+	            kind: 'metadata',
+	            id: _trackTextTrack.TRACK_ID
+	        });
+
+	        this.template = this.text_track.template;
+	    }
+
+	    _createClass(ChapterThumbnails, [{
+	        key: 'addComponent',
+	        value: function addComponent() {
+	            var control_bar = this.player.getChild('controlBar');
+
+	            var chapter_button = control_bar.getChild('chaptersButton');
+
+	            var chapter_thumbnail_menu_button = control_bar.getChild(_menuChapterThumbnailMenuButton.CHAPTER_THUMBNAIL_MENU_BUTTON_NAME);
+
+	            // remove existing menu—menu button will be hidden if there are no items found
+	            if (chapter_thumbnail_menu_button && chapter_thumbnail_menu_button.menu) {
+	                chapter_thumbnail_menu_button.menu.dispose();
+
+	                delete chapter_thumbnail_menu_button.menu;
+	            } else {
+	                chapter_thumbnail_menu_button = new _menuChapterThumbnailMenuButton.ChapterThumbnailMenuButton(this.player, {
+	                    name: _menuChapterThumbnailMenuButton.CHAPTER_THUMBNAIL_MENU_BUTTON_NAME,
+	                    template: this.template
+	                });
+
+	                // add component to end of control bar
+	                control_bar.addChild(chapter_thumbnail_menu_button);
+
+	                // move component—there is no component index placement
+	                control_bar.el().insertBefore(chapter_thumbnail_menu_button.el(), chapter_button.el());
+	            }
+
+	            this.addTextTrack();
+	        }
+	    }, {
+	        key: 'addTextTrack',
+	        value: function addTextTrack() {
+	            var current_text_track = this.player.remoteTextTracks().getTrackById(_trackTextTrack.TRACK_ID);
+
+	            // remove existing track
+	            if (current_text_track) {
+	                this.player.removeRemoteTextTrack(current_text_track);
+	            }
+
+	            // add new track
+	            this.player.addRemoteTextTrack(this.text_track);
+	        }
+	    }]);
+
+	    return ChapterThumbnails;
+	})();
+
+	exports['default'] = ChapterThumbnails;
+
+	videojs.plugin('chapter_thumbnails', function chapter_thumbnails(options) {
+	    var chapter_thumbnail = new ChapterThumbnails(this, options);
+
+	    chapter_thumbnail.addComponent();
+	});
+	module.exports = exports['default'];
+
+/***/ },
+/* 1 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 2 */,
+/* 3 */,
+/* 4 */,
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x2, _x3, _x4) { var _again = true; _function: while (_again) { var object = _x2, property = _x3, receiver = _x4; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x2 = parent; _x3 = property; _x4 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _chapterThumbnailMenu = __webpack_require__(6);
+
+	var _chapterThumbnailMenuItem = __webpack_require__(7);
+
+	var _trackTextTrack = __webpack_require__(9);
+
+	var CHAPTER_THUMBNAIL_MENU_BUTTON_NAME = 'ChapterThumbnailMenuButton';
+
+	/**
+	 * @name Chapter Thumbnails Button
+	 * @description
+	 * Define the chapter thumbnails menu button component.
+	 * Create the chapter thumbnails menu and attach it to the player.
+	 *
+	 * @param {Object} player VideoJS player
+	 * @param {Object} options={}
+	 * @param {Object} options.name Component name
+	 * @param {Object} [options.template]
+	 */
+
+	var VjsMenuButton = videojs.getComponent('MenuButton');
+
+	var ChapterThumbnailMenuButton = (function (_VjsMenuButton) {
+	    _inherits(ChapterThumbnailMenuButton, _VjsMenuButton);
+
+	    function ChapterThumbnailMenuButton(player) {
+	        var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+	        _classCallCheck(this, ChapterThumbnailMenuButton);
+
+	        _get(Object.getPrototypeOf(ChapterThumbnailMenuButton.prototype), 'constructor', this).call(this, player, options);
+
+	        var tracks = this.player().remoteTextTracks();
+
+	        // hide the button if there are no items
+	        if (this.items.length <= 0) {
+	            this.hide();
+	        }
+
+	        // do not set any events unless tracks are available
+	        if (!tracks) {
+	            return;
+	        }
+
+	        // NOTE: https://github.com/videojs/video.js/blob/master/src/js/control-bar/text-track-controls/text-track-button.js
+	        // Events follow videojs.TextTrackButton
+
+	        var update = this.update.bind(this);
+
+	        tracks.addEventListener('addtrack', update);
+	        tracks.addEventListener('removetrack', update);
+
+	        this.player().on('dispose', function () {
+	            tracks.removeEventListener('addtrack', update);
+	            tracks.removeEventListener('removetrack', update);
+	        });
+
+	        this.addClass('vjs-chapter-thumbnails-button');
+	        this.addClass('vjs-chapters-button');
+
+	        this.el_.setAttribute('aria-label', 'Chapters Menu');
+	    }
+
+	    /**
+	     * @name Create Menu
+	     * @description
+	     * Defined by videojs.MenuButton
+	     *
+	     * This method gets hit multiple times from multiple areas.
+	     * - constructor
+	     * - addtrack event
+	     * - removetrack event
+	     * - timeout hack
+	     */
+
+	    _createClass(ChapterThumbnailMenuButton, [{
+	        key: 'createMenu',
+	        value: function createMenu() {
+	            var _this = this;
+
+	            var chapter_track = undefined,
+	                track = undefined;
+
+	            var tracks = this.player().remoteTextTracks() || [];
+
+	            this.items = [];
+
+	            // cache menu during create menu dance
+	            if (!this.menu) {
+	                this.menu = new _chapterThumbnailMenu.ChapterThumbnailMenu(this.player(), {
+	                    name: _chapterThumbnailMenu.CHAPTER_THUMBNAIL_MENU_NAME
+	                });
+	            }
+
+	            for (var i = 0, _length = tracks.length; i < _length; i++) {
+	                track = tracks[i];
+
+	                if (track.id === _trackTextTrack.TRACK_ID) {
+	                    chapter_track = track;
+
+	                    break;
+	                }
+	            }
+
+	            if (!chapter_track) {
+	                return this.menu;
+	            }
+
+	            if (chapter_track && chapter_track.cues == null) {
+	                track.mode = 'hidden';
+
+	                var remote_text_track_el = this.player().remoteTextTrackEls().getTrackElementByTrack_(track);
+
+	                if (remote_text_track_el) {
+	                    remote_text_track_el.addEventListener('load', function (event) {
+	                        return _this.createMenu();
+	                    });
+	                }
+	            }
+
+	            // create menu if track cues are available
+	            if (chapter_track && chapter_track.cues && chapter_track.cues.length > 0) {
+	                this.items = this.createItems(chapter_track);
+
+	                for (var i = 0, _length2 = this.items.length; i < _length2; i++) {
+	                    // TODO: enables - onClick close menu
+	                    // menu.addItem(this.items[i]);
+
+	                    this.menu.addChild(this.items[i]);
+	                }
+
+	                this.player().addChild(this.menu);
+
+	                if (this.items.length > 0) {
+	                    this.show();
+	                }
+	            }
+
+	            return this.menu;
+	        }
+
+	        /**
+	         * @name Create Items
+	         * @description
+	         * Defined by videojs.MenuButton
+	         *
+	         */
+
+	    }, {
+	        key: 'createItems',
+	        value: function createItems(text_track) {
+	            var items = [];
+
+	            if (!text_track || text_track.cues.length <= 0) {
+	                return items;
+	            }
+
+	            var template = this.options_.template;
+
+	            for (var i = 0, _length3 = text_track.cues.length; i < _length3; i++) {
+	                var cue = text_track.cues[i];
+
+	                items.push(new _chapterThumbnailMenuItem.ChapterThumbnailMenuItem(this.player(), {
+	                    cue: cue,
+	                    template: template,
+	                    text_track: text_track
+	                }));
+	            }
+
+	            return items;
+	        }
+
+	        /**
+	         * @name Handle Click
+	         * @description
+	         * Defined by videojs.MenuButton
+	         */
+
+	    }, {
+	        key: 'handleClick',
+	        value: function handleClick(event) {
+	            // TODO: not sure if there is a better way to determine visibility
+	            if (this.menu.hasClass('vjs-lock-showing')) {
+	                this.menu.unlockShowing();
+	            } else {
+	                this.menu.lockShowing();
+	            }
+
+	            this.player().el().focus();
+	        }
+
+	        /**
+	         * @name Update
+	         * @description
+	         * Defined by videojs.MenuButton
+	         *
+	         * Must override so that the menu isn't attached to the videojs.MenuButton.
+	         * Instead we will manage it ourselves by adding it to the player directly.
+	         */
+
+	    }, {
+	        key: 'update',
+	        value: function update() {
+	            var menu = this.createMenu();
+
+	            this.menu = menu;
+
+	            this.buttonPressed_ = false;
+
+	            if (this.items && this.items.length === 0) {
+	                this.hide();
+	            } else if (this.items && this.items.length > 1) {
+	                this.show();
+	            }
+	        }
+	    }]);
+
+	    return ChapterThumbnailMenuButton;
+	})(VjsMenuButton);
+
+	ChapterThumbnailMenuButton.prototype.controlText_ = 'Chapters';
+
+	exports.CHAPTER_THUMBNAIL_MENU_BUTTON_NAME = CHAPTER_THUMBNAIL_MENU_BUTTON_NAME;
+	exports.ChapterThumbnailMenuButton = ChapterThumbnailMenuButton;
+
+/***/ },
+/* 6 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	var _get = function get(_x2, _x3, _x4) { var _again = true; _function: while (_again) { var object = _x2, property = _x3, receiver = _x4; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x2 = parent; _x3 = property; _x4 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var CHAPTER_THUMBNAIL_MENU_NAME = 'ChapterThumbnailMenu';
+
+	/**
+	 * @name Chapter Thumbnails Menu
+	 * @description
+	 * Define the chapter thumbnails menu component.
+	 *
+	 * @param {Object} player VideoJS player
+	 * @param {Object} options={}
+	 * @param {Object} options.name Component name
+	 */
+
+	var VjsMenu = videojs.getComponent('Menu');
+
+	var ChapterThumbnailMenu = (function (_VjsMenu) {
+	    _inherits(ChapterThumbnailMenu, _VjsMenu);
+
+	    function ChapterThumbnailMenu(player) {
+	        var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+	        _classCallCheck(this, ChapterThumbnailMenu);
+
+	        _get(Object.getPrototypeOf(ChapterThumbnailMenu.prototype), 'constructor', this).call(this, player, options);
+
+	        this.el_.id = 'vjs_chapter_thumbnails_menu';
+
+	        // NOTE: does not have a className property
+	        this.addClass('vjs-chapter-thumbnails-menu');
+	    }
+
+	    return ChapterThumbnailMenu;
+	})(VjsMenu);
+
+	exports.CHAPTER_THUMBNAIL_MENU_NAME = CHAPTER_THUMBNAIL_MENU_NAME;
+	exports.ChapterThumbnailMenu = ChapterThumbnailMenu;
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x2, _x3, _x4) { var _again = true; _function: while (_again) { var object = _x2, property = _x3, receiver = _x4; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x2 = parent; _x3 = property; _x4 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _videojsChapterThumbnailTemplate = __webpack_require__(8);
+
+	var _videojsChapterThumbnailTemplate2 = _interopRequireDefault(_videojsChapterThumbnailTemplate);
+
+	/**
+	 * @name Chapter Thumnails Menu Item
+	 * @description
+	 * Define the chapter thumbnails menu item component.
+	 *
+	 * @param {Object} player VideoJS player
+	 * @param {Object} options={}
+	 * @param {Object} options.cue
+	 * @param {Object} [options.template]
+	 * @param {Object} options.text_track
+	 */
+
+	var VjsMenuItem = videojs.getComponent('MenuItem');
+
+	var ChapterThumbnailMenuItem = (function (_VjsMenuItem) {
+	    _inherits(ChapterThumbnailMenuItem, _VjsMenuItem);
+
+	    function ChapterThumbnailMenuItem(player) {
+	        var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+	        _classCallCheck(this, ChapterThumbnailMenuItem);
+
+	        var cue = options.cue;
+	        var text_track = options.text_track;
+
+	        var current_time = player.currentTime();
+
+	        options.label = (0, _videojsChapterThumbnailTemplate2['default'])(cue);
+	        options.selected = cue.startTime <= current_time && current_time < cue.endTime;
+
+	        _get(Object.getPrototypeOf(ChapterThumbnailMenuItem.prototype), 'constructor', this).call(this, player, options);
+
+	        this.addClass('vjs-chapter-thumbnails-menu-item');
+
+	        text_track.addEventListener('cuechange', videojs.bind(this, this.onCueChange));
+	    }
+
+	    /**
+	     * @name Handle Click
+	     * @description
+	     * Defined by videojs.MenuItem
+	     */
+
+	    _createClass(ChapterThumbnailMenuItem, [{
+	        key: 'handleClick',
+	        value: function handleClick(event) {
+	            var cue = this.options_.cue;
+	            var is_paused = this.player().paused();
+
+	            if (!is_paused) {
+	                this.player().pause();
+	            }
+
+	            this.player().currentTime(cue.startTime);
+
+	            if (!is_paused) {
+	                this.player().play();
+	            }
+
+	            this.player().el().focus();
+	        }
+	    }, {
+	        key: 'onCueChange',
+	        value: function onCueChange(event) {
+	            this.update();
+	        }
+	    }, {
+	        key: 'update',
+	        value: function update() {
+	            var cue = this.options_.cue,
+	                current_time = this.player().currentTime();
+
+	            this.selected(cue.startTime <= current_time && current_time < cue.endTime);
+	        }
+	    }]);
+
+	    return ChapterThumbnailMenuItem;
+	})(VjsMenuItem);
+
+	exports.ChapterThumbnailMenuItem = ChapterThumbnailMenuItem;
+
+/***/ },
+/* 8 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+	var defaults = {
+	    template: '\n<div class="vjs-chapters-thumbnails-item">\n    <img class="vjs-chapters-thumbnails-item-image" src="{{image}}" />\n    <span class="vjs-chapters-thumbnails-item-title">{{title}}</span>\n</div>\n'
+	};
+
+	function chapterThumbnailTemplate() {
+	    var cue = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+	    var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+	    var template = options.template || defaults.template;
+
+	    var cue_text = JSON.parse(cue.text || '{}');
+
+	    for (var key in cue_text) {
+	        if (cue_text.hasOwnProperty(key)) {
+	            template = template.replace(new RegExp('{{' + key + '}}', 'ig'), cue_text[key]);
+	        }
+	    }
+
+	    return template;
+	}
+
+	exports['default'] = chapterThumbnailTemplate;
+	module.exports = exports['default'];
+
+/***/ },
+/* 9 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	var TRACK_ID = 'chapter_thumbnails_track';
+	exports.TRACK_ID = TRACK_ID;
+
+/***/ }
+/******/ ]);
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
+
+/***/ }),
+
+/***/ 23:
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
+var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+with(obj||{}){
+__p+='<video id="embed-video" class="embed-resource video-js vjs-default-skin vjs-big-play-centered" controls\n       preload="none" width="100%" height="100%" poster="'+
+((__t=( coverUrl ))==null?'':__t)+
+'">\n    ';
+ _.each( sources, function( s ){ 
+__p+='\n    <source src="'+
+((__t=( s.url ))==null?'':__t)+
+'" type="'+
+((__t=( s.type ))==null?'':__t)+
+'">\n    ';
+ }); 
+__p+='\n    ';
+ _.each( tracks, function( s ){ 
+__p+='\n    ';
+ if (s.kind == "subtitles") { 
+__p+='\n    <track src="'+
+((__t=( s.src ))==null?'':__t)+
+'" kind="'+
+((__t=( s.kind ))==null?'':__t)+
+'" srclang="'+
+((__t=( s.srclang ))==null?'':__t)+
+'" label="'+
+((__t=( s.label ))==null?'':__t)+
+'" ';
+ if (s.default == true) { 
+__p+='default';
+ } 
+__p+=' >\n    ';
+ } 
+__p+='\n    ';
+ }); 
+__p+='\n\n</video>';
+}
+return __p;
+};
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+
+/***/ 24:
+/***/ (function(module, exports) {
+
+module.exports = function(obj){
+var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+with(obj||{}){
+__p+='<div class="vjs-chapters-thumbnails-item">\n    <span class="vjs-chapters-thumbnails-item-image">{{image}}</span>\n    <span class="vjs-chapters-thumbnails-item-title">{{title}}</span>\n</div>';
+}
+return __p;
+};
+
+/***/ }),
+
+/***/ 6:
 /***/ (function(module, exports, __webpack_require__) {
 
 var _ = __webpack_require__(0);
@@ -1255,9 +2106,8 @@ var ResizeEl = function () {
 exports.default = ResizeEl;
 
 /***/ }),
-/* 5 */,
-/* 6 */,
-/* 7 */
+
+/***/ 7:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var require;var require;/**
@@ -22923,894 +23773,9 @@ module.exports = exports['default'];
 
 }(this, (this.vttjs || {})));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
-
-/***/ }),
-/* 8 */,
-/* 9 */,
-/* 10 */,
-/* 11 */,
-/* 12 */,
-/* 13 */,
-/* 14 */,
-/* 15 */,
-/* 16 */,
-/* 17 */,
-/* 18 */,
-/* 19 */,
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/// <reference path="../../../../embed/embed.d.ts" />
-/**
- * VideoJS Player for Embed Videos
- */
-// require('html5shiv');
-window.HELP_IMPROVE_VIDEOJS = false;
-var videojs = __webpack_require__(7);
-var chapters = __webpack_require__(21);
-var _ = __webpack_require__(0);
-var service_1 = __webpack_require__(5);
-var resizeEl_1 = __webpack_require__(4);
-var playerTemplate = __webpack_require__(22);
-var chaptersTemplate = __webpack_require__(23);
-var pym = __webpack_require__(3);
-var VideoPlayer = function () {
-    function VideoPlayer() {
-        var _this = this;
-        var that = this;
-        this.configService = new service_1.default();
-        var videoContainers = document.getElementsByClassName('video-player'); //$('.video-player');
-        this.$playerContainer = videoContainers[0];
-        this.$playerContainer.insertAdjacentHTML('afterbegin', playerTemplate(this.configService.get('resource')));
-        this.$embedContainer = document.getElementById('embed-content'); //$('#embed-content');
-        this.$embedVideoResource = document.getElementById('embed-video'); //$('#embed-video');
-        this.$currentTime = this.configService.get('resource.currentTime'); // current time to start video
-        this.resourceOriginalWidth = this.configService.get('resource.width');
-        this.resourceOriginalHeight = this.configService.get('resource.height');
-        /*add resizer*/
-        this.resizer = new resizeEl_1.default({
-            target: this.$embedContainer,
-            container: this.$embedContainer,
-            resizeOnWindowChange: this.configService.get('resource.fitIn') === true ? true : false,
-            resizeCallback: function (dimensions) {
-                _this.$playerContainer.style.width = dimensions.width + 'px';
-                _this.$playerContainer.style.height = dimensions.height + 'px';
-            }
-        });
-        if (this.configService.get('isStandalone') === true) {
-            this.initResizer();
-        } else {
-            this.pymChild = new pym.Child({ id: 'phraseanet-embed-frame', renderCallback: function (windowWidth) {
-                    //let ratio = that.resourceOriginalHeight / that.resourceOriginalWidth;
-                    // send video calculated height
-                    //that.$embedContainer.style.height = windowWidth * ratio + 'px';
-                } });
-            window.addEventListener('resize', _.debounce(function () {
-                if (_this.pymChild !== undefined) {
-                    _this.pymChild.sendHeight();
-                }
-            }, 200), false);
-            if (this.pymChild.parentUrl === '') {
-                // no parent pym:
-                this.initResizer();
-            }
-        }
-        this.setupVideo();
-    }
-    VideoPlayer.prototype.initResizer = function () {
-        var _this = this;
-        this.resizer = new resizeEl_1.default({
-            target: this.$embedContainer,
-            container: this.$embedContainer,
-            resizeOnWindowChange: this.configService.get('resource.fitIn') === true ? true : false,
-            resizeCallback: function (dimensions) {
-                _this.$playerContainer.style.width = dimensions.width + 'px';
-                _this.$playerContainer.style.height = dimensions.height + 'px';
-            }
-        });
-        this.resizer.setContainerDimensions({
-            width: window.innerWidth,
-            height: window.innerHeight
-        });
-        this.resizer.setTargetDimensions({
-            width: this.resourceOriginalWidth,
-            height: this.resourceOriginalHeight
-        });
-        this.resizer.resize();
-    };
-    VideoPlayer.prototype.setupVideo = function () {
-        var _this = this;
-        var aspectRatio = this.configService.get('resource.aspectRatio'),
-            options = {
-            playbackRates: [],
-            fluid: true
-        };
-        if (this.configService.get('resource.aspectRatio') !== null) {
-            options.aspectRatio = this.configService.get('resource.aspectRatio');
-        }
-        if (this.configService.get('resource.autoplay') !== null) {
-            options.autoplay = this.configService.get('resource.autoplay');
-        }
-        if (this.configService.get('resource.playbackRates') !== null) {
-            options.playbackRates = this.configService.get('resource.playbackRates');
-        }
-        options.techOrder = ['html5', 'flash'];
-        options.flash = {
-            swf: '/assets/vendors/alchemy-embed-medias/players/videojs/video-js.swf'
-        };
-        var chapterTrack = null,
-            tracks = this.configService.get('resource.tracks');
-        if (tracks !== null) {
-            // search for chapter track:
-            _.each(tracks, function (track, i) {
-                if (track.kind === 'chapters') {
-                    chapterTrack = track;
-                }
-            });
-        }
-        var player = this.initVideo('embed-video', options, function () {
-            var metadatas = player.on('loadedmetadata', function () {
-                var videoWidth = _this.$embedVideoResource.videoWidth,
-                    videoHeight = _this.$embedVideoResource.videoHeight;
-                if (videoWidth > 0 && videoHeight > 0) {
-                    if (_this.resizer !== null) {
-                        _this.resizer.setTargetDimensions({
-                            width: videoWidth,
-                            height: videoHeight
-                        });
-                    }
-                    /*set currentTime to play video */
-                    if (_this.$currentTime !== null) {
-                        player.currentTime(parseInt(_this.$currentTime));
-                    }
-                }
-            });
-            player.on('ready', function () {
-                if (_this.pymChild !== undefined) {
-                    _this.pymChild.sendMessage('childReady', { type: 'video' });
-                }
-            });
-        });
-        if (chapterTrack !== null) {
-            player.ready(function () {
-                player.chapter_thumbnails(chapterTrack, { template: chaptersTemplate });
-            });
-        }
-        if (this.pymChild !== undefined) {
-            if (this.pymChild.parentUrl !== '') {
-                // listen for parent events:
-                // note: message are never received if there no message content with the subject
-                this.pymChild.onMessage('play', function () {
-                    player.play();
-                });
-                this.pymChild.onMessage('pause', function () {
-                    player.pause();
-                });
-                this.pymChild.onMessage('dispose', function () {
-                    player.dispose();
-                });
-            }
-        }
-    };
-    VideoPlayer.prototype.initVideo = function () {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i - 0] = arguments[_i];
-        }
-        return videojs.apply(this, args);
-    };
-    return VideoPlayer;
-}();
-exports.default = VideoPlayer;
-window.embedPlugin = new VideoPlayer();
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(videojs) {/**
- * videojs-chapter-thumbnails v1.1.2
- * 
- * @author: Carey Hinoki <carey.hinoki@gmail.com>
- * @date: 2015-12-10
- */
-
-/******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
-/******/ 			return installedModules[moduleId].exports;
-
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			exports: {},
-/******/ 			id: moduleId,
-/******/ 			loaded: false
-/******/ 		};
-
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-
-/******/ 		// Flag the module as loaded
-/******/ 		module.loaded = true;
-
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-
-
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
-
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(0);
-/******/ })
-/************************************************************************/
-/******/ ([
-/* 0 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	__webpack_require__(1);
-
-	var _menuChapterThumbnailMenuButton = __webpack_require__(5);
-
-	var _trackTextTrack = __webpack_require__(9);
-
-	/**
-	 * @name Chapters Plugin
-	 * @description
-	 * Define chapters plugin by specifying a WebVTT spec.
-	 * http://dev.w3.org/html5/webvtt/
-	 *
-	 * Abide by the following:
-	 *
-	 * @example
-	 * WEBVTT
-	 *
-	 * 00:00:00.000 --> 00:10:00.000
-	 * {
-	 *     "title":"Introduction",
-	 *     "image":"http://www.example.com/example.jpg"
-	 * }
-	 *
-	 * @example
-	 * videojs('player_id', {
-	 *     plugins: {
-	 *         chapter_thumbnails: {
-	 *             label:    'English',
-	 *             language: 'en',
-	 *             src:      'chapters.vtt'
-	 *         }
-	 *     }
-	 * });
-	 *
-	 * videojs('player_id').chapter_thumbnails({
-	 *     label:    'English',
-	 *     language: 'en',
-	 *     src:      'chapters.vtt'
-	 * });
-	 *
-	 * @param {Object} player VideoJS player
-	 * @param {Object} options={}
-	 * @param {Object} [options.label=English]
-	 * @param {Object} [options.language=en]
-	 * @param {Object} options.src
-	 * @param {Object} [options.template]
-	 */
-
-	var ChapterThumbnails = (function () {
-	    function ChapterThumbnails(player) {
-	        var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-
-	        _classCallCheck(this, ChapterThumbnails);
-
-	        var defaults = {
-	            label: 'English',
-	            language: 'en'
-	        };
-
-	        this.player = player;
-
-	        this.text_track = videojs.mergeOptions(defaults, options, {
-	            'default': true,
-	            kind: 'metadata',
-	            id: _trackTextTrack.TRACK_ID
-	        });
-
-	        this.template = this.text_track.template;
-	    }
-
-	    _createClass(ChapterThumbnails, [{
-	        key: 'addComponent',
-	        value: function addComponent() {
-	            var control_bar = this.player.getChild('controlBar');
-
-	            var chapter_button = control_bar.getChild('chaptersButton');
-
-	            var chapter_thumbnail_menu_button = control_bar.getChild(_menuChapterThumbnailMenuButton.CHAPTER_THUMBNAIL_MENU_BUTTON_NAME);
-
-	            // remove existing menu—menu button will be hidden if there are no items found
-	            if (chapter_thumbnail_menu_button && chapter_thumbnail_menu_button.menu) {
-	                chapter_thumbnail_menu_button.menu.dispose();
-
-	                delete chapter_thumbnail_menu_button.menu;
-	            } else {
-	                chapter_thumbnail_menu_button = new _menuChapterThumbnailMenuButton.ChapterThumbnailMenuButton(this.player, {
-	                    name: _menuChapterThumbnailMenuButton.CHAPTER_THUMBNAIL_MENU_BUTTON_NAME,
-	                    template: this.template
-	                });
-
-	                // add component to end of control bar
-	                control_bar.addChild(chapter_thumbnail_menu_button);
-
-	                // move component—there is no component index placement
-	                control_bar.el().insertBefore(chapter_thumbnail_menu_button.el(), chapter_button.el());
-	            }
-
-	            this.addTextTrack();
-	        }
-	    }, {
-	        key: 'addTextTrack',
-	        value: function addTextTrack() {
-	            var current_text_track = this.player.remoteTextTracks().getTrackById(_trackTextTrack.TRACK_ID);
-
-	            // remove existing track
-	            if (current_text_track) {
-	                this.player.removeRemoteTextTrack(current_text_track);
-	            }
-
-	            // add new track
-	            this.player.addRemoteTextTrack(this.text_track);
-	        }
-	    }]);
-
-	    return ChapterThumbnails;
-	})();
-
-	exports['default'] = ChapterThumbnails;
-
-	videojs.plugin('chapter_thumbnails', function chapter_thumbnails(options) {
-	    var chapter_thumbnail = new ChapterThumbnails(this, options);
-
-	    chapter_thumbnail.addComponent();
-	});
-	module.exports = exports['default'];
-
-/***/ },
-/* 1 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ },
-/* 2 */,
-/* 3 */,
-/* 4 */,
-/* 5 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	var _get = function get(_x2, _x3, _x4) { var _again = true; _function: while (_again) { var object = _x2, property = _x3, receiver = _x4; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x2 = parent; _x3 = property; _x4 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var _chapterThumbnailMenu = __webpack_require__(6);
-
-	var _chapterThumbnailMenuItem = __webpack_require__(7);
-
-	var _trackTextTrack = __webpack_require__(9);
-
-	var CHAPTER_THUMBNAIL_MENU_BUTTON_NAME = 'ChapterThumbnailMenuButton';
-
-	/**
-	 * @name Chapter Thumbnails Button
-	 * @description
-	 * Define the chapter thumbnails menu button component.
-	 * Create the chapter thumbnails menu and attach it to the player.
-	 *
-	 * @param {Object} player VideoJS player
-	 * @param {Object} options={}
-	 * @param {Object} options.name Component name
-	 * @param {Object} [options.template]
-	 */
-
-	var VjsMenuButton = videojs.getComponent('MenuButton');
-
-	var ChapterThumbnailMenuButton = (function (_VjsMenuButton) {
-	    _inherits(ChapterThumbnailMenuButton, _VjsMenuButton);
-
-	    function ChapterThumbnailMenuButton(player) {
-	        var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-
-	        _classCallCheck(this, ChapterThumbnailMenuButton);
-
-	        _get(Object.getPrototypeOf(ChapterThumbnailMenuButton.prototype), 'constructor', this).call(this, player, options);
-
-	        var tracks = this.player().remoteTextTracks();
-
-	        // hide the button if there are no items
-	        if (this.items.length <= 0) {
-	            this.hide();
-	        }
-
-	        // do not set any events unless tracks are available
-	        if (!tracks) {
-	            return;
-	        }
-
-	        // NOTE: https://github.com/videojs/video.js/blob/master/src/js/control-bar/text-track-controls/text-track-button.js
-	        // Events follow videojs.TextTrackButton
-
-	        var update = this.update.bind(this);
-
-	        tracks.addEventListener('addtrack', update);
-	        tracks.addEventListener('removetrack', update);
-
-	        this.player().on('dispose', function () {
-	            tracks.removeEventListener('addtrack', update);
-	            tracks.removeEventListener('removetrack', update);
-	        });
-
-	        this.addClass('vjs-chapter-thumbnails-button');
-	        this.addClass('vjs-chapters-button');
-
-	        this.el_.setAttribute('aria-label', 'Chapters Menu');
-	    }
-
-	    /**
-	     * @name Create Menu
-	     * @description
-	     * Defined by videojs.MenuButton
-	     *
-	     * This method gets hit multiple times from multiple areas.
-	     * - constructor
-	     * - addtrack event
-	     * - removetrack event
-	     * - timeout hack
-	     */
-
-	    _createClass(ChapterThumbnailMenuButton, [{
-	        key: 'createMenu',
-	        value: function createMenu() {
-	            var _this = this;
-
-	            var chapter_track = undefined,
-	                track = undefined;
-
-	            var tracks = this.player().remoteTextTracks() || [];
-
-	            this.items = [];
-
-	            // cache menu during create menu dance
-	            if (!this.menu) {
-	                this.menu = new _chapterThumbnailMenu.ChapterThumbnailMenu(this.player(), {
-	                    name: _chapterThumbnailMenu.CHAPTER_THUMBNAIL_MENU_NAME
-	                });
-	            }
-
-	            for (var i = 0, _length = tracks.length; i < _length; i++) {
-	                track = tracks[i];
-
-	                if (track.id === _trackTextTrack.TRACK_ID) {
-	                    chapter_track = track;
-
-	                    break;
-	                }
-	            }
-
-	            if (!chapter_track) {
-	                return this.menu;
-	            }
-
-	            if (chapter_track && chapter_track.cues == null) {
-	                track.mode = 'hidden';
-
-	                var remote_text_track_el = this.player().remoteTextTrackEls().getTrackElementByTrack_(track);
-
-	                if (remote_text_track_el) {
-	                    remote_text_track_el.addEventListener('load', function (event) {
-	                        return _this.createMenu();
-	                    });
-	                }
-	            }
-
-	            // create menu if track cues are available
-	            if (chapter_track && chapter_track.cues && chapter_track.cues.length > 0) {
-	                this.items = this.createItems(chapter_track);
-
-	                for (var i = 0, _length2 = this.items.length; i < _length2; i++) {
-	                    // TODO: enables - onClick close menu
-	                    // menu.addItem(this.items[i]);
-
-	                    this.menu.addChild(this.items[i]);
-	                }
-
-	                this.player().addChild(this.menu);
-
-	                if (this.items.length > 0) {
-	                    this.show();
-	                }
-	            }
-
-	            return this.menu;
-	        }
-
-	        /**
-	         * @name Create Items
-	         * @description
-	         * Defined by videojs.MenuButton
-	         *
-	         */
-
-	    }, {
-	        key: 'createItems',
-	        value: function createItems(text_track) {
-	            var items = [];
-
-	            if (!text_track || text_track.cues.length <= 0) {
-	                return items;
-	            }
-
-	            var template = this.options_.template;
-
-	            for (var i = 0, _length3 = text_track.cues.length; i < _length3; i++) {
-	                var cue = text_track.cues[i];
-
-	                items.push(new _chapterThumbnailMenuItem.ChapterThumbnailMenuItem(this.player(), {
-	                    cue: cue,
-	                    template: template,
-	                    text_track: text_track
-	                }));
-	            }
-
-	            return items;
-	        }
-
-	        /**
-	         * @name Handle Click
-	         * @description
-	         * Defined by videojs.MenuButton
-	         */
-
-	    }, {
-	        key: 'handleClick',
-	        value: function handleClick(event) {
-	            // TODO: not sure if there is a better way to determine visibility
-	            if (this.menu.hasClass('vjs-lock-showing')) {
-	                this.menu.unlockShowing();
-	            } else {
-	                this.menu.lockShowing();
-	            }
-
-	            this.player().el().focus();
-	        }
-
-	        /**
-	         * @name Update
-	         * @description
-	         * Defined by videojs.MenuButton
-	         *
-	         * Must override so that the menu isn't attached to the videojs.MenuButton.
-	         * Instead we will manage it ourselves by adding it to the player directly.
-	         */
-
-	    }, {
-	        key: 'update',
-	        value: function update() {
-	            var menu = this.createMenu();
-
-	            this.menu = menu;
-
-	            this.buttonPressed_ = false;
-
-	            if (this.items && this.items.length === 0) {
-	                this.hide();
-	            } else if (this.items && this.items.length > 1) {
-	                this.show();
-	            }
-	        }
-	    }]);
-
-	    return ChapterThumbnailMenuButton;
-	})(VjsMenuButton);
-
-	ChapterThumbnailMenuButton.prototype.controlText_ = 'Chapters';
-
-	exports.CHAPTER_THUMBNAIL_MENU_BUTTON_NAME = CHAPTER_THUMBNAIL_MENU_BUTTON_NAME;
-	exports.ChapterThumbnailMenuButton = ChapterThumbnailMenuButton;
-
-/***/ },
-/* 6 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-
-	var _get = function get(_x2, _x3, _x4) { var _again = true; _function: while (_again) { var object = _x2, property = _x3, receiver = _x4; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x2 = parent; _x3 = property; _x4 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var CHAPTER_THUMBNAIL_MENU_NAME = 'ChapterThumbnailMenu';
-
-	/**
-	 * @name Chapter Thumbnails Menu
-	 * @description
-	 * Define the chapter thumbnails menu component.
-	 *
-	 * @param {Object} player VideoJS player
-	 * @param {Object} options={}
-	 * @param {Object} options.name Component name
-	 */
-
-	var VjsMenu = videojs.getComponent('Menu');
-
-	var ChapterThumbnailMenu = (function (_VjsMenu) {
-	    _inherits(ChapterThumbnailMenu, _VjsMenu);
-
-	    function ChapterThumbnailMenu(player) {
-	        var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-
-	        _classCallCheck(this, ChapterThumbnailMenu);
-
-	        _get(Object.getPrototypeOf(ChapterThumbnailMenu.prototype), 'constructor', this).call(this, player, options);
-
-	        this.el_.id = 'vjs_chapter_thumbnails_menu';
-
-	        // NOTE: does not have a className property
-	        this.addClass('vjs-chapter-thumbnails-menu');
-	    }
-
-	    return ChapterThumbnailMenu;
-	})(VjsMenu);
-
-	exports.CHAPTER_THUMBNAIL_MENU_NAME = CHAPTER_THUMBNAIL_MENU_NAME;
-	exports.ChapterThumbnailMenu = ChapterThumbnailMenu;
-
-/***/ },
-/* 7 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	var _get = function get(_x2, _x3, _x4) { var _again = true; _function: while (_again) { var object = _x2, property = _x3, receiver = _x4; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x2 = parent; _x3 = property; _x4 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var _videojsChapterThumbnailTemplate = __webpack_require__(8);
-
-	var _videojsChapterThumbnailTemplate2 = _interopRequireDefault(_videojsChapterThumbnailTemplate);
-
-	/**
-	 * @name Chapter Thumnails Menu Item
-	 * @description
-	 * Define the chapter thumbnails menu item component.
-	 *
-	 * @param {Object} player VideoJS player
-	 * @param {Object} options={}
-	 * @param {Object} options.cue
-	 * @param {Object} [options.template]
-	 * @param {Object} options.text_track
-	 */
-
-	var VjsMenuItem = videojs.getComponent('MenuItem');
-
-	var ChapterThumbnailMenuItem = (function (_VjsMenuItem) {
-	    _inherits(ChapterThumbnailMenuItem, _VjsMenuItem);
-
-	    function ChapterThumbnailMenuItem(player) {
-	        var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-
-	        _classCallCheck(this, ChapterThumbnailMenuItem);
-
-	        var cue = options.cue;
-	        var text_track = options.text_track;
-
-	        var current_time = player.currentTime();
-
-	        options.label = (0, _videojsChapterThumbnailTemplate2['default'])(cue);
-	        options.selected = cue.startTime <= current_time && current_time < cue.endTime;
-
-	        _get(Object.getPrototypeOf(ChapterThumbnailMenuItem.prototype), 'constructor', this).call(this, player, options);
-
-	        this.addClass('vjs-chapter-thumbnails-menu-item');
-
-	        text_track.addEventListener('cuechange', videojs.bind(this, this.onCueChange));
-	    }
-
-	    /**
-	     * @name Handle Click
-	     * @description
-	     * Defined by videojs.MenuItem
-	     */
-
-	    _createClass(ChapterThumbnailMenuItem, [{
-	        key: 'handleClick',
-	        value: function handleClick(event) {
-	            var cue = this.options_.cue;
-	            var is_paused = this.player().paused();
-
-	            if (!is_paused) {
-	                this.player().pause();
-	            }
-
-	            this.player().currentTime(cue.startTime);
-
-	            if (!is_paused) {
-	                this.player().play();
-	            }
-
-	            this.player().el().focus();
-	        }
-	    }, {
-	        key: 'onCueChange',
-	        value: function onCueChange(event) {
-	            this.update();
-	        }
-	    }, {
-	        key: 'update',
-	        value: function update() {
-	            var cue = this.options_.cue,
-	                current_time = this.player().currentTime();
-
-	            this.selected(cue.startTime <= current_time && current_time < cue.endTime);
-	        }
-	    }]);
-
-	    return ChapterThumbnailMenuItem;
-	})(VjsMenuItem);
-
-	exports.ChapterThumbnailMenuItem = ChapterThumbnailMenuItem;
-
-/***/ },
-/* 8 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-	var defaults = {
-	    template: '\n<div class="vjs-chapters-thumbnails-item">\n    <img class="vjs-chapters-thumbnails-item-image" src="{{image}}" />\n    <span class="vjs-chapters-thumbnails-item-title">{{title}}</span>\n</div>\n'
-	};
-
-	function chapterThumbnailTemplate() {
-	    var cue = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-	    var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-
-	    var template = options.template || defaults.template;
-
-	    var cue_text = JSON.parse(cue.text || '{}');
-
-	    for (var key in cue_text) {
-	        if (cue_text.hasOwnProperty(key)) {
-	            template = template.replace(new RegExp('{{' + key + '}}', 'ig'), cue_text[key]);
-	        }
-	    }
-
-	    return template;
-	}
-
-	exports['default'] = chapterThumbnailTemplate;
-	module.exports = exports['default'];
-
-/***/ },
-/* 9 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	var TRACK_ID = 'chapter_thumbnails_track';
-	exports.TRACK_ID = TRACK_ID;
-
-/***/ }
-/******/ ]);
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
-
-/***/ }),
-/* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
-var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-with(obj||{}){
-__p+='<video id="embed-video" class="embed-resource video-js vjs-default-skin vjs-big-play-centered" controls\n       preload="none" width="100%" height="100%" poster="'+
-((__t=( coverUrl ))==null?'':__t)+
-'">\n    ';
- _.each( sources, function( s ){ 
-__p+='\n    <source src="'+
-((__t=( s.url ))==null?'':__t)+
-'" type="'+
-((__t=( s.type ))==null?'':__t)+
-'">\n    ';
- }); 
-__p+='\n    ';
- _.each( tracks, function( s ){ 
-__p+='\n    ';
- if (s.kind == "subtitles") { 
-__p+='\n    <track src="'+
-((__t=( s.src ))==null?'':__t)+
-'" kind="'+
-((__t=( s.kind ))==null?'':__t)+
-'" srclang="'+
-((__t=( s.srclang ))==null?'':__t)+
-'" label="'+
-((__t=( s.label ))==null?'':__t)+
-'" ';
- if (s.default == true) { 
-__p+='default';
- } 
-__p+=' >\n    ';
- } 
-__p+='\n    ';
- }); 
-__p+='\n\n</video>';
-}
-return __p;
-};
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 23 */
-/***/ (function(module, exports) {
-
-module.exports = function(obj){
-var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-with(obj||{}){
-__p+='<div class="vjs-chapters-thumbnails-item">\n    <span class="vjs-chapters-thumbnails-item-image">{{image}}</span>\n    <span class="vjs-chapters-thumbnails-item-title">{{title}}</span>\n</div>';
-}
-return __p;
-};
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ })
-],[20]);
+
+},[21]);
 //# sourceMappingURL=video_videojs.js.map
