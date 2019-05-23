@@ -6,7 +6,6 @@
 // require('html5shiv');
 (<any>window).HELP_IMPROVE_VIDEOJS = false;
 let videojs = require('../../../../../node_modules/video.js/dist/video.js');
-require('../../../../../node_modules/videojs-flash/dist/videojs-flash.js');
 
 let chapters = require('../../../../../node_modules/videojs-chapter-thumbnails/dist/videojs.chapter-thumbnails.js');
 
