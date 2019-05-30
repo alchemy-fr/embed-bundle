@@ -1169,6 +1169,10 @@ var VideoPlayer = function () {
                 _this.$playerContainer.style.height = dimensions.height + 'px';
             }
         });
+        if (this.configService.get('resource.chaptersDisplay') !== 'thumbnail_banner') {
+            var chapterBlock = document.getElementById('embed-video');
+            chapterBlock.classList.add("dropdown-chapter");
+        }
         if (this.configService.get('isStandalone') === true) {
             this.initResizer();
         } else {
