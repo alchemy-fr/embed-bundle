@@ -52,7 +52,7 @@ export default class VideoPlayer {
                 this.$playerContainer.style.height = dimensions.height + 'px';
             }
         });
-        if( this.configService.get('resource.chaptersDisplay') !== 'thumbnail_banner' ) {
+        if(( this.configService.get('resource.chaptersDisplay') !== 'thumbnail_banner' ) || ( this.configService.get('resource.chaptersDisplay') == 'thumbnail_dropdown' )) {
             let chapterBlock = document.getElementById('embed-video');
             chapterBlock.classList.add("dropdown-chapter");
         }
