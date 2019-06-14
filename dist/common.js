@@ -91,7 +91,7 @@
 /******/ 		if (__webpack_require__.nc) {
 /******/ 			script.setAttribute("nonce", __webpack_require__.nc);
 /******/ 		}
-/******/ 		script.src = __webpack_require__.p + "" + {"0":"25d4ecca1153d5f09833"}[chunkId] + ".js";
+/******/ 		script.src = __webpack_require__.p + "" + {"0":"9bd4df79dbb54aa66807"}[chunkId] + ".js";
 /******/ 		var timeout = setTimeout(onScriptComplete, 120000);
 /******/ 		script.onerror = script.onload = onScriptComplete;
 /******/ 		function onScriptComplete() {
@@ -147,7 +147,7 @@
 /******/ 	__webpack_require__.oe = function(err) { console.error(err); throw err; };
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 46);
+/******/ 	return __webpack_require__(__webpack_require__.s = 47);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -1849,11 +1849,39 @@
   }
 }());
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(19)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(22)(module)))
 
 /***/ }),
 
-/***/ 18:
+/***/ 2:
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+
+/***/ 21:
 /***/ (function(module, exports, __webpack_require__) {
 
 var instance = null;
@@ -1932,7 +1960,7 @@ exports.default = ApplicationConfigService;
 
 /***/ }),
 
-/***/ 19:
+/***/ 22:
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -1961,7 +1989,7 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ 20:
+/***/ 23:
 /***/ (function(module, exports, __webpack_require__) {
 
 var _ = __webpack_require__(0);
@@ -2001,7 +2029,7 @@ exports.default = config;
 
 /***/ }),
 
-/***/ 3:
+/***/ 4:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __extends = this && this.__extends || function (d, b) {
@@ -2012,9 +2040,9 @@ var __extends = this && this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var applicationConfigService_1 = __webpack_require__(18);
+var applicationConfigService_1 = __webpack_require__(21);
 //import radioChannels from '../../core/radioChannels';
-var config_1 = __webpack_require__(20);
+var config_1 = __webpack_require__(23);
 var instance = null;
 var ConfigService = function (_super) {
     __extends(ConfigService, _super);
@@ -2039,35 +2067,7 @@ exports.default = ConfigService;
 
 /***/ }),
 
-/***/ 4:
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-
-/***/ 46:
+/***/ 47:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(0);

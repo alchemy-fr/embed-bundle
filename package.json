@@ -44,8 +44,7 @@
     "screenfull": "^2.0.0",
     "swfobject": "^2.2.1",
     "underscore": "^1.8.3",
-    "video.js": "5.5.3",
-    "videojs-chapter-thumbnails": "1.1.2",
+    "video.js": "7.5.5",
     "videojs-flash": "^2.2.0",
     "webl10n": "^1.0.0",
     "webpack": "^3.10.0"
