@@ -122,36 +122,3 @@ $asset-theme-path: './assets/images/';
   }
 }
 
-/* Dropdown style for  chapters-thumbnails */
-.dropdown-chapter {
-  .vjs-chapter-thumbnails-menu {
-    .vjs-menu-content {
-      width: 250px;
-      right: 50px;
-      height: 200px;
-    }
-  }
-  .vjs-menu .vjs-chapter-thumbnails-menu-item {
-    width: 98%;
-    display: block;
-
-  }
-
-  .vjs-chapters-thumbnails-item {
-    display: block;
-    min-height: 38px;
-    img {
-      width: 30%;
-      float: left;
-      margin: 0;
-    }
-  }
-  .vjs-chapters-thumbnails-item-title {
-    display: inline-block;
-    width: 60%;
-    text-align: left;
-    max-width: 132px;
-    overflow: hidden;
-    padding-top: 10px;
-  }
-}

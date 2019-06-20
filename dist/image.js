@@ -1,6 +1,6 @@
 webpackJsonp([5],{
 
-/***/ 17:
+/***/ 20:
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -9,8 +9,8 @@ webpackJsonp([5],{
 /// <reference path="./embed.d.ts" />
 // require('html5shiv');
 //import _ = require('underscore');
-var pym = __webpack_require__(2);
-var service_1 = __webpack_require__(3);
+var pym = __webpack_require__(3);
+var service_1 = __webpack_require__(4);
 var resizeEl_1 = __webpack_require__(6);
 var Embed = function () {
     function Embed() {
@@ -61,7 +61,7 @@ window.embedPlugin = new Embed();
 
 /***/ }),
 
-/***/ 2:
+/***/ 3:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! pym.js - v1.3.2 - 2018-02-13 */
@@ -1290,5 +1290,5 @@ exports.default = ResizeEl;
 
 /***/ })
 
-},[17]);
+},[20]);
 //# sourceMappingURL=image.js.map

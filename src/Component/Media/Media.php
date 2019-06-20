@@ -228,6 +228,9 @@ class Media extends AbstractDelivery
                 foreach ($field->get_values() as $value) {
                     // get vtt raw content
                     $videoTextTrack = $value->getValue();
+                    $videoTextTrack =  preg_replace('#image.*?}#si', '', $videoTextTrack);
+                    $videoTextTrack =  preg_replace('#{.*?:"#si', '', $videoTextTrack);
+                    $videoTextTrack =  preg_replace('#".*?"#si', '', $videoTextTrack);
                 }
             }
         }

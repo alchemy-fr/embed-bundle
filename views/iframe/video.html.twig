@@ -3,7 +3,6 @@
 {% block stylesheet %}
     {% if video.player == 'videojs' %}
     <link type="text/css" rel="stylesheet" href="/assets/vendors/alchemy-embed-medias/players/videojs/skin/videojs.css">
-    <link type="text/css" rel="stylesheet" href="/assets/vendors/alchemy-embed-medias/players/videojs/skin/videojs.css">
     {% else %}
     <link type="text/css" rel="stylesheet" href="/assets/vendors/alchemy-embed-medias/players/flowplayer/skin/flowplayer.css">
     {% endif %}
@@ -27,7 +26,6 @@
                     width: {{embedMedia.dimensions.width}},
                     height: {{embedMedia.dimensions.height}},
                     autoplay: {{ video.autoplay |json_encode|raw }},
-                    chaptersDisplay: {{ video.chapters_display |json_encode|raw }},
                     currentTime: {{embedMedia.currentTime}},
                     fitIn: true, // force video to downScale / upscale
                     aspectRatio: '{{ embedMedia.dimensions.width }}:{{ embedMedia.dimensions.height }}',

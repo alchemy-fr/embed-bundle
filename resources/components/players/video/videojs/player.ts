@@ -7,13 +7,11 @@
 (<any>window).HELP_IMPROVE_VIDEOJS = false;
 let videojs = require('../../../../../node_modules/video.js/dist/video.js');
 
-let chapters = require('../../../../../node_modules/videojs-chapter-thumbnails/dist/videojs.chapter-thumbnails.js');
 
 import * as _ from 'underscore';
 import ConfigService from '../../../embed/config/service';
 import ResizeEl from '../../../utils/resizeEl';
 let playerTemplate:any = require('./player.html');
-let chaptersTemplate:any = require('./chapters.html');
 let pym = require('pym.js');
 
 export default class VideoPlayer {
@@ -52,10 +50,6 @@ export default class VideoPlayer {
                 this.$playerContainer.style.height = dimensions.height + 'px';
             }
         });
-        if(( this.configService.get('resource.chaptersDisplay') !== 'thumbnail_banner' ) || ( this.configService.get('resource.chaptersDisplay') == 'thumbnail_dropdown' )) {
-            let chapterBlock = document.getElementById('embed-video');
-            chapterBlock.classList.add("dropdown-chapter");
-        }
 
         if( this.configService.get('isStandalone') === true ) {
             this.initResizer();
@@ -172,7 +166,7 @@ export default class VideoPlayer {
 
         if( chapterTrack !== null ) {
             (<any>player).ready(function() {
-                (<any>player).chapter_thumbnails(chapterTrack, { template: chaptersTemplate});
+                (<any>player).addRemoteTextTrack(chapterTrack);
             });
         }
 

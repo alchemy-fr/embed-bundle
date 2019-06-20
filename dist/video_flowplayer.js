@@ -1,6 +1,6 @@
-webpackJsonp([3],{
+webpackJsonp([4],{
 
-/***/ 25:
+/***/ 26:
 /***/ (function(module, exports, __webpack_require__) {
 
 /// <reference path="../../../../embed/embed.d.ts" />
@@ -9,11 +9,11 @@ webpackJsonp([3],{
  */
 // require('html5shiv');
 window.HELP_IMPROVE_VIDEOJS = false;
-var flowplayer = __webpack_require__(26);
+var flowplayer = __webpack_require__(27);
 var _ = __webpack_require__(0);
-var service_1 = __webpack_require__(3);
+var service_1 = __webpack_require__(4);
 var resizeEl_1 = __webpack_require__(6);
-var playerTemplate = __webpack_require__(27);
+var playerTemplate = __webpack_require__(28);
 var VideoPlayer = function () {
     function VideoPlayer() {
         this.configService = new service_1.default();
@@ -87,7 +87,7 @@ window.embedPlugin = new VideoPlayer();
 
 /***/ }),
 
-/***/ 26:
+/***/ 27:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var require;var require;/*!
@@ -7003,11 +7003,11 @@ module.exports = function isObject(x) {
 },{}]},{},[19])(19)
 });
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
 
-/***/ 27:
+/***/ 28:
 /***/ (function(module, exports) {
 
 module.exports = function(obj){
@@ -7120,5 +7120,5 @@ exports.default = ResizeEl;
 
 /***/ })
 
-},[25]);
+},[26]);
 //# sourceMappingURL=video_flowplayer.js.map

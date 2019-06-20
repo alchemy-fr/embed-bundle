@@ -2835,11 +2835,6 @@ locate-path@^2.0.0:
     p-locate "^2.0.0"
     path-exists "^3.0.0"
 
-lodash-compat@^3.9.3:
-  version "3.10.2"
-  resolved "https://registry.yarnpkg.com/lodash-compat/-/lodash-compat-3.10.2.tgz#c6940128a9d30f8e902cd2cf99fd0cba4ecfc183"
-  integrity sha1-xpQBKKnTD46QLNLPmf0Muk7PwYM=
-
 lodash._arraycopy@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/lodash._arraycopy/-/lodash._arraycopy-3.0.0.tgz#76e7b7c1f1fb92547374878a562ed06a3e50f6e1"
@@ -3708,7 +3703,7 @@ object-copy@^0.1.0:
     define-property "^0.2.5"
     kind-of "^3.0.3"
 
-object-keys@^1.0.11, object-keys@^1.0.12:
+object-keys@^1.0.12:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/object-keys/-/object-keys-1.1.1.tgz#1c47f272df277f3b1daf061677d9c82e2322c60e"
   integrity sha512-NuAESUOUMrlIXOfHKzD6bpPu3tYt3xvjNdRIQ+FeT0lNb4K8WR70CaDxhuNguS2XG+GjkyMwOzsN5ZktImfhLA==
@@ -3724,16 +3719,6 @@ object-visit@^1.0.0:
   integrity sha1-95xEk68MU3e1n+OdOV5BBC3QRbs=
   dependencies:
     isobject "^3.0.0"
-
-object.assign@^4.0.1:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/object.assign/-/object.assign-4.1.0.tgz#968bf1100d7956bb3ca086f006f846b3bc4008da"
-  integrity sha512-exHJeq6kBKj58mqGyTQ9DFvrZC/eR6OwxzoM9YRoGBqrXYonaFyGiFMuc9VZrXf7DarreEwMpurG3dd+CNyW5w==
-  dependencies:
-    define-properties "^1.1.2"
-    function-bind "^1.1.1"
-    has-symbols "^1.0.0"
-    object-keys "^1.0.11"
 
 object.defaults@^1.1.0:
   version "1.1.0"
@@ -4451,7 +4436,7 @@ safe-buffer@^5.0.1, safe-buffer@^5.1.0, safe-buffer@^5.1.1, safe-buffer@^5.1.2, 
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.2.tgz#991ec69d296e0313747d59bdfd2b745c35f8828d"
   integrity sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==
 
-safe-json-parse@4.0.0, safe-json-parse@^4.0.0:
+safe-json-parse@4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/safe-json-parse/-/safe-json-parse-4.0.0.tgz#7c0f578cfccd12d33a71c0e05413e2eca171eaac"
   integrity sha1-fA9XjPzNEtM6ccDgVBPi7KFx6qw=
@@ -5245,21 +5230,20 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
-video.js@5.5.3:
-  version "5.5.3"
-  resolved "https://registry.yarnpkg.com/video.js/-/video.js-5.5.3.tgz#a43f2bfc793d70d4e128dad02cde3a2f4e107b40"
-  integrity sha1-pD8r/Hk9cNThKNrQLN46L04Qe0A=
+video.js@7.5.5:
+  version "7.5.5"
+  resolved "https://registry.yarnpkg.com/video.js/-/video.js-7.5.5.tgz#322c321cb1e8ac55007f61f75f5dd928548fd4d2"
+  integrity sha512-25eZciVCBJrJe0lhr5hUT9fQfGSBIBek9FoFfFgJEyXDmPwRMR3NCxYarW+qpPAC1Re8V6MSgaCg1oIbZdqBpA==
   dependencies:
-    global "^4.3.0"
-    lodash-compat "^3.9.3"
-    object.assign "^4.0.1"
-    safe-json-parse "^4.0.0"
+    "@babel/runtime" "^7.2.0"
+    "@videojs/http-streaming" "1.9.3"
+    global "4.3.2"
+    keycode "^2.2.0"
+    safe-json-parse "4.0.0"
     tsml "1.0.1"
-    videojs-font "1.5.1"
-    videojs-ie8 "1.1.1"
-    videojs-swf "5.0.1"
-    videojs-vtt.js "^0.12.1"
-    xhr "~2.2.0"
+    videojs-font "3.1.0"
+    videojs-vtt.js "0.14.1"
+    xhr "2.4.0"
 
 "video.js@^6 || ^7", "video.js@^6.8.0 || ^7.0.0":
   version "7.5.4"
@@ -5276,11 +5260,6 @@ video.js@5.5.3:
     videojs-vtt.js "0.14.1"
     xhr "2.4.0"
 
-videojs-chapter-thumbnails@1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/videojs-chapter-thumbnails/-/videojs-chapter-thumbnails-1.1.2.tgz#34c52cb7493ba8f3cc97cb103442ef89f65970e4"
-  integrity sha1-NMUst0k7qPPMl8sQNELvifZZcOQ=
-
 videojs-flash@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/videojs-flash/-/videojs-flash-2.2.0.tgz#92aa47855eafb4d71cb041c768936e97de5aca7c"
@@ -5290,27 +5269,10 @@ videojs-flash@^2.2.0:
     video.js "^6 || ^7"
     videojs-swf "5.4.2"
 
-videojs-font@1.5.1:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/videojs-font/-/videojs-font-1.5.1.tgz#647918200314b8b1f953a489a3766531fce822e3"
-  integrity sha1-ZHkYIAMUuLH5U6SJo3ZlMfzoIuM=
-
 videojs-font@3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/videojs-font/-/videojs-font-3.1.0.tgz#ac33be9b517fe19299f61cccd2b3c7d75a1c6960"
   integrity sha512-rxB68SVgbHD+kSwoNWNCHicKJuR2ga3bGfvGxmB+8fupsiLbnyCwTBVtrZUq4bZnD64mrKP1DxHiutxwrs59pQ==
-
-videojs-ie8@1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/videojs-ie8/-/videojs-ie8-1.1.1.tgz#269d624ff325b3bc9258495f2c86f0bc0f0206c0"
-  integrity sha1-Jp1iT/Mls7ySWElfLIbwvA8CBsA=
-  dependencies:
-    es5-shim "^4.3.1"
-
-videojs-swf@5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/videojs-swf/-/videojs-swf-5.0.1.tgz#2186bd9ec5ffc5d065d5d956cb0df2533ffa2983"
-  integrity sha1-IYa9nsX/xdBl1dlWyw3yUz/6KYM=
 
 videojs-swf@5.4.2:
   version "5.4.2"
@@ -5321,13 +5283,6 @@ videojs-vtt.js@0.14.1:
   version "0.14.1"
   resolved "https://registry.yarnpkg.com/videojs-vtt.js/-/videojs-vtt.js-0.14.1.tgz#da583eb1fc9c81c826a9432b706040e8dea49911"
   integrity sha512-YxOiywx6N9t3J5nqsE5WN2Sw4CSqVe3zV+AZm2T4syOc2buNJaD6ZoexSdeszx2sHLU/RRo2r4BJAXFDQ7Qo2Q==
-  dependencies:
-    global "^4.3.1"
-
-videojs-vtt.js@^0.12.1:
-  version "0.12.6"
-  resolved "https://registry.yarnpkg.com/videojs-vtt.js/-/videojs-vtt.js-0.12.6.tgz#e078600bda899eaa6f9c3307134cd0c811947b8e"
-  integrity sha512-XFXeGBQiljnElMhwCcZst0RDbZn2n8LU7ZScXryd3a00OaZsHAjdZu/7/RdSr7Z1jHphd45FnOvOQkGK4YrWCQ==
   dependencies:
     global "^4.3.1"
 
@@ -5525,16 +5480,6 @@ xhr@2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/xhr/-/xhr-2.4.0.tgz#e16e66a45f869861eeefab416d5eff722dc40993"
   integrity sha1-4W5mpF+GmGHu76tBbV7/ci3ECZM=
-  dependencies:
-    global "~4.3.0"
-    is-function "^1.0.1"
-    parse-headers "^2.0.0"
-    xtend "^4.0.0"
-
-xhr@~2.2.0:
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/xhr/-/xhr-2.2.2.tgz#2ee72571869f8686d41559a9ea286c18971435ff"
-  integrity sha1-LuclcYafhobUFVmp6ihsGJcUNf8=
   dependencies:
     global "~4.3.0"
     is-function "^1.0.1"
