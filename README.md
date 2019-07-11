@@ -49,6 +49,7 @@ embed_bundle:
     audio:
         player: videojs
         autoplay: false
+        cover_subdef: thumbnail
     document:
         player: flexpaper
         enable_pdfjs: true
