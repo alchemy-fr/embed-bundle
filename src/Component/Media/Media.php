@@ -120,7 +120,24 @@ class Media extends AbstractDelivery
                     'url'  => $resourceUrl,
                     'type' => $subdef->get_mime()
                 ];
-                $embedMedia['coverUrl'] = $baseUrl . $substitutionPath;
+                $coverUrl = $baseUrl . $thumbnail->get_url();
+
+                $embedConfig = $this->getEmbedConfiguration();
+
+                // if user config has custom subdef specified:
+                if (array_key_exists('audio', $embedConfig)) {
+                    if (array_key_exists('cover_subdef', $embedConfig['audio'])) {
+                        $customCoverName = $embedConfig['audio']['cover_subdef'];
+                        try {
+                            $customCover = $record->get_subdef($customCoverName);
+                            $coverUrl = $baseUrl.$customCover->get_url();
+                        } catch (\Exception $e) {
+                            // no existing custom cover
+                        }
+                    }
+                }
+
+                $embedMedia['coverUrl'] = $coverUrl;
                 // set default dimension for player
                 $embedMedia['dimensions'] = [
                     'width'  => 320,
