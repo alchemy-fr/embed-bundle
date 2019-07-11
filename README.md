@@ -29,6 +29,7 @@ video.cover_subdef | string | define a subdefinition for video cover, default is
 video.available_speeds | number[] | playback available speeds
 audio.player | string | active video player, embed bundle ship with `videojs`
 audio.autoplay | boolean | autoplay as default behavior
+audio.cover_subdef | string | define a subdefinition for audio cover, default is ```thumbnail```
 document.enable_pdfjs | boolean | use pdfjs instead of flexbox for pdf only
 document.player | string | active document player, embed bundle ship with `flexbox`
 
