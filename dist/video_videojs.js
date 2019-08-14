@@ -21122,7 +21122,8 @@ exports.default = ResizeEl;
     _proto.createEl = function createEl() {
       return _Component.prototype.createEl.call(this, 'iframe', {
         className: 'vjs-resize-manager',
-        tabIndex: -1
+        tabIndex: -1,
+        frameborder: 0
       }, {
         'aria-hidden': 'true'
       });
