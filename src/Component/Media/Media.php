@@ -70,7 +70,7 @@ class Media extends AbstractDelivery
                         $customCoverName = $embedConfig['video']['coverSubdef'];
                         try {
                             $customCover = $record->get_subdef($customCoverName);
-                            $coverUrl = $baseUrl.$customCover->get_url();
+                            $coverUrl = $customCover->get_url();
                         } catch (\Exception $e) {
                             // no existing custom cover
                         }
