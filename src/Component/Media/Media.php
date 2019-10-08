@@ -56,11 +56,11 @@ class Media extends AbstractDelivery
         switch ($record->getType()) {
             case 'video':
                 $ogMetaData['og:type'] = 'video.other';
-                $ogMetaData['og:image'] = $baseUrl . $thumbnail->get_permalink()->get_url();
+                $ogMetaData['og:image'] = $baseUrl . $thumbnail->get_url();
                 $ogMetaData['og:image:width'] = $thumbnail->get_width();
                 $ogMetaData['og:image:height'] = $thumbnail->get_height();
 
-                $coverUrl = $baseUrl . $thumbnail->get_permalink()->get_url();
+                $coverUrl = $baseUrl . $thumbnail->get_url();
 
                 $embedConfig = $this->getEmbedConfiguration();
 
@@ -70,7 +70,7 @@ class Media extends AbstractDelivery
                         $customCoverName = $embedConfig['video']['cover_subdef'];
                         try {
                             $customCover = $record->get_subdef($customCoverName);
-                            $coverUrl = $customCover->get_url();
+                            $coverUrl = $customCover->get_permalink()->get_url();
                         } catch (\Exception $e) {
                             // no existing custom cover
                         }
@@ -101,7 +101,7 @@ class Media extends AbstractDelivery
             case 'flexpaper':
             case 'document':
                 $ogMetaData['og:type'] = 'article';
-                $ogMetaData['og:image'] = $baseUrl . $thumbnail->get_permalink()->get_url();
+                $ogMetaData['og:image'] = $baseUrl . $thumbnail->get_url();
                 $ogMetaData['og:image:width'] = $thumbnail->get_width();
                 $ogMetaData['og:image:height'] = $thumbnail->get_height();
 
