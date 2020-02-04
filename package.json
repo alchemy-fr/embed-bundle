@@ -37,7 +37,7 @@
     "gulp-install": "^1.0.0",
     "html5shiv": "~3.7.3",
     "jquery": "~1.11.3",
-    "lodash.merge": "^3.3.2",
+    "lodash.merge": "^4.6.2",
     "modernizr": "~3.0.0",
     "pdfjs-dist": "1.8.366",
     "pym.js": "^1.3.2",
