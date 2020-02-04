@@ -270,10 +270,27 @@ class Media extends AbstractDelivery
             $vttIds = [];
             $vttMetadata = [];
 
+            $chapterVttFieldName = 'VideoTextTrackChapters'; // as default name if configuration is not set up
+            
+            if (array_key_exists('ChapterVttFieldName', $this->app['phraseanet.configuration']['video-editor'])) {
+                $chapterVttFieldName = $this->app['phraseanet.configuration']['video-editor']['ChapterVttFieldName'];
+            }          
+
             // extract vtt ids and labels
             foreach ($databox->get_meta_structure() as $meta) {
                 $foundParts = [];
-                if (preg_match('/^VideoTextTrack(.*)$/iu', $meta->get_name(), $foundParts)) {
+
+                if ($meta->get_name() === $chapterVttFieldName ) {
+                    $vttIds[] = $meta->get_id();
+
+                    $vttMetadata[$meta->get_id()] = [
+                      'label'   => 'chapters', //@todo translate
+                      'srclang' => '',
+                      'default' => true,
+                      'kind'    => 'chapters',
+                    ];
+
+                } elseif (preg_match('/^VideoTextTrack(.*)$/iu', $meta->get_name(), $foundParts)) {
                     $vttIds[] = $meta->get_id();
 
                     /*
@@ -284,23 +301,12 @@ class Media extends AbstractDelivery
                         - metadata
                         - subtitles
                     */
-                    $kind = '';
-                    $setAsDefault = false;
-                    $vttFoundKind = strtolower($foundParts[1]);
-                    switch ($vttFoundKind) {
-                        case 'chapters':
-                            $setAsDefault = true;
-                            $kind = 'chapters';
-                            break;
-                        default:
-                            $kind = 'subtitles';
-                    }
-
+                                        
                     $vttMetadata[$meta->get_id()] = [
-                      'label' => empty($foundParts[1]) ? 'default' : $foundParts[1], //@todo translate
+                      'label'   => empty($foundParts[1]) ? 'default' : $foundParts[1], //@todo translate
                       'srclang' => '',
-                      'default' => $setAsDefault,
-                      'kind' => $kind,
+                      'default' => false,
+                      'kind'    => 'subtitles',
                     ];
                 }
             }
