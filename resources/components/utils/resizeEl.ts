@@ -77,6 +77,19 @@ class ResizeEl {
         let resizeW = resourceWidth,
             resizeH = resourceHeight;
 
+        /**
+         * Post msg to parent
+         */
+        let message = {
+            id:"Phraseanet",
+            url: (<any>window).location.href,
+            optimizedWidth: Math.floor(maxHeight / resourceRatio),
+            optimizedHeight: Math.floor(maxWidth * resourceRatio),
+            optimizeOppositeWidth: maxWidth > resourceWidth ? resourceWidth : 0,
+            optimizeOppositeHeight: maxHeight > resourceHeight ? resourceHeight : 0
+        }
+        parent.postMessage(message, '*');
+
         // pass 1 make height ok:
 
         if (resourceWidth > resourceHeight) {
