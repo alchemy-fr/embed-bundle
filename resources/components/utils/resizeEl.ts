@@ -58,9 +58,10 @@ class ResizeEl {
             height: height
         });
         this.setTargetDimensions({
-            width: width,
-            height: height
+            width: (<any>window).embedPlugin.resourceOriginalWidth,
+            height: (<any>window).embedPlugin.resourceOriginalHeight
         });
+
         this.resize();
     }
 
@@ -92,6 +93,11 @@ class ResizeEl {
             if (resizeH > maxHeight) {
                 resizeW = maxHeight / resourceRatio;
                 resizeH = maxHeight;
+            }
+
+            if (resizeW > maxWidth) {
+                resizeW = maxWidth;
+                resizeH = maxWidth * resourceRatio;
             }
         }
 

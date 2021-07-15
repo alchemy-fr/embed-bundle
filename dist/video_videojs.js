@@ -1174,8 +1174,8 @@ var ResizeEl = function () {
             height: height
         });
         this.setTargetDimensions({
-            width: width,
-            height: height
+            width: window.embedPlugin.resourceOriginalWidth,
+            height: window.embedPlugin.resourceOriginalHeight
         });
         this.resize();
     };
@@ -1204,6 +1204,10 @@ var ResizeEl = function () {
             if (resizeH > maxHeight) {
                 resizeW = maxHeight / resourceRatio;
                 resizeH = maxHeight;
+            }
+            if (resizeW > maxWidth) {
+                resizeW = maxWidth;
+                resizeH = maxWidth * resourceRatio;
             }
         }
         if (resizeW === null && resizeH === null) {
@@ -21122,8 +21126,7 @@ exports.default = ResizeEl;
     _proto.createEl = function createEl() {
       return _Component.prototype.createEl.call(this, 'iframe', {
         className: 'vjs-resize-manager',
-        tabIndex: -1,
-        frameborder: 0
+        tabIndex: -1
       }, {
         'aria-hidden': 'true'
       });

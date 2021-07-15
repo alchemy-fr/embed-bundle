@@ -1232,8 +1232,8 @@ var ResizeEl = function () {
             height: height
         });
         this.setTargetDimensions({
-            width: width,
-            height: height
+            width: window.embedPlugin.resourceOriginalWidth,
+            height: window.embedPlugin.resourceOriginalHeight
         });
         this.resize();
     };
@@ -1262,6 +1262,10 @@ var ResizeEl = function () {
             if (resizeH > maxHeight) {
                 resizeW = maxHeight / resourceRatio;
                 resizeH = maxHeight;
+            }
+            if (resizeW > maxWidth) {
+                resizeW = maxWidth;
+                resizeH = maxWidth * resourceRatio;
             }
         }
         if (resizeW === null && resizeH === null) {
