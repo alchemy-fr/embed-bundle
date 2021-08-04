@@ -1174,8 +1174,8 @@ var ResizeEl = function () {
             height: height
         });
         this.setTargetDimensions({
-            width: window.embedPlugin.resourceOriginalWidth,
-            height: window.embedPlugin.resourceOriginalHeight
+            width: window.location.search.indexOf('homothetic=true') === -1 ? width : window.embedPlugin.resourceOriginalWidth,
+            height: window.location.search.indexOf('homothetic=true') === -1 ? height : window.embedPlugin.resourceOriginalHeight
         });
         this.resize();
     };
@@ -1189,18 +1189,6 @@ var ResizeEl = function () {
             resourceRatio = this.targetDimensions.height / this.targetDimensions.width;
         var resizeW = resourceWidth,
             resizeH = resourceHeight;
-        /**
-         * Post msg to parent
-         */
-        var message = {
-            id: "Phraseanet",
-            url: window.location.href,
-            optimizedWidth: Math.floor(maxHeight / resourceRatio),
-            optimizedHeight: Math.floor(maxWidth * resourceRatio),
-            optimizeOppositeWidth: maxWidth > resourceWidth ? resourceWidth : 0,
-            optimizeOppositeHeight: maxHeight > resourceHeight ? resourceHeight : 0
-        };
-        parent.postMessage(message, '*');
         // pass 1 make height ok:
         if (resourceWidth > resourceHeight) {
             // if width still too large:
@@ -1217,9 +1205,11 @@ var ResizeEl = function () {
                 resizeW = maxHeight / resourceRatio;
                 resizeH = maxHeight;
             }
-            if (resizeW > maxWidth) {
-                resizeW = maxWidth;
-                resizeH = maxWidth * resourceRatio;
+            if (window.location.search.indexOf('homothetic=true') !== -1) {
+                if (resizeW > maxWidth) {
+                    resizeW = maxWidth;
+                    resizeH = maxWidth * resourceRatio;
+                }
             }
         }
         if (resizeW === null && resizeH === null) {
@@ -1240,6 +1230,20 @@ var ResizeEl = function () {
         this.$embedContainer.style['margin-top'] = marginTop + 'px';
         if (this.resizeCallback !== undefined) {
             this.resizeCallback.apply(this, [{ width: resizeW, height: resizeH, 'margin-top': marginTop }]);
+        }
+        if (window.location.search.indexOf('homothetic=true') !== -1) {
+            /**
+             * Post msg to window parent (iframe context)
+             */
+            var optimizedWidth = Math.floor(maxHeight / resourceRatio);
+            var optimizedHeight = Math.floor(maxWidth * resourceRatio);
+            var message = {
+                id: "Phraseanet",
+                url: window.location.href,
+                optimizedWidth: resourceWidth < optimizedWidth ? resourceWidth : optimizedWidth,
+                optimizedHeight: resourceHeight < optimizedHeight ? resourceHeight : optimizedHeight
+            };
+            parent.postMessage(message, '*');
         }
     };
     return ResizeEl;
