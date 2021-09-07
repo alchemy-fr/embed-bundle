@@ -60,8 +60,8 @@ class ResizeEl {
         });
 
         this.setTargetDimensions({
-            width: (<any>window).location.search.indexOf('homothetic=true') === -1 ? width : (<any>window).embedPlugin.resourceOriginalWidth,
-            height: (<any>window).location.search.indexOf('homothetic=true') === -1 ? height : (<any>window).embedPlugin.resourceOriginalHeight
+            width: (<any>window).embedPlugin.resourceOriginalWidth,
+            height: (<any>window).embedPlugin.resourceOriginalHeight
         });
 
         this.resize();
@@ -96,12 +96,9 @@ class ResizeEl {
                 resizeW = maxHeight / resourceRatio;
                 resizeH = maxHeight;
             }
-            if((<any>window).location.search.indexOf('homothetic=true') !== -1)
-            {
-                if (resizeW > maxWidth) {
-                    resizeW = maxWidth;
-                    resizeH = maxWidth * resourceRatio;
-                }
+            if (resizeW > maxWidth) {
+                resizeW = maxWidth;
+                resizeH = maxWidth * resourceRatio;
             }
 
         }
@@ -132,21 +129,19 @@ class ResizeEl {
             this.resizeCallback.apply(this, [{width: resizeW, height: resizeH, 'margin-top': marginTop}]);
         }
 
-        if((<any>window).location.search.indexOf('homothetic=true') !== -1)
-        {
-            /**
-             * Post msg to window parent (iframe context)
-             */
-            let optimizedWidth = Math.floor(maxHeight / resourceRatio);
-            let optimizedHeight = Math.floor(maxWidth * resourceRatio);
-            let message = {
-                id: "Phraseanet",
-                url: (<any>window).location.href,
-                optimizedWidth: resourceWidth < optimizedWidth ? resourceWidth : optimizedWidth,
-                optimizedHeight: resourceHeight < optimizedHeight ? resourceHeight : optimizedHeight,
-            };
-            parent.postMessage(message, '*');
-        }
+        /**
+         * Post msg to window parent (iframe context)
+         */
+        let optimizedWidth = Math.floor(maxHeight / resourceRatio);
+        let optimizedHeight = Math.floor(maxWidth * resourceRatio);
+        let message = {
+            id: "Phraseanet",
+            url: (<any>window).location.href,
+            optimizedWidth: resourceWidth < optimizedWidth ? resourceWidth : optimizedWidth,
+            optimizedHeight: resourceHeight < optimizedHeight ? resourceHeight : optimizedHeight,
+        };
+        parent.postMessage(message, '*');
+
     }
 }
 export default ResizeEl;
