@@ -1,0 +1,19 @@
+/*!
+
+   Flowplayer v6.0.5 (2016-01-13) | flowplayer.org/license
+
+*/
+
+/*!
+  * $script.js JS loader & dependency manager
+  * https://github.com/ded/script.js
+  * (c) Dustin Diaz 2014 | License MIT
+  */
+
+/*!
+  * Bean - copyright (c) Jacob Thornton 2011-2012
+  * https://github.com/fat/bean
+  * MIT license
+  */
+
+/*! (C) WebReflection Mit Style License */

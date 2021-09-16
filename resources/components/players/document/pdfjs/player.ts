@@ -5,7 +5,7 @@
 
 //require('html5shiv');
 require('../../../../../node_modules/webl10n/l10n');
-require('../../../../../node_modules/pdfjs-dist/web/compatibility'); // should be loaded first
+// require('../../../../../node_modules/pdfjs-dist/web/compatibility'); // should be loaded first
 require('../../../../../node_modules/pdfjs-dist/build/pdf');
 // Webpack returns a string to the url because we configured the url-loader.
 (<any>window).PDFJS.workerSrc = require('../../../../../node_modules/pdfjs-dist/build/pdf.worker.js');

@@ -16,19 +16,21 @@ gulp.task('webpack:build', ['styles', 'hbs-tpl'], function(callback) {
     gulp.start('deploy:copy-styles');
     // modify some webpack config options
     var myConfig = Object.create(webpackConfig);
-    myConfig.plugins = myConfig.plugins.concat(
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                drop_console: true,
-                warnings: false
-            }
-        })
-    );
+    // myConfig.plugins = myConfig.plugins.concat(
+    //     new webpack.optimize.UglifyJsPlugin({
+    //         compress: {
+    //             drop_console: true,
+    //             warnings: false
+    //         }
+    //     })
+    // );
     // myConfig.output.filename = 'build.min.js';
 
     // run webpack
     webpack(myConfig, function(err, stats) {
-        if(err) throw new gutil.PluginError("webpack:build", err);
+        if(err) {
+            throw new gutil.PluginError("webpack:build", err);
+        }
         gutil.log("[webpack:build]", stats.toString({
             colors: true
         }));

@@ -48,7 +48,7 @@ module.exports = {
             {
                 test: /\.ts(x?)$/,
                 exclude: /node_modules/,
-                loader: "babel-loader!ts-loader"
+                use: ["babel-loader", "ts-loader"]
             }
         ]
     },
@@ -70,11 +70,12 @@ module.exports = {
             _: "underscore",
             "videojs": "video.js",
             "window.videojs": "video.js"
-        }),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'common',
-            // minChunks: Infinity,
-            filename: 'common.js'
         })
+        // ,
+        // new webpack.optimize.CommonsChunkPlugin({
+        //     name: 'common',
+        //     // minChunks: Infinity,
+        //     filename: 'common.js'
+        // })
     ]
 };
