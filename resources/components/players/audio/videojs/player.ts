@@ -90,7 +90,7 @@ export default class AudioPlayer {
         let aspectRatio = this.configService.get('resource.aspectRatio'),
             options: VideoJSOptions = {
             fluid: true,
-            inactivityTimeout: 0 // force control to be alway active
+            // inactivityTimeout: 0 // force control to be alway active
         };
 
         if( this.configService.get('resource.aspectRatio') !== null ) {

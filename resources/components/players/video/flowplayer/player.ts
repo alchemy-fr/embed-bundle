@@ -76,11 +76,11 @@ export default class VideoPlayer {
     setupVideo() {
         let aspectRatio = this.configService.get('resource.aspectRatio'),
             options: IFlowPlayerOptions = {
-               clip: {
+                clip: {
                     sources: []
                 },
-                embed: false,
-                splash: this.configService.get('resource.coverUrl')
+                // embed: false,
+                // splash: this.configService.get('resource.coverUrl')
             };
 
         if( this.configService.get('resource.aspectRatio') !== null ) {
