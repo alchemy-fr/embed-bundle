@@ -12,6 +12,7 @@ require('../../../../../node_modules/webl10n/l10n');
 import * as PDFJS from '../../../../../node_modules/pdfjs-dist/build/pdf';
 import PDFJSWorker from '../../../../../node_modules/pdfjs-dist/build/pdf.worker.entry'
 PDFJS.GlobalWorkerOptions.workerPort = new PDFJSWorker();
+(<any>window).PDFJS = PDFJS;
 
 
 // Webpack returns a string to the url because we configured the url-loader.
