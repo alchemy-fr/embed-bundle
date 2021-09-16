@@ -6,9 +6,18 @@
 //require('html5shiv');
 require('../../../../../node_modules/webl10n/l10n');
 // require('../../../../../node_modules/pdfjs-dist/web/compatibility'); // should be loaded first
-require('../../../../../node_modules/pdfjs-dist/build/pdf');
+
+//require('../../../../../node_modules/pdfjs-dist/build/pdf');
+
+import * as PDFJS from '../../../../../node_modules/pdfjs-dist/build/pdf';
+import PDFJSWorker from '../../../../../node_modules/pdfjs-dist/build/pdf.worker.entry'
+PDFJS.GlobalWorkerOptions.workerPort = new PDFJSWorker();
+
+
 // Webpack returns a string to the url because we configured the url-loader.
-(<any>window).PDFJS.workerSrc = require('../../../../../node_modules/pdfjs-dist/build/pdf.worker.js');
+//(<any>window).PDFJS.workerSrc = require('../../../../../node_modules/pdfjs-dist/build/pdf.worker.js');
+
+
 let pdfview = require('../../../../../node_modules/pdfjs-dist/web/pdf_viewer');
 let ui_utils:any = require('../../../../../node_modules/pdfjs-dist/lib/web/ui_utils');
 //import * as $ from 'jquery';
