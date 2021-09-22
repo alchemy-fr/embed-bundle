@@ -4,29 +4,23 @@
  */
 
 //require('html5shiv');
-require('../../../../../node_modules/webl10n/l10n');
-// require('../../../../../node_modules/pdfjs-dist/web/compatibility'); // should be loaded first
+require('webl10n/l10n');
 
-//require('../../../../../node_modules/pdfjs-dist/build/pdf');
+import * as pdfjsLib from 'pdfjs-dist';
+import {PDFViewer, PDFFindController, EventBus, NullL10n} from 'pdfjs-dist/web/pdf_viewer';
 
-import * as PDFJS from '../../../../../node_modules/pdfjs-dist/build/pdf';
-import PDFJSWorker from '../../../../../node_modules/pdfjs-dist/build/pdf.worker.entry'
-PDFJS.GlobalWorkerOptions.workerPort = new PDFJSWorker();
-(<any>window).PDFJS = PDFJS;
+const L10n = NullL10n; // TODO use real translator
 
-
-// Webpack returns a string to the url because we configured the url-loader.
-//(<any>window).PDFJS.workerSrc = require('../../../../../node_modules/pdfjs-dist/build/pdf.worker.js');
+// Setting worker path to worker bundle.
 
 
-let pdfview = require('../../../../../node_modules/pdfjs-dist/web/pdf_viewer');
-let ui_utils:any = require('../../../../../node_modules/pdfjs-dist/lib/web/ui_utils');
+pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
+
 //import * as $ from 'jquery';
 import * as _ from 'underscore';
 import ConfigService from '../../../embed/config/service';
 let playerTemplate:any = require('./player.html');
 let pym = require('pym.js');
-
 
 let FindStates = {
     FIND_FOUND: 0,
@@ -99,8 +93,14 @@ export default class DocumentPlayer {
         let presentationModeButton = document.getElementById('presentationMode');
 
 
-        let pdfViewer = new (<any>window).PDFJS.PDFViewer({
-            container: container
+        const eventBus = new EventBus({});
+
+        let pdfViewer = new PDFViewer({
+            container: (container as HTMLDivElement),
+            renderer: 'canvas',
+            eventBus,
+            linkService: undefined,
+            l10n: undefined,
         });
 
         window.addEventListener('resize', _.debounce(() => {
@@ -118,31 +118,24 @@ export default class DocumentPlayer {
             }
         });
 
-        //set localization
-        ui_utils.mozL10n.ready(onLocalized);
-
-
-        let pdfFindController = new (<any>window).PDFJS.PDFFindController({
-            pdfViewer: pdfViewer
+        let pdfFindController = new PDFFindController({
+            linkService: pdfViewer.linkService,
+            eventBus: eventBus,
         });
 
-        pdfFindController.onUpdateResultsCount = function (matchCount) {
-            updateResultsCount(matchCount);
-        };
+        eventBus._on('updatefindmatchescount', function ({matchesCount}) {
+            updateResultsCount(matchesCount);
+        });
 
-        pdfFindController.onUpdateState = function (state, previous, matchCount) {
-            updateUIState(state, previous, matchCount);
-        }
+        eventBus._on('updatefindcontrolstate', function ({state, previous, matchesCount}) {
+            updateUIState(state, previous, matchesCount);
+        });
 
-
-        pdfViewer.setFindController(pdfFindController);
-
-
+        pdfViewer.findController = pdfFindController;
 
         /* HANDLERS FUNCTIONS */
         zoomIn.addEventListener("click", function() {
-            var newScale = pdfViewer.currentScale;
-            newScale = (newScale * SCALE_DELTA).toFixed(2);
+            const newScale = (pdfViewer.currentScale * SCALE_DELTA);
             if(newScale > MAX_SCALE) {
                 pdfViewer.currentScale = MAX_SCALE;
             }else {
@@ -152,8 +145,7 @@ export default class DocumentPlayer {
         });
 
         zoomOut.addEventListener("click", function() {
-            var newScale = pdfViewer.currentScale;
-            newScale = (newScale / SCALE_DELTA).toFixed(2);
+            const newScale = (pdfViewer.currentScale / SCALE_DELTA);
             if(newScale < MIN_SCALE) {
                 pdfViewer.currentScale = MIN_SCALE;
             }else {
@@ -164,7 +156,7 @@ export default class DocumentPlayer {
 
         reset.addEventListener("click", function() {
             pdfViewer.currentScaleValue = "page-width";
-            var newScale = pdfViewer.currentScale;
+            const newScale = pdfViewer.currentScale;
             updateZoomButton(newScale);
         });
 
@@ -198,30 +190,21 @@ export default class DocumentPlayer {
             toggleFullScreen();
         });
 
-
         document.addEventListener('webkitfullscreenchange', exitHandler, false);
         document.addEventListener('mozfullscreenchange', exitHandler, false);
         document.addEventListener('fullscreenchange', exitHandler, false);
         document.addEventListener('MSFullscreenChange', exitHandler, false);
 
-        function onLocalized() {
-            ui_utils.mozL10n.setLanguage(document.documentElement.lang);
-        }
-
-        function exitHandler()
-        {
+        function exitHandler() {
             var document:any = window.document;
             var fullscreen = document.webkitIsFullScreen ||    // alternative standard method
                 document.mozFullScreen  || document.msFullscreenElement;
-            if (fullscreen)
-            {
+            if (fullscreen) {
                 pdfViewer.currentScaleValue = "auto";
-            }else {
+            } else {
                 pdfViewer.currentScaleValue = "page-width";
             }
-
         }
-
 
         function toggleFullScreen() {
             var elem:any = viewerElement;
@@ -307,7 +290,6 @@ export default class DocumentPlayer {
             opened = false;
             toggleFindButton.classList.remove('toggled');
             bar.classList.add('hidden');
-            pdfFindController.active = false;
         }
 
         function toggle() {
@@ -354,7 +336,7 @@ export default class DocumentPlayer {
             findResultsCount.classList.remove('hidden');
         }
 
-        function updateUIState(state, previous, matchCount) {
+        async function updateUIState(state, previous, matchCount) {
             var notFound = false;
             var findMsg = '';
             var status = '';
@@ -365,14 +347,14 @@ export default class DocumentPlayer {
                     status = 'pending';
                     break;
                 case FindStates.FIND_NOTFOUND:
-                    findMsg = ui_utils.mozL10n.get('find_not_found', null, 'Phrase not found');
+                    findMsg = await L10n.get('find_not_found');
                     notFound = true;
                     break;
                 case FindStates.FIND_WRAPPED:
                     if (previous) {
-                        findMsg = ui_utils.mozL10n.get('find_reached_top', null, 'Reached top of document, continued from bottom');
+                        findMsg = await L10n.get('find_reached_top');
                     } else {
-                        findMsg = ui_utils.mozL10n.get('find_reached_bottom', null, 'Reached end of document, continued from top');
+                        findMsg = await L10n.get('find_reached_bottom');
                     }
                     break;
             }
@@ -387,13 +369,12 @@ export default class DocumentPlayer {
             _adjustWidth();
         }
 
-
         container.addEventListener("pagesinit", function () {
             pdfViewer.currentScaleValue = "page-width";
         });
 
-
-        (<any>window).PDFJS.getDocument(pdf)
+        pdfjsLib.getDocument(pdf)
+            .promise
             .then(function(document){
                 console.log("render");
                 pdfViewer.setDocument(document);
