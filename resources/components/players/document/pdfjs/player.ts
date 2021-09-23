@@ -7,12 +7,17 @@
 require('webl10n/l10n');
 
 import * as pdfjsLib from 'pdfjs-dist';
-import {PDFViewer, PDFFindController, EventBus, NullL10n} from 'pdfjs-dist/web/pdf_viewer';
+import {
+    PDFViewer,
+    PDFFindController,
+    EventBus,
+    NullL10n,
+    PDFLinkService
+} from 'pdfjs-dist/web/pdf_viewer';
 
 const L10n = NullL10n; // TODO use real translator
 
 // Setting worker path to worker bundle.
-
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
 
@@ -29,13 +34,24 @@ let FindStates = {
     FIND_PENDING: 3
 };
 
+type MatchesCount = {
+    total: number;
+    current: number;
+};
 
+type FindEvent = {
+    matchesCount: MatchesCount,
+};
+
+type UpdatefindcontrolstateEvent = {
+    state: any;
+    previous: any;
+} & FindEvent;
 
 export default class DocumentPlayer {
     private configService;
     private $documentContainer;
-    private documentEmbedContainerId;
-    private pymChild;
+    private readonly pymChild;
     private $embedContainer;
     private resourceOriginalWidth;
     private resourceOriginalHeight;
@@ -76,32 +92,44 @@ export default class DocumentPlayer {
         let pdf = this.configService.get('resource.url');
         //let pdf = '/assets/helloworld.pdf';
 
-        let viewerElement = document.getElementById('viewer');
-        let container = document.getElementById('viewerContainer');
-        let zoomIn = document.getElementById('zoomIn');
-        let zoomOut = document.getElementById('zoomOut');
-        let reset = document.getElementById('reset');
-        let toggleFindButton = document.getElementById('viewFind');
-        let bar = document.getElementById('findbar');
-        let findField:HTMLInputElement = <HTMLInputElement>document.getElementById('findInput');
-        let findNextButton = document.getElementById('findNext');
-        let findPreviousButton = document.getElementById('findPrevious');
-        let caseSensitive = <HTMLInputElement>document.getElementById('findMatchCase');
-        let highlightAll = <HTMLInputElement>document.getElementById('findHighlightAll');
-        let findResultsCount = document.getElementById('findResultsCount');
-        let findMessage = document.getElementById('findMsg');
-        let presentationModeButton = document.getElementById('presentationMode');
+        const viewerElement = document.getElementById('viewer');
+        const container = document.getElementById('viewerContainer');
+        const zoomIn = document.getElementById('zoomIn');
+        const zoomOut = document.getElementById('zoomOut');
+        const reset = document.getElementById('reset');
+        const toggleFindButton = document.getElementById('viewFind');
+        const bar = document.getElementById('findbar');
+        const findField:HTMLInputElement = <HTMLInputElement>document.getElementById('findInput');
+        const findNextButton = document.getElementById('findNext');
+        const findPreviousButton = document.getElementById('findPrevious');
+        const caseSensitive = <HTMLInputElement>document.getElementById('findMatchCase');
+        const highlightAll = <HTMLInputElement>document.getElementById('findHighlightAll');
+        const findResultsCount = document.getElementById('findResultsCount');
+        const findMessage = document.getElementById('findMsg');
+        const presentationModeButton = document.getElementById('presentationMode');
 
 
         const eventBus = new EventBus({});
 
-        let pdfViewer = new PDFViewer({
+        const linkService = new PDFLinkService({
+            eventBus,
+        });
+        const l10n = undefined;
+
+        const findController = new PDFFindController({
+            linkService,
+            eventBus,
+        });
+
+        const pdfViewer = new PDFViewer({
             container: (container as HTMLDivElement),
             renderer: 'canvas',
             eventBus,
-            linkService: undefined,
-            l10n: undefined,
+            linkService,
+            findController,
+            l10n,
         });
+        linkService.setViewer(pdfViewer);
 
         window.addEventListener('resize', _.debounce(() => {
             if (this.pymChild !== undefined) {
@@ -110,7 +138,7 @@ export default class DocumentPlayer {
             pdfViewer.currentScaleValue = 'page-width';
         }, 200), false);
 
-        container.addEventListener('pagesinit', function () {
+        container.addEventListener('pagesinit', () => {
             // change default scale.
             pdfViewer.currentScaleValue = 'page-width';
             if (this.pymChild !== undefined) {
@@ -118,20 +146,13 @@ export default class DocumentPlayer {
             }
         });
 
-        let pdfFindController = new PDFFindController({
-            linkService: pdfViewer.linkService,
-            eventBus: eventBus,
+        eventBus._on('updatefindmatchescount', ({matchesCount}: Partial<FindEvent>) => {
+            updateResultsCount(matchesCount.total);
         });
 
-        eventBus._on('updatefindmatchescount', function ({matchesCount}) {
-            updateResultsCount(matchesCount);
+        eventBus._on('updatefindcontrolstate', ({state, previous, matchesCount}: UpdatefindcontrolstateEvent) => {
+            updateUIState(state, previous, matchesCount.total);
         });
-
-        eventBus._on('updatefindcontrolstate', function ({state, previous, matchesCount}) {
-            updateUIState(state, previous, matchesCount);
-        });
-
-        pdfViewer.findController = pdfFindController;
 
         /* HANDLERS FUNCTIONS */
         zoomIn.addEventListener("click", function() {
@@ -237,7 +258,7 @@ export default class DocumentPlayer {
         }
 
         function dispatchEvent(type, findPrev) {
-            pdfFindController.executeCommand('find' + type, {
+            findController.executeCommand('find' + type, {
                 query: findField.value,
                 phraseSearch: true,
                 caseSensitive: caseSensitive.checked,
@@ -245,7 +266,6 @@ export default class DocumentPlayer {
                 findPrevious: findPrev
             });
         }
-
 
         function updateZoomButton(scale) {
             if(scale >= MAX_SCALE) {
@@ -322,7 +342,7 @@ export default class DocumentPlayer {
             }
         }
 
-        function updateResultsCount(matchCount) {
+        function updateResultsCount(matchCount: number) {
             if (!findResultsCount) {
                 return; // No UI control is provided. 
             }
@@ -336,7 +356,7 @@ export default class DocumentPlayer {
             findResultsCount.classList.remove('hidden');
         }
 
-        async function updateUIState(state, previous, matchCount) {
+        async function updateUIState(state, previous, matchCount: number) {
             var notFound = false;
             var findMsg = '';
             var status = '';
@@ -378,10 +398,12 @@ export default class DocumentPlayer {
             .then(function(document){
                 console.log("render");
                 pdfViewer.setDocument(document);
+                linkService.setDocument(document);
                 if (that.pymChild !== undefined) {
                     that.pymChild.sendHeight()
                 }
             });
     }
 }
+
 (<any>window).embedPlugin = new DocumentPlayer();
