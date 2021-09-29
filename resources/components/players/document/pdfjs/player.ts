@@ -138,7 +138,7 @@ export default class DocumentPlayer {
             pdfViewer.currentScaleValue = 'page-width';
         }, 200), false);
 
-        container.addEventListener('pagesinit', () => {
+        eventBus._on('pagesinit', () => {
             // change default scale.
             pdfViewer.currentScaleValue = 'page-width';
             if (this.pymChild !== undefined) {
