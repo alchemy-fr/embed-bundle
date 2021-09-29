@@ -5,6 +5,7 @@ var conf = require('./conf.js');
 module.exports = {
     cache: true,
     entry: {
+        'pdf.worker': `./node_modules/pdfjs-dist/build/pdf.worker.js`, // for the pdfjsLib.GlobalWorkerOptions.workerSrc
         image: conf.paths.src + '/embed/image.ts',
         video_videojs: conf.paths.src + '/components/players/video/videojs/player.ts',
         video_flowplayer: conf.paths.src + '/components/players/video/flowplayer/player.ts',
@@ -28,7 +29,7 @@ module.exports = {
         rules: [
             /* PDFjs loader configuration */
             {
-                test: /\.pdf$|pdf\.worker\.js$/,
+                test: /\.pdf$/,
                 loader: "url-loader",
                 options: {
                     limit: 10000

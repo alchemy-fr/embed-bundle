@@ -19,7 +19,7 @@ const L10n = NullL10n; // TODO use real translator
 
 // Setting worker path to worker bundle.
 
-pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
+pdfjsLib.GlobalWorkerOptions.workerSrc = "/assets/vendors/alchemy-embed-medias/pdf.worker.js";
 
 //import * as $ from 'jquery';
 import * as _ from 'underscore';
