@@ -7,10 +7,11 @@ let instance = null;
 
 class ConfigService extends ApplicationConfigService{
     constructor() {
+        super(config);
+
         if ( !instance ) {
             instance = this;
         }
-        super(config);
 
 /*        // register listeners:
         radioChannels().get('config').reply('service', () => {

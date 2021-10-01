@@ -4,19 +4,28 @@
  */
 
 //require('html5shiv');
-require('../../../../../node_modules/webl10n/l10n');
-require('../../../../../node_modules/pdfjs-dist/web/compatibility'); // should be loaded first
-require('../../../../../node_modules/pdfjs-dist/build/pdf');
-// Webpack returns a string to the url because we configured the url-loader.
-(<any>window).PDFJS.workerSrc = require('../../../../../node_modules/pdfjs-dist/build/pdf.worker.js');
-let pdfview = require('../../../../../node_modules/pdfjs-dist/web/pdf_viewer');
-let ui_utils:any = require('../../../../../node_modules/pdfjs-dist/lib/web/ui_utils');
+require('webl10n/l10n');
+
+import * as pdfjsLib from 'pdfjs-dist';
+import {
+    PDFViewer,
+    PDFFindController,
+    EventBus,
+    NullL10n,
+    PDFLinkService
+} from 'pdfjs-dist/web/pdf_viewer';
+
+const L10n = NullL10n; // TODO use real translator
+
+// Setting worker path to worker bundle.
+
+pdfjsLib.GlobalWorkerOptions.workerSrc = "/assets/vendors/alchemy-embed-medias/pdf.worker.js";
+
 //import * as $ from 'jquery';
 import * as _ from 'underscore';
 import ConfigService from '../../../embed/config/service';
 let playerTemplate:any = require('./player.html');
 let pym = require('pym.js');
-
 
 let FindStates = {
     FIND_FOUND: 0,
@@ -25,13 +34,24 @@ let FindStates = {
     FIND_PENDING: 3
 };
 
+type MatchesCount = {
+    total: number;
+    current: number;
+};
 
+type FindEvent = {
+    matchesCount: MatchesCount,
+};
+
+type UpdatefindcontrolstateEvent = {
+    state: any;
+    previous: any;
+} & FindEvent;
 
 export default class DocumentPlayer {
     private configService;
     private $documentContainer;
-    private documentEmbedContainerId;
-    private pymChild;
+    private readonly pymChild;
     private $embedContainer;
     private resourceOriginalWidth;
     private resourceOriginalHeight;
@@ -72,26 +92,44 @@ export default class DocumentPlayer {
         let pdf = this.configService.get('resource.url');
         //let pdf = '/assets/helloworld.pdf';
 
-        let viewerElement = document.getElementById('viewer');
-        let container = document.getElementById('viewerContainer');
-        let zoomIn = document.getElementById('zoomIn');
-        let zoomOut = document.getElementById('zoomOut');
-        let reset = document.getElementById('reset');
-        let toggleFindButton = document.getElementById('viewFind');
-        let bar = document.getElementById('findbar');
-        let findField:HTMLInputElement = <HTMLInputElement>document.getElementById('findInput');
-        let findNextButton = document.getElementById('findNext');
-        let findPreviousButton = document.getElementById('findPrevious');
-        let caseSensitive = <HTMLInputElement>document.getElementById('findMatchCase');
-        let highlightAll = <HTMLInputElement>document.getElementById('findHighlightAll');
-        let findResultsCount = document.getElementById('findResultsCount');
-        let findMessage = document.getElementById('findMsg');
-        let presentationModeButton = document.getElementById('presentationMode');
+        const viewerElement = document.getElementById('viewer');
+        const container = document.getElementById('viewerContainer');
+        const zoomIn = document.getElementById('zoomIn');
+        const zoomOut = document.getElementById('zoomOut');
+        const reset = document.getElementById('reset');
+        const toggleFindButton = document.getElementById('viewFind');
+        const bar = document.getElementById('findbar');
+        const findField:HTMLInputElement = <HTMLInputElement>document.getElementById('findInput');
+        const findNextButton = document.getElementById('findNext');
+        const findPreviousButton = document.getElementById('findPrevious');
+        const caseSensitive = <HTMLInputElement>document.getElementById('findMatchCase');
+        const highlightAll = <HTMLInputElement>document.getElementById('findHighlightAll');
+        const findResultsCount = document.getElementById('findResultsCount');
+        const findMessage = document.getElementById('findMsg');
+        const presentationModeButton = document.getElementById('presentationMode');
 
 
-        let pdfViewer = new (<any>window).PDFJS.PDFViewer({
-            container: container
+        const eventBus = new EventBus({});
+
+        const linkService = new PDFLinkService({
+            eventBus,
         });
+        const l10n = undefined;
+
+        const findController = new PDFFindController({
+            linkService,
+            eventBus,
+        });
+
+        const pdfViewer = new PDFViewer({
+            container: (container as HTMLDivElement),
+            renderer: 'canvas',
+            eventBus,
+            linkService,
+            findController,
+            l10n,
+        });
+        linkService.setViewer(pdfViewer);
 
         window.addEventListener('resize', _.debounce(() => {
             if (this.pymChild !== undefined) {
@@ -100,7 +138,7 @@ export default class DocumentPlayer {
             pdfViewer.currentScaleValue = 'page-width';
         }, 200), false);
 
-        container.addEventListener('pagesinit', function () {
+        eventBus._on('pagesinit', () => {
             // change default scale.
             pdfViewer.currentScaleValue = 'page-width';
             if (this.pymChild !== undefined) {
@@ -108,31 +146,17 @@ export default class DocumentPlayer {
             }
         });
 
-        //set localization
-        ui_utils.mozL10n.ready(onLocalized);
-
-
-        let pdfFindController = new (<any>window).PDFJS.PDFFindController({
-            pdfViewer: pdfViewer
+        eventBus._on('updatefindmatchescount', ({matchesCount}: Partial<FindEvent>) => {
+            updateResultsCount(matchesCount.total);
         });
 
-        pdfFindController.onUpdateResultsCount = function (matchCount) {
-            updateResultsCount(matchCount);
-        };
-
-        pdfFindController.onUpdateState = function (state, previous, matchCount) {
-            updateUIState(state, previous, matchCount);
-        }
-
-
-        pdfViewer.setFindController(pdfFindController);
-
-
+        eventBus._on('updatefindcontrolstate', ({state, previous, matchesCount}: UpdatefindcontrolstateEvent) => {
+            updateUIState(state, previous, matchesCount.total);
+        });
 
         /* HANDLERS FUNCTIONS */
         zoomIn.addEventListener("click", function() {
-            var newScale = pdfViewer.currentScale;
-            newScale = (newScale * SCALE_DELTA).toFixed(2);
+            const newScale = (pdfViewer.currentScale * SCALE_DELTA);
             if(newScale > MAX_SCALE) {
                 pdfViewer.currentScale = MAX_SCALE;
             }else {
@@ -142,8 +166,7 @@ export default class DocumentPlayer {
         });
 
         zoomOut.addEventListener("click", function() {
-            var newScale = pdfViewer.currentScale;
-            newScale = (newScale / SCALE_DELTA).toFixed(2);
+            const newScale = (pdfViewer.currentScale / SCALE_DELTA);
             if(newScale < MIN_SCALE) {
                 pdfViewer.currentScale = MIN_SCALE;
             }else {
@@ -154,7 +177,7 @@ export default class DocumentPlayer {
 
         reset.addEventListener("click", function() {
             pdfViewer.currentScaleValue = "page-width";
-            var newScale = pdfViewer.currentScale;
+            const newScale = pdfViewer.currentScale;
             updateZoomButton(newScale);
         });
 
@@ -188,30 +211,21 @@ export default class DocumentPlayer {
             toggleFullScreen();
         });
 
-
         document.addEventListener('webkitfullscreenchange', exitHandler, false);
         document.addEventListener('mozfullscreenchange', exitHandler, false);
         document.addEventListener('fullscreenchange', exitHandler, false);
         document.addEventListener('MSFullscreenChange', exitHandler, false);
 
-        function onLocalized() {
-            ui_utils.mozL10n.setLanguage(document.documentElement.lang);
-        }
-
-        function exitHandler()
-        {
+        function exitHandler() {
             var document:any = window.document;
             var fullscreen = document.webkitIsFullScreen ||    // alternative standard method
                 document.mozFullScreen  || document.msFullscreenElement;
-            if (fullscreen)
-            {
+            if (fullscreen) {
                 pdfViewer.currentScaleValue = "auto";
-            }else {
+            } else {
                 pdfViewer.currentScaleValue = "page-width";
             }
-
         }
-
 
         function toggleFullScreen() {
             var elem:any = viewerElement;
@@ -244,7 +258,7 @@ export default class DocumentPlayer {
         }
 
         function dispatchEvent(type, findPrev) {
-            pdfFindController.executeCommand('find' + type, {
+            findController.executeCommand('find' + type, {
                 query: findField.value,
                 phraseSearch: true,
                 caseSensitive: caseSensitive.checked,
@@ -252,7 +266,6 @@ export default class DocumentPlayer {
                 findPrevious: findPrev
             });
         }
-
 
         function updateZoomButton(scale) {
             if(scale >= MAX_SCALE) {
@@ -297,7 +310,6 @@ export default class DocumentPlayer {
             opened = false;
             toggleFindButton.classList.remove('toggled');
             bar.classList.add('hidden');
-            pdfFindController.active = false;
         }
 
         function toggle() {
@@ -330,7 +342,7 @@ export default class DocumentPlayer {
             }
         }
 
-        function updateResultsCount(matchCount) {
+        function updateResultsCount(matchCount: number) {
             if (!findResultsCount) {
                 return; // No UI control is provided. 
             }
@@ -344,7 +356,7 @@ export default class DocumentPlayer {
             findResultsCount.classList.remove('hidden');
         }
 
-        function updateUIState(state, previous, matchCount) {
+        async function updateUIState(state, previous, matchCount: number) {
             var notFound = false;
             var findMsg = '';
             var status = '';
@@ -355,14 +367,14 @@ export default class DocumentPlayer {
                     status = 'pending';
                     break;
                 case FindStates.FIND_NOTFOUND:
-                    findMsg = ui_utils.mozL10n.get('find_not_found', null, 'Phrase not found');
+                    findMsg = await L10n.get('find_not_found');
                     notFound = true;
                     break;
                 case FindStates.FIND_WRAPPED:
                     if (previous) {
-                        findMsg = ui_utils.mozL10n.get('find_reached_top', null, 'Reached top of document, continued from bottom');
+                        findMsg = await L10n.get('find_reached_top');
                     } else {
-                        findMsg = ui_utils.mozL10n.get('find_reached_bottom', null, 'Reached end of document, continued from top');
+                        findMsg = await L10n.get('find_reached_bottom');
                     }
                     break;
             }
@@ -377,20 +389,21 @@ export default class DocumentPlayer {
             _adjustWidth();
         }
 
-
         container.addEventListener("pagesinit", function () {
             pdfViewer.currentScaleValue = "page-width";
         });
 
-
-        (<any>window).PDFJS.getDocument(pdf)
+        pdfjsLib.getDocument(pdf)
+            .promise
             .then(function(document){
                 console.log("render");
                 pdfViewer.setDocument(document);
+                linkService.setDocument(document);
                 if (that.pymChild !== undefined) {
                     that.pymChild.sendHeight()
                 }
             });
     }
 }
+
 (<any>window).embedPlugin = new DocumentPlayer();
