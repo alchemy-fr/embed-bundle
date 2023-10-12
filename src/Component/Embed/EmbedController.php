@@ -155,6 +155,12 @@ class EmbedController
                 break;
         }
 
+        if ($this->app['conf']->has(['phraseanet-service', 'phraseanet_local_id'])) {
+            $metaData['embedMedia']['matomoTitle'] = $this->app['conf']->get(['phraseanet-service', 'phraseanet_local_id']) . "_" . $record->getId();
+        } else {
+            $metaData['embedMedia']['matomoTitle'] = $record->get_title(['removeExtension' => true]);
+        }
+
         $twigOptions = array_merge($embedConfig, $metaData);
 
         return $this->app['twig']->render('@alchemy_embed/iframe/'.$template, $twigOptions);
