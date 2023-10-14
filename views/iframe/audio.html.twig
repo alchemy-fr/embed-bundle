@@ -30,6 +30,7 @@
                     aspectRatio: '{{ embedMedia.dimensions.width }}:{{ embedMedia.dimensions.height }}',
                     coverUrl: "{{ embedMedia.coverUrl }}",
                     matomoTitle: "{{ embedMedia.matomoTitle }}",
+                    matomoResource: "{{ embedMedia.matomoResource }}",
                     playbackRates: {{ audio['available_speeds']|json_encode|raw }},
                     sources: [{% for source in  embedMedia.source %}{
                         url: "{{ source.url }}",
