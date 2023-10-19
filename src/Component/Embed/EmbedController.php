@@ -155,8 +155,8 @@ class EmbedController
                 break;
         }
 
-        if ($this->app['conf']->has(['phraseanet-service', 'phraseanet_local_id'])) {
-            $metaData['embedMedia']['matomoResource'] = $this->app['conf']->get(['phraseanet-service', 'phraseanet_local_id']) . "_" . $record->getId();
+        if ($this->app['conf']->has(['main', 'instance_id'])) {
+            $metaData['embedMedia']['matomoResource'] = $this->app['conf']->get(['main', 'instance_id']) . "_" . $record->getId();
         } else {
             $metaData['embedMedia']['matomoResource'] = $record->getId();
         }
